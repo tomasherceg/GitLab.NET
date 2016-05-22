@@ -45,7 +45,7 @@ publish_master:
     script:
         - xbuild "GitLabAPI.sln" /p:Configuration=$CONFIGURATION
         - cd GitLabAPI
-        - nuget pack GitLabAPI.csproj -Prop Configuration=$CONFIGURATION -verbosity detailed
+        - nuget pack GitLabAPI.nuspec
         - nuget setApiKey $NUGET_API_KEY
         - nuget push GitLabAPI.*.nupkg
 

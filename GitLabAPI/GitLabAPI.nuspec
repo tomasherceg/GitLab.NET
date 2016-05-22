@@ -2,10 +2,10 @@
 <package >
   <metadata>
     <id>GitLabAPI</id>
-    <version>$version$</version>
+    <version>0.0.4.0</version>
     <title>GitLabAPI</title>
-    <authors>$author$</authors>
-    <owners>$author$</owners>
+    <authors>Anthony Stivers, Ryan Marshall</authors>
+    <owners>Anthony Stivers, Ryan Marshall</owners>
     <licenseUrl>https://opensource.org/licenses/MIT</licenseUrl>
     <projectUrl>https://gitlab.com/tstivers/GitLabAPI</projectUrl>
     <iconUrl>https://nuget.org/Content/Images/packageDefaultIcon-50x50.png</iconUrl>
@@ -22,4 +22,8 @@
     <copyright>Copyright 2016</copyright>
     <tags></tags>
   </metadata>
+  <files>
+    <file src="bin\Release\*.dll" target="lib" />
+    <file src="bin\Release\*.pdb" target="lib" />
+  </files>
 </package>
