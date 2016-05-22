@@ -48,8 +48,11 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Factories\IRestClientFactory.cs" />
+    <Compile Include="Factories\IRestRequestFactory.cs" />
     <Compile Include="Factories\RestClientFactory.cs" />
+    <Compile Include="Factories\RestRequestFactory.cs" />
     <Compile Include="GitLab.cs" />
+    <Compile Include="GitLabAuthenticator.cs" />
     <Compile Include="Models\AccessLevel.cs" />
     <Compile Include="Models\NamespaceAvatar.cs" />
     <Compile Include="Models\Identity.cs" />

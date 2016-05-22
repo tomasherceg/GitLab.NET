@@ -23,21 +23,10 @@ namespace GitLabAPI
 
         public GitLab(string privateToken, Uri hostUri) : this(privateToken)
         {
-            hostUri = new Uri(hostUri, apiPath);
+            baseUri = new Uri(hostUri, apiPath);
         }
 
-        /// <summary>
-        /// Retrieves a private token for a user.
-        /// </summary>
-        /// <param name="user">The username or email address for the user.</param>
-        /// <param name="password">The user's password.</param>
-        /// <returns>The user's private token. Null if the login failed.</returns>
-        public static async Task<string> GetPrivateToken(string user, string password, Uri hostUri)
-        {
-
-        }
-
-        public T Execute<T>(RestRequest request) where T : new()
+        private T Execute<T>(RestRequest request) where T : new()
         {
             var client = RestClientFactory.Create();
             client.BaseUrl = baseUri;
@@ -50,7 +39,7 @@ namespace GitLabAPI
             return response.Data;
         }
 
-        public async Task<T> ExecuteAsync<T>(RestRequest request) where T : new()
+        private async Task<T> ExecuteAsync<T>(RestRequest request) where T : new()
         {
             var client = RestClientFactory.Create();
             client.BaseUrl = baseUri;
