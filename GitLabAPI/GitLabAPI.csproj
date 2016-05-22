@@ -47,7 +47,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="GitLabAPI.cs" />
+    <Compile Include="GitLab.cs" />
     <Compile Include="Models\AccessLevel.cs" />
     <Compile Include="Models\NamespaceAvatar.cs" />
     <Compile Include="Models\Identity.cs" />
