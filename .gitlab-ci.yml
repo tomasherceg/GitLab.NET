@@ -45,7 +45,7 @@ publish_master:
     script:
         - cd GitLabAPI
         - nuget pack GitLabAPI.nuspec
-        - nuget setApiKey $NUGET_API_KEY
+        - nuget setApiKey $NUGET_API_KEY -verbosity quiet
         - nuget push GitLabAPI.*.nupkg
 
 build_develop:
