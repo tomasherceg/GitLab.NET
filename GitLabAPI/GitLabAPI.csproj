@@ -47,6 +47,8 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Factories\IRestClientFactory.cs" />
+    <Compile Include="Factories\RestClientFactory.cs" />
     <Compile Include="GitLab.cs" />
     <Compile Include="Models\AccessLevel.cs" />
     <Compile Include="Models\NamespaceAvatar.cs" />
