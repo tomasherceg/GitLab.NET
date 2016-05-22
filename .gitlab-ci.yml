@@ -12,15 +12,15 @@ before_script:
     stage: build
     artifacts:
         paths:
-            - GitLabAPI\bin\$CONFIGURATION\*
-            - GitLabAPI.Tests\bin\$CONFIGURATION\*
+            - GitLabAPI/bin/$CONFIGURATION/*
+            - GitLabAPI.Tests/bin/$CONFIGURATION/*
     script:
         - xbuild "GitLabAPI.sln" /p:Configuration=$CONFIGURATION
 
 .test_template: &test_template
     stage: test
     script:
-        - packages\xunit.runner.console.2.1.0\tools\xunit.console GitLabAPI.Tests\bin\$CONFIGURATION\GitLabAPI.Tests.dll
+        - packages/xunit.runner.console.2.1.0/tools/xunit.console GitLabAPI.Tests/bin/$CONFIGURATION/GitLabAPI.Tests.dll
 
 build_master:
     variables:
