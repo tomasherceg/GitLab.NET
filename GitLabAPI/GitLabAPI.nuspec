@@ -25,5 +25,7 @@
   <files>
     <file src="bin\Release\*.dll" target="lib" />
     <file src="bin\Release\*.pdb" target="lib" />
+    <file src="bin/Release/*.dll" target="lib" />
+    <file src="bin/Release/*.mdb" target="lib" />
   </files>
 </package>
