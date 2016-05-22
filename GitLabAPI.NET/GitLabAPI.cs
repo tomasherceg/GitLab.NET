@@ -12,7 +12,7 @@ namespace GitLabAPI.NET
 
         private const string apiPath = "/api/v3";
         
-        private IRequestExecutor requestExecutor;
+        private RequestExecutor requestExecutor;
 
         public GitLabAPI(string privateToken, Uri hostUri)
         {
