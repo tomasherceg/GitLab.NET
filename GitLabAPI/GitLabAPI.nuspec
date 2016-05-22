@@ -4,8 +4,8 @@
     <id>GitLabAPI</id>
     <version>0.0.5.0</version>
     <title>GitLabAPI</title>
-    <authors>Anthony Stivers, Ryan Marshall</authors>
-    <owners>Anthony Stivers, Ryan Marshall</owners>
+    <authors>Anthony Stivers</authors>
+    <owners>Anthony Stivers</owners>
     <licenseUrl>https://opensource.org/licenses/MIT</licenseUrl>
     <projectUrl>https://gitlab.com/tstivers/GitLabAPI</projectUrl>
     <iconUrl>https://nuget.org/Content/Images/packageDefaultIcon-50x50.png</iconUrl>
@@ -19,7 +19,7 @@
     <releaseNotes>
       This project is currently in Alpha phase, and as such it may not work correctly.
     </releaseNotes>
-    <copyright>Copyright 2016</copyright>
+    <copyright>Copyright 2016 Anthony Stivers</copyright>
     <tags></tags>
   </metadata>
   <files>

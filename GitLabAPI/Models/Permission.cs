@@ -7,9 +7,9 @@ namespace GitLabAPI.Models
     public class Permission
     {
         [DataMember(Name = "access_level")]
-        public int AccessLevel { get; set; }
+        public AccessLevel AccessLevel { get; set; }
 
         [DataMember(Name = "notification_level")]
-        public int NotificationLevel { get; set; }
+        public NotificationLevel NotificationLevel { get; set; }
     }
 }

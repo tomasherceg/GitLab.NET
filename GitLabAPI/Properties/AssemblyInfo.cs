@@ -8,7 +8,7 @@ using System.Runtime.InteropServices;
 [assembly: AssemblyTitle("GitLabAPI")]
 [assembly: AssemblyDescription("This is a wrapper around GitLab's API that works with your .NET projects. This project is currently in Alpha phase, and as such it may not work correctly.")]
 [assembly: AssemblyConfiguration("")]
-[assembly: AssemblyCompany("Anthony Stivers, Ryan Marshall")]
+[assembly: AssemblyCompany("Anthony Stivers")]
 [assembly: AssemblyProduct("GitLabAPI")]
 [assembly: AssemblyCopyright("Copyright Anthony Stivers ©  2016")]
 [assembly: AssemblyTrademark("")]
