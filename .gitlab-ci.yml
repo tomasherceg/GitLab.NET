@@ -43,7 +43,6 @@ publish_master:
     variables:
         CONFIGURATION: "Release"
     script:
-        - xbuild "GitLabAPI.sln" /p:Configuration=$CONFIGURATION
         - cd GitLabAPI
         - nuget pack GitLabAPI.nuspec
         - nuget setApiKey $NUGET_API_KEY
