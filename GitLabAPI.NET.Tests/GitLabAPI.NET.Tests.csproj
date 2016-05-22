@@ -68,9 +68,9 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\GitLabAPI\GitLabAPI.csproj">
+    <ProjectReference Include="..\GitLabAPI.NET\GitLabAPI.NET.csproj">
       <Project>{bb8cf8f9-9656-4b1e-8642-3f4831246061}</Project>
-      <Name>GitLabAPI</Name>
+      <Name>GitLabAPI.NET</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>

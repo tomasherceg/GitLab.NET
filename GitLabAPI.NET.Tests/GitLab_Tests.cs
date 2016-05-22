@@ -1,7 +1,7 @@
 ﻿using System;
 using Xunit;
 
-namespace GitLabAPI.Tests
+namespace GitLabAPI.NET.Tests
 {
     public class GitLab_Tests
     {

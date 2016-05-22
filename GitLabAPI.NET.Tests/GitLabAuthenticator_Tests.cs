@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 using Xunit;
 
-namespace GitLabAPI.Tests
+namespace GitLabAPI.NET.Tests
 {
     public class GitLabAuthenticator_Tests
     {

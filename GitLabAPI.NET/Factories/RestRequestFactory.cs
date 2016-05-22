@@ -1,7 +1,7 @@
 ﻿using RestSharp;
 using System;
 
-namespace GitLabAPI.Factories
+namespace GitLabAPI.NET.Factories
 {
     public class RestRequestFactory : IRestRequestFactory
     {

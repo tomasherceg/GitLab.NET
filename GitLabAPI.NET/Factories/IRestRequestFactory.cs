@@ -1,6 +1,6 @@
 ﻿using RestSharp;
 
-namespace GitLabAPI.Factories
+namespace GitLabAPI.NET.Factories
 {
     public interface IRestRequestFactory
     {

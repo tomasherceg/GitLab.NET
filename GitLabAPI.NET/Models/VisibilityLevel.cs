@@ -1,4 +1,4 @@
-﻿namespace GitLabAPI.Models
+﻿namespace GitLabAPI.NET.Models
 {
     public enum VisibilityLevel
     {

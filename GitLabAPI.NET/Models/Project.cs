@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Runtime.Serialization;
 
-namespace GitLabAPI.Models
+namespace GitLabAPI.NET.Models
 {
     [DataContract]
     public class Project

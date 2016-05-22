@@ -1,10 +1,10 @@
-﻿using GitLabAPI.Factories;
-using GitLabAPI.Models;
+﻿using GitLabAPI.NET.Factories;
+using GitLabAPI.NET.Models;
 using RestSharp;
 using System;
 using System.Threading.Tasks;
 
-namespace GitLabAPI
+namespace GitLabAPI.NET
 {
     /// <summary>
     /// Retrieves a private token for a given username/password combination.

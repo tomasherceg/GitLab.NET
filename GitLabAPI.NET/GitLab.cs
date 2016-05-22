@@ -1,9 +1,9 @@
-﻿using GitLabAPI.Factories;
+﻿using GitLabAPI.NET.Factories;
 using RestSharp;
 using System;
 using System.Threading.Tasks;
 
-namespace GitLabAPI
+namespace GitLabAPI.NET
 {
     public class GitLab
     {

@@ -13,23 +13,21 @@ publish:
         - master
     artifacts:
         paths:
-            - GitLabAPI/bin/Release/GitLabAPI.dll
-            - GitLabAPI/bin/Release/GitLabAPI.mdb
-            - GitLabAPI/*.nupkg
+            - GitLabAPI.NET/bin/Release/GitLabAPI.dll
+            - GitLabAPI.NET/bin/Release/GitLabAPI.mdb
+            - GitLabAPI.NET.*.nupkg
     script:
-        - xbuild "GitLabAPI.sln" /p:Configuration=Release
-        - mono packages/xunit.runner.console.2.1.0/tools/xunit.console.exe GitLabAPI.Tests/bin/Release/GitLabAPI.Tests.dll
-        - cd GitLabAPI
-        - nuget pack GitLabAPI.nuspec
+        - xbuild "GitLabAPI.NET.sln" /p:Configuration=Release
+        - mono packages/xunit.runner.console.2.1.0/tools/xunit.console.exe GitLabAPI.NET.Tests/bin/Release/GitLabAPI.NET.Tests.dll
+        - nuget pack GitLabAPI.NET.nuspec
         - nuget setApiKey $NUGET_API_KEY -verbosity quiet
-        - nuget push GitLabAPI.*.nupk
+        - nuget push GitLabAPI.NET.*.nupk
 
 test:
     stage: test
     except:
         - master
     script:
-        - xbuild "GitLabAPI.sln" /p:Configuration=Debug
-        - mono packages/xunit.runner.console.2.1.0/tools/xunit.console.exe GitLabAPI.Tests/bin/Debug/GitLabAPI.Tests.dll
-        - cd GitLabAPI
-        - nuget pack GitLabAPI.nuspec
+        - xbuild "GitLabAPI.NET.sln" /p:Configuration=Debug
+        - mono packages/xunit.runner.console.2.1.0/tools/xunit.console.exe GitLabAPI.NET.Tests/bin/Debug/GitLabAPI.NET.Tests.dll
+        - nuget pack GitLabAPI.NET.nuspec
