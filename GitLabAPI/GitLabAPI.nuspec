@@ -21,6 +21,9 @@
     </releaseNotes>
     <copyright>Copyright 2016 Anthony Stivers</copyright>
     <tags></tags>
+    <dependencies>
+      <dependency id="RestSharp" version="105.2.3" />
+    </dependencies>
   </metadata>
   <files>
     <file src="bin\*\*.dll" target="lib" />

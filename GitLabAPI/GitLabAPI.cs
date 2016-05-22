@@ -6,7 +6,8 @@ using System.Threading.Tasks;
 
 namespace GitLabAPI
 {
-    class GitLabAPI
+    public class GitLabAPI
     {
+
     }
 }
