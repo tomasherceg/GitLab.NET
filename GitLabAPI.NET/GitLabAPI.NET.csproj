@@ -7,8 +7,8 @@
     <ProjectGuid>{BB8CF8F9-9656-4B1E-8642-3F4831246061}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>GitLabAPI</RootNamespace>
-    <AssemblyName>GitLabAPI</AssemblyName>
+    <RootNamespace>GitLabAPI.NET</RootNamespace>
+    <AssemblyName>GitLabAPI.NET</AssemblyName>
     <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <TargetFrameworkProfile />

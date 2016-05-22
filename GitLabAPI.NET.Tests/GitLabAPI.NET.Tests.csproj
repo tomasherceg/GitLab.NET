@@ -8,8 +8,8 @@
     <ProjectGuid>{3FC277CC-9FB6-4EB2-9257-DC422E2CC96D}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>GitLabAPI.Tests</RootNamespace>
-    <AssemblyName>GitLabAPI.Tests</AssemblyName>
+    <RootNamespace>GitLabAPI.NET.Tests</RootNamespace>
+    <AssemblyName>GitLabAPI.NET.Tests</AssemblyName>
     <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <NuGetPackageImportStamp>
