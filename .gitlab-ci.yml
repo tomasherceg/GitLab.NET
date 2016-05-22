@@ -13,7 +13,8 @@ publish:
         - master
     artifacts:
         paths:
-            - GitLabAPI/bin/Release/*
+            - GitLabAPI/bin/Release/GitLabAPI.dll
+            - GitLabAPI/bin/Release/GitLabAPI.mdb
             - GitLabAPI/*.nupkg
     script:
         - xbuild "GitLabAPI.sln" /p:Configuration=Release
