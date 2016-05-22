@@ -1,10 +1,12 @@
-before_script:
-    - nuget restore -NonInteractive
+image: mono
 
 stages:
     - build
     - test
     - deploy
+
+before_script:
+    - nuget restore -NonInteractive
 
 .build_template: &build_template
     stage: build
