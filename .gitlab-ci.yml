@@ -44,7 +44,7 @@ publish_master:
         CONFIGURATION: "Release"
     script:
         - cd GitLabAPI
-        - nuget pack GitLabAPI.csproj -Prop Configuration=$CONFIGURATION
+        - nuget pack GitLabAPI.csproj -Prop Configuration=$CONFIGURATION -verbosity detailed
         - nuget setApiKey $NUGET_API_KEY
         - nuget push GitLabAPI.*.nupkg
 
