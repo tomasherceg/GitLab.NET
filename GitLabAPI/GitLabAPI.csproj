@@ -45,11 +45,14 @@
   <ItemGroup>
     <Compile Include="GitLabAPI.cs" />
     <Compile Include="Models\AccessLevel.cs" />
+    <Compile Include="Models\NamespaceAvatar.cs" />
     <Compile Include="Models\Identity.cs" />
-    <Compile Include="Models\Namespace.cs" />
+    <Compile Include="Models\ProjectNamespace.cs" />
     <Compile Include="Models\NotificationLevel.cs" />
     <Compile Include="Models\Permission.cs" />
     <Compile Include="Models\Project.cs" />
+    <Compile Include="Models\ProjectOwner.cs" />
+    <Compile Include="Models\ProjectPermissions.cs" />
     <Compile Include="Models\User.cs" />
     <Compile Include="Models\VisibilityLevel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

@@ -23,9 +23,9 @@
     <tags></tags>
   </metadata>
   <files>
-    <file src="bin\Release\*.dll" target="lib" />
-    <file src="bin\Release\*.pdb" target="lib" />
-    <file src="bin/Release/*.dll" target="lib" />
-    <file src="bin/Release/*.mdb" target="lib" />
+    <file src="bin\*\*.dll" target="lib" />
+    <file src="bin\*\*.pdb" target="lib" />
+    <file src="bin/*/*.dll" target="lib" />
+    <file src="bin/*/*.mdb" target="lib" />
   </files>
 </package>

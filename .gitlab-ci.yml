@@ -3,67 +3,47 @@ image: mono
 stages:
     - build
     - test
-    - publish
 
 before_script:
     - nuget restore -NonInteractive
 
-.build_template: &build_template
+build_master:
     stage: build
+    only:
+        - master
     artifacts:
         paths:
-            - GitLabAPI/bin/$CONFIGURATION/*
-            - GitLabAPI.Tests/bin/$CONFIGURATION/*
+            - GitLabAPI/bin/Release/*
+            - GitLabAPI/*.nupkg
     script:
-        - xbuild "GitLabAPI.sln" /p:Configuration=$CONFIGURATION
-
-.test_template: &test_template
-    stage: test
-    script:
-        - mono packages/xunit.runner.console.2.1.0/tools/xunit.console.exe GitLabAPI.Tests/bin/$CONFIGURATION/GitLabAPI.Tests.dll
-
-build_master:
-    variables:
-        CONFIGURATION: "Release"
-    only:
-        - master
-    <<: *build_template
-
-test_master:
-    variables:
-        CONFIGURATION: "Release"
-    only:
-        - master
-    <<: *test_template
-
-publish_master:
-    stage: publish
-    only:
-        - master
-    variables:
-        CONFIGURATION: "Release"
-    script:
+        - xbuild "GitLabAPI.sln" /p:Configuration=Release
+        - mono packages/xunit.runner.console.2.1.0/tools/xunit.console.exe GitLabAPI.Tests/bin/Release/GitLabAPI.Tests.dll
         - cd GitLabAPI
         - nuget pack GitLabAPI.nuspec
         - nuget setApiKey $NUGET_API_KEY -verbosity quiet
         - nuget push GitLabAPI.*.nupkg
 
-build_develop:
-    variables:
-        CONFIGURATION: "Debug"
+test_release:
+    stage: test
     only:
-        - develop
-        - /^release\/.*$/
-        - /^feature\/.*$/
-        - /^hotfix\/.*$/
-    <<: *build_template
+        - /^release-.*$/
+    artifacts:
+        paths:
+            - GitLabAPI/bin/Debug/*
+            - GitLabAPI/*.nupkg
+    script:
+        - xbuild "GitLabAPI.sln" /p:Configuration=Debug
+        - mono packages/xunit.runner.console.2.1.0/tools/xunit.console.exe GitLabAPI.Tests/bin/Debug/GitLabAPI.Tests.dll
+        - cd GitLabAPI
+        - nuget pack GitLabAPI.nuspec
 
 test_develop:
-    variables:
-        CONFIGURATION: "Debug"
-    only:
-        - develop
-        - /^release\/.*$/
-        - /^feature\/.*$/
-        - /^hotfix\/.*$/
-    <<: *test_template
+    stage: test
+    except:
+        - master
+        - /^release-.*$/
+    script:
+        - xbuild "GitLabAPI.sln" /p:Configuration=Debug
+        - mono packages/xunit.runner.console.2.1.0/tools/xunit.console.exe GitLabAPI.Tests/bin/Debug/GitLabAPI.Tests.dll
+        - cd GitLabAPI
+        - nuget pack GitLabAPI.nuspec

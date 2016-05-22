@@ -6,17 +6,14 @@ namespace GitLabAPI.Models
     [DataContract]
     public class User
     {
-        [DataMember(Name = "id")]
-        public int Id { get; set; }
+        [DataMember(Name = "name")]
+        public string Name { get; set; }
 
         [DataMember(Name = "username")]
         public string Username { get; set; }
 
-        [DataMember(Name = "email")]
-        public string Email { get; set; }
-
-        [DataMember(Name = "name")]
-        public string Name { get; set; }
+        [DataMember(Name = "id")]
+        public int Id { get; set; }
 
         [DataMember(Name = "state")]
         public string State { get; set; }
@@ -56,6 +53,9 @@ namespace GitLabAPI.Models
 
         [DataMember(Name = "confirmed_at")]
         public DateTime ConfirmedAt { get; set; }
+
+        [DataMember(Name = "email")]
+        public string Email { get; set; }
 
         [DataMember(Name = "theme_id")]
         public int ThemeId { get; set; }
