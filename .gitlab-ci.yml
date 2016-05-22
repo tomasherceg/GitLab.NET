@@ -15,7 +15,7 @@ before_script:
             - GitLabAPI\bin\%CONFIGURATION%\*
             - GitLabAPI.Tests\bin\%CONFIGURATION%\*
     script:
-        - xbuild "TrialMinder.sln" /p:Configuration=%CONFIGURATION%
+        - xbuild "GitLabAPI.sln" /p:Configuration=%CONFIGURATION%
 
 .test_template: &test_template
     stage: test
