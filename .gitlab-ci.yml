@@ -7,7 +7,7 @@ stages:
 before_script:
     - nuget restore -NonInteractive
 
-build_master:
+publish:
     stage: build
     only:
         - master
@@ -21,27 +21,12 @@ build_master:
         - cd GitLabAPI
         - nuget pack GitLabAPI.nuspec
         - nuget setApiKey $NUGET_API_KEY -verbosity quiet
-        - nuget push GitLabAPI.*.nupkg
+        - nuget push GitLabAPI.*.nupk
 
-test_release:
-    stage: test
-    only:
-        - /^release-.*$/
-    artifacts:
-        paths:
-            - GitLabAPI/bin/Debug/*
-            - GitLabAPI/*.nupkg
-    script:
-        - xbuild "GitLabAPI.sln" /p:Configuration=Debug
-        - mono packages/xunit.runner.console.2.1.0/tools/xunit.console.exe GitLabAPI.Tests/bin/Debug/GitLabAPI.Tests.dll
-        - cd GitLabAPI
-        - nuget pack GitLabAPI.nuspec
-
-test_develop:
+test:
     stage: test
     except:
         - master
-        - /^release-.*$/
     script:
         - xbuild "GitLabAPI.sln" /p:Configuration=Debug
         - mono packages/xunit.runner.console.2.1.0/tools/xunit.console.exe GitLabAPI.Tests/bin/Debug/GitLabAPI.Tests.dll
