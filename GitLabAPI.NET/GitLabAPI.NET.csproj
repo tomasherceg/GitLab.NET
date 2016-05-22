@@ -52,7 +52,6 @@
     <Compile Include="Factories\RestClientFactory.cs" />
     <Compile Include="Factories\RestRequestFactory.cs" />
     <Compile Include="GitLabAPI.cs" />
-    <Compile Include="IRequestExecutor.cs" />
     <Compile Include="PrivateTokenAuthenticator.cs" />
     <Compile Include="Models\AccessLevel.cs" />
     <Compile Include="Models\NamespaceAvatar.cs" />

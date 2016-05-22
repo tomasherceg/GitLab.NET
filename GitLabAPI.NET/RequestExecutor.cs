@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace GitLabAPI.NET
 {
-    public class RequestExecutor : IRequestExecutor
+    public class RequestExecutor
     {
         private Uri baseUri;
         private IAuthenticator authenticator;
@@ -32,7 +32,7 @@ namespace GitLabAPI.NET
         /// <typeparam name="T">The type to deserialize the response to.</typeparam>
         /// <param name="request">The IRestRequest to execute.</param>
         /// <returns>An object of type T with the deserialized data.</returns>
-        public T Execute<T>(IRestRequest request) where T : new()
+        public T Execute<T>(RestRequest request) where T : new()
         {
             var client = restClientFactory.Create(baseUri, authenticator);
 
@@ -53,7 +53,7 @@ namespace GitLabAPI.NET
         /// <typeparam name="T">The type to deserialize the response to.</typeparam>
         /// <param name="request">The IRestRequest to execute.</param>
         /// <returns>An object of type T with the deserialized data.</returns>
-        public async Task<T> ExecuteAsync<T>(IRestRequest request) where T : new()
+        public async Task<T> ExecuteAsync<T>(RestRequest request) where T : new()
         {
             var client = restClientFactory.Create(baseUri, authenticator);
 
