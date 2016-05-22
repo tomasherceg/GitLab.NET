@@ -20,7 +20,7 @@ before_script:
 .test_template: &test_template
     stage: test
     script:
-        - packages/xunit.runner.console.2.1.0/tools/xunit.console GitLabAPI.Tests/bin/$CONFIGURATION/GitLabAPI.Tests.dll
+        - mono packages/xunit.runner.console.2.1.0/tools/xunit.console.exe GitLabAPI.Tests/bin/$CONFIGURATION/GitLabAPI.Tests.dll
 
 build_master:
     variables:
