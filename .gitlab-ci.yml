@@ -3,7 +3,7 @@ image: mono
 stages:
     - build
     - test
-    - deploy
+    - publish
 
 before_script:
     - nuget restore -NonInteractive
@@ -35,6 +35,18 @@ test_master:
     only:
         - master
     <<: *test_template
+
+publish_master:
+    stage: publish
+    only:
+        - master
+    variables:
+        CONFIGURATION: "Release"
+    script:
+        - cd GitLabAPI
+        - nuget pack GitLabAPI.csproj -Prop Configuration=$CONFIGURATION
+        - nuget setApiKey $NUGET_API_KEY
+        - nuget push GitLabAPI.*.nupkg
 
 build_develop:
     variables:
