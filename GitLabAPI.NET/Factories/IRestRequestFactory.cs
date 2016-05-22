@@ -4,6 +4,6 @@ namespace GitLabAPI.NET.Factories
 {
     public interface IRestRequestFactory
     {
-        IRestRequest Create();
+        IRestRequest Create(Method method = Method.GET);
     }
 }

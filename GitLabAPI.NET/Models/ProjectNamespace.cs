@@ -1,45 +1,44 @@
-﻿using System;
-using System.Runtime.Serialization;
+﻿using RestSharp.Deserializers;
+using System;
 
 namespace GitLabAPI.NET.Models
 {
-    [DataContract]
     public class ProjectNamespace
     {
-        [DataMember(Name = "id")]
+        [DeserializeAs(Name = "id")]
         public int Id { get; set; }
 
-        [DataMember(Name = "name")]
+        [DeserializeAs(Name = "name")]
         public string Name { get; set; }
 
-        [DataMember(Name = "path")]
+        [DeserializeAs(Name = "path")]
         public string Path { get; set; }
 
-        [DataMember(Name = "owner_id")]
+        [DeserializeAs(Name = "owner_id")]
         public int OwnerId { get; set; }
 
-        [DataMember(Name = "created_at")]
+        [DeserializeAs(Name = "created_at")]
         public DateTime CreatedAt { get; set; }
 
-        [DataMember(Name = "updated_at")]
+        [DeserializeAs(Name = "updated_at")]
         public DateTime UpdatedAt { get; set; }
 
-        [DataMember(Name = "description")]
+        [DeserializeAs(Name = "description")]
         public string Description { get; set; }
 
-        [DataMember(Name = "avatar")]
+        [DeserializeAs(Name = "avatar")]
         public NamespaceAvatar Avatar { get; set; }
 
-        [DataMember(Name = "membership_lock")]
+        [DeserializeAs(Name = "membership_lock")]
         public bool MembershipLock { get; set; }
 
-        [DataMember(Name = "share_with_group_lock")]
+        [DeserializeAs(Name = "share_with_group_lock")]
         public bool ShareWithGroupLock { get; set; }
 
-        [DataMember(Name = "visibility_level")]
+        [DeserializeAs(Name = "visibility_level")]
         public VisibilityLevel VisibilityLevel { get; set; }
 
-        [DataMember(Name = "last_ldap_sync_at")]
+        [DeserializeAs(Name = "last_ldap_sync_at")]
         public DateTime LastLdapSyncAt { get; set; }
     }
 }

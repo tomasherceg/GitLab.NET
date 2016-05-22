@@ -1,108 +1,107 @@
-﻿using System;
-using System.Runtime.Serialization;
+﻿using RestSharp.Deserializers;
+using System;
 
 namespace GitLabAPI.NET.Models
 {
-    [DataContract]
     public class Project
     {
-        [DataMember(Name = "id")]
+        [DeserializeAs(Name = "id")]
         public int Id { get; set; }
 
-        [DataMember(Name = "description")]
+        [DeserializeAs(Name = "description")]
         public string Description { get; set; }
 
-        [DataMember(Name = "default_branch")]
+        [DeserializeAs(Name = "default_branch")]
         public string DefaultBranch { get; set; }
 
-        [DataMember(Name = "tag_list")]
+        [DeserializeAs(Name = "tag_list")]
         public string[] Tags { get; set; }
 
-        [DataMember(Name = "public")]
+        [DeserializeAs(Name = "public")]
         public bool Public { get; set; }
 
-        [DataMember(Name = "archived")]
+        [DeserializeAs(Name = "archived")]
         public bool Archived { get; set; }
 
-        [DataMember(Name = "visibility_level")]
+        [DeserializeAs(Name = "visibility_level")]
         public VisibilityLevel VisibilityLevel { get; set; }
 
-        [DataMember(Name = "ssh_url_to_repo")]
+        [DeserializeAs(Name = "ssh_url_to_repo")]
         public string SshUrlToRepo { get; set; }
 
-        [DataMember(Name = "http_url_to_repo")]
+        [DeserializeAs(Name = "http_url_to_repo")]
         public string HttpUrlToRepo { get; set; }
 
-        [DataMember(Name = "web_url")]
+        [DeserializeAs(Name = "web_url")]
         public string WebUrl { get; set; }
 
-        [DataMember(Name = "owner")]
+        [DeserializeAs(Name = "owner")]
         public ProjectOwner Owner { get; set; }
 
-        [DataMember(Name = "name")]
+        [DeserializeAs(Name = "name")]
         public string Name { get; set; }
 
-        [DataMember(Name = "name_with_namespace")]
+        [DeserializeAs(Name = "name_with_namespace")]
         public string NameWithNamespace { get; set; }
 
-        [DataMember(Name = "path")]
+        [DeserializeAs(Name = "path")]
         public string Path { get; set; }
 
-        [DataMember(Name = "path_with_namespace")]
+        [DeserializeAs(Name = "path_with_namespace")]
         public string PathWithNamespace { get; set; }
 
-        [DataMember(Name = "issues_enabled")]
+        [DeserializeAs(Name = "issues_enabled")]
         public bool IssuesEnabled { get; set; }
 
-        [DataMember(Name = "merge_requests_enabled")]
+        [DeserializeAs(Name = "merge_requests_enabled")]
         public bool MergeRequestsEnabled { get; set; }
 
-        [DataMember(Name = "wiki_enabled")]
+        [DeserializeAs(Name = "wiki_enabled")]
         public bool WikiEnabled { get; set; }
 
-        [DataMember(Name = "builds_enabled")]
+        [DeserializeAs(Name = "builds_enabled")]
         public bool BuildsEnabled { get; set; }
 
-        [DataMember(Name = "snippets_enabled")]
+        [DeserializeAs(Name = "snippets_enabled")]
         public bool SnippetsEnabled { get; set; }
 
-        [DataMember(Name = "container_registry_enabled")]
+        [DeserializeAs(Name = "container_registry_enabled")]
         public bool ContainerRegistryEnabled { get; set; }
 
-        [DataMember(Name = "created_at")]
+        [DeserializeAs(Name = "created_at")]
         public DateTime CreatedAt { get; set; }
 
-        [DataMember(Name = "last_activity_at")]
+        [DeserializeAs(Name = "last_activity_at")]
         public DateTime LastActivityAt { get; set; }
 
-        [DataMember(Name = "shared_runners_enabled")]
+        [DeserializeAs(Name = "shared_runners_enabled")]
         public bool SharedRunnersEnabled { get; set; }
 
-        [DataMember(Name = "creator_id")]
+        [DeserializeAs(Name = "creator_id")]
         public int CreatorId { get; set; }
 
-        [DataMember(Name = "namespace")]
+        [DeserializeAs(Name = "namespace")]
         public ProjectNamespace Namespace { get; set; }
 
-        [DataMember(Name = "avatar_url")]
+        [DeserializeAs(Name = "avatar_url")]
         public string AvatarUrl { get; set; }
 
-        [DataMember(Name = "star_count")]
+        [DeserializeAs(Name = "star_count")]
         public int StarCount { get; set; }
 
-        [DataMember(Name = "forks_count")]
+        [DeserializeAs(Name = "forks_count")]
         public int ForksCount { get; set; }
 
-        [DataMember(Name = "open_issues_count")]
+        [DeserializeAs(Name = "open_issues_count")]
         public int OpenIssuesCount { get; set; }
 
-        [DataMember(Name = "public_builds")]
+        [DeserializeAs(Name = "public_builds")]
         public bool PublicBuilds { get; set; }
 
-        [DataMember(Name = "permissions")]
+        [DeserializeAs(Name = "permissions")]
         public ProjectPermissions Permissions { get; set; }
 
-        [DataMember(Name = "runners_token")]
+        [DeserializeAs(Name = "runners_token")]
         public string RunnersToken { get; set; }
     }
 }

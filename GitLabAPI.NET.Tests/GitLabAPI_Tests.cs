@@ -10,7 +10,17 @@ namespace GitLabAPI.NET.Tests
         [InlineData("")]
         public void Constructor_PrivateTokenNullOrEmpty_ThrowsArgumentNullException(string privateToken)
         {
-            Assert.Throws<ArgumentNullException>(() => new GitLabAPI(privateToken));
+            var baseUri = new Uri("https://host.com");
+
+            Assert.Throws<ArgumentNullException>(() => new GitLabAPI(privateToken, baseUri));
+        }
+
+        [Fact]
+        public void Constructor_BaseUriNull_ThrowsArgumentNullException()
+        {
+            var privateToken = "privateToken";
+
+            Assert.Throws<ArgumentNullException>(() => new GitLabAPI(privateToken, null));
         }
     }
 }

@@ -1,14 +1,13 @@
-﻿using System.Runtime.Serialization;
+﻿using RestSharp.Deserializers;
 
 namespace GitLabAPI.NET.Models
 {
-    [DataContract]
     public class ProjectPermissions
     {
-        [DataMember(Name = "project_access")]
+        [DeserializeAs(Name = "project_access")]
         public Permission ProjectAccess { get; set; }
 
-        [DataMember(Name = "group_access")]
+        [DeserializeAs(Name = "group_access")]
         public Permission GroupAccess { get; set; }
     }
 }

@@ -1,5 +1,6 @@
 ﻿using GitLabAPI.NET.Factories;
 using RestSharp;
+using RestSharp.Authenticators;
 using System;
 using System.Threading.Tasks;
 
@@ -9,47 +10,22 @@ namespace GitLabAPI.NET
     {
         public IRestClientFactory RestClientFactory { get; set; } = new RestClientFactory();
 
-        private Uri baseUri = new Uri("https://gitlab.com" + apiPath);
         private const string apiPath = "/api/v3";
-        private string privateToken;
+        
+        private IRequestExecutor requestExecutor;
 
-        public GitLabAPI(string privateToken)
+        public GitLabAPI(string privateToken, Uri hostUri)
         {
             if (string.IsNullOrEmpty(privateToken))
                 throw new ArgumentNullException(nameof(privateToken));
 
-            this.privateToken = privateToken;
-        }
+            if (hostUri == null)
+                throw new ArgumentNullException(nameof(hostUri));
 
-        public GitLabAPI(string privateToken, Uri hostUri) : this(privateToken)
-        {
-            baseUri = new Uri(hostUri, apiPath);
-        }
-
-        private T Execute<T>(RestRequest request) where T : new()
-        {
-            var client = RestClientFactory.Create();
-            client.BaseUrl = baseUri;
-
-            // Add the private token to every request
-            request.AddParameter("PRIVATE-TOKEN", privateToken, ParameterType.HttpHeader);
-
-            var response = client.Execute<T>(request);
-
-            return response.Data;
-        }
-
-        private async Task<T> ExecuteAsync<T>(RestRequest request) where T : new()
-        {
-            var client = RestClientFactory.Create();
-            client.BaseUrl = baseUri;
-
-            // Add the private token to every request
-            request.AddParameter("PRIVATE-TOKEN", privateToken, ParameterType.HttpHeader);
-
-            var response = await client.ExecuteTaskAsync<T>(request);
-
-            return response.Data;
+            var baseUri = new Uri(hostUri, apiPath);
+            var authenticator = new PrivateTokenAuthenticator(privateToken);
+            
+            requestExecutor = new RequestExecutor(baseUri, authenticator);
         }
     }
 }

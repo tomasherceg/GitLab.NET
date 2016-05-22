@@ -1,26 +1,25 @@
-﻿using System.Runtime.Serialization;
+﻿using RestSharp.Deserializers;
 
 namespace GitLabAPI.NET.Models
 {
-    [DataContract]
     public class ProjectOwner
     {
-        [DataMember(Name = "name")]
+        [DeserializeAs(Name = "name")]
         public string Name { get; set; }
 
-        [DataMember(Name = "username")]
+        [DeserializeAs(Name = "username")]
         public string Username { get; set; }
 
-        [DataMember(Name = "id")]
+        [DeserializeAs(Name = "id")]
         public int Id { get; set; }
 
-        [DataMember(Name = "state")]
+        [DeserializeAs(Name = "state")]
         public string State { get; set; }
 
-        [DataMember(Name = "avatar_url")]
+        [DeserializeAs(Name = "avatar_url")]
         public string AvatarUrl { get; set; }
 
-        [DataMember(Name = "web_url")]
+        [DeserializeAs(Name = "web_url")]
         public string WebUrl { get; set; }
     }
 }

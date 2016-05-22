@@ -1,11 +1,10 @@
-﻿using System.Runtime.Serialization;
+﻿using RestSharp.Deserializers;
 
 namespace GitLabAPI.NET.Models
 {
-    [DataContract]
     public class NamespaceAvatar
     {
-        [DataMember(Name = "url")]
+        [DeserializeAs(Name = "url")]
         public string Url { get; set; }
     }
 }

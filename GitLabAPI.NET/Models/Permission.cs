@@ -1,15 +1,14 @@
-﻿using System;
-using System.Runtime.Serialization;
+﻿using RestSharp.Deserializers;
+using System;
 
 namespace GitLabAPI.NET.Models
 {
-    [DataContract]
     public class Permission
     {
-        [DataMember(Name = "access_level")]
+        [DeserializeAs(Name = "access_level")]
         public AccessLevel AccessLevel { get; set; }
 
-        [DataMember(Name = "notification_level")]
+        [DeserializeAs(Name = "notification_level")]
         public NotificationLevel NotificationLevel { get; set; }
     }
 }
