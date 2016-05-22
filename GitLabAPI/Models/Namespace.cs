@@ -4,7 +4,7 @@ using System.Runtime.Serialization;
 namespace GitLabAPI.Models
 {
     [DataContract]
-    public class _Namespace
+    public class Namespace
     {
         [DataMember(Name = "id")]
         public int Id { get; set; }
