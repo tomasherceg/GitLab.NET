@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 
 namespace GitLabAPI.NET
 {
-    public class GitLab
+    public class GitLabAPI
     {
         public IRestClientFactory RestClientFactory { get; set; } = new RestClientFactory();
 
@@ -13,7 +13,7 @@ namespace GitLabAPI.NET
         private const string apiPath = "/api/v3";
         private string privateToken;
 
-        public GitLab(string privateToken)
+        public GitLabAPI(string privateToken)
         {
             if (string.IsNullOrEmpty(privateToken))
                 throw new ArgumentNullException(nameof(privateToken));
@@ -21,7 +21,7 @@ namespace GitLabAPI.NET
             this.privateToken = privateToken;
         }
 
-        public GitLab(string privateToken, Uri hostUri) : this(privateToken)
+        public GitLabAPI(string privateToken, Uri hostUri) : this(privateToken)
         {
             baseUri = new Uri(hostUri, apiPath);
         }
