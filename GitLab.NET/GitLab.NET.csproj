@@ -57,7 +57,7 @@
     <Compile Include="Exceptions\UnprocessableException.cs" />
     <Compile Include="Factories\IRestClientFactory.cs" />
     <Compile Include="Factories\RestClientFactory.cs" />
-    <Compile Include="GitLabAPI.cs" />
+    <Compile Include="GitLabBase.cs" />
     <Compile Include="Helpers\RestExecutor.cs" />
     <Compile Include="Models\Error.cs" />
     <Compile Include="PrivateTokenAuthenticator.cs" />

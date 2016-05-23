@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 
 namespace GitLab.NET
 {
-    public class GitLabUsers : GitLabAPI
+    public class GitLabUsers : GitLabBase
     {
         public GitLabUsers(string privateToken, Uri hostUri) : base(privateToken, hostUri) { }
 

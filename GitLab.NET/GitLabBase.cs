@@ -10,7 +10,7 @@ using System.Threading.Tasks;
 
 namespace GitLab.NET
 {
-    public abstract class GitLabAPI
+    public abstract class GitLabBase
     {
         public IRestClientFactory RestClientFactory { get; set; } = new RestClientFactory();
 
@@ -18,7 +18,7 @@ namespace GitLab.NET
         
         private RestExecutor restExecutor;
 
-        public GitLabAPI(string privateToken, Uri hostUri)
+        public GitLabBase(string privateToken, Uri hostUri)
         {
             if (string.IsNullOrEmpty(privateToken))
                 throw new ArgumentNullException(nameof(privateToken));

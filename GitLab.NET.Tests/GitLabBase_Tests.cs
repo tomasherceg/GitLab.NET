@@ -3,7 +3,7 @@ using Xunit;
 
 namespace GitLab.NET.Tests
 {
-    public class GitLabAPI_Tests
+    public class GitLabBase_Tests
     {
         [Theory]
         [InlineData(null)]
@@ -23,7 +23,7 @@ namespace GitLab.NET.Tests
             Assert.Throws<ArgumentNullException>(() => new GitLabAPISubClass(privateToken, null));
         }
 
-        private class GitLabAPISubClass : GitLabAPI
+        private class GitLabAPISubClass : GitLabBase
         {
             public GitLabAPISubClass(string privateToken, Uri hostUri) : base(privateToken, hostUri) { }
         }
