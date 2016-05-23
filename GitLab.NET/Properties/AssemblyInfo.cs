@@ -6,7 +6,7 @@ using System.Runtime.InteropServices;
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
 [assembly: AssemblyTitle("GitLab.NET")]
-[assembly: AssemblyDescription("This is a wrapper around GitLab's API that works with your .NET projects. This project is currently in Alpha phase, and as such it may not work correctly.")]
+[assembly: AssemblyDescription("GitLab.NET is a wrapper around GitLab's API that works with your .NET projects. This library is currently in Alpha phase, and as such it may not work correctly (or at all).")]
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("Anthony Stivers, Ryan Marshall")]
 [assembly: AssemblyProduct("GitLab.NET")]
