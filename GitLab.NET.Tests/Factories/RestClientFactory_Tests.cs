@@ -11,7 +11,7 @@ namespace GitLab.NET.Tests.Factories
         {
             var sut = new RestClientFactory();
 
-            Assert.Throws<ArgumentNullException>(() => sut.Create(null));
+            Assert.Throws<ArgumentNullException>("baseUri", () => sut.Create(null));
         }
     }
 }

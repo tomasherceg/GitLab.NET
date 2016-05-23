@@ -1,18 +1,25 @@
-﻿using RestSharp;
+﻿using System;
+using RestSharp;
 
 namespace GitLab.NET.RequestHelpers
 {
-    public class SessionRequest : IRequestHelper
+    public class CreateSessionRequest : IRequestHelper
     {
         private const string resource = "session";
 
         public string User { get; set; }
         public string Password { get; set; }
 
-        public SessionRequest() { }
+        public CreateSessionRequest() { }
 
-        public SessionRequest(string user, string password)
+        public CreateSessionRequest(string user, string password)
         {
+            if (string.IsNullOrWhiteSpace(user))
+                throw new ArgumentNullException(nameof(user));
+
+            if (string.IsNullOrWhiteSpace(password))
+                throw new ArgumentNullException(nameof(password));
+
             User = user;
             Password = password;
         }

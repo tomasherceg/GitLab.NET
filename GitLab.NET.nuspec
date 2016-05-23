@@ -2,7 +2,7 @@
 <package >
   <metadata>
     <id>GitLab.NET</id>
-    <version>0.0.5.0</version>
+    <version>0.0.1.0</version>
     <title>GitLab.NET</title>
     <authors>Anthony Stivers, Ryan Marshall</authors>
     <owners>Anthony Stivers, Ryan Marshall</owners>
@@ -11,10 +11,10 @@
     <iconUrl>https://nuget.org/Content/Images/packageDefaultIcon-50x50.png</iconUrl>
     <requireLicenseAcceptance>false</requireLicenseAcceptance>
     <summary>
-      This is a simple wrapper around GitLab's API that works with your .NET projects.
+      GitLab.NET is a simple wrapper around GitLab's API that works with your .NET projects.
     </summary>
     <description>
-      This is a simple wrapper around GitLab's API that works with your .NET projects. This project is currently in Alpha phase, and as such it may not work correctly.
+      GitLab.NET is a simple wrapper around GitLab's API that works with your .NET projects. This library is currently in Alpha phase, and as such it may not work correctly (or at all).
     </description>
     <releaseNotes>
       This project is currently in Alpha phase, and as such it may not work correctly.

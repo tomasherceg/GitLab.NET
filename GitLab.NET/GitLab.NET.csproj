@@ -58,7 +58,8 @@
     <Compile Include="Factories\IRestClientFactory.cs" />
     <Compile Include="Factories\RestClientFactory.cs" />
     <Compile Include="GitLabAPI.cs" />
-    <Compile Include="Helpers\RestExecutor.cs" />
+    <Compile Include="GitLabBase.cs" />
+    <Compile Include="RestHelpers\RestExecutor.cs" />
     <Compile Include="Models\Error.cs" />
     <Compile Include="PrivateTokenAuthenticator.cs" />
     <Compile Include="Models\AccessLevel.cs" />
@@ -74,9 +75,12 @@
     <Compile Include="Models\VisibilityLevel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="RequestHelpers\IRequestHelper.cs" />
-    <Compile Include="RequestHelpers\SessionRequest.cs" />
-    <Compile Include="RequestHelpers\UsersRequest.cs" />
+    <Compile Include="RequestHelpers\CreateSessionRequest.cs" />
+    <Compile Include="RequestHelpers\GetUserRequest.cs" />
+    <Compile Include="RequestHelpers\GetUsersRequest.cs" />
+    <Compile Include="RestSharpExtensions\RestRequestExtensions.cs" />
     <Compile Include="UserAuthenticator.cs" />
+    <Compile Include="GitLabUsers.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />

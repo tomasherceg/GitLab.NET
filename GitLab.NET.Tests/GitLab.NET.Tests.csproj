@@ -65,10 +65,16 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Factories\RestClientFactory_Tests.cs" />
-    <Compile Include="GitLabAuthenticator_Tests.cs" />
     <Compile Include="GitLabAPI_Tests.cs" />
+    <Compile Include="GitLabUsers_Tests.cs" />
+    <Compile Include="PrivateTokenAuthenticator_Tests.cs" />
+    <Compile Include="GitLabBase_Tests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Helpers\RestExecutor_Tests.cs" />
+    <Compile Include="RequestHelpers\CreateSessionRequest_Tests.cs" />
+    <Compile Include="RequestHelpers\GetUserRequest_Tests.cs" />
+    <Compile Include="RestSharpExtensions\RestRequestExtensions.cs" />
+    <Compile Include="UserAuthenticator_Tests.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
@@ -82,9 +88,7 @@
   <ItemGroup>
     <Service Include="{82A7F48D-3B50-4B1E-B82E-3ADA8210C358}" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="RequestHelpers\" />
-  </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
     <PropertyGroup>

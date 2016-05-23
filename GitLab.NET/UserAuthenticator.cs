@@ -1,7 +1,8 @@
 ﻿using GitLab.NET.Factories;
-using GitLab.NET.Helpers;
+using GitLab.NET.RestHelpers;
 using GitLab.NET.Models;
 using GitLab.NET.RequestHelpers;
+using RestSharp;
 using System;
 using System.Threading.Tasks;
 
@@ -24,6 +25,9 @@ namespace GitLab.NET
         /// <param name="hostUri">The url for the GitLab server without /api/v3.</param>
         public UserAuthenticator(Uri hostUri)
         {
+            if (hostUri == null)
+                throw new ArgumentNullException(nameof(hostUri));
+
             var baseUri = new Uri(hostUri, apiPath);
 
             restExecutor = new RestExecutor(RestClientFactory, baseUri);
@@ -37,19 +41,11 @@ namespace GitLab.NET
         /// <returns>The user's private token. Null if the username/password was incorrect.</returns>
         public string GetPrivateToken(string user, string password)
         {
-            var request = new SessionRequest(user, password);
+            var request = new CreateSessionRequest(user, password);
 
             var response = restExecutor.Execute<User>(request);
 
-            switch (response.StatusCode)
-            {
-                case System.Net.HttpStatusCode.Created:
-                    return response.Data.PrivateToken;
-                case System.Net.HttpStatusCode.Unauthorized:
-                    return null;
-                default:
-                    throw new NotSupportedException("An unhandled status code was encountered: '" + response.StatusCode.ToString() + "'.");
-            }
+            return response.Data.PrivateToken;
         }
 
         /// <summary>
@@ -60,19 +56,11 @@ namespace GitLab.NET
         /// <returns>The user's private token. Null if the username/password was incorrect.</returns>
         public async Task<string> GetPrivateTokenAsync(string user, string password)
         {
-            var request = new SessionRequest(user, password);
+            var request = new CreateSessionRequest(user, password);
 
             var response = await restExecutor.ExecuteAsync<User>(request);
 
-            switch (response.StatusCode)
-            {
-                case System.Net.HttpStatusCode.Created:
-                    return response.Data.PrivateToken;
-                case System.Net.HttpStatusCode.Unauthorized:
-                    return null;
-                default:
-                    throw new NotSupportedException("An unhandled status code was encountered: '" + response.StatusCode.ToString() + "'.");
-            }
+            return response.Data.PrivateToken;
         }
     }
 }
