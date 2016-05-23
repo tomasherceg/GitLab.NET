@@ -3,7 +3,7 @@
   <metadata>
     <id>GitLab.NET</id>
     <version>0.0.5.0</version>
-    <title>GitLabAPI.NET</title>
+    <title>GitLab.NET</title>
     <authors>Anthony Stivers, Ryan Marshall</authors>
     <owners>Anthony Stivers, Ryan Marshall</owners>
     <licenseUrl>https://opensource.org/licenses/MIT</licenseUrl>
