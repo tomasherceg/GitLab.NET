@@ -17,7 +17,7 @@ namespace GitLabAPI.NET.RequestHelpers
 
         public RestRequest GetRequest()
         {
-            var request = new RestRequest();
+            var request = new RestRequest(Method.POST);
             request.AddParameter("login", User);
             request.AddParameter("password", Password);
             return request;
