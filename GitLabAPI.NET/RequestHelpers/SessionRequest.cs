@@ -4,6 +4,15 @@ namespace GitLabAPI.NET.RequestHelpers
 {
     public class SessionRequest : IRequestHelper
     {
+        private const string _url = "/session";
+        public string Url
+        {
+            get
+            {
+                return _url;
+            }
+        }
+
         public string User { get; set; }
         public string Password { get; set; }
 
