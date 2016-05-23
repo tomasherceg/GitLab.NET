@@ -2,7 +2,7 @@
 
 namespace GitLab.NET.RequestHelpers
 {
-    public class UsersRequest : IRequestHelper
+    public class GetUsersRequest : IRequestHelper
     {
         private const string resource = "users";
 

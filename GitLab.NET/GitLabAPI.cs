@@ -10,7 +10,7 @@ using System.Threading.Tasks;
 
 namespace GitLab.NET
 {
-    public class GitLabAPI
+    public abstract class GitLabAPI
     {
         public IRestClientFactory RestClientFactory { get; set; } = new RestClientFactory();
 
@@ -30,24 +30,6 @@ namespace GitLab.NET
             var authenticator = new PrivateTokenAuthenticator(privateToken);
             
             restExecutor = new RestExecutor(RestClientFactory, baseUri, authenticator);
-        }
-
-        public IRestResponse<List<User>> Test()
-        {
-            var request = new UsersRequest();
-
-            var response = restExecutor.Execute<List<User>>(request);
-
-            return response;
-        }
-
-        public List<User> GetUsers()
-        {
-            var request = new UsersRequest();
-
-            var response = restExecutor.Execute<List<User>>(request);
-
-            return response.Data;
         }
     }
 }

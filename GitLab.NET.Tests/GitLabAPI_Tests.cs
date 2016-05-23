@@ -12,7 +12,7 @@ namespace GitLab.NET.Tests
         {
             var baseUri = new Uri("https://host.com");
 
-            Assert.Throws<ArgumentNullException>(() => new GitLabAPI(privateToken, baseUri));
+            Assert.Throws<ArgumentNullException>(() => new GitLabAPISubClass(privateToken, baseUri));
         }
 
         [Fact]
@@ -20,7 +20,12 @@ namespace GitLab.NET.Tests
         {
             var privateToken = "privateToken";
 
-            Assert.Throws<ArgumentNullException>(() => new GitLabAPI(privateToken, null));
+            Assert.Throws<ArgumentNullException>(() => new GitLabAPISubClass(privateToken, null));
+        }
+
+        private class GitLabAPISubClass : GitLabAPI
+        {
+            public GitLabAPISubClass(string privateToken, Uri hostUri) : base(privateToken, hostUri) { }
         }
     }
 }

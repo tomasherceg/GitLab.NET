@@ -2,16 +2,16 @@
 
 namespace GitLab.NET.RequestHelpers
 {
-    public class SessionRequest : IRequestHelper
+    public class GetSessionRequest : IRequestHelper
     {
         private const string resource = "session";
 
         public string User { get; set; }
         public string Password { get; set; }
 
-        public SessionRequest() { }
+        public GetSessionRequest() { }
 
-        public SessionRequest(string user, string password)
+        public GetSessionRequest(string user, string password)
         {
             User = user;
             Password = password;
