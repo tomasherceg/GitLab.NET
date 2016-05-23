@@ -12,15 +12,9 @@ namespace GitLabAPI.NET
     public class UserAuthenticator
     {
         public IRestClientFactory RestClientFactory { get; set; } = new RestClientFactory();
-        public IRestRequestFactory RestRequestFactory { get; set; } = new RestRequestFactory();
 
-        private Uri baseUri = new Uri("https://gitlab.com" + apiPath);
+        private Uri baseUri;
         private const string apiPath = "/api/v3";
-
-        /// <summary>
-        /// Creates a new instance of UserAuthenticator with the default host url of 'https://gitlab.com'.
-        /// </summary>
-        public UserAuthenticator() { }
 
         /// <summary>
         /// Creates a new instance of UserAuthenticator.
@@ -83,7 +77,7 @@ namespace GitLabAPI.NET
 
         private IRestRequest createSessionRequest(string user, string password)
         {
-            var request = RestRequestFactory.Create(Method.POST);
+            var request = new RestRequest(Method.POST);
             request.AddParameter("login", user);
             request.AddParameter("password", password);
 
