@@ -4,15 +4,15 @@ using RestSharp.Authenticators;
 using System;
 using System.Threading.Tasks;
 
-namespace GitLabAPI.NET
+namespace GitLabAPI.NET.Helpers
 {
-    public class RequestExecutor
+    public class RestExecutor
     {
         private Uri baseUri;
         private IAuthenticator authenticator;
         private IRestClientFactory restClientFactory = new RestClientFactory();
 
-        public RequestExecutor(Uri baseUri, IAuthenticator authenticator = null)
+        public RestExecutor(Uri baseUri, IAuthenticator authenticator = null)
         {
             if (baseUri == null)
                 throw new ArgumentNullException(nameof(baseUri));
@@ -21,7 +21,7 @@ namespace GitLabAPI.NET
             this.authenticator = authenticator;
         }
 
-        public RequestExecutor(IRestClientFactory restClientFactory, Uri baseUri, IAuthenticator authenticator = null) : this(baseUri, authenticator)
+        public RestExecutor(IRestClientFactory restClientFactory, Uri baseUri, IAuthenticator authenticator = null) : this(baseUri, authenticator)
         {
             this.restClientFactory = restClientFactory;
         }
@@ -32,7 +32,7 @@ namespace GitLabAPI.NET
         /// <typeparam name="T">The type to deserialize the response to.</typeparam>
         /// <param name="request">The IRestRequest to execute.</param>
         /// <returns>An object of type T with the deserialized data.</returns>
-        public T Execute<T>(RestRequest request) where T : new()
+        public IRestResponse<T> Execute<T>(RestRequest request) where T : new()
         {
             var client = restClientFactory.Create(baseUri, authenticator);
 
@@ -44,7 +44,7 @@ namespace GitLabAPI.NET
                 throw new ApplicationException(message, response.ErrorException);
             }
 
-            return response.Data;
+            return response;
         }
 
         /// <summary>
@@ -53,7 +53,7 @@ namespace GitLabAPI.NET
         /// <typeparam name="T">The type to deserialize the response to.</typeparam>
         /// <param name="request">The IRestRequest to execute.</param>
         /// <returns>An object of type T with the deserialized data.</returns>
-        public async Task<T> ExecuteAsync<T>(RestRequest request) where T : new()
+        public async Task<IRestResponse<T>> ExecuteAsync<T>(RestRequest request) where T : new()
         {
             var client = restClientFactory.Create(baseUri, authenticator);
 
@@ -65,7 +65,7 @@ namespace GitLabAPI.NET
                 throw new ApplicationException(message, response.ErrorException);
             }
 
-            return response.Data;
+            return response;
         }
     }
 }

@@ -75,7 +75,7 @@ namespace GitLabAPI.NET
             }
         }
 
-        private IRestRequest createSessionRequest(string user, string password)
+        private RestRequest createSessionRequest(string user, string password)
         {
             var request = new RestRequest(Method.POST);
             request.AddParameter("login", user);
