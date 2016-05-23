@@ -4,14 +4,7 @@ namespace GitLabAPI.NET.RequestHelpers
 {
     public class SessionRequest : IRequestHelper
     {
-        private const string _url = "/session";
-        public string Url
-        {
-            get
-            {
-                return _url;
-            }
-        }
+        private const string resource = "session";
 
         public string User { get; set; }
         public string Password { get; set; }
@@ -26,7 +19,7 @@ namespace GitLabAPI.NET.RequestHelpers
 
         public RestRequest GetRequest()
         {
-            var request = new RestRequest(Method.POST);
+            var request = new RestRequest(resource, Method.POST);
             request.AddParameter("login", User);
             request.AddParameter("password", Password);
             return request;
