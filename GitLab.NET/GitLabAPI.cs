@@ -1,11 +1,10 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace GitLab.NET
 {
+    /// <summary>
+    /// GitLab.NET base class. This class is a base implementation of the GitLab.NET library.
+    /// </summary>
     public class GitLabAPI
     {
         public GitLabUsers Users { get; private set; }

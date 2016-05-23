@@ -65,6 +65,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Factories\RestClientFactory_Tests.cs" />
+    <Compile Include="GitLabAPI_Tests.cs" />
     <Compile Include="GitLabAuthenticator_Tests.cs" />
     <Compile Include="GitLabBase_Tests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
