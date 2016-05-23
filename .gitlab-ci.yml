@@ -21,7 +21,7 @@ publish:
         - mono packages/xunit.runner.console.2.1.0/tools/xunit.console.exe GitLab.NET.Tests/bin/Release/GitLab.NET.Tests.dll
         - nuget pack GitLab.NET.nuspec
         - nuget setApiKey $NUGET_API_KEY -verbosity quiet
-        - nuget push GitLab.NET.*.nupk
+        - nuget push GitLab.NET.*.nupkg
 
 test:
     stage: test
