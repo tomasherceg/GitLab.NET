@@ -3,67 +3,31 @@ image: mono
 stages:
     - build
     - test
-    - publish
 
 before_script:
     - nuget restore -NonInteractive
 
-.build_template: &build_template
+publish:
     stage: build
+    only:
+        - master
     artifacts:
         paths:
-            - GitLabAPI/bin/$CONFIGURATION/*
-            - GitLabAPI.Tests/bin/$CONFIGURATION/*
+            - GitLabAPI.NET/bin/Release/GitLabAPI.dll
+            - GitLabAPI.NET/bin/Release/GitLabAPI.mdb
+            - GitLabAPI.NET.*.nupkg
     script:
-        - xbuild "GitLabAPI.sln" /p:Configuration=$CONFIGURATION
-
-.test_template: &test_template
-    stage: test
-    script:
-        - mono packages/xunit.runner.console.2.1.0/tools/xunit.console.exe GitLabAPI.Tests/bin/$CONFIGURATION/GitLabAPI.Tests.dll
-
-build_master:
-    variables:
-        CONFIGURATION: "Release"
-    only:
-        - master
-    <<: *build_template
-
-test_master:
-    variables:
-        CONFIGURATION: "Release"
-    only:
-        - master
-    <<: *test_template
-
-publish_master:
-    stage: publish
-    only:
-        - master
-    variables:
-        CONFIGURATION: "Release"
-    script:
-        - cd GitLabAPI
-        - nuget pack GitLabAPI.nuspec
+        - xbuild "GitLabAPI.NET.sln" /p:Configuration=Release
+        - mono packages/xunit.runner.console.2.1.0/tools/xunit.console.exe GitLabAPI.NET.Tests/bin/Release/GitLabAPI.NET.Tests.dll
+        - nuget pack GitLabAPI.NET.nuspec
         - nuget setApiKey $NUGET_API_KEY -verbosity quiet
-        - nuget push GitLabAPI.*.nupkg
+        - nuget push GitLabAPI.NET.*.nupk
 
-build_develop:
-    variables:
-        CONFIGURATION: "Debug"
-    only:
-        - develop
-        - /^release\/.*$/
-        - /^feature\/.*$/
-        - /^hotfix\/.*$/
-    <<: *build_template
-
-test_develop:
-    variables:
-        CONFIGURATION: "Debug"
-    only:
-        - develop
-        - /^release\/.*$/
-        - /^feature\/.*$/
-        - /^hotfix\/.*$/
-    <<: *test_template
+test:
+    stage: test
+    except:
+        - master
+    script:
+        - xbuild "GitLabAPI.NET.sln" /p:Configuration=Debug
+        - mono packages/xunit.runner.console.2.1.0/tools/xunit.console.exe GitLabAPI.NET.Tests/bin/Debug/GitLabAPI.NET.Tests.dll
+        - nuget pack GitLabAPI.NET.nuspec

@@ -4,9 +4,12 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace GitLabAPI
+using Xunit;
+
+namespace GitLabAPI.NET.Tests
 {
-    class GitLabAPI
+    public class GitLabAuthenticator_Tests
     {
+        
     }
 }
