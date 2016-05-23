@@ -10,7 +10,7 @@ before_script:
 publish:
     stage: build
     only:
-        - master
+        - production
     artifacts:
         paths:
             - GitLabAPI.NET/bin/Release/GitLabAPI.dll
@@ -26,7 +26,7 @@ publish:
 test:
     stage: test
     except:
-        - master
+        - production
     script:
         - xbuild "GitLabAPI.NET.sln" /p:Configuration=Debug
         - mono packages/xunit.runner.console.2.1.0/tools/xunit.console.exe GitLabAPI.NET.Tests/bin/Debug/GitLabAPI.NET.Tests.dll
