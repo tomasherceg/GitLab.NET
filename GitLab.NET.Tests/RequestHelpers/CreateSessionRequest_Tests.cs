@@ -1,4 +1,5 @@
 ﻿using GitLab.NET.RequestHelpers;
+using GitLab.NET.Tests.TestHelpers;
 using System;
 using Xunit;
 
@@ -7,6 +8,7 @@ namespace GitLab.NET.Tests.RequestHelpers
     public class CreateSessionRequest_Tests
     {
         [Theory]
+        
         [InlineData(null)]
         [InlineData("")]
         [InlineData("   ")]

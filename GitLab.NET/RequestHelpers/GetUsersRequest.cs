@@ -5,11 +5,16 @@ namespace GitLab.NET.RequestHelpers
 {
     public class GetUsersRequest : IRequestHelper
     {
-        private const string resource = "users";
+        public const string resource = "users";
 
-        public string Search { get; set; }
+        public string Search { get; private set; }
 
         public GetUsersRequest() { }
+
+        public GetUsersRequest(string search)
+        {
+            Search = search;
+        }
 
         public RestRequest GetRequest()
         {

@@ -4,7 +4,7 @@ using Xunit;
 
 namespace GitLab.NET.Tests.RestSharpExtensions
 {
-    public class RestRequestExtensions
+    public class RestRequestExtensions_Tests
     {
         [Fact]
         public void AddParameterIfNotNull_WithNameValue_AddsParameterIfNotNull()

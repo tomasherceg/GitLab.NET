@@ -1,22 +1,16 @@
 ﻿using GitLab.NET.Factories;
 using GitLab.NET.RestHelpers;
-using GitLab.NET.Models;
-using GitLab.NET.RequestHelpers;
-using RestSharp;
-using RestSharp.Authenticators;
 using System;
-using System.Collections.Generic;
-using System.Threading.Tasks;
 
 namespace GitLab.NET
 {
     public abstract class GitLabBase
     {
-        public IRestClientFactory RestClientFactory { get; set; } = new RestClientFactory();
-
         private const string apiPath = "/api/v3";
+
+        public IRestClientFactory RestClientFactory { get; set; } = new RestClientFactory();
         
-        private RestExecutor restExecutor;
+        protected RestExecutor restExecutor;
 
         public GitLabBase(string privateToken, Uri hostUri)
         {

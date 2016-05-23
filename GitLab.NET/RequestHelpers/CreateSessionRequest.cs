@@ -5,12 +5,10 @@ namespace GitLab.NET.RequestHelpers
 {
     public class CreateSessionRequest : IRequestHelper
     {
-        private const string resource = "session";
+        public const string resource = "session";
 
-        public string User { get; set; }
-        public string Password { get; set; }
-
-        public CreateSessionRequest() { }
+        public string User { get; private set; }
+        public string Password { get; private set; }
 
         public CreateSessionRequest(string user, string password)
         {
