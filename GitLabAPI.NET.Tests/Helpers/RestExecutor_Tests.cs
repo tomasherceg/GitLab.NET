@@ -1,8 +1,9 @@
 ﻿using GitLabAPI.NET.Factories;
+using GitLabAPI.NET.Helpers;
 using System;
 using Xunit;
 
-namespace GitLabAPI.NET.Helpers.Tests
+namespace GitLabAPI.NET.Tests.Helpers
 {
     public class RestExecutor_Tests
     {
