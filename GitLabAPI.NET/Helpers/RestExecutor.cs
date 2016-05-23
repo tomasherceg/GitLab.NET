@@ -1,4 +1,5 @@
 ﻿using GitLabAPI.NET.Factories;
+using GitLabAPI.NET.RequestHelpers;
 using RestSharp;
 using RestSharp.Authenticators;
 using System;
@@ -31,11 +32,11 @@ namespace GitLabAPI.NET.Helpers
         /// <typeparam name="T">The type to deserialize the response to.</typeparam>
         /// <param name="request">The IRestRequest to execute.</param>
         /// <returns>An object of type T with the deserialized data.</returns>
-        public IRestResponse<T> Execute<T>(RestRequest request) where T : new()
+        public IRestResponse<T> Execute<T>(IRequestHelper request) where T : new()
         {
             var client = restClientFactory.Create(baseUri, authenticator);
 
-            var response = client.Execute<T>(request);
+            var response = client.Execute<T>(request.GetRequest());
 
             if (response.ErrorException != null)
             {
@@ -52,11 +53,11 @@ namespace GitLabAPI.NET.Helpers
         /// <typeparam name="T">The type to deserialize the response to.</typeparam>
         /// <param name="request">The IRestRequest to execute.</param>
         /// <returns>An object of type T with the deserialized data.</returns>
-        public async Task<IRestResponse<T>> ExecuteAsync<T>(RestRequest request) where T : new()
+        public async Task<IRestResponse<T>> ExecuteAsync<T>(IRequestHelper request) where T : new()
         {
             var client = restClientFactory.Create(baseUri, authenticator);
 
-            var response = await client.ExecuteTaskAsync<T>(request);
+            var response = await client.ExecuteTaskAsync<T>(request.GetRequest());
 
             if (response.ErrorException != null)
             {

@@ -1,7 +1,7 @@
 ﻿using GitLabAPI.NET.Factories;
 using GitLabAPI.NET.Helpers;
 using GitLabAPI.NET.Models;
-using RestSharp;
+using GitLabAPI.NET.RequestHelpers;
 using System;
 using System.Threading.Tasks;
 
@@ -37,7 +37,7 @@ namespace GitLabAPI.NET
         /// <returns>The user's private token. Null if the username/password was incorrect.</returns>
         public string GetPrivateToken(string user, string password)
         {
-            var request = createSessionRequest(user, password);
+            var request = new SessionRequest(user, password);
 
             var response = restExecutor.Execute<User>(request);
 
@@ -60,7 +60,7 @@ namespace GitLabAPI.NET
         /// <returns>The user's private token. Null if the username/password was incorrect.</returns>
         public async Task<string> GetPrivateTokenAsync(string user, string password)
         {
-            var request = createSessionRequest(user, password);
+            var request = new SessionRequest(user, password);
 
             var response = await restExecutor.ExecuteAsync<User>(request);
 
@@ -73,15 +73,6 @@ namespace GitLabAPI.NET
                 default:
                     throw new NotSupportedException("An unhandled status code was encountered: '" + response.StatusCode.ToString() + "'.");
             }
-        }
-
-        private RestRequest createSessionRequest(string user, string password)
-        {
-            var request = new RestRequest(Method.POST);
-            request.AddParameter("login", user);
-            request.AddParameter("password", password);
-
-            return request;
         }
     }
 }
