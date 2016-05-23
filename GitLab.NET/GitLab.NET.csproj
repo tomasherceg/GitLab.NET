@@ -76,6 +76,7 @@
     <Compile Include="RequestHelpers\IRequestHelper.cs" />
     <Compile Include="RequestHelpers\SessionRequest.cs" />
     <Compile Include="RequestHelpers\UsersRequest.cs" />
+    <Compile Include="RestSharpExtensions\RestRequestExtensions.cs" />
     <Compile Include="UserAuthenticator.cs" />
   </ItemGroup>
   <ItemGroup>
