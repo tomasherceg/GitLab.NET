@@ -10,19 +10,18 @@ namespace GitLabAPI.NET.Helpers
     {
         private Uri baseUri;
         private IAuthenticator authenticator;
-        private IRestClientFactory restClientFactory = new RestClientFactory();
+        private IRestClientFactory restClientFactory;
 
-        public RestExecutor(Uri baseUri, IAuthenticator authenticator = null)
+        public RestExecutor(IRestClientFactory restClientFactory, Uri baseUri, IAuthenticator authenticator = null)
         {
             if (baseUri == null)
                 throw new ArgumentNullException(nameof(baseUri));
 
+            if (restClientFactory == null)
+                throw new ArgumentNullException(nameof(restClientFactory));
+
             this.baseUri = baseUri;
             this.authenticator = authenticator;
-        }
-
-        public RestExecutor(IRestClientFactory restClientFactory, Uri baseUri, IAuthenticator authenticator = null) : this(baseUri, authenticator)
-        {
             this.restClientFactory = restClientFactory;
         }
 

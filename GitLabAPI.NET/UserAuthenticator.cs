@@ -26,7 +26,7 @@ namespace GitLabAPI.NET
         {
             var baseUri = new Uri(hostUri, apiPath);
 
-            restExecutor = new RestExecutor(baseUri);
+            restExecutor = new RestExecutor(RestClientFactory, baseUri);
         }
 
         /// <summary>

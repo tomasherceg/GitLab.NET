@@ -26,7 +26,7 @@ namespace GitLabAPI.NET
             var baseUri = new Uri(hostUri, apiPath);
             var authenticator = new PrivateTokenAuthenticator(privateToken);
             
-            requestExecutor = new RestExecutor(baseUri, authenticator);
+            requestExecutor = new RestExecutor(RestClientFactory, baseUri, authenticator);
         }
     }
 }
