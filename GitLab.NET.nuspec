@@ -1,0 +1,36 @@
+<?xml version="1.0"?>
+<package >
+  <metadata>
+    <id>GitLab.NET</id>
+    <version>0.0.5.0</version>
+    <title>GitLab.NET</title>
+    <authors>Anthony Stivers, Ryan Marshall</authors>
+    <owners>Anthony Stivers, Ryan Marshall</owners>
+    <licenseUrl>https://opensource.org/licenses/MIT</licenseUrl>
+    <projectUrl>https://gitlab.com/tstivers/GitLabAPI</projectUrl>
+    <iconUrl>https://nuget.org/Content/Images/packageDefaultIcon-50x50.png</iconUrl>
+    <requireLicenseAcceptance>false</requireLicenseAcceptance>
+    <summary>
+      This is a simple wrapper around GitLab's API that works with your .NET projects.
+    </summary>
+    <description>
+      This is a simple wrapper around GitLab's API that works with your .NET projects. This project is currently in Alpha phase, and as such it may not work correctly.
+    </description>
+    <releaseNotes>
+      This project is currently in Alpha phase, and as such it may not work correctly.
+    </releaseNotes>
+    <copyright>Copyright 2016 Anthony Stivers</copyright>
+    <tags></tags>
+    <dependencies>
+      <dependency id="RestSharp" version="105.2.3" />
+    </dependencies>
+  </metadata>
+  <files>
+    <file src="GitLab.NET\bin\*\GitLab.NET.dll" target="lib" />
+    <file src="GitLab.NET\bin\*\GitLab.NET.pdb" target="lib" />
+    <file src="GitLab.NET\bin\*\GitLab.NET.mdb" target="lib" />
+    <file src="GitLab.NET/bin/*/GitLab.NET.dll" target="lib" />
+    <file src="GitLab.NET/bin/*/GitLab.NET.pdb" target="lib" />
+    <file src="GitLab.NET/bin/*/GitLab.NET.mdb" target="lib" />
+  </files>
+</package>
