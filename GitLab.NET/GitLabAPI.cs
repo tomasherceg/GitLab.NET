@@ -11,7 +11,7 @@ namespace GitLab.NET
 
         public GitLabAPI(string privateToken, Uri hostUri)
         {
-            if (string.IsNullOrEmpty(privateToken))
+            if (string.IsNullOrWhiteSpace(privateToken))
                 throw new ArgumentNullException(nameof(privateToken));
 
             if (hostUri == null)

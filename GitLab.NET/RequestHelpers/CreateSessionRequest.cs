@@ -1,4 +1,5 @@
-﻿using RestSharp;
+﻿using System;
+using RestSharp;
 
 namespace GitLab.NET.RequestHelpers
 {
@@ -13,6 +14,12 @@ namespace GitLab.NET.RequestHelpers
 
         public CreateSessionRequest(string user, string password)
         {
+            if (string.IsNullOrWhiteSpace(user))
+                throw new ArgumentNullException(nameof(user));
+
+            if (string.IsNullOrWhiteSpace(password))
+                throw new ArgumentNullException(nameof(password));
+
             User = user;
             Password = password;
         }

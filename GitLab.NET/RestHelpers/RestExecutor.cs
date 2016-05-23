@@ -8,7 +8,7 @@ using System;
 using System.Net;
 using System.Threading.Tasks;
 
-namespace GitLab.NET.Helpers
+namespace GitLab.NET.RestHelpers
 {
     public class RestExecutor
     {

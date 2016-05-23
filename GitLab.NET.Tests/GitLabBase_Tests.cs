@@ -8,11 +8,13 @@ namespace GitLab.NET.Tests
         [Theory]
         [InlineData(null)]
         [InlineData("")]
-        public void Constructor_PrivateTokenNullOrEmpty_ThrowsArgumentNullException(string privateToken)
+        [InlineData("   ")]
+        [InlineData("\t")]
+        public void Constructor_PrivateTokenNullOrWhiteSpace_ThrowsArgumentNullException(string invalidToken)
         {
             var baseUri = new Uri("https://host.com");
 
-            Assert.Throws<ArgumentNullException>(() => new GitLabBaseSubClass(privateToken, baseUri));
+            Assert.Throws<ArgumentNullException>("privateToken", () => new GitLabBaseSubClass(invalidToken, baseUri));
         }
 
         [Fact]
@@ -20,7 +22,7 @@ namespace GitLab.NET.Tests
         {
             var privateToken = "privateToken";
 
-            Assert.Throws<ArgumentNullException>(() => new GitLabBaseSubClass(privateToken, null));
+            Assert.Throws<ArgumentNullException>("hostUri", () => new GitLabBaseSubClass(privateToken, null));
         }
 
         private class GitLabBaseSubClass : GitLabBase

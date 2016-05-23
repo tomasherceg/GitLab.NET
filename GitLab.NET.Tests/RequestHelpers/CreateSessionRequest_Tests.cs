@@ -4,7 +4,7 @@ using Xunit;
 
 namespace GitLab.NET.Tests.RequestHelpers
 {
-    public class GetSessionRequest_Tests
+    public class CreateSessionRequest_Tests
     {
         [Theory]
         [InlineData(null)]
@@ -13,7 +13,7 @@ namespace GitLab.NET.Tests.RequestHelpers
         [InlineData("\t")]
         public void Constructor_UserIsNullOrWhiteSpace_ThrowsArgumentNullException(string invalidUser)
         {
-            Assert.Throws<ArgumentNullException>(() => new CreateSessionRequest(invalidUser, "validPassword"));
+            Assert.Throws<ArgumentNullException>("user", () => new CreateSessionRequest(invalidUser, "validPassword"));
         }
 
         [Theory]
@@ -23,7 +23,7 @@ namespace GitLab.NET.Tests.RequestHelpers
         [InlineData("\t")]
         public void Constructor_PasswordIsNullOrWhiteSpace_ThrowsArgumentNullException(string invalidPassword)
         {
-            Assert.Throws<ArgumentNullException>(() => new CreateSessionRequest("validUser", invalidPassword));
+            Assert.Throws<ArgumentNullException>("password", () => new CreateSessionRequest("validUser", invalidPassword));
         }
     }
 }

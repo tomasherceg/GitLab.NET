@@ -1,5 +1,6 @@
 ﻿using RestSharp;
 using RestSharp.Authenticators;
+using System;
 
 namespace GitLab.NET
 {
@@ -9,6 +10,9 @@ namespace GitLab.NET
 
         public PrivateTokenAuthenticator(string privateToken)
         {
+            if (string.IsNullOrWhiteSpace(privateToken))
+                throw new ArgumentNullException(nameof(privateToken));
+
             this.privateToken = privateToken;
         }
 

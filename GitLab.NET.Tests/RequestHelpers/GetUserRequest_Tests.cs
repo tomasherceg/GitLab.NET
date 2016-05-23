@@ -13,7 +13,17 @@ namespace GitLab.NET.Tests.RequestHelpers
         [InlineData("\t")]
         public void Constructor_UsernameIsNullOrWhiteSpace_ThrowsArgumentNullException(string invalidUsername)
         {
-            Assert.Throws<ArgumentNullException>(() => new GetUserRequest(invalidUsername));
+            Assert.Throws<ArgumentNullException>("username", () => new GetUserRequest(invalidUsername));
+        }
+
+        [Fact]
+        public void GetRequest_UsernameValid_ReturnsCorrectRequest()
+        {
+            var sut = new GetUserRequest("validUsername");
+
+            var result = sut.GetRequest();
+
+            Assert.Equal(GetUserRequest.ByUsernameResource, result.Resource);
         }
     }
 }

@@ -1,5 +1,5 @@
 ﻿using GitLab.NET.Factories;
-using GitLab.NET.Helpers;
+using GitLab.NET.RestHelpers;
 using GitLab.NET.Models;
 using GitLab.NET.RequestHelpers;
 using RestSharp;
@@ -20,7 +20,7 @@ namespace GitLab.NET
 
         public GitLabBase(string privateToken, Uri hostUri)
         {
-            if (string.IsNullOrEmpty(privateToken))
+            if (string.IsNullOrWhiteSpace(privateToken))
                 throw new ArgumentNullException(nameof(privateToken));
 
             if (hostUri == null)

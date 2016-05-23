@@ -1,5 +1,5 @@
 ﻿using GitLab.NET.Factories;
-using GitLab.NET.Helpers;
+using GitLab.NET.RestHelpers;
 using System;
 using Xunit;
 
@@ -10,7 +10,7 @@ namespace GitLab.NET.Tests.Helpers
         [Fact]
         public void Constructor_BaseUriNull_ArgumentNullException()
         {
-            Assert.Throws<ArgumentNullException>(() => new RestExecutor(new RestClientFactory(), null));
+            Assert.Throws<ArgumentNullException>("baseUri", () => new RestExecutor(new RestClientFactory(), null));
         }
 
         [Fact]
@@ -18,7 +18,7 @@ namespace GitLab.NET.Tests.Helpers
         {
             var baseUri = new Uri("https://host.com");
 
-            Assert.Throws<ArgumentNullException>(() => new RestExecutor(null, baseUri));
+            Assert.Throws<ArgumentNullException>("restClientFactory", () => new RestExecutor(null, baseUri));
         }
     }
 }

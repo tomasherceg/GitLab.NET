@@ -59,7 +59,7 @@
     <Compile Include="Factories\RestClientFactory.cs" />
     <Compile Include="GitLabAPI.cs" />
     <Compile Include="GitLabBase.cs" />
-    <Compile Include="Helpers\RestExecutor.cs" />
+    <Compile Include="RestHelpers\RestExecutor.cs" />
     <Compile Include="Models\Error.cs" />
     <Compile Include="PrivateTokenAuthenticator.cs" />
     <Compile Include="Models\AccessLevel.cs" />
