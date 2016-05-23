@@ -1,6 +1,7 @@
 ﻿using GitLabAPI.NET.Factories;
+using GitLabAPI.NET.Helpers;
 using GitLabAPI.NET.Models;
-using RestSharp;
+using GitLabAPI.NET.RequestHelpers;
 using System;
 using System.Threading.Tasks;
 
@@ -12,9 +13,10 @@ namespace GitLabAPI.NET
     public class UserAuthenticator
     {
         public IRestClientFactory RestClientFactory { get; set; } = new RestClientFactory();
-
-        private Uri baseUri;
+        
         private const string apiPath = "/api/v3";
+
+        private RestExecutor restExecutor;
 
         /// <summary>
         /// Creates a new instance of UserAuthenticator.
@@ -22,7 +24,9 @@ namespace GitLabAPI.NET
         /// <param name="hostUri">The url for the GitLab server without /api/v3.</param>
         public UserAuthenticator(Uri hostUri)
         {
-            baseUri = new Uri(hostUri, apiPath);
+            var baseUri = new Uri(hostUri, apiPath);
+
+            restExecutor = new RestExecutor(RestClientFactory, baseUri);
         }
 
         /// <summary>
@@ -33,11 +37,9 @@ namespace GitLabAPI.NET
         /// <returns>The user's private token. Null if the username/password was incorrect.</returns>
         public string GetPrivateToken(string user, string password)
         {
-            var client = RestClientFactory.Create(baseUri);
+            var request = new SessionRequest(user, password);
 
-            var request = createSessionRequest(user, password);
-
-            var response = client.Execute<User>(request);
+            var response = restExecutor.Execute<User>(request);
 
             switch (response.StatusCode)
             {
@@ -58,11 +60,9 @@ namespace GitLabAPI.NET
         /// <returns>The user's private token. Null if the username/password was incorrect.</returns>
         public async Task<string> GetPrivateTokenAsync(string user, string password)
         {
-            var client = RestClientFactory.Create(baseUri);
+            var request = new SessionRequest(user, password);
 
-            var request = createSessionRequest(user, password);
-
-            var response = await client.ExecuteTaskAsync<User>(request);
+            var response = await restExecutor.ExecuteAsync<User>(request);
 
             switch (response.StatusCode)
             {
@@ -73,15 +73,6 @@ namespace GitLabAPI.NET
                 default:
                     throw new NotSupportedException("An unhandled status code was encountered: '" + response.StatusCode.ToString() + "'.");
             }
-        }
-
-        private IRestRequest createSessionRequest(string user, string password)
-        {
-            var request = new RestRequest(Method.POST);
-            request.AddParameter("login", user);
-            request.AddParameter("password", password);
-
-            return request;
         }
     }
 }
