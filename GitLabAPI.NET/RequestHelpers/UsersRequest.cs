@@ -1,19 +1,16 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using RestSharp;
+﻿using RestSharp;
 
 namespace GitLabAPI.NET.RequestHelpers
 {
     public class UsersRequest : IRequestHelper
     {
-
+        private const string resource = "users";
 
         public RestRequest GetRequest()
         {
-            throw new NotImplementedException();
+            var request = new RestRequest(resource, Method.GET);
+
+            return request;
         }
     }
 }

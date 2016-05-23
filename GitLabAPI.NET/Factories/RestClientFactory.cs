@@ -11,7 +11,7 @@ namespace GitLabAPI.NET.Factories
             if (baseUri == null)
                 throw new ArgumentNullException(nameof(baseUri));
 
-            var result = Create(baseUri);
+            var result = new RestClient(baseUri);
             result.Authenticator = authenticator;
 
             return result;

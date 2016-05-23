@@ -47,10 +47,19 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Exceptions\BadRequestException.cs" />
+    <Compile Include="Exceptions\ConflictException.cs" />
+    <Compile Include="Exceptions\ForbiddenException.cs" />
+    <Compile Include="Exceptions\MethodNotAllowedException.cs" />
+    <Compile Include="Exceptions\NotFoundException.cs" />
+    <Compile Include="Exceptions\ServerErrorException.cs" />
+    <Compile Include="Exceptions\UnauthorizedException.cs" />
+    <Compile Include="Exceptions\UnprocessableException.cs" />
     <Compile Include="Factories\IRestClientFactory.cs" />
     <Compile Include="Factories\RestClientFactory.cs" />
     <Compile Include="GitLabAPI.cs" />
     <Compile Include="Helpers\RestExecutor.cs" />
+    <Compile Include="Models\Error.cs" />
     <Compile Include="PrivateTokenAuthenticator.cs" />
     <Compile Include="Models\AccessLevel.cs" />
     <Compile Include="Models\NamespaceAvatar.cs" />

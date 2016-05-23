@@ -1,8 +1,11 @@
 ﻿using GitLabAPI.NET.Factories;
 using GitLabAPI.NET.Helpers;
+using GitLabAPI.NET.Models;
+using GitLabAPI.NET.RequestHelpers;
 using RestSharp;
 using RestSharp.Authenticators;
 using System;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 
 namespace GitLabAPI.NET
@@ -13,7 +16,7 @@ namespace GitLabAPI.NET
 
         private const string apiPath = "/api/v3";
         
-        private RestExecutor requestExecutor;
+        private RestExecutor restExecutor;
 
         public GitLabAPI(string privateToken, Uri hostUri)
         {
@@ -26,7 +29,25 @@ namespace GitLabAPI.NET
             var baseUri = new Uri(hostUri, apiPath);
             var authenticator = new PrivateTokenAuthenticator(privateToken);
             
-            requestExecutor = new RestExecutor(RestClientFactory, baseUri, authenticator);
+            restExecutor = new RestExecutor(RestClientFactory, baseUri, authenticator);
+        }
+
+        public IRestResponse<List<User>> Test()
+        {
+            var request = new UsersRequest();
+
+            var response = restExecutor.Execute<List<User>>(request);
+
+            return response;
+        }
+
+        public List<User> GetUsers()
+        {
+            var request = new UsersRequest();
+
+            var response = restExecutor.Execute<List<User>>(request);
+
+            return response.Data;
         }
     }
 }
