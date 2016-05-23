@@ -6,13 +6,11 @@ namespace GitLabAPI.NET.Factories
 {
     public class RestClientFactory : IRestClientFactory
     {
-        public IRestClient Create(Uri baseUri)
+        public IRestClient Create(Uri baseUri, IAuthenticator authenticator = null)
         {
-            return new RestClient(baseUri);
-        }
+            if (baseUri == null)
+                throw new ArgumentNullException(nameof(baseUri));
 
-        public IRestClient Create(Uri baseUri, IAuthenticator authenticator)
-        {
             var result = Create(baseUri);
             result.Authenticator = authenticator;
 
