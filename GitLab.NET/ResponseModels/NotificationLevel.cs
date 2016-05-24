@@ -1,5 +1,8 @@
-﻿namespace GitLab.NET.RestModels
+﻿using System.Diagnostics.CodeAnalysis;
+
+namespace GitLab.NET.ResponseModels
 {
+    [SuppressMessage("ReSharper", "UnusedMember.Global")]
     public enum NotificationLevel
     {
         Disabled = 0,

@@ -5,7 +5,7 @@ using Xunit;
 
 namespace GitLab.NET.Tests.Helpers
 {
-    public class RestExecutor_Tests
+    public class RestExecutorTests
     {
         [Fact]
         public void Constructor_BaseUriIsNull_ThrowsArgumentNullException()

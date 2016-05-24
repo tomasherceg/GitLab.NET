@@ -4,7 +4,7 @@ using Xunit;
 
 namespace GitLab.NET.Tests
 {
-    public class GitLabBase_Tests
+    public class GitLabBaseTests
     {
         [Theory]
         [ClassData(typeof(EmptyOrWhiteSpace))]

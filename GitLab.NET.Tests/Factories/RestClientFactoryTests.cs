@@ -4,7 +4,7 @@ using Xunit;
 
 namespace GitLab.NET.Tests.Factories
 {
-    public class RestClientFactory_Tests
+    public class RestClientFactoryTests
     {
         [Fact]
         public void Create_BaseUriIsNull_ThrowsArgumentNullException()

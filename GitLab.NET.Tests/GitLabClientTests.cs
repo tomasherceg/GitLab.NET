@@ -4,7 +4,7 @@ using Xunit;
 
 namespace GitLab.NET.Tests
 {
-    public class GitLabAPI_Tests
+    public class GitLabClientTests
     {
         [Theory]
         [ClassData(typeof(EmptyOrWhiteSpace))]
@@ -12,7 +12,7 @@ namespace GitLab.NET.Tests
         {
             var baseUri = new Uri("https://host.com");
 
-            Assert.Throws<ArgumentException>("privateToken", () => new GitLabAPI(invalidToken, baseUri));
+            Assert.Throws<ArgumentException>("privateToken", () => new GitLabClient(invalidToken, baseUri));
         }
 
         [Fact]
@@ -20,7 +20,7 @@ namespace GitLab.NET.Tests
         {
             var baseUri = new Uri("https://host.com");
 
-            Assert.Throws<ArgumentNullException>("privateToken", () => new GitLabAPI(null, baseUri));
+            Assert.Throws<ArgumentNullException>("privateToken", () => new GitLabClient(null, baseUri));
         }
 
         [Fact]
@@ -28,7 +28,7 @@ namespace GitLab.NET.Tests
         {
             var privateToken = "privateToken";
 
-            Assert.Throws<ArgumentNullException>("hostUri", () => new GitLabAPI(privateToken, null));
+            Assert.Throws<ArgumentNullException>("hostUri", () => new GitLabClient(privateToken, null));
         }
     }
 }

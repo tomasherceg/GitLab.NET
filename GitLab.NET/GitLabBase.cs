@@ -1,18 +1,22 @@
 ﻿using GitLab.NET.Factories;
 using GitLab.NET.RestHelpers;
 using System;
+using System.Diagnostics.CodeAnalysis;
+using RestSharp.Authenticators;
 
 namespace GitLab.NET
 {
     public abstract class GitLabBase
     {
-        private const string apiPath = "/api/v3";
-
+        private const string ApiPath = "/api/v3";
+        
+        [SuppressMessage("ReSharper", "MemberCanBePrivate.Global")]
+        [SuppressMessage("ReSharper", "AutoPropertyCanBeMadeGetOnly.Global")]
         public IRestClientFactory RestClientFactory { get; set; } = new RestClientFactory();
         
-        protected RestExecutor restExecutor;
+        protected readonly RestExecutor RestExecutor;
 
-        public GitLabBase(string privateToken, Uri hostUri)
+        protected GitLabBase(string privateToken, Uri hostUri)
         {
             if (privateToken == null)
                 throw new ArgumentNullException(nameof(privateToken));
@@ -23,10 +27,10 @@ namespace GitLab.NET
             if (hostUri == null)
                 throw new ArgumentNullException(nameof(hostUri));
 
-            var baseUri = new Uri(hostUri, apiPath);
+            var baseUri = new Uri(hostUri, ApiPath);
             var authenticator = new PrivateTokenAuthenticator(privateToken);
             
-            restExecutor = new RestExecutor(RestClientFactory, baseUri, authenticator);
+            RestExecutor = new RestExecutor(RestClientFactory, baseUri, authenticator);
         }
     }
 }

@@ -5,10 +5,10 @@ namespace GitLab.NET.RequestModels
 {
     public class CreateSession : IRequestModel
     {
-        public const string resource = "session";
+        private const string Resource = "session";
 
-        public string User { get; private set; }
-        public string Password { get; private set; }
+        private readonly string _user;
+        private readonly string _password;
 
         public CreateSession(string user, string password)
         {
@@ -24,15 +24,15 @@ namespace GitLab.NET.RequestModels
             if (string.IsNullOrWhiteSpace(password))
                 throw new ArgumentException("Parameter must not be empty or white space.", nameof(password));
 
-            User = user;
-            Password = password;
+            _user = user;
+            _password = password;
         }
 
         public RestRequest GetRequest()
         {
-            var request = new RestRequest(resource, Method.POST);
-            request.AddParameter("login", User);
-            request.AddParameter("password", Password);
+            var request = new RestRequest(Resource, Method.POST);
+            request.AddParameter("login", _user);
+            request.AddParameter("password", _password);
             return request;
         }
     }

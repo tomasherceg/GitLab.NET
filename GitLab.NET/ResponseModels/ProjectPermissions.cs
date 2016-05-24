@@ -1,7 +1,9 @@
-﻿using RestSharp.Deserializers;
+﻿using System.Diagnostics.CodeAnalysis;
+using RestSharp.Deserializers;
 
-namespace GitLab.NET.RestModels
+namespace GitLab.NET.ResponseModels
 {
+    [SuppressMessage("ReSharper", "UnusedMember.Global")]
     public class ProjectPermissions
     {
         [DeserializeAs(Name = "project_access")]

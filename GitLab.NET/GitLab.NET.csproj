@@ -56,7 +56,7 @@
     <Compile Include="Exceptions\UnprocessableException.cs" />
     <Compile Include="Factories\IRestClientFactory.cs" />
     <Compile Include="Factories\RestClientFactory.cs" />
-    <Compile Include="GitLabAPI.cs" />
+    <Compile Include="GitLabClient.cs" />
     <Compile Include="GitLabBase.cs" />
     <Compile Include="PaginatedResult.cs" />
     <Compile Include="RequestModels\IRequestModel.cs" />
@@ -84,6 +84,7 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
+    <Compile Include="JetBrains.Annotations\JetBrains.Annotations.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="FodyWeavers.xml" />

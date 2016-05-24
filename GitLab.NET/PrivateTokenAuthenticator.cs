@@ -6,7 +6,7 @@ namespace GitLab.NET
 {
     public class PrivateTokenAuthenticator : IAuthenticator
     {
-        private readonly string privateToken;
+        private readonly string _privateToken;
 
         public PrivateTokenAuthenticator(string privateToken)
         {
@@ -16,12 +16,12 @@ namespace GitLab.NET
             if (string.IsNullOrWhiteSpace(privateToken))
                 throw new ArgumentException("Parameter must not be empty or white space.", nameof(privateToken));
 
-            this.privateToken = privateToken;
+            _privateToken = privateToken;
         }
 
         public void Authenticate(IRestClient client, IRestRequest request)
         {
-            request.AddParameter("PRIVATE-TOKEN", privateToken, ParameterType.HttpHeader);
+            request.AddParameter("PRIVATE-TOKEN", _privateToken, ParameterType.HttpHeader);
         }
     }
 }

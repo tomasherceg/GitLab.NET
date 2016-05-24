@@ -58,20 +58,19 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Factories\RestClientFactory_Tests.cs" />
-    <Compile Include="GitLabAPI_Tests.cs" />
-    <Compile Include="GitLabUsers_Tests.cs" />
-    <Compile Include="PrivateTokenAuthenticator_Tests.cs" />
-    <Compile Include="GitLabBase_Tests.cs" />
+    <Compile Include="Factories\RestClientFactoryTests.cs" />
+    <Compile Include="GitLabClientTests.cs" />
+    <Compile Include="PrivateTokenAuthenticatorTests.cs" />
+    <Compile Include="GitLabBaseTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Helpers\RestExecutor_Tests.cs" />
-    <Compile Include="RequestHelpers\CreateSession_Tests.cs" />
-    <Compile Include="RequestHelpers\GetUser_Tests.cs" />
-    <Compile Include="RequestHelpers\GetUsers_Tests.cs" />
-    <Compile Include="RestSharpExtensions\RestRequestExtensions_Tests.cs" />
+    <Compile Include="Helpers\RestExecutorTests.cs" />
+    <Compile Include="RequestHelpers\CreateSessionTests.cs" />
+    <Compile Include="RequestHelpers\GetUserTests.cs" />
+    <Compile Include="RequestHelpers\GetUsersTests.cs" />
+    <Compile Include="RestSharpExtensions\RestRequestExtensionsTests.cs" />
     <Compile Include="TestHelpers\EmptyOrWhiteSpace.cs" />
     <Compile Include="TestHelpers\ParameterEqualityComparer.cs" />
-    <Compile Include="UserAuthenticator_Tests.cs" />
+    <Compile Include="UserAuthenticatorTests.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />

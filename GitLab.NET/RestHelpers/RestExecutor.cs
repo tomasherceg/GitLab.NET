@@ -1,20 +1,20 @@
 ﻿using GitLab.NET.Exceptions;
 using GitLab.NET.Factories;
-using GitLab.NET.RestModels;
 using GitLab.NET.RequestModels;
 using RestSharp;
 using RestSharp.Authenticators;
 using System;
 using System.Net;
 using System.Threading.Tasks;
+using GitLab.NET.ResponseModels;
 
 namespace GitLab.NET.RestHelpers
 {
     public class RestExecutor
     {
-        private Uri baseUri;
-        private IAuthenticator authenticator;
-        private IRestClientFactory restClientFactory;
+        private readonly Uri _baseUri;
+        private readonly IAuthenticator _authenticator;
+        private readonly IRestClientFactory _restClientFactory;
 
         public RestExecutor(IRestClientFactory restClientFactory, Uri baseUri, IAuthenticator authenticator = null)
         {
@@ -24,20 +24,20 @@ namespace GitLab.NET.RestHelpers
             if (restClientFactory == null)
                 throw new ArgumentNullException(nameof(restClientFactory));
 
-            this.baseUri = baseUri;
-            this.authenticator = authenticator;
-            this.restClientFactory = restClientFactory;
+            _baseUri = baseUri;
+            _authenticator = authenticator;
+            _restClientFactory = restClientFactory;
         }
 
         /// <summary>
         /// Executes a request synchronously and returns its result.
         /// </summary>
         /// <typeparam name="T">The type to deserialize the response to.</typeparam>
-        /// <param name="request">The IRestRequest to execute.</param>
+        /// <param name="requestModel">The IRestRequest to execute.</param>
         /// <returns>An object of type T with the deserialized data.</returns>
         public IRestResponse<T> Execute<T>(IRequestModel requestModel) where T : new()
         {
-            var client = restClientFactory.Create(baseUri, authenticator);
+            var client = _restClientFactory.Create(_baseUri, _authenticator);
 
             var response = client.Execute<T>(requestModel.GetRequest());
 
@@ -51,11 +51,11 @@ namespace GitLab.NET.RestHelpers
         /// Executes a request asynchronously and returns its result.
         /// </summary>
         /// <typeparam name="T">The type to deserialize the response to.</typeparam>
-        /// <param name="request">The IRestRequest to execute.</param>
+        /// <param name="requestModel">The IRestRequest to execute.</param>
         /// <returns>An object of type T with the deserialized data.</returns>
         public async Task<IRestResponse<T>> ExecuteAsync<T>(IRequestModel requestModel) where T : new()
         {
-            var client = restClientFactory.Create(baseUri, authenticator);
+            var client = _restClientFactory.Create(_baseUri, _authenticator);
 
             var response = await client.ExecuteTaskAsync<T>(requestModel.GetRequest());
 

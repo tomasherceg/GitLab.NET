@@ -6,16 +6,16 @@ namespace GitLab.NET.RequestModels
 {
     public class GetUsers : IRequestModel
     {
-        public const string resource = "users";
+        private const string Resource = "users";
 
-        public string Search { get; private set; }
-        public int Page { get; private set; }
-        public int ResultsPerPage { get; private set; }
+        private readonly string _search;
+        private readonly int _page;
+        private readonly int _resultsPerPage;
 
         public GetUsers(int page, int resultsPerPage)
         {
-            Page = page;
-            ResultsPerPage = resultsPerPage;
+            _page = page;
+            _resultsPerPage = resultsPerPage;
         }
 
         public GetUsers(string search, int page, int resultsPerPage)
@@ -26,18 +26,18 @@ namespace GitLab.NET.RequestModels
             if (string.IsNullOrWhiteSpace(search))
                 throw new ArgumentException("The parameter must not be empty or white space.", nameof(search));
 
-            Search = search;
-            Page = page;
-            ResultsPerPage = resultsPerPage;
+            _search = search;
+            _page = page;
+            _resultsPerPage = resultsPerPage;
         }
 
         public RestRequest GetRequest()
         {
-            var request = new RestRequest(resource, Method.GET);
+            var request = new RestRequest(Resource, Method.GET);
 
-            request.AddParameterIfNotNull("search", Search);
-            request.AddParameter("page", Page);
-            request.AddParameter("per_page", ResultsPerPage);
+            request.AddParameterIfNotNull("search", _search);
+            request.AddParameter("page", _page);
+            request.AddParameter("per_page", _resultsPerPage);
 
             return request;
         }

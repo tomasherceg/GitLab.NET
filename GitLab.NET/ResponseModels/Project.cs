@@ -1,8 +1,10 @@
-﻿using RestSharp.Deserializers;
-using System;
+﻿using System;
+using System.Diagnostics.CodeAnalysis;
+using RestSharp.Deserializers;
 
-namespace GitLab.NET.RestModels
+namespace GitLab.NET.ResponseModels
 {
+    [SuppressMessage("ReSharper", "UnusedMember.Global")]
     public class Project
     {
         [DeserializeAs(Name = "id")]

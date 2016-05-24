@@ -1,9 +1,12 @@
 ﻿using RestSharp;
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 
 namespace GitLab.NET
 {
+    [SuppressMessage("ReSharper", "MemberCanBePrivate.Global")]
+    [SuppressMessage("ReSharper", "UnusedAutoPropertyAccessor.Global")]
     public class PaginatedResult<T>
     {
         public int? CurrentPage { get; private set; }
@@ -35,14 +38,14 @@ namespace GitLab.NET
 
     internal static class HeaderHelper
     {
-        public static int? GetAsInt(this IList<Parameter> headers, string name)
+        public static int? GetAsInt(this IEnumerable<Parameter> headers, string name)
         {
             var result = headers.FirstOrDefault(h => h.Name == name)?.Value;
 
             if (result == null)
                 return null;
-            else
-                return int.Parse((string)result);
+
+            return int.Parse((string)result);
         }
     }
 }

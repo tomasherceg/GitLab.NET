@@ -4,7 +4,7 @@ using Xunit;
 
 namespace GitLab.NET.Tests
 {
-    public class PrivateTokenAuthenticator_Tests
+    public class PrivateTokenAuthenticatorTests
     {
         [Theory]
         [ClassData(typeof(EmptyOrWhiteSpace))]

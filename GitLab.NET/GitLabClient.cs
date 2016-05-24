@@ -1,15 +1,17 @@
-﻿using System;
+﻿// ReSharper disable MemberCanBePrivate.Global
+using System;
+using JetBrains.Annotations;
 
 namespace GitLab.NET
 {
     /// <summary>
     /// GitLab.NET base class. This class is a base implementation of the GitLab.NET library.
     /// </summary>
-    public class GitLabAPI
+    public class GitLabClient
     {
-        public GitLabUsers Users { get; private set; }
+        public GitLabUsers Users { [UsedImplicitly] get; private set; }
 
-        public GitLabAPI(string privateToken, Uri hostUri)
+        public GitLabClient(string privateToken, Uri hostUri)
         {
             if (privateToken == null)
                 throw new ArgumentNullException(nameof(privateToken));

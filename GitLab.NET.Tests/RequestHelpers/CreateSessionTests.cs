@@ -5,7 +5,7 @@ using Xunit;
 
 namespace GitLab.NET.Tests.RequestHelpers
 {
-    public class CreateSession_Tests
+    public class CreateSessionTests
     {
         [Theory]
         [ClassData(typeof(EmptyOrWhiteSpace))]

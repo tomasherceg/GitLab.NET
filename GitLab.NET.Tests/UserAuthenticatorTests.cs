@@ -3,7 +3,7 @@ using Xunit;
 
 namespace GitLab.NET.Tests
 {
-    public class UserAuthenticator_Tests
+    public class UserAuthenticatorTests
     {
         [Fact]
         public void Constructor_BaseUriIsNull_ThrowsArgumentNullException()

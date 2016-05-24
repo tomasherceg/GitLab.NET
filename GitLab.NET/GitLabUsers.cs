@@ -1,13 +1,13 @@
-﻿using GitLab.NET.RestModels;
-using GitLab.NET.RequestModels;
-using RestSharp;
+﻿using GitLab.NET.RequestModels;
 using System;
 using System.Collections.Generic;
-using System.Linq;
+using System.Diagnostics.CodeAnalysis;
 using System.Threading.Tasks;
+using GitLab.NET.ResponseModels;
 
 namespace GitLab.NET
 {
+    [SuppressMessage("ReSharper", "UnusedMember.Global")]
     public class GitLabUsers : GitLabBase
     {
         public GitLabUsers(string privateToken, Uri hostUri) : base(privateToken, hostUri) { }
@@ -21,7 +21,7 @@ namespace GitLab.NET
         {
             var request = new GetUser(id);
 
-            var result = restExecutor.Execute<User>(request);
+            var result = RestExecutor.Execute<User>(request);
 
             return result.Data;
         }
@@ -35,7 +35,7 @@ namespace GitLab.NET
         {
             var request = new GetUser(id);
 
-            var result = await restExecutor.ExecuteAsync<User>(request);
+            var result = await RestExecutor.ExecuteAsync<User>(request);
 
             return result.Data;
         }
@@ -49,7 +49,7 @@ namespace GitLab.NET
         {
             var request = new GetUser(username);
 
-            var result = restExecutor.Execute<User>(request);
+            var result = RestExecutor.Execute<User>(request);
 
             return result.Data;
         }
@@ -63,7 +63,7 @@ namespace GitLab.NET
         {
             var request = new GetUser(username);
 
-            var result = await restExecutor.ExecuteAsync<User>(request);
+            var result = await RestExecutor.ExecuteAsync<User>(request);
 
             return result.Data;
         }
@@ -98,7 +98,7 @@ namespace GitLab.NET
         {
             var request = new GetUsers(page, resultsPerPage);
 
-            var result = restExecutor.Execute<List<User>>(request);
+            var result = RestExecutor.Execute<List<User>>(request);
 
             return PaginatedResult<User>.Create(result);
         }
@@ -113,7 +113,7 @@ namespace GitLab.NET
         {
             var request = new GetUsers(page, resultsPerPage);
 
-            var result = await restExecutor.ExecuteAsync<List<User>>(request);
+            var result = await RestExecutor.ExecuteAsync<List<User>>(request);
 
             return PaginatedResult<User>.Create(result);
         }
@@ -151,7 +151,7 @@ namespace GitLab.NET
         {
             var request = new GetUsers(searchQuery, page, resultsPerPage);
 
-            var result = restExecutor.Execute<List<User>>(request);
+            var result = RestExecutor.Execute<List<User>>(request);
 
             return PaginatedResult<User>.Create(result);
         }
@@ -167,7 +167,7 @@ namespace GitLab.NET
         {
             var request = new GetUsers(searchQuery, page, resultsPerPage);
 
-            var result = await restExecutor.ExecuteAsync<List<User>>(request);
+            var result = await RestExecutor.ExecuteAsync<List<User>>(request);
 
             return PaginatedResult<User>.Create(result);
         }

@@ -8,12 +8,12 @@ namespace GitLab.NET.RequestModels
         public const string ByIdResource = "users/{id}";
         public const string ByUsernameResource = "users";
 
-        public int? Id { get; private set; }
-        public string Username { get; private set; }
+        private readonly int? _id;
+        private readonly string _username;
 
         public GetUser(int id)
         {
-            Id = id;
+            _id = id;
         }
 
         public GetUser(string username)
@@ -24,21 +24,21 @@ namespace GitLab.NET.RequestModels
             if (string.IsNullOrWhiteSpace(username))
                 throw new ArgumentException("Parameter must not be empty or white space.", nameof(username));
 
-            Username = username;
+            _username = username;
         }
 
         public RestRequest GetRequest()
         {
-            if (Username != null)
+            if (_username != null)
             {
                 var request = new RestRequest(ByUsernameResource, Method.GET);
-                request.AddParameter("username", Username);
+                request.AddParameter("username", _username);
                 return request;
             }
             else
             {
                 var request = new RestRequest(ByIdResource, Method.GET);
-                request.AddParameter("id", Id, ParameterType.UrlSegment);
+                request.AddParameter("id", _id, ParameterType.UrlSegment);
                 return request;
             }
         }
