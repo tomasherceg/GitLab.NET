@@ -12,13 +12,13 @@ namespace GitLab.NET.Tests.RequestHelpers
         [ClassData(typeof(EmptyOrWhiteSpace))]
         public void Constructor_SearchIsEmptyOrWhiteSpace_ThrowsArgumentException(string invalidSearch)
         {
-            Assert.Throws<ArgumentException>("search", () => new GetUsers(invalidSearch));
+            Assert.Throws<ArgumentException>("search", () => new GetUsers(invalidSearch, 0, 0));
         }
 
         [Fact]
         public void Constructor_SearchIsNull_ThrowsArgumentNullException()
         {
-            Assert.Throws<ArgumentNullException>("search", () => new GetUsers(null));
+            Assert.Throws<ArgumentNullException>("search", () => new GetUsers(null, 0, 0));
         }
 
         [Fact]
@@ -26,7 +26,7 @@ namespace GitLab.NET.Tests.RequestHelpers
         {
             var searchName = "search";
             var searchValue = "searchValue";
-            var sut = new GetUsers(searchValue);
+            var sut = new GetUsers(searchValue, 0, 0);
             var expected = new Parameter() { Name = searchName, Value = searchValue };
 
             var result = sut.GetRequest();
