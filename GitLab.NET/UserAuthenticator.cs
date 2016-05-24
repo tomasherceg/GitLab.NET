@@ -1,8 +1,7 @@
 ﻿using GitLab.NET.Factories;
 using GitLab.NET.RestHelpers;
-using GitLab.NET.Models;
-using GitLab.NET.RequestHelpers;
-using RestSharp;
+using GitLab.NET.RestModels;
+using GitLab.NET.RequestModels;
 using System;
 using System.Threading.Tasks;
 
@@ -41,7 +40,7 @@ namespace GitLab.NET
         /// <returns>The user's private token. Null if the username/password was incorrect.</returns>
         public string GetPrivateToken(string user, string password)
         {
-            var request = new CreateSessionRequest(user, password);
+            var request = new CreateSession(user, password);
 
             var response = restExecutor.Execute<User>(request);
 
@@ -56,7 +55,7 @@ namespace GitLab.NET
         /// <returns>The user's private token. Null if the username/password was incorrect.</returns>
         public async Task<string> GetPrivateTokenAsync(string user, string password)
         {
-            var request = new CreateSessionRequest(user, password);
+            var request = new CreateSession(user, password);
 
             var response = await restExecutor.ExecuteAsync<User>(request);
 

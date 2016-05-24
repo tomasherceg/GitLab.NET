@@ -1,22 +1,28 @@
 ﻿using System;
 using RestSharp;
 
-namespace GitLab.NET.RequestHelpers
+namespace GitLab.NET.RequestModels
 {
-    public class CreateSessionRequest : IRequestHelper
+    public class CreateSession : IRequestModel
     {
         public const string resource = "session";
 
         public string User { get; private set; }
         public string Password { get; private set; }
 
-        public CreateSessionRequest(string user, string password)
+        public CreateSession(string user, string password)
         {
-            if (string.IsNullOrWhiteSpace(user))
+            if (user == null)
                 throw new ArgumentNullException(nameof(user));
 
-            if (string.IsNullOrWhiteSpace(password))
+            if (string.IsNullOrWhiteSpace(user))
+                throw new ArgumentException("Parameter must not be empty or white space.", nameof(user));
+
+            if (password == null)
                 throw new ArgumentNullException(nameof(password));
+
+            if (string.IsNullOrWhiteSpace(password))
+                throw new ArgumentException("Parameter must not be empty or white space.", nameof(password));
 
             User = user;
             Password = password;

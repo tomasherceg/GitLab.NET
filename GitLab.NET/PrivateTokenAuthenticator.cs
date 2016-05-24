@@ -10,8 +10,11 @@ namespace GitLab.NET
 
         public PrivateTokenAuthenticator(string privateToken)
         {
-            if (string.IsNullOrWhiteSpace(privateToken))
+            if (privateToken == null)
                 throw new ArgumentNullException(nameof(privateToken));
+
+            if (string.IsNullOrWhiteSpace(privateToken))
+                throw new ArgumentException("Parameter must not be empty or white space.", nameof(privateToken));
 
             this.privateToken = privateToken;
         }

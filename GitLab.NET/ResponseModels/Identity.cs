@@ -1,6 +1,6 @@
 ﻿using RestSharp.Deserializers;
 
-namespace GitLab.NET.Models
+namespace GitLab.NET.RestModels
 {
     public class Identity
     {

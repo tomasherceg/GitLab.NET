@@ -1,25 +1,28 @@
 ﻿using RestSharp;
 using System;
 
-namespace GitLab.NET.RequestHelpers
+namespace GitLab.NET.RequestModels
 {
-    public class GetUserRequest : IRequestHelper
+    public class GetUser : IRequestModel
     {
-        public const string ByIdResource = "users/{UserId}";
+        public const string ByIdResource = "users/{id}";
         public const string ByUsernameResource = "users";
 
         public int? Id { get; private set; }
         public string Username { get; private set; }
 
-        public GetUserRequest(int id)
+        public GetUser(int id)
         {
             Id = id;
         }
 
-        public GetUserRequest(string username)
+        public GetUser(string username)
         {
-            if (string.IsNullOrWhiteSpace(username))
+            if (username == null)
                 throw new ArgumentNullException(nameof(username));
+
+            if (string.IsNullOrWhiteSpace(username))
+                throw new ArgumentException("Parameter must not be empty or white space.", nameof(username));
 
             Username = username;
         }
@@ -35,7 +38,7 @@ namespace GitLab.NET.RequestHelpers
             else
             {
                 var request = new RestRequest(ByIdResource, Method.GET);
-                request.AddParameter("UserId", Id, ParameterType.UrlSegment);
+                request.AddParameter("id", Id, ParameterType.UrlSegment);
                 return request;
             }
         }

@@ -1,4 +1,4 @@
-﻿namespace GitLab.NET.Models
+﻿namespace GitLab.NET.RestModels
 {
     public enum AccessLevel
     {

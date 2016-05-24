@@ -11,8 +11,11 @@ namespace GitLab.NET
 
         public GitLabAPI(string privateToken, Uri hostUri)
         {
-            if (string.IsNullOrWhiteSpace(privateToken))
+            if (privateToken == null)
                 throw new ArgumentNullException(nameof(privateToken));
+
+            if (string.IsNullOrWhiteSpace(privateToken))
+                throw new ArgumentException("Parameter must not be empty or white space.", nameof(privateToken));
 
             if (hostUri == null)
                 throw new ArgumentNullException(nameof(hostUri));

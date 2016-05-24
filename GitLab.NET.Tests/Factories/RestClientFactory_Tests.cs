@@ -7,7 +7,7 @@ namespace GitLab.NET.Tests.Factories
     public class RestClientFactory_Tests
     {
         [Fact]
-        public void Create_BaseUriNull_ThrowsArgumentNullException()
+        public void Create_BaseUriIsNull_ThrowsArgumentNullException()
         {
             var sut = new RestClientFactory();
 

@@ -1,4 +1,5 @@
-﻿using System;
+﻿using GitLab.NET.Tests.TestHelpers;
+using System;
 using Xunit;
 
 namespace GitLab.NET.Tests
@@ -6,13 +7,16 @@ namespace GitLab.NET.Tests
     public class PrivateTokenAuthenticator_Tests
     {
         [Theory]
-        [InlineData(null)]
-        [InlineData("")]
-        [InlineData(" ")]
-        [InlineData("\t")]
-        public void Constructor_PrivateTokenIsNullOrWhiteSpace_ThrowsArgumentNullException(string invalidToken)
+        [ClassData(typeof(EmptyOrWhiteSpace))]
+        public void Constructor_PrivateTokenIsEmptyOrWhiteSpace_ThrowsArgumentException(string invalidToken)
         {
-            Assert.Throws<ArgumentNullException>("privateToken", () => new PrivateTokenAuthenticator(invalidToken));
+            Assert.Throws<ArgumentException>("privateToken", () => new PrivateTokenAuthenticator(invalidToken));
+        }
+
+        [Fact]
+        public void Constructor_PrivateTokenIsNull_ThrowsArgumentNullException()
+        {
+            Assert.Throws<ArgumentNullException>("privateToken", () => new PrivateTokenAuthenticator(null));
         }
     }
 }

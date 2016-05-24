@@ -1,4 +1,5 @@
-﻿using System;
+﻿using GitLab.NET.Tests.TestHelpers;
+using System;
 using Xunit;
 
 namespace GitLab.NET.Tests
@@ -6,19 +7,24 @@ namespace GitLab.NET.Tests
     public class GitLabBase_Tests
     {
         [Theory]
-        [InlineData(null)]
-        [InlineData("")]
-        [InlineData("   ")]
-        [InlineData("\t")]
-        public void Constructor_PrivateTokenNullOrWhiteSpace_ThrowsArgumentNullException(string invalidToken)
+        [ClassData(typeof(EmptyOrWhiteSpace))]
+        public void Constructor_PrivateTokenIsEmptyOrWhiteSpace_ThrowsArgumentException(string invalidToken)
         {
             var baseUri = new Uri("https://host.com");
 
-            Assert.Throws<ArgumentNullException>("privateToken", () => new GitLabBaseSubClass(invalidToken, baseUri));
+            Assert.Throws<ArgumentException>("privateToken", () => new GitLabBaseSubClass(invalidToken, baseUri));
         }
 
         [Fact]
-        public void Constructor_BaseUriNull_ThrowsArgumentNullException()
+        public void Constructor_PrivateTokenIsNull_ThrowsArgumentNullException()
+        {
+            var baseUri = new Uri("https://host.com");
+
+            Assert.Throws<ArgumentNullException>("privateToken", () => new GitLabBaseSubClass(null, baseUri));
+        }
+
+        [Fact]
+        public void Constructor_BaseUriIsNull_ThrowsArgumentNullException()
         {
             var privateToken = "privateToken";
 

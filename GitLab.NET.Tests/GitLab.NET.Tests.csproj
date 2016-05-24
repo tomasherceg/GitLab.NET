@@ -65,11 +65,12 @@
     <Compile Include="GitLabBase_Tests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Helpers\RestExecutor_Tests.cs" />
-    <Compile Include="RequestHelpers\CreateSessionRequest_Tests.cs" />
-    <Compile Include="RequestHelpers\GetUserRequest_Tests.cs" />
-    <Compile Include="RequestHelpers\GetUsersRequest_Tests.cs" />
+    <Compile Include="RequestHelpers\CreateSession_Tests.cs" />
+    <Compile Include="RequestHelpers\GetUser_Tests.cs" />
+    <Compile Include="RequestHelpers\GetUsers_Tests.cs" />
     <Compile Include="RestSharpExtensions\RestRequestExtensions_Tests.cs" />
     <Compile Include="TestHelpers\EmptyOrWhiteSpace.cs" />
+    <Compile Include="TestHelpers\ParameterEqualityComparer.cs" />
     <Compile Include="UserAuthenticator_Tests.cs" />
   </ItemGroup>
   <ItemGroup>

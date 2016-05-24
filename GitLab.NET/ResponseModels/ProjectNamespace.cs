@@ -1,7 +1,7 @@
 ﻿using RestSharp.Deserializers;
 using System;
 
-namespace GitLab.NET.Models
+namespace GitLab.NET.RestModels
 {
     public class ProjectNamespace
     {
