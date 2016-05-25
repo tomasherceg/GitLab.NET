@@ -3,7 +3,6 @@ using System.Net;
 using System.Threading.Tasks;
 using GitLab.NET.Exceptions;
 using GitLab.NET.ResponseModels;
-using JetBrains.Annotations;
 using RestSharp;
 using RestSharp.Authenticators;
 
@@ -12,11 +11,20 @@ namespace GitLab.NET
     public class RestExecutor : IRestExecutor
     {
         private readonly IAuthenticator _authenticator;
-        [NotNull] private readonly Uri _baseUri;
-        [NotNull] private readonly IRestClientFactory _restClientFactory;
+        private readonly Uri _baseUri;
+        private readonly IRestClientFactory _restClientFactory;
 
         public RestExecutor(IRestClientFactory restClientFactory, Uri baseUri, IAuthenticator authenticator = null)
         {
+            if (restClientFactory == null)
+                throw new ArgumentNullException(nameof(restClientFactory));
+
+            if (baseUri == null)
+                throw new ArgumentNullException(nameof(baseUri));
+
+            if (authenticator == null)
+                throw new ArgumentNullException(nameof(authenticator));
+
             _baseUri = baseUri;
             _authenticator = authenticator;
             _restClientFactory = restClientFactory;
@@ -26,13 +34,16 @@ namespace GitLab.NET
         ///     Executes a request synchronously and returns its result.
         /// </summary>
         /// <typeparam name="T">The type to deserialize the response to.</typeparam>
-        /// <param name="requestModel">The IRestRequest to execute.</param>
+        /// <param name="request">The IRestRequest to execute.</param>
         /// <returns>An object of type T with the deserialized data.</returns>
-        public IRestResponse<T> Execute<T>([NotNull] IRequestModel requestModel) where T : new()
+        public IRestResponse<T> Execute<T>(IRequestModel request) where T : new()
         {
+            if (request == null)
+                throw new ArgumentNullException(nameof(request));
+
             var client = _restClientFactory.Create(_baseUri, _authenticator);
 
-            var response = client.Execute<T>(requestModel.GetRequest());
+            var response = client.Execute<T>(request.GetRequest());
 
             HandleException(response);
             HandleErrors(response);
@@ -44,13 +55,16 @@ namespace GitLab.NET
         ///     Executes a request asynchronously and returns its result.
         /// </summary>
         /// <typeparam name="T">The type to deserialize the response to.</typeparam>
-        /// <param name="requestModel">The IRestRequest to execute.</param>
+        /// <param name="request">The IRestRequest to execute.</param>
         /// <returns>An object of type T with the deserialized data.</returns>
-        public async Task<IRestResponse<T>> ExecuteAsync<T>([NotNull] IRequestModel requestModel) where T : new()
+        public async Task<IRestResponse<T>> ExecuteAsync<T>(IRequestModel request) where T : new()
         {
+            if (request == null)
+                throw new ArgumentNullException(nameof(request));
+
             var client = _restClientFactory.Create(_baseUri, _authenticator);
 
-            var response = await client.ExecuteTaskAsync<T>(requestModel.GetRequest());
+            var response = await client.ExecuteTaskAsync<T>(request.GetRequest());
 
             HandleException(response);
             HandleErrors(response);
@@ -61,7 +75,7 @@ namespace GitLab.NET
         private static void HandleException(IRestResponse response)
         {
             if (response.ErrorException != null)
-                throw new ApplicationException("Error retrieving response. Check inner exception for more information.", response.ErrorException);
+                throw response.ErrorException;
         }
 
         private static void HandleErrors(IRestResponse response)
@@ -69,10 +83,6 @@ namespace GitLab.NET
             string message;
             switch (response.StatusCode)
             {
-                case HttpStatusCode.OK:
-                case HttpStatusCode.Created:
-                case HttpStatusCode.NotModified:
-                    return;
                 case HttpStatusCode.BadRequest:
                     message = GetErrorMessage(response);
                     throw new BadRequestException(message);
@@ -98,6 +108,11 @@ namespace GitLab.NET
                     message = GetErrorMessage(response);
                     throw new UnprocessableException(message);
             }
+
+            if (response.StatusCode != HttpStatusCode.OK &&
+                response.StatusCode != HttpStatusCode.Created &&
+                response.StatusCode != HttpStatusCode.NotModified)
+                throw new UnhandledErrorException(response.StatusCode + " was unhandled.");
         }
 
         private static string GetErrorMessage(IRestResponse response)

@@ -53,6 +53,7 @@
     <Compile Include="Exceptions\NotFoundException.cs" />
     <Compile Include="Exceptions\ServerErrorException.cs" />
     <Compile Include="Exceptions\UnauthorizedException.cs" />
+    <Compile Include="Exceptions\UnhandledErrorException.cs" />
     <Compile Include="Exceptions\UnprocessableException.cs" />
     <Compile Include="GitLabClient.cs" />
     <Compile Include="IRequestModel.cs" />

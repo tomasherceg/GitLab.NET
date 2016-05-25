@@ -6,29 +6,34 @@ namespace GitLab.NET.Tests
 {
     public class GitLabClientTests
     {
+        private static readonly Uri ValidHostUri = new Uri("https://host.com");
+        private const string ValidToken = "privateToken";
+
         [Theory]
         [ClassData(typeof(EmptyOrWhiteSpace))]
         public void Constructor_PrivateTokenIsEmptyOrWhiteSpace_ThrowsArgumentException(string invalidToken)
         {
-            var baseUri = new Uri("https://host.com");
-
-            Assert.Throws<ArgumentException>("privateToken", () => new GitLabClient(invalidToken, baseUri));
+            Assert.Throws<ArgumentException>(ValidToken, () => new GitLabClient(invalidToken, ValidHostUri));
         }
 
         [Fact]
         public void Constructor_PrivateTokenIsNull_ThrowsArgumentNullException()
         {
-            var baseUri = new Uri("https://host.com");
-
-            Assert.Throws<ArgumentNullException>("privateToken", () => new GitLabClient(null, baseUri));
+            Assert.Throws<ArgumentNullException>(ValidToken, () => new GitLabClient(null, ValidHostUri));
         }
 
         [Fact]
         public void Constructor_BaseUriIsNull_ThrowsArgumentNullException()
         {
-            const string privateToken = "privateToken";
+            Assert.Throws<ArgumentNullException>(() => new GitLabClient(ValidToken, null));
+        }
 
-            Assert.Throws<ArgumentNullException>("hostUri", () => new GitLabClient(privateToken, null));
+        [Fact]
+        public void Constructor_ValidParameters_SetsUsers()
+        {
+            var sut = new GitLabClient(ValidToken, ValidHostUri);
+
+            Assert.NotNull(sut.Users);
         }
     }
 }

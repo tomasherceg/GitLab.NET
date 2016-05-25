@@ -66,6 +66,7 @@
     <Compile Include="PrivateTokenAuthenticatorTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="RepositoryBaseTests.cs" />
+    <Compile Include="RestExecutorTests.cs" />
     <Compile Include="TestHelpers\EmptyOrWhiteSpace.cs" />
     <Compile Include="TestHelpers\ParameterEqualityComparer.cs" />
     <Compile Include="UserAuthenticatorTests.cs" />

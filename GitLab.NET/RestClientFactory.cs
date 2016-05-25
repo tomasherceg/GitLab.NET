@@ -7,7 +7,7 @@ namespace GitLab.NET
 {
     public class RestClientFactory : IRestClientFactory
     {
-        public IRestClient Create([NotNull] Uri baseUri, IAuthenticator authenticator = null)
+        public IRestClient Create(Uri baseUri, IAuthenticator authenticator = null)
         {
             var result = new RestClient(baseUri)
             {
