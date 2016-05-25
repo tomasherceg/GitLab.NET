@@ -1,7 +1,7 @@
-﻿using RestSharp;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
+using RestSharp;
 
 namespace GitLab.NET
 {
@@ -40,12 +40,19 @@ namespace GitLab.NET
     {
         public static int? GetAsInt(this IEnumerable<Parameter> headers, string name)
         {
-            var result = headers.FirstOrDefault(h => h.Name == name)?.Value;
+            var header = headers.FirstOrDefault(h => h.Name == name)?.Value as string;
 
-            if (result == null)
+            if (header == null)
                 return null;
 
-            return int.Parse((string)result);
+            int result;
+
+            var didParse = int.TryParse(header, out result);
+
+            if (didParse)
+                return result;
+
+            return null;
         }
     }
 }

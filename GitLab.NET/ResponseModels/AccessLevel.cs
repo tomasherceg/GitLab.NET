@@ -9,6 +9,6 @@ namespace GitLab.NET.ResponseModels
         Reporter = 20,
         Developer = 30,
         Master = 40,
-        Owner = 50,
+        Owner = 50
     }
 }

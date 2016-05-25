@@ -1,6 +1,6 @@
-﻿using RestSharp;
+﻿using System;
+using RestSharp;
 using RestSharp.Authenticators;
-using System;
 
 namespace GitLab.NET
 {

@@ -1,8 +1,8 @@
-﻿using RestSharp;
+﻿using System;
+using RestSharp;
 using RestSharp.Authenticators;
-using System;
 
-namespace GitLab.NET.Factories
+namespace GitLab.NET
 {
     public interface IRestClientFactory
     {

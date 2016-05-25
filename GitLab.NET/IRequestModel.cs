@@ -1,6 +1,6 @@
 ﻿using RestSharp;
 
-namespace GitLab.NET.RequestModels
+namespace GitLab.NET
 {
     public interface IRequestModel
     {

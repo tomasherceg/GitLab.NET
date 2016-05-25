@@ -1,9 +1,9 @@
-﻿using RestSharp;
-using System;
+﻿using JetBrains.Annotations;
+using RestSharp;
 
 namespace GitLab.NET.RequestModels
 {
-    public class GetUser : IRequestModel
+    internal class GetUserRequest : IRequestModel
     {
         public const string ByIdResource = "users/{id}";
         public const string ByUsernameResource = "users";
@@ -11,19 +11,13 @@ namespace GitLab.NET.RequestModels
         private readonly int? _id;
         private readonly string _username;
 
-        public GetUser(int id)
+        public GetUserRequest(int id)
         {
             _id = id;
         }
 
-        public GetUser(string username)
+        public GetUserRequest([NotNull] string username)
         {
-            if (username == null)
-                throw new ArgumentNullException(nameof(username));
-
-            if (string.IsNullOrWhiteSpace(username))
-                throw new ArgumentException("Parameter must not be empty or white space.", nameof(username));
-
             _username = username;
         }
 

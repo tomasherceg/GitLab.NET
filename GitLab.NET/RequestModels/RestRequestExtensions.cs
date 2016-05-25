@@ -1,8 +1,8 @@
 ﻿using RestSharp;
 
-namespace GitLab.NET.RestSharpExtensions
+namespace GitLab.NET.RequestModels
 {
-    public static class RestRequestExtensions
+    internal static class RestRequestExtensions
     {
         public static void AddParameterIfNotNull(this RestRequest request, string name, object value)
         {

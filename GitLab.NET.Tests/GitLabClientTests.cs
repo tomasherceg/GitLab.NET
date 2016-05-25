@@ -26,7 +26,7 @@ namespace GitLab.NET.Tests
         [Fact]
         public void Constructor_BaseUriIsNull_ThrowsArgumentNullException()
         {
-            var privateToken = "privateToken";
+            const string privateToken = "privateToken";
 
             Assert.Throws<ArgumentNullException>("hostUri", () => new GitLabClient(privateToken, null));
         }

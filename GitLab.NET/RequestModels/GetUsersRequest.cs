@@ -1,31 +1,23 @@
-﻿using GitLab.NET.RestSharpExtensions;
-using RestSharp;
-using System;
+﻿using RestSharp;
 
 namespace GitLab.NET.RequestModels
 {
-    public class GetUsers : IRequestModel
+    internal class GetUsersRequest : IRequestModel
     {
         private const string Resource = "users";
-
-        private readonly string _search;
         private readonly int _page;
         private readonly int _resultsPerPage;
 
-        public GetUsers(int page, int resultsPerPage)
+        private readonly string _search;
+
+        public GetUsersRequest(int page, int resultsPerPage)
         {
             _page = page;
             _resultsPerPage = resultsPerPage;
         }
 
-        public GetUsers(string search, int page, int resultsPerPage)
+        public GetUsersRequest(string search, int page, int resultsPerPage)
         {
-            if (search == null)
-                throw new ArgumentNullException(nameof(search));
-
-            if (string.IsNullOrWhiteSpace(search))
-                throw new ArgumentException("The parameter must not be empty or white space.", nameof(search));
-
             _search = search;
             _page = page;
             _resultsPerPage = resultsPerPage;

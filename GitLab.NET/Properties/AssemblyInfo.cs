@@ -4,8 +4,10 @@ using System.Runtime.InteropServices;
 // General Information about an assembly is controlled through the following 
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
+
 [assembly: AssemblyTitle("GitLab.NET")]
-[assembly: AssemblyDescription("GitLab.NET is a wrapper around GitLab's API that works with your .NET projects. This library is currently in Alpha phase, and as such it may not work correctly (or at all).")]
+[assembly:
+    AssemblyDescription("GitLab.NET is a wrapper around GitLab's API that works with your .NET projects. This library is currently in Alpha phase, and as such it may not work correctly (or at all).")]
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("Anthony Stivers, Ryan Marshall")]
 [assembly: AssemblyProduct("GitLab.NET")]
@@ -16,9 +18,11 @@ using System.Runtime.InteropServices;
 // Setting ComVisible to false makes the types in this assembly not visible 
 // to COM components.  If you need to access a type in this assembly from 
 // COM, set the ComVisible attribute to true on that type.
+
 [assembly: ComVisible(false)]
 
 // The following GUID is for the ID of the typelib if this project is exposed to COM
+
 [assembly: Guid("bb8cf8f9-9656-4b1e-8642-3f4831246061")]
 
 // Version information for an assembly consists of the following four values:
@@ -31,5 +35,6 @@ using System.Runtime.InteropServices;
 // You can specify all the values or you can default the Build and Revision Numbers 
 // by using the '*' as shown below:
 // [assembly: AssemblyVersion("1.0.*")]
+
 [assembly: AssemblyVersion("0.1.0.0")]
 [assembly: AssemblyFileVersion("0.1.0.0")]

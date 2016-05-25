@@ -9,6 +9,6 @@ namespace GitLab.NET.ResponseModels
         Participating = 1,
         Watch = 2,
         Global = 3,
-        Mention = 4,
+        Mention = 4
     }
 }

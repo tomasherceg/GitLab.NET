@@ -7,6 +7,6 @@ namespace GitLab.NET.ResponseModels
     {
         Private = 0,
         Internal = 10,
-        Public = 20,
+        Public = 20
     }
 }

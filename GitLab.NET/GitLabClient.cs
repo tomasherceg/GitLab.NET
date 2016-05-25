@@ -1,15 +1,16 @@
-﻿// ReSharper disable MemberCanBePrivate.Global
-using System;
-using JetBrains.Annotations;
+﻿using System;
 
 namespace GitLab.NET
 {
-    /// <summary>
-    /// GitLab.NET base class. This class is a base implementation of the GitLab.NET library.
-    /// </summary>
     public class GitLabClient
     {
-        public GitLabUsers Users { [UsedImplicitly] get; private set; }
+        private const string ApiPath = "/api/v3";
+
+        // ReSharper disable MemberCanBePrivate.Global
+        // ReSharper disable UnusedAutoPropertyAccessor.Global
+        public UserRepository Users { get; }
+        // ReSharper restore UnusedAutoPropertyAccessor.Global
+        // ReSharper restore MemberCanBePrivate.Global
 
         public GitLabClient(string privateToken, Uri hostUri)
         {
@@ -22,7 +23,11 @@ namespace GitLab.NET
             if (hostUri == null)
                 throw new ArgumentNullException(nameof(hostUri));
 
-            Users = new GitLabUsers(privateToken, hostUri);
+            var baseUri = new Uri(hostUri, ApiPath);
+            var authenticator = new PrivateTokenAuthenticator(privateToken);
+            var restExecutor = new RestExecutor(new RestClientFactory(), baseUri, authenticator);
+
+            Users = new UserRepository(restExecutor);
         }
     }
 }
