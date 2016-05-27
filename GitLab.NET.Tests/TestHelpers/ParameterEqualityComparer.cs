@@ -1,6 +1,6 @@
 ﻿using System;
-using RestSharp;
 using System.Collections.Generic;
+using RestSharp;
 
 namespace GitLab.NET.Tests.TestHelpers
 {

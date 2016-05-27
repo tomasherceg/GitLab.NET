@@ -1,4 +1,5 @@
-﻿using System;
+﻿// ReSharper disable UnusedMember.Global
+using System;
 
 namespace GitLab.NET.ResponseModels
 {
@@ -15,6 +16,6 @@ namespace GitLab.NET.ResponseModels
         public string Key { get; set; }
 
         /// <summary> The date and time this key was created at. </summary>
-        public DateTime CreatedAt { get; set; }
+        public DateTime? CreatedAt { get; set; }
     }
 }

@@ -1,4 +1,6 @@
-﻿using System.Collections.Generic;
+﻿// ReSharper disable MemberCanBePrivate.Global
+// ReSharper disable UnusedAutoPropertyAccessor.Global
+using System.Collections.Generic;
 using System.Net;
 using System.Web.Script.Serialization;
 using RestSharp;
@@ -17,10 +19,8 @@ namespace GitLab.NET
 
         //public Dictionary<string, string> Errors { get; }
 
-        /// <summary>
-        /// Creates a new <see cref="RequestResult{T}" /> instance.
-        /// </summary>
-        /// <param name="response">The response to populate this instance with.</param>
+        /// <summary> Creates a new <see cref="RequestResult{T}" /> instance. </summary>
+        /// <param name="response"> The response to populate this instance with. </param>
         public RequestResult(IRestResponse<T> response)
         {
             StatusCode = response.StatusCode;

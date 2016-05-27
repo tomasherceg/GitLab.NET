@@ -1,4 +1,5 @@
-﻿using System;
+﻿// ReSharper disable UnusedMember.Global
+using System;
 
 namespace GitLab.NET.ResponseModels
 {
@@ -27,10 +28,10 @@ namespace GitLab.NET.ResponseModels
         public string WebUrl { get; set; }
 
         /// <summary> The date and time the user's account was created. </summary>
-        public DateTime CreatedAt { get; set; }
+        public DateTime? CreatedAt { get; set; }
 
         /// <summary> Whether or not the user has admin privileges. </summary>
-        public bool IsAdmin { get; set; }
+        public bool? IsAdmin { get; set; }
 
         /// <summary> The user's bio. </summary>
         public string Bio { get; set; }
@@ -51,37 +52,37 @@ namespace GitLab.NET.ResponseModels
         public string WebsiteUrl { get; set; }
 
         /// <summary> The date and time of the user's last sign in. </summary>
-        public DateTime LastSignInAt { get; set; }
+        public DateTime? LastSignInAt { get; set; }
 
         /// <summary> The date and time the user's account was confirmed at. </summary>
-        public DateTime ConfirmedAt { get; set; }
+        public DateTime? ConfirmedAt { get; set; }
 
         /// <summary> The ID of the user's currently selected theme. </summary>
-        public int ThemeId { get; set; }
+        public int? ThemeId { get; set; }
 
         /// <summary> The ID of the user's currently selected color scheme. </summary>
-        public int ColorSchemeId { get; set; }
+        public int? ColorSchemeId { get; set; }
 
         /// <summary> The maximum number of projects the user is allowed to create. </summary>
-        public int ProjectsLimit { get; set; }
+        public int? ProjectsLimit { get; set; }
 
         /// <summary> The date and time of the user's current sign in. </summary>
-        public DateTime CurrentSignInAt { get; set; }
+        public DateTime? CurrentSignInAt { get; set; }
 
         /// <summary> The external identites attached to the user's account. </summary>
         public Identity[] Identities { get; set; }
 
         /// <summary> Whether or not the user can create groups. </summary>
-        public bool CanCreateGroup { get; set; }
+        public bool? CanCreateGroup { get; set; }
 
         /// <summary> Whether or not the user can create projects. </summary>
-        public bool CanCreateProject { get; set; }
+        public bool? CanCreateProject { get; set; }
 
         /// <summary> Whether or not the user's account requires two-factor authentication for login. </summary>
-        public bool TwoFactorEnabled { get; set; }
+        public bool? TwoFactorEnabled { get; set; }
 
         /// <summary> Whether or not the user's account is flagged as external. </summary>
-        public bool External { get; set; }
+        public bool? External { get; set; }
 
         /// <summary> The user's private token. </summary>
         public string PrivateToken { get; set; }

@@ -16,6 +16,14 @@ namespace GitLab.NET.Tests
         }
 
         [Fact]
+        public void Create_NameIsNull_ThrowsArgumentNullException()
+        {
+            var sut = new UserRepository(Substitute.For<IRequestExecutor>());
+
+            Assert.Throws<ArgumentNullException>(() => sut.Create("email", "password", "username", null));
+        }
+
+        [Fact]
         public void Create_PasswordIsNull_ThrowsArgumentNullException()
         {
             var sut = new UserRepository(Substitute.For<IRequestExecutor>());
@@ -32,19 +40,19 @@ namespace GitLab.NET.Tests
         }
 
         [Fact]
-        public void Create_NameIsNull_ThrowsArgumentNullException()
-        {
-            var sut = new UserRepository(Substitute.For<IRequestExecutor>());
-
-            Assert.Throws<ArgumentNullException>(() => sut.Create("email", "password", "username", null));
-        }
-
-        [Fact]
         public async Task CreateAsync_EmailIsNull_ThrowsArgumentNullException()
         {
             var sut = new UserRepository(Substitute.For<IRequestExecutor>());
 
             await Assert.ThrowsAsync<ArgumentNullException>(() => sut.CreateAsync(null, "password", "username", "name"));
+        }
+
+        [Fact]
+        public async Task CreateAsync_NameIsNull_ThrowsArgumentNullException()
+        {
+            var sut = new UserRepository(Substitute.For<IRequestExecutor>());
+
+            await Assert.ThrowsAsync<ArgumentNullException>(() => sut.CreateAsync("email", "password", "username", null));
         }
 
         [Fact]
@@ -61,30 +69,6 @@ namespace GitLab.NET.Tests
             var sut = new UserRepository(Substitute.For<IRequestExecutor>());
 
             await Assert.ThrowsAsync<ArgumentNullException>(() => sut.CreateAsync("email", "password", null, "name"));
-        }
-
-        [Fact]
-        public async Task CreateAsync_NameIsNull_ThrowsArgumentNullException()
-        {
-            var sut = new UserRepository(Substitute.For<IRequestExecutor>());
-
-            await Assert.ThrowsAsync<ArgumentNullException>(() => sut.CreateAsync("email", "password", "username", null));
-        }
-
-        [Fact]
-        public void GetByUsername_UsernameIsNull_ThrowsArgumentNullException()
-        {
-            var sut = new UserRepository(Substitute.For<IRequestExecutor>());
-
-            Assert.Throws<ArgumentNullException>(() => sut.GetByUsername(null));
-        }
-
-        [Fact]
-        public async Task GetByUsernameAsync_UsernameIsNull_ThrowsArgumentNullException()
-        {
-            var sut = new UserRepository(Substitute.For<IRequestExecutor>());
-
-            await Assert.ThrowsAsync<ArgumentNullException>(() => sut.GetByUsernameAsync(null));
         }
 
         [Fact]
@@ -133,6 +117,22 @@ namespace GitLab.NET.Tests
             var sut = new UserRepository(Substitute.For<IRequestExecutor>());
 
             await Assert.ThrowsAsync<ArgumentOutOfRangeException>(() => sut.GetAllAsync(resultsPerPage: 0));
+        }
+
+        [Fact]
+        public void GetByUsername_UsernameIsNull_ThrowsArgumentNullException()
+        {
+            var sut = new UserRepository(Substitute.For<IRequestExecutor>());
+
+            Assert.Throws<ArgumentNullException>(() => sut.GetByUsername(null));
+        }
+
+        [Fact]
+        public async Task GetByUsernameAsync_UsernameIsNull_ThrowsArgumentNullException()
+        {
+            var sut = new UserRepository(Substitute.For<IRequestExecutor>());
+
+            await Assert.ThrowsAsync<ArgumentNullException>(() => sut.GetByUsernameAsync(null));
         }
 
         [Fact]

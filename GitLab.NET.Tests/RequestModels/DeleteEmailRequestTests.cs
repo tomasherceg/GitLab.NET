@@ -1,6 +1,4 @@
-﻿using NSubstitute;
-using System;
-using GitLab.NET.RequestModels;
+﻿using GitLab.NET.RequestModels;
 using GitLab.NET.Tests.TestHelpers;
 using RestSharp;
 using Xunit;
@@ -20,26 +18,6 @@ namespace GitLab.NET.Tests.RequestModels
         }
 
         [Fact]
-        public void GetRequest_UserIdIsSet_SetsCorrectResource()
-        {
-            var sut = new DeleteEmailRequest(0, 0);
-
-            var result = sut.GetRequest();
-
-            Assert.Equal(DeleteEmailRequest.ForSpecifiedUserResource, result.Resource);
-        }
-
-        [Fact]
-        public void GetRequest_UserIdIsNotSet_SetsCorrectResource()
-        {
-            var sut = new DeleteEmailRequest(0);
-
-            var result = sut.GetRequest();
-
-            Assert.Equal(DeleteEmailRequest.ForCurrentUserResource, result.Resource);
-        }
-
-        [Fact]
         public void GetRequest_UserIdIsNotSet_AddsIdParameter()
         {
             const uint expected = 5;
@@ -54,6 +32,16 @@ namespace GitLab.NET.Tests.RequestModels
             var result = sut.GetRequest();
 
             Assert.Contains(expectedParameter, result.Parameters, new ParameterEqualityComparer());
+        }
+
+        [Fact]
+        public void GetRequest_UserIdIsNotSet_SetsCorrectResource()
+        {
+            var sut = new DeleteEmailRequest(0);
+
+            var result = sut.GetRequest();
+
+            Assert.Equal(DeleteEmailRequest.ForCurrentUserResource, result.Resource);
         }
 
         [Fact]
@@ -88,6 +76,16 @@ namespace GitLab.NET.Tests.RequestModels
             var result = sut.GetRequest();
 
             Assert.Contains(expectedParameter, result.Parameters, new ParameterEqualityComparer());
+        }
+
+        [Fact]
+        public void GetRequest_UserIdIsSet_SetsCorrectResource()
+        {
+            var sut = new DeleteEmailRequest(0, 0);
+
+            var result = sut.GetRequest();
+
+            Assert.Equal(DeleteEmailRequest.ForSpecifiedUserResource, result.Resource);
         }
     }
 }

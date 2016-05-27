@@ -1,4 +1,5 @@
-﻿using System;
+﻿// ReSharper disable UnusedMember.Global
+using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using GitLab.NET.RequestModels;
@@ -13,11 +14,9 @@ namespace GitLab.NET
         /// <param name="restExecutor"> An instance of <see cref="IRequestExecutor" /> to use for this repository. </param>
         public UserRepository(IRequestExecutor restExecutor) : base(restExecutor) { }
 
-        /// <summary>
-        /// Blocks a user.
-        /// </summary>
-        /// <param name="id">The user's ID.</param>
-        /// <returns>A <see cref="RequestResult{User}" /> representing the results of the request.</returns>
+        /// <summary> Blocks a user. </summary>
+        /// <param name="id"> The user's ID. </param>
+        /// <returns> A <see cref="RequestResult{User}" /> representing the results of the request. </returns>
         public RequestResult<User> Block(uint id)
         {
             var request = new BlockUserRequest(id);
@@ -27,11 +26,9 @@ namespace GitLab.NET
             return new RequestResult<User>(result);
         }
 
-        /// <summary>
-        /// Blocks a user.
-        /// </summary>
-        /// <param name="id">The user's ID.</param>
-        /// <returns>A <see cref="RequestResult{User}" /> representing the results of the request.</returns>
+        /// <summary> Blocks a user. </summary>
+        /// <param name="id"> The user's ID. </param>
+        /// <returns> A <see cref="RequestResult{User}" /> representing the results of the request. </returns>
         public async Task<RequestResult<User>> BlockAsync(uint id)
         {
             var request = new BlockUserRequest(id);
@@ -315,11 +312,9 @@ namespace GitLab.NET
             return new PaginatedResult<User>(result);
         }
 
-        /// <summary>
-        /// Unblocks a user.
-        /// </summary>
-        /// <param name="id">The user's ID.</param>
-        /// <returns>A <see cref="RequestResult{User}" /> representing the results of the request.</returns>
+        /// <summary> Unblocks a user. </summary>
+        /// <param name="id"> The user's ID. </param>
+        /// <returns> A <see cref="RequestResult{User}" /> representing the results of the request. </returns>
         public RequestResult<User> Unblock(uint id)
         {
             var request = new UnblockUserRequest(id);
@@ -329,11 +324,9 @@ namespace GitLab.NET
             return new RequestResult<User>(result);
         }
 
-        /// <summary>
-        /// Unblocks a user.
-        /// </summary>
-        /// <param name="id">The user's ID.</param>
-        /// <returns>A <see cref="RequestResult{User}" /> representing the results of the request.</returns>
+        /// <summary> Unblocks a user. </summary>
+        /// <param name="id"> The user's ID. </param>
+        /// <returns> A <see cref="RequestResult{User}" /> representing the results of the request. </returns>
         public async Task<RequestResult<User>> UnblockAsync(uint id)
         {
             var request = new UnblockUserRequest(id);

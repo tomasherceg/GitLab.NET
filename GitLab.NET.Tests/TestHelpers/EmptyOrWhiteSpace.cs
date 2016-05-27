@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿// ReSharper disable UnusedMember.Global
+using System.Collections;
 using System.Collections.Generic;
 
 namespace GitLab.NET.Tests.TestHelpers
@@ -7,11 +8,26 @@ namespace GitLab.NET.Tests.TestHelpers
     {
         public IEnumerator<object[]> GetEnumerator()
         {
-            yield return new object[] { "" };
-            yield return new object[] { " " };
-            yield return new object[] { "\t" };
-            yield return new object[] { "\r" };
-            yield return new object[] { "\n" };
+            yield return new object[]
+            {
+                ""
+            };
+            yield return new object[]
+            {
+                " "
+            };
+            yield return new object[]
+            {
+                "\t"
+            };
+            yield return new object[]
+            {
+                "\r"
+            };
+            yield return new object[]
+            {
+                "\n"
+            };
         }
 
         IEnumerator IEnumerable.GetEnumerator()

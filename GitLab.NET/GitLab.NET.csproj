@@ -68,6 +68,7 @@
     <Compile Include="IRestClientFactory.cs" />
     <Compile Include="IRequestExecutor.cs" />
     <Compile Include="KeyRepository.cs" />
+    <Compile Include="ProjectSnippetsRepository.cs" />
     <Compile Include="RepositoryBase.cs" />
     <Compile Include="PaginatedResult.cs" />
     <Compile Include="RequestModels\BlockUserRequest.cs" />
@@ -88,6 +89,8 @@
     <Compile Include="RequestResult.cs" />
     <Compile Include="ResponseModels\EmailAddress.cs" />
     <Compile Include="ResponseModels\Identity.cs" />
+    <Compile Include="ResponseModels\ProjectSnippet.cs" />
+    <Compile Include="ResponseModels\ProjectSnippetAuthor.cs" />
     <Compile Include="ResponseModels\SshKey.cs" />
     <Compile Include="ResponseModels\User.cs" />
     <Compile Include="RestClientFactory.cs" />

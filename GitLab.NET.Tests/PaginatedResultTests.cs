@@ -6,15 +6,6 @@ namespace GitLab.NET.Tests
 {
     public class PaginatedResultTests
     {
-        private const uint ExpectedPage = 5;
-        private const uint ExpectedPrevPage = 4;
-        private const uint ExpectedNextPage = 6;
-        private const uint ExpectedPerPage = 20;
-        private const uint ExpectedTotalPages = 10;
-        private const uint ExpectedTotal = 200;
-
-        private readonly IRestResponse<List<object>> _response;
-
         public PaginatedResultTests()
         {
             _response = new RestResponse<List<object>>();
@@ -56,6 +47,15 @@ namespace GitLab.NET.Tests
             });
         }
 
+        private const uint ExpectedPage = 5;
+        private const uint ExpectedPrevPage = 4;
+        private const uint ExpectedNextPage = 6;
+        private const uint ExpectedPerPage = 20;
+        private const uint ExpectedTotalPages = 10;
+        private const uint ExpectedTotal = 200;
+
+        private readonly IRestResponse<List<object>> _response;
+
         [Fact]
         public void Constructor_SetsCurrentPage()
         {
@@ -65,19 +65,19 @@ namespace GitLab.NET.Tests
         }
 
         [Fact]
-        public void Constructor_SetsPreviousPage()
-        {
-            var sut = new PaginatedResult<object>(_response);
-
-            Assert.Equal(ExpectedPrevPage, sut.PreviousPage);
-        }
-
-        [Fact]
         public void Constructor_SetsNextPage()
         {
             var sut = new PaginatedResult<object>(_response);
 
             Assert.Equal(ExpectedNextPage, sut.NextPage);
+        }
+
+        [Fact]
+        public void Constructor_SetsPreviousPage()
+        {
+            var sut = new PaginatedResult<object>(_response);
+
+            Assert.Equal(ExpectedPrevPage, sut.PreviousPage);
         }
 
         [Fact]

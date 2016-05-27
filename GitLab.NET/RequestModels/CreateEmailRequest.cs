@@ -6,9 +6,9 @@ namespace GitLab.NET.RequestModels
     {
         public const string ForCurrentUserResource = "user/emails";
         public const string ForSpecifiedUserResource = "users/{id}/emails";
+        private readonly string _email;
 
         private readonly uint? _userId;
-        private readonly string _email;
 
         public CreateEmailRequest(string email)
         {
