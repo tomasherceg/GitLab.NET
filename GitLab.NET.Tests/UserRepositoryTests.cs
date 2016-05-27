@@ -1,10 +1,6 @@
 ﻿using System;
 using System.Threading.Tasks;
-using GitLab.NET.RequestModels;
-using GitLab.NET.ResponseModels;
 using NSubstitute;
-using RestSharp;
-using RestSharp.Authenticators;
 using Xunit;
 
 namespace GitLab.NET.Tests
@@ -12,19 +8,83 @@ namespace GitLab.NET.Tests
     public class UserRepositoryTests
     {
         [Fact]
-        public void FindByUsername_UsernameIsNull_ThrowsArgumentNullException()
+        public void Create_EmailIsNull_ThrowsArgumentNullException()
         {
             var sut = new UserRepository(Substitute.For<IRequestExecutor>());
 
-            Assert.Throws<ArgumentNullException>(() => sut.FindByUsername(null));
+            Assert.Throws<ArgumentNullException>(() => sut.Create(null, "password", "username", "name"));
         }
 
         [Fact]
-        public async Task FindByUsernameAsync_UsernameIsNull_ThrowsArgumentNullException()
+        public void Create_PasswordIsNull_ThrowsArgumentNullException()
         {
             var sut = new UserRepository(Substitute.For<IRequestExecutor>());
 
-            await Assert.ThrowsAsync<ArgumentNullException>(() => sut.FindByUsernameAsync(null));
+            Assert.Throws<ArgumentNullException>(() => sut.Create("email", null, "username", "name"));
+        }
+
+        [Fact]
+        public void Create_UsernameIsNull_ThrowsArgumentNullException()
+        {
+            var sut = new UserRepository(Substitute.For<IRequestExecutor>());
+
+            Assert.Throws<ArgumentNullException>(() => sut.Create("email", "password", null, "name"));
+        }
+
+        [Fact]
+        public void Create_NameIsNull_ThrowsArgumentNullException()
+        {
+            var sut = new UserRepository(Substitute.For<IRequestExecutor>());
+
+            Assert.Throws<ArgumentNullException>(() => sut.Create("email", "password", "username", null));
+        }
+
+        [Fact]
+        public async Task CreateAsync_EmailIsNull_ThrowsArgumentNullException()
+        {
+            var sut = new UserRepository(Substitute.For<IRequestExecutor>());
+
+            await Assert.ThrowsAsync<ArgumentNullException>(() => sut.CreateAsync(null, "password", "username", "name"));
+        }
+
+        [Fact]
+        public async Task CreateAsync_PasswordIsNull_ThrowsArgumentNullException()
+        {
+            var sut = new UserRepository(Substitute.For<IRequestExecutor>());
+
+            await Assert.ThrowsAsync<ArgumentNullException>(() => sut.CreateAsync("email", null, "username", "name"));
+        }
+
+        [Fact]
+        public async Task CreateAsync_UsernameIsNull_ThrowsArgumentNullException()
+        {
+            var sut = new UserRepository(Substitute.For<IRequestExecutor>());
+
+            await Assert.ThrowsAsync<ArgumentNullException>(() => sut.CreateAsync("email", "password", null, "name"));
+        }
+
+        [Fact]
+        public async Task CreateAsync_NameIsNull_ThrowsArgumentNullException()
+        {
+            var sut = new UserRepository(Substitute.For<IRequestExecutor>());
+
+            await Assert.ThrowsAsync<ArgumentNullException>(() => sut.CreateAsync("email", "password", "username", null));
+        }
+
+        [Fact]
+        public void GetByUsername_UsernameIsNull_ThrowsArgumentNullException()
+        {
+            var sut = new UserRepository(Substitute.For<IRequestExecutor>());
+
+            Assert.Throws<ArgumentNullException>(() => sut.GetByUsername(null));
+        }
+
+        [Fact]
+        public async Task GetByUsernameAsync_UsernameIsNull_ThrowsArgumentNullException()
+        {
+            var sut = new UserRepository(Substitute.For<IRequestExecutor>());
+
+            await Assert.ThrowsAsync<ArgumentNullException>(() => sut.GetByUsernameAsync(null));
         }
 
         [Fact]
@@ -32,31 +92,7 @@ namespace GitLab.NET.Tests
         {
             var sut = new UserRepository(Substitute.For<IRequestExecutor>());
 
-            Assert.Throws<ArgumentOutOfRangeException>(() => sut.GetAll(page: 0));
-        }
-
-        [Fact]
-        public async Task GetAllAsync_PageIsLessThanDefault_ThrowsArgumentOutOfRangeException()
-        {
-            var sut = new UserRepository(Substitute.For<IRequestExecutor>());
-
-            await Assert.ThrowsAsync<ArgumentOutOfRangeException>(() => sut.GetAllAsync(page: 0));
-        }
-
-        [Fact]
-        public void GetAll_ResultsPerPageIsLessThanMinimum_ThrowsArgumentOutOfRangeException()
-        {
-            var sut = new UserRepository(Substitute.For<IRequestExecutor>());
-
-            Assert.Throws<ArgumentOutOfRangeException>(() => sut.GetAll(resultsPerPage: 0));
-        }
-
-        [Fact]
-        public async Task GetAllAsync_ResultsPerPageIsLessThanMinimum_ThrowsArgumentOutOfRangeException()
-        {
-            var sut = new UserRepository(Substitute.For<IRequestExecutor>());
-
-            await Assert.ThrowsAsync<ArgumentOutOfRangeException>(() => sut.GetAllAsync(resultsPerPage: 0));
+            Assert.Throws<ArgumentOutOfRangeException>(() => sut.GetAll(0));
         }
 
         [Fact]
@@ -68,6 +104,22 @@ namespace GitLab.NET.Tests
         }
 
         [Fact]
+        public void GetAll_ResultsPerPageIsLessThanMinimum_ThrowsArgumentOutOfRangeException()
+        {
+            var sut = new UserRepository(Substitute.For<IRequestExecutor>());
+
+            Assert.Throws<ArgumentOutOfRangeException>(() => sut.GetAll(resultsPerPage: 0));
+        }
+
+        [Fact]
+        public async Task GetAllAsync_PageIsLessThanDefault_ThrowsArgumentOutOfRangeException()
+        {
+            var sut = new UserRepository(Substitute.For<IRequestExecutor>());
+
+            await Assert.ThrowsAsync<ArgumentOutOfRangeException>(() => sut.GetAllAsync(0));
+        }
+
+        [Fact]
         public async Task GetAllAsync_ResultsPerPageIsGreaterThanMinimum_ThrowsArgumentOutOfRangeException()
         {
             var sut = new UserRepository(Substitute.For<IRequestExecutor>());
@@ -76,11 +128,11 @@ namespace GitLab.NET.Tests
         }
 
         [Fact]
-        public void Search_SearchQueryIsNull_ThrowsArgumentNullException()
+        public async Task GetAllAsync_ResultsPerPageIsLessThanMinimum_ThrowsArgumentOutOfRangeException()
         {
             var sut = new UserRepository(Substitute.For<IRequestExecutor>());
 
-            Assert.Throws<ArgumentNullException>(() => sut.Search(null));
+            await Assert.ThrowsAsync<ArgumentOutOfRangeException>(() => sut.GetAllAsync(resultsPerPage: 0));
         }
 
         [Fact]
@@ -88,15 +140,7 @@ namespace GitLab.NET.Tests
         {
             var sut = new UserRepository(Substitute.For<IRequestExecutor>());
 
-            Assert.Throws<ArgumentOutOfRangeException>(() => sut.Search("searchQuery", page: 0));
-        }
-
-        [Fact]
-        public void Search_ResultsPerPageIsLessThanMinimum_ThrowsArgumentOutOfRangeException()
-        {
-            var sut = new UserRepository(Substitute.For<IRequestExecutor>());
-
-            Assert.Throws<ArgumentOutOfRangeException>(() => sut.Search("searchQuery", resultsPerPage: 0));
+            Assert.Throws<ArgumentOutOfRangeException>(() => sut.Search("searchQuery", 0));
         }
 
         [Fact]
@@ -108,11 +152,19 @@ namespace GitLab.NET.Tests
         }
 
         [Fact]
-        public async Task SearchAsync_SearchQueryIsNull_ThrowsArgumentNullException()
+        public void Search_ResultsPerPageIsLessThanMinimum_ThrowsArgumentOutOfRangeException()
         {
             var sut = new UserRepository(Substitute.For<IRequestExecutor>());
 
-            await Assert.ThrowsAsync<ArgumentNullException>(() => sut.SearchAsync(null));
+            Assert.Throws<ArgumentOutOfRangeException>(() => sut.Search("searchQuery", resultsPerPage: 0));
+        }
+
+        [Fact]
+        public void Search_SearchQueryIsNull_ThrowsArgumentNullException()
+        {
+            var sut = new UserRepository(Substitute.For<IRequestExecutor>());
+
+            Assert.Throws<ArgumentNullException>(() => sut.Search(null));
         }
 
         [Fact]
@@ -120,7 +172,15 @@ namespace GitLab.NET.Tests
         {
             var sut = new UserRepository(Substitute.For<IRequestExecutor>());
 
-            await Assert.ThrowsAsync<ArgumentOutOfRangeException>(() => sut.SearchAsync("searchQuery", page: 0));
+            await Assert.ThrowsAsync<ArgumentOutOfRangeException>(() => sut.SearchAsync("searchQuery", 0));
+        }
+
+        [Fact]
+        public async Task SearchAsync_ResultsPerPageIsGreaterThanMinimum_ThrowsArgumentOutOfRangeException()
+        {
+            var sut = new UserRepository(Substitute.For<IRequestExecutor>());
+
+            await Assert.ThrowsAsync<ArgumentOutOfRangeException>(() => sut.SearchAsync("searchQuery", resultsPerPage: uint.MaxValue));
         }
 
         [Fact]
@@ -132,11 +192,11 @@ namespace GitLab.NET.Tests
         }
 
         [Fact]
-        public async Task SearchAsync_ResultsPerPageIsGreaterThanMinimum_ThrowsArgumentOutOfRangeException()
+        public async Task SearchAsync_SearchQueryIsNull_ThrowsArgumentNullException()
         {
             var sut = new UserRepository(Substitute.For<IRequestExecutor>());
 
-            await Assert.ThrowsAsync<ArgumentOutOfRangeException>(() => sut.SearchAsync("searchQuery", resultsPerPage: uint.MaxValue));
+            await Assert.ThrowsAsync<ArgumentNullException>(() => sut.SearchAsync(null));
         }
     }
 }

@@ -1,6 +1,5 @@
-﻿using GitLab.NET.Tests.TestHelpers;
+﻿using System;
 using NSubstitute;
-using System;
 using RestSharp;
 using Xunit;
 
@@ -23,6 +22,16 @@ namespace GitLab.NET.Tests
         }
 
         [Fact]
+        public void Authenticate_PrivateTokenNull_ThrowsNullReferenceException()
+        {
+            var sut = new PrivateTokenAuthenticator();
+            var client = Substitute.For<IRestClient>();
+            var request = Substitute.For<IRestRequest>();
+
+            Assert.Throws<NullReferenceException>(() => sut.Authenticate(client, request));
+        }
+
+        [Fact]
         public void Authenticate_RequestIsNull_ThrowsArgumentNullException()
         {
             var sut = new PrivateTokenAuthenticator
@@ -32,16 +41,6 @@ namespace GitLab.NET.Tests
             var client = Substitute.For<IRestClient>();
 
             Assert.Throws<ArgumentNullException>(() => sut.Authenticate(client, null));
-        }
-
-        [Fact]
-        public void Authenticate_PrivateTokenNull_ThrowsNullReferenceException()
-        {
-            var sut = new PrivateTokenAuthenticator();
-            var client = Substitute.For<IRestClient>();
-            var request = Substitute.For<IRestRequest>();
-
-            Assert.Throws<NullReferenceException>(() => sut.Authenticate(client, request));
         }
 
         [Fact]

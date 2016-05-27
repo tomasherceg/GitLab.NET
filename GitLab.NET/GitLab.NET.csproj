@@ -50,6 +50,7 @@
     <Reference Include="System.Web.Extensions" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="EmailRepository.cs" />
     <Compile Include="Exceptions\BadRequestException.cs" />
     <Compile Include="Exceptions\ConflictException.cs" />
     <Compile Include="Exceptions\ForbiddenException.cs" />
@@ -66,11 +67,28 @@
     <Compile Include="IRequestModel.cs" />
     <Compile Include="IRestClientFactory.cs" />
     <Compile Include="IRequestExecutor.cs" />
+    <Compile Include="KeyRepository.cs" />
     <Compile Include="RepositoryBase.cs" />
     <Compile Include="PaginatedResult.cs" />
+    <Compile Include="RequestModels\BlockUserRequest.cs" />
+    <Compile Include="RequestModels\CreateEmailRequest.cs" />
+    <Compile Include="RequestModels\CreateKeyRequest.cs" />
+    <Compile Include="RequestModels\CreateUserRequest.cs" />
+    <Compile Include="RequestModels\DeleteEmailRequest.cs" />
+    <Compile Include="RequestModels\DeleteKeyRequest.cs" />
+    <Compile Include="RequestModels\DeleteUserRequest.cs" />
+    <Compile Include="RequestModels\GetEmailsRequest.cs" />
+    <Compile Include="RequestModels\GetKeyRequest.cs" />
+    <Compile Include="RequestModels\GetKeyWithUserRequest.cs" />
+    <Compile Include="RequestModels\GetUserEmailsRequest.cs" />
+    <Compile Include="RequestModels\GetUserKeysRequest.cs" />
     <Compile Include="RequestModels\RestRequestExtensions.cs" />
+    <Compile Include="RequestModels\UnblockUserRequest.cs" />
+    <Compile Include="RequestModels\UpdateUserRequest.cs" />
     <Compile Include="RequestResult.cs" />
+    <Compile Include="ResponseModels\EmailAddress.cs" />
     <Compile Include="ResponseModels\Identity.cs" />
+    <Compile Include="ResponseModels\SshKey.cs" />
     <Compile Include="ResponseModels\User.cs" />
     <Compile Include="RestClientFactory.cs" />
     <Compile Include="RequestExecutor.cs" />

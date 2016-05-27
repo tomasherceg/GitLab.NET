@@ -1,13 +1,12 @@
-﻿using JetBrains.Annotations;
-using RestSharp;
+﻿using RestSharp;
 
 namespace GitLab.NET.RequestModels
 {
     internal class GetUserRequest : IRequestModel
     {
-        private const string ByIdResource = "users/{id}";
-        private const string ByUsernameResource = "users";
-        private const string CurrentUserResource = "user";
+        public const string ByIdResource = "users/{id}";
+        public const string ByUsernameResource = "users";
+        public const string CurrentUserResource = "user";
 
         private readonly uint? _id;
         private readonly string _username;

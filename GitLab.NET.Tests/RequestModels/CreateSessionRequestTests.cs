@@ -1,6 +1,4 @@
 ﻿using GitLab.NET.RequestModels;
-using NSubstitute;
-using System;
 using GitLab.NET.Tests.TestHelpers;
 using RestSharp;
 using Xunit;
@@ -9,16 +7,6 @@ namespace GitLab.NET.Tests.RequestModels
 {
     public class CreateSessionRequestTests
     {
-        [Fact]
-        public void GetRequest_SetsCorrectResource()
-        {
-            var sut = new CreateSessionRequest("username", "password");
-
-            var result = sut.GetRequest();
-
-            Assert.Equal(CreateSessionRequest.Resource, result.Resource);
-        }
-
         [Fact]
         public void GetRequest_AddsLoginParameter()
         {
@@ -51,6 +39,16 @@ namespace GitLab.NET.Tests.RequestModels
             var result = sut.GetRequest();
 
             Assert.Contains(expectedParameter, result.Parameters, new ParameterEqualityComparer());
+        }
+
+        [Fact]
+        public void GetRequest_SetsCorrectResource()
+        {
+            var sut = new CreateSessionRequest("username", "password");
+
+            var result = sut.GetRequest();
+
+            Assert.Equal(CreateSessionRequest.Resource, result.Resource);
         }
 
         [Fact]

@@ -13,8 +13,20 @@ namespace GitLab.NET
         public string PrivateToken
         {
             get { return _authenticator.PrivateToken; }
-            set { _authenticator.PrivateToken = value; }
+            set
+            {
+                if (value == null)
+                    throw new ArgumentNullException(nameof(value));
+
+                _authenticator.PrivateToken = value;
+            }
         }
+
+        /// <summary> Provides a wrapper around the GitLab emails API. </summary>
+        public EmailRepository Emails { get; }
+
+        /// <summary> Provides a wrapper around the GitLab keys API. </summary>
+        public KeyRepository Keys { get; }
 
         /// <summary> Provides a wrapper around the GitLab sessions API. </summary>
         public SessionRepository Session { get; }
@@ -37,8 +49,10 @@ namespace GitLab.NET
             };
             var restExecutor = new RequestExecutor(new RestClientFactory(), baseUri, _authenticator);
 
-            Users = new UserRepository(restExecutor);
+            Emails = new EmailRepository(restExecutor);
+            Keys = new KeyRepository(restExecutor);
             Session = new SessionRepository(restExecutor);
+            Users = new UserRepository(restExecutor);
         }
     }
 }
