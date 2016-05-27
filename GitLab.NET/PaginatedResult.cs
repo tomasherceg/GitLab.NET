@@ -1,6 +1,4 @@
 ﻿using System.Collections.Generic;
-using System.Linq;
-using System.Net;
 using RestSharp;
 
 namespace GitLab.NET
@@ -27,10 +25,8 @@ namespace GitLab.NET
         /// <summary> The total number of results available. </summary>
         public uint? TotalResults { get; }
 
-        /// <summary>
-        /// Creates a new <see cref="PaginatedResult{T}" /> instance.
-        /// </summary>
-        /// <param name="response">The response to populate this instance with.</param>
+        /// <summary> Creates a new <see cref="PaginatedResult{T}" /> instance. </summary>
+        /// <param name="response"> The response to populate this instance with. </param>
         public PaginatedResult(IRestResponse<List<T>> response) : base(response)
         {
             CurrentPage = response.Headers.GetAsUInt("X-Page");

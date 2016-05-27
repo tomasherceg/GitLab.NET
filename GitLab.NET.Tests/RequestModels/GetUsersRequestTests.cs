@@ -1,6 +1,4 @@
 ﻿using GitLab.NET.RequestModels;
-using NSubstitute;
-using System;
 using GitLab.NET.Tests.TestHelpers;
 using RestSharp;
 using Xunit;
@@ -9,16 +7,6 @@ namespace GitLab.NET.Tests.RequestModels
 {
     public class GetUsersRequestTests
     {
-        [Fact]
-        public void GetRequest_SetsCorrectResource()
-        {
-            var sut = new GetUsersRequest(0, 20);
-
-            var result = sut.GetRequest();
-
-            Assert.Equal(GetUsersRequest.Resource, result.Resource);
-        }
-
         [Fact]
         public void GetRequest_AddsPageParameter()
         {
@@ -56,7 +44,7 @@ namespace GitLab.NET.Tests.RequestModels
         [Fact]
         public void GetRequest_SearchIsSet_AddsSearchParameter()
         {
-            string expectedSearch = "search";
+            var expectedSearch = "search";
             var expectedParameter = new Parameter
             {
                 Name = "search",
@@ -68,6 +56,26 @@ namespace GitLab.NET.Tests.RequestModels
             var result = sut.GetRequest();
 
             Assert.Contains(expectedParameter, result.Parameters, new ParameterEqualityComparer());
+        }
+
+        [Fact]
+        public void GetRequest_SetsCorrectResource()
+        {
+            var sut = new GetUsersRequest(1, 20);
+
+            var result = sut.GetRequest();
+
+            Assert.Equal(GetUsersRequest.Resource, result.Resource);
+        }
+
+        [Fact]
+        public void GetRequest_SetsMethodToGet()
+        {
+            var sut = new GetUsersRequest(1, 20);
+
+            var result = sut.GetRequest();
+
+            Assert.Equal(Method.GET, result.Method);
         }
     }
 }

@@ -1,7 +1,5 @@
 ﻿using System;
-using System.Runtime.CompilerServices;
 using RestSharp;
-using RestSharp.Authenticators;
 
 namespace GitLab.NET
 {

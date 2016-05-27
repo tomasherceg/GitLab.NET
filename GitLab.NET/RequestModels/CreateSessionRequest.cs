@@ -1,5 +1,4 @@
-﻿using JetBrains.Annotations;
-using RestSharp;
+﻿using RestSharp;
 
 namespace GitLab.NET.RequestModels
 {

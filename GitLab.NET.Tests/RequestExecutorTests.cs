@@ -3,7 +3,6 @@ using System.Threading.Tasks;
 using NSubstitute;
 using RestSharp;
 using RestSharp.Authenticators;
-using RestSharp.Validation;
 using Xunit;
 
 namespace GitLab.NET.Tests
@@ -23,9 +22,9 @@ namespace GitLab.NET.Tests
         private readonly IPrivateTokenAuthenticator _authenticator;
 
         [Fact]
-        public void Constructor_RestClientFactoryIsNull_ThrowsArgumentNullException()
+        public void Constructor_AuthenticatorIsNull_ThrowsArgumentNullException()
         {
-            Assert.Throws<ArgumentNullException>(() => new RequestExecutor(null, ValidBaseUri, _authenticator));
+            Assert.Throws<ArgumentNullException>(() => new RequestExecutor(_restClientFactory, ValidBaseUri, null));
         }
 
         [Fact]
@@ -35,9 +34,29 @@ namespace GitLab.NET.Tests
         }
 
         [Fact]
-        public void Constructor_AuthenticatorIsNull_ThrowsArgumentNullException()
+        public void Constructor_RestClientFactoryIsNull_ThrowsArgumentNullException()
         {
-            Assert.Throws<ArgumentNullException>(() => new RequestExecutor(_restClientFactory, ValidBaseUri, null));
+            Assert.Throws<ArgumentNullException>(() => new RequestExecutor(null, ValidBaseUri, _authenticator));
+        }
+
+        [Fact]
+        public void Execute_AuthenticateIsFalse_DoesNotAuthenticate()
+        {
+            var sut = new RequestExecutor(_restClientFactory, ValidBaseUri, _authenticator);
+
+            sut.Execute<object>(Substitute.For<IRequestModel>(), false);
+
+            _restClientFactory.Received().Create(Arg.Any<Uri>());
+        }
+
+        [Fact]
+        public void Execute_AuthenticateIsTrue_DoesAuthenticate()
+        {
+            var sut = new RequestExecutor(_restClientFactory, ValidBaseUri, _authenticator);
+
+            sut.Execute<object>(Substitute.For<IRequestModel>());
+
+            _restClientFactory.Received().Create(Arg.Any<Uri>(), Arg.Any<IAuthenticator>());
         }
 
         [Fact]
@@ -46,14 +65,6 @@ namespace GitLab.NET.Tests
             var sut = new RequestExecutor(_restClientFactory, ValidBaseUri, _authenticator);
 
             Assert.Throws<ArgumentNullException>(() => sut.Execute<object>(null));
-        }
-
-        [Fact]
-        public async Task ExecuteAsync_RequestIsNull_ThrowsArgumentNullException()
-        {
-            var sut = new RequestExecutor(_restClientFactory, ValidBaseUri, _authenticator);
-
-            await Assert.ThrowsAsync<ArgumentNullException>(() => sut.ExecuteAsync<object>(null));
         }
 
         [Fact]
@@ -71,6 +82,34 @@ namespace GitLab.NET.Tests
         }
 
         [Fact]
+        public async Task ExecuteAsync_AuthenticateIsFalse_DoesNotAuthenticate()
+        {
+            var sut = new RequestExecutor(_restClientFactory, ValidBaseUri, _authenticator);
+
+            await sut.ExecuteAsync<object>(Substitute.For<IRequestModel>(), false);
+
+            _restClientFactory.Received().Create(Arg.Any<Uri>());
+        }
+
+        [Fact]
+        public async Task ExecuteAsync_AuthenticateIsTrue_DoesAuthenticate()
+        {
+            var sut = new RequestExecutor(_restClientFactory, ValidBaseUri, _authenticator);
+
+            await sut.ExecuteAsync<object>(Substitute.For<IRequestModel>());
+
+            _restClientFactory.Received().Create(Arg.Any<Uri>(), Arg.Any<IAuthenticator>());
+        }
+
+        [Fact]
+        public async Task ExecuteAsync_RequestIsNull_ThrowsArgumentNullException()
+        {
+            var sut = new RequestExecutor(_restClientFactory, ValidBaseUri, _authenticator);
+
+            await Assert.ThrowsAsync<ArgumentNullException>(() => sut.ExecuteAsync<object>(null));
+        }
+
+        [Fact]
         public async Task ExecuteAsync_RestResponseErrorExceptionIsSet_ThrowsErrorException()
         {
             var restClient = Substitute.For<IRestClient>();
@@ -82,50 +121,6 @@ namespace GitLab.NET.Tests
             var sut = new RequestExecutor(_restClientFactory, ValidBaseUri, _authenticator);
 
             await Assert.ThrowsAsync<TestException>(() => sut.ExecuteAsync<object>(Substitute.For<IRequestModel>()));
-        }
-
-        [Fact]
-        public void Execute_AuthenticateIsFalse_DoesNotAuthenticate()
-        {
-            var restClient = Substitute.For<IRestClient>();
-            var sut = new RequestExecutor(_restClientFactory, ValidBaseUri, _authenticator);
-
-            sut.Execute<object>(Substitute.For<IRequestModel>(), false);
-
-            _restClientFactory.Received().Create(Arg.Any<Uri>());
-        }
-
-        [Fact]
-        public async Task ExecuteAsync_AuthenticateIsFalse_DoesNotAuthenticate()
-        {
-            var restClient = Substitute.For<IRestClient>();
-            var sut = new RequestExecutor(_restClientFactory, ValidBaseUri, _authenticator);
-
-            await sut.ExecuteAsync<object>(Substitute.For<IRequestModel>(), false);
-
-            _restClientFactory.Received().Create(Arg.Any<Uri>());
-        }
-
-        [Fact]
-        public void Execute_AuthenticateIsTrue_DoesAuthenticate()
-        {
-            var restClient = Substitute.For<IRestClient>();
-            var sut = new RequestExecutor(_restClientFactory, ValidBaseUri, _authenticator);
-
-            sut.Execute<object>(Substitute.For<IRequestModel>());
-
-            _restClientFactory.Received().Create(Arg.Any<Uri>(), Arg.Any<IAuthenticator>());
-        }
-
-        [Fact]
-        public async Task ExecuteAsync_AuthenticateIsTrue_DoesAuthenticate()
-        {
-            var restClient = Substitute.For<IRestClient>();
-            var sut = new RequestExecutor(_restClientFactory, ValidBaseUri, _authenticator);
-
-            await sut.ExecuteAsync<object>(Substitute.For<IRequestModel>());
-
-            _restClientFactory.Received().Create(Arg.Any<Uri>(), Arg.Any<IAuthenticator>());
         }
     }
 }
