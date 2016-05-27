@@ -11,7 +11,10 @@ namespace GitLab.NET.Tests.TestHelpers
             if (x.Name != y.Name)
                 return false;
 
-            if (x.Value != y.Value)
+            if (!x.Value.Equals(y.Value))
+                return false;
+
+            if (x.Type != y.Type)
                 return false;
 
             return true;
