@@ -26,11 +26,7 @@
     </dependencies>
   </metadata>
   <files>
-    <file src="GitLab.NET\bin\*\GitLab.NET.dll" target="lib" />
-    <file src="GitLab.NET\bin\*\GitLab.NET.pdb" target="lib" />
-    <file src="GitLab.NET\bin\*\GitLab.NET.mdb" target="lib" />
-    <file src="GitLab.NET/bin/*/GitLab.NET.dll" target="lib" />
-    <file src="GitLab.NET/bin/*/GitLab.NET.pdb" target="lib" />
-    <file src="GitLab.NET/bin/*/GitLab.NET.mdb" target="lib" />
+    <file src="GitLab.NET\bin\*\GitLab.NET.*" target="lib" />
+    <file src="GitLab.NET/bin/*/GitLab.NET.*" target="lib" />
   </files>
 </package>

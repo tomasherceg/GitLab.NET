@@ -4,26 +4,26 @@ namespace GitLab.NET.RequestModels
 {
     internal class GetUsersRequest : IRequestModel
     {
-        private const string Resource = "users";
-        private readonly int _page;
-        private readonly int _resultsPerPage;
+        public const string Resource = "users";
 
+        private readonly uint _page;
+        private readonly uint _resultsPerPage;
         private readonly string _search;
 
-        public GetUsersRequest(int page, int resultsPerPage)
+        public GetUsersRequest(uint page, uint resultsPerPage)
         {
             _page = page;
             _resultsPerPage = resultsPerPage;
         }
 
-        public GetUsersRequest(string search, int page, int resultsPerPage)
+        public GetUsersRequest(string search, uint page, uint resultsPerPage)
         {
             _search = search;
             _page = page;
             _resultsPerPage = resultsPerPage;
         }
 
-        public RestRequest GetRequest()
+        public IRestRequest GetRequest()
         {
             var request = new RestRequest(Resource, Method.GET);
 

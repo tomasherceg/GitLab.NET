@@ -5,36 +5,45 @@ namespace GitLab.NET.RequestModels
 {
     internal class GetUserRequest : IRequestModel
     {
-        public const string ByIdResource = "users/{id}";
-        public const string ByUsernameResource = "users";
+        private const string ByIdResource = "users/{id}";
+        private const string ByUsernameResource = "users";
+        private const string CurrentUserResource = "user";
 
-        private readonly int? _id;
+        private readonly uint? _id;
         private readonly string _username;
 
-        public GetUserRequest(int id)
+        public GetUserRequest() { }
+
+        public GetUserRequest(uint id)
         {
             _id = id;
         }
 
-        public GetUserRequest([NotNull] string username)
+        public GetUserRequest(string username)
         {
             _username = username;
         }
 
-        public RestRequest GetRequest()
+        public IRestRequest GetRequest()
         {
+            var request = new RestRequest(Method.GET);
+
             if (_username != null)
             {
-                var request = new RestRequest(ByUsernameResource, Method.GET);
+                request.Resource = ByUsernameResource;
                 request.AddParameter("username", _username);
-                return request;
+            }
+            else if (_id != null)
+            {
+                request.Resource = ByIdResource;
+                request.AddParameter("id", _id, ParameterType.UrlSegment);
             }
             else
             {
-                var request = new RestRequest(ByIdResource, Method.GET);
-                request.AddParameter("id", _id, ParameterType.UrlSegment);
-                return request;
+                request.Resource = CurrentUserResource;
             }
+
+            return request;
         }
     }
 }

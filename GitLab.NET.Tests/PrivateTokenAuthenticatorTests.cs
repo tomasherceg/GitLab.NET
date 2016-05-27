@@ -10,23 +10,13 @@ namespace GitLab.NET.Tests
     {
         private const string ValidToken = "validToken";
 
-        [Theory]
-        [ClassData(typeof(EmptyOrWhiteSpace))]
-        public void Constructor_PrivateTokenIsEmptyOrWhiteSpace_ThrowsArgumentException(string invalidToken)
-        {
-            Assert.Throws<ArgumentException>(() => new PrivateTokenAuthenticator(invalidToken));
-        }
-
-        [Fact]
-        public void Constructor_PrivateTokenIsNull_ThrowsArgumentNullException()
-        {
-            Assert.Throws<ArgumentNullException>(() => new PrivateTokenAuthenticator(null));
-        }
-
         [Fact]
         public void Authenticate_ClientIsNull_ThrowsArgumentNullException()
         {
-            var sut = new PrivateTokenAuthenticator(ValidToken);
+            var sut = new PrivateTokenAuthenticator
+            {
+                PrivateToken = ValidToken
+            };
             var request = Substitute.For<IRestRequest>();
 
             Assert.Throws<ArgumentNullException>(() => sut.Authenticate(null, request));
@@ -35,16 +25,32 @@ namespace GitLab.NET.Tests
         [Fact]
         public void Authenticate_RequestIsNull_ThrowsArgumentNullException()
         {
-            var sut = new PrivateTokenAuthenticator(ValidToken);
+            var sut = new PrivateTokenAuthenticator
+            {
+                PrivateToken = ValidToken
+            };
             var client = Substitute.For<IRestClient>();
 
             Assert.Throws<ArgumentNullException>(() => sut.Authenticate(client, null));
         }
-        
+
+        [Fact]
+        public void Authenticate_PrivateTokenNull_ThrowsNullReferenceException()
+        {
+            var sut = new PrivateTokenAuthenticator();
+            var client = Substitute.For<IRestClient>();
+            var request = Substitute.For<IRestRequest>();
+
+            Assert.Throws<NullReferenceException>(() => sut.Authenticate(client, request));
+        }
+
         [Fact]
         public void Authenticate_ValidParameters_AddsPrivateToken()
         {
-            var sut = new PrivateTokenAuthenticator(ValidToken);
+            var sut = new PrivateTokenAuthenticator
+            {
+                PrivateToken = ValidToken
+            };
             var client = Substitute.For<IRestClient>();
             var request = Substitute.For<IRestRequest>();
 

@@ -1,15 +1,14 @@
-﻿using System.Diagnostics.CodeAnalysis;
-using RestSharp.Deserializers;
-
-namespace GitLab.NET.ResponseModels
+﻿namespace GitLab.NET.ResponseModels
 {
-    [SuppressMessage("ReSharper", "UnusedMember.Global")]
+    /// <summary>
+    /// Provides information about an external identity.
+    /// </summary>
     public class Identity
     {
-        [DeserializeAs(Name = "provider")]
+        /// <summary> The identity provider. </summary>
         public string Provider { get; set; }
 
-        [DeserializeAs(Name = "extern_uid")]
+        /// <summary> The UID for the identity. </summary>
         public string ExternUid { get; set; }
     }
 }

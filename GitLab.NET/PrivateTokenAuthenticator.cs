@@ -1,24 +1,19 @@
 ﻿using System;
+using System.Runtime.CompilerServices;
 using RestSharp;
 using RestSharp.Authenticators;
 
 namespace GitLab.NET
 {
-    public class PrivateTokenAuthenticator : IAuthenticator
+    /// <summary> A GitLab private token authenticator. </summary>
+    internal class PrivateTokenAuthenticator : IPrivateTokenAuthenticator
     {
-        private readonly string _privateToken;
+        /// <summary> The user's private token. </summary>
+        public string PrivateToken { get; set; }
 
-        public PrivateTokenAuthenticator(string privateToken)
-        {
-            if (privateToken == null)
-                throw new ArgumentNullException(nameof(privateToken));
-
-            if (string.IsNullOrWhiteSpace(privateToken))
-                throw new ArgumentException("Parameter must not be empty or white space.", nameof(privateToken));
-
-            _privateToken = privateToken;
-        }
-
+        /// <summary> Adds the provided private token to the request as a header. </summary>
+        /// <param name="client"> The <see cref="IRestClient" />. </param>
+        /// <param name="request"> The <see cref="IRestRequest" /> to add the header to. </param>
         public void Authenticate(IRestClient client, IRestRequest request)
         {
             if (client == null)
@@ -27,7 +22,10 @@ namespace GitLab.NET
             if (request == null)
                 throw new ArgumentNullException(nameof(request));
 
-            request.AddParameter("PRIVATE-TOKEN", _privateToken, ParameterType.HttpHeader);
+            if (PrivateToken == null)
+                throw new NullReferenceException("PrivateToken is null.");
+
+            request.AddParameter("PRIVATE-TOKEN", PrivateToken, ParameterType.HttpHeader);
         }
     }
 }

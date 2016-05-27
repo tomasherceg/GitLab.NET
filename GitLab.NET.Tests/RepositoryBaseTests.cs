@@ -8,9 +8,9 @@ namespace GitLab.NET.Tests
     {
         private class RepositoryBaseInstance : RepositoryBase
         {
-            public IRestExecutor RestExecutorProp => RestExecutor;
+            public IRequestExecutor RestExecutorProp => RequestExecutor;
 
-            public RepositoryBaseInstance(IRestExecutor restExecutor) : base(restExecutor) { }
+            public RepositoryBaseInstance(IRequestExecutor restExecutor) : base(restExecutor) { }
         }
 
         [Fact]
@@ -22,7 +22,7 @@ namespace GitLab.NET.Tests
         [Fact]
         public void Constructor_RestExecutorNotNull_SetsRestExecutor()
         {
-            var sut = new RepositoryBaseInstance(Substitute.For<IRestExecutor>());
+            var sut = new RepositoryBaseInstance(Substitute.For<IRequestExecutor>());
 
             Assert.NotNull(sut.RestExecutorProp);
         }

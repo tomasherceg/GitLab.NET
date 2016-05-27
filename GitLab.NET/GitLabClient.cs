@@ -2,32 +2,43 @@
 
 namespace GitLab.NET
 {
+    /// <summary> A wrapper around the GitLab API. </summary>
     public class GitLabClient
     {
         private const string ApiPath = "/api/v3";
 
-        // ReSharper disable MemberCanBePrivate.Global
-        // ReSharper disable UnusedAutoPropertyAccessor.Global
-        public UserRepository Users { get; }
-        // ReSharper restore UnusedAutoPropertyAccessor.Global
-        // ReSharper restore MemberCanBePrivate.Global
+        private readonly IPrivateTokenAuthenticator _authenticator;
 
-        public GitLabClient(string privateToken, Uri hostUri)
+        /// <summary> The user's private token. </summary>
+        public string PrivateToken
         {
-            if (privateToken == null)
-                throw new ArgumentNullException(nameof(privateToken));
+            get { return _authenticator.PrivateToken; }
+            set { _authenticator.PrivateToken = value; }
+        }
 
-            if (string.IsNullOrWhiteSpace(privateToken))
-                throw new ArgumentException("Parameter must not be empty or white space.", nameof(privateToken));
+        /// <summary> Provides a wrapper around the GitLab sessions API. </summary>
+        public SessionRepository Session { get; }
 
+        /// <summary> Provides a wrapper around the GitLab users API. </summary>
+        public UserRepository Users { get; }
+
+        /// <summary> Creates a new <see cref="GitLabClient" /> instance. </summary>
+        /// <param name="hostUri"> The GitLab server to connect to. </param>
+        /// <param name="privateToken"> The private token to use when making requests to the GitLab API. </param>
+        public GitLabClient(Uri hostUri, string privateToken = null)
+        {
             if (hostUri == null)
                 throw new ArgumentNullException(nameof(hostUri));
 
             var baseUri = new Uri(hostUri, ApiPath);
-            var authenticator = new PrivateTokenAuthenticator(privateToken);
-            var restExecutor = new RestExecutor(new RestClientFactory(), baseUri, authenticator);
+            _authenticator = new PrivateTokenAuthenticator
+            {
+                PrivateToken = privateToken
+            };
+            var restExecutor = new RequestExecutor(new RestClientFactory(), baseUri, _authenticator);
 
             Users = new UserRepository(restExecutor);
+            Session = new SessionRepository(restExecutor);
         }
     }
 }

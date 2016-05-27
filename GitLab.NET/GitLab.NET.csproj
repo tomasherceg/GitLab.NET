@@ -23,6 +23,8 @@
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
+    <DocumentationFile>bin\Debug\GitLab.NET.xml</DocumentationFile>
+    <RunCodeAnalysis>false</RunCodeAnalysis>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>pdbonly</DebugType>
@@ -32,6 +34,7 @@
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
     <DebugSymbols>true</DebugSymbols>
+    <DocumentationFile>bin\Release\GitLab.NET.xml</DocumentationFile>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="ConfigureAwait, Version=0.3.1.0, Culture=neutral, PublicKeyToken=233850a516558a98, processorArchitecture=MSIL">
@@ -44,6 +47,7 @@
     </Reference>
     <Reference Include="System" />
     <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Web.Extensions" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Exceptions\BadRequestException.cs" />
@@ -56,32 +60,26 @@
     <Compile Include="Exceptions\UnhandledErrorException.cs" />
     <Compile Include="Exceptions\UnprocessableException.cs" />
     <Compile Include="GitLabClient.cs" />
+    <Compile Include="Config.cs" />
+    <Compile Include="HeaderHelper.cs" />
+    <Compile Include="IPrivateTokenAuthenticator.cs" />
     <Compile Include="IRequestModel.cs" />
     <Compile Include="IRestClientFactory.cs" />
-    <Compile Include="IRestExecutor.cs" />
+    <Compile Include="IRequestExecutor.cs" />
     <Compile Include="RepositoryBase.cs" />
     <Compile Include="PaginatedResult.cs" />
     <Compile Include="RequestModels\RestRequestExtensions.cs" />
-    <Compile Include="RestClientFactory.cs" />
-    <Compile Include="RestExecutor.cs" />
-    <Compile Include="ResponseModels\Error.cs" />
-    <Compile Include="PrivateTokenAuthenticator.cs" />
-    <Compile Include="ResponseModels\AccessLevel.cs" />
-    <Compile Include="ResponseModels\NamespaceAvatar.cs" />
+    <Compile Include="RequestResult.cs" />
     <Compile Include="ResponseModels\Identity.cs" />
-    <Compile Include="ResponseModels\ProjectNamespace.cs" />
-    <Compile Include="ResponseModels\NotificationLevel.cs" />
-    <Compile Include="ResponseModels\Permission.cs" />
-    <Compile Include="ResponseModels\Project.cs" />
-    <Compile Include="ResponseModels\ProjectOwner.cs" />
-    <Compile Include="ResponseModels\ProjectPermissions.cs" />
     <Compile Include="ResponseModels\User.cs" />
-    <Compile Include="ResponseModels\VisibilityLevel.cs" />
+    <Compile Include="RestClientFactory.cs" />
+    <Compile Include="RequestExecutor.cs" />
+    <Compile Include="PrivateTokenAuthenticator.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="RequestModels\CreateSessionRequest.cs" />
     <Compile Include="RequestModels\GetUserRequest.cs" />
     <Compile Include="RequestModels\GetUsersRequest.cs" />
-    <Compile Include="UserAuthenticator.cs" />
+    <Compile Include="SessionRepository.cs" />
     <Compile Include="UserRepository.cs" />
   </ItemGroup>
   <ItemGroup>
