@@ -7,9 +7,11 @@ namespace GitLab.NET.Tests.TestHelpers
     {
         public IEnumerator<object[]> GetEnumerator()
         {
-            // ...
-            yield return new object[] { 8, 21 };
-            yield return new object[] { 16, 987 };
+            yield return new object[] { "" };
+            yield return new object[] { " " };
+            yield return new object[] { "\t" };
+            yield return new object[] { "\r" };
+            yield return new object[] { "\n" };
         }
 
         IEnumerator IEnumerable.GetEnumerator()
