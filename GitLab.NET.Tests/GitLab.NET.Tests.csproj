@@ -70,8 +70,10 @@
     <Compile Include="ProjectSnippetRepositoryTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="RepositoryBaseTests.cs" />
+    <Compile Include="RepositoryRepositoryTests.cs" />
     <Compile Include="RequestExecutorTests.cs" />
     <Compile Include="RequestModels\BlockUserRequestTests.cs" />
+    <Compile Include="RequestModels\CompareRepositoryRequestTests.cs" />
     <Compile Include="RequestModels\CreateEmailRequestTests.cs" />
     <Compile Include="RequestModels\CreateKeyRequestTests.cs" />
     <Compile Include="RequestModels\CreateProjectSnippetRequestTests.cs" />
@@ -81,7 +83,10 @@
     <Compile Include="RequestModels\DeleteKeyRequestTests.cs" />
     <Compile Include="RequestModels\DeleteProjectSnippetRequestTests.cs" />
     <Compile Include="RequestModels\DeleteUserRequestTests.cs" />
+    <Compile Include="RequestModels\GetBlobRawContentRequestTests.cs" />
     <Compile Include="RequestModels\GetEmailsRequestTests.cs" />
+    <Compile Include="RequestModels\GetRepositoryContributorsRequestTests.cs" />
+    <Compile Include="RequestModels\GetRepositoryFileArchiveRequestTests.cs" />
     <Compile Include="RequestModels\GetKeyRequestTests.cs" />
     <Compile Include="RequestModels\GetKeyWithUserRequestTests.cs" />
     <Compile Include="RequestModels\GetGitLabLicenseRequestTests.cs" />
@@ -90,6 +95,8 @@
     <Compile Include="RequestModels\GetProjectSnippetContentRequestTests.cs" />
     <Compile Include="RequestModels\GetProjectSnippetRequestTests.cs" />
     <Compile Include="RequestModels\GetProjectSnippetsRequestTests.cs" />
+    <Compile Include="RequestModels\GetRepositoryRawFileContentRequestTests.cs" />
+    <Compile Include="RequestModels\GetRepositoryTreeRequestTests.cs" />
     <Compile Include="RequestModels\GetUserEmailsRequestTests.cs" />
     <Compile Include="RequestModels\GetUserKeysRequestTests.cs" />
     <Compile Include="RequestModels\GetUserRequestTests.cs" />

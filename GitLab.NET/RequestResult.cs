@@ -23,23 +23,14 @@ namespace GitLab.NET
             StatusCode = response.StatusCode;
             Results = response.Data;
         }
-    }
-
-    /// <summary> Provides data from an API request. </summary>
-    public class RequestResult
-    {
-        /// <summary> The <see cref="HttpStatusCode" /> returned by the server for this request. </summary>
-        public HttpStatusCode StatusCode { get; }
-
-        /// <summary> The results from the query. </summary>
-        public string Results { get; }
 
         /// <summary> Creates a new <see cref="RequestResult{T}" /> instance. </summary>
         /// <param name="response"> The response to populate this instance with. </param>
-        public RequestResult(IRestResponse response)
+        /// <param name="data"> The data for this instance. </param>
+        public RequestResult(IRestResponse response, T data)
         {
             StatusCode = response.StatusCode;
-            Results = response.Content;
+            Results = data;
         }
     }
 }
