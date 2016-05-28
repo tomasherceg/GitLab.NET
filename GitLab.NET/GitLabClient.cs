@@ -37,6 +37,9 @@ namespace GitLab.NET
         /// <summary> Provides a wrapper around the GitLab project snippets API. </summary>
         public ProjectSnippetRepository ProjectSnippets { get; }
 
+        /// <summary> Provides a wrapper around the GitLab repository API. </summary>
+        public RepositoryRepository Repositories { get; }
+
         /// <summary> Provides a wrapper around the GitLab sessions API. </summary>
         public SessionRepository Session { get; }
 
@@ -63,6 +66,7 @@ namespace GitLab.NET
             Keys = new KeyRepository(restExecutor);
             Licenses = new LicenseRepository(restExecutor);
             ProjectSnippets = new ProjectSnippetRepository(restExecutor);
+            Repositories = new RepositoryRepository(restExecutor);
             Session = new SessionRepository(restExecutor);
             Users = new UserRepository(restExecutor);
         }

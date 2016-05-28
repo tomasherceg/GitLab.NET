@@ -144,27 +144,27 @@ namespace GitLab.NET
         /// <summary> Gets a snippet's content by its ID and the project ID it is associated with. </summary>
         /// <param name="id"> The ID of the snippet. </param>
         /// <param name="projectId"> The ID of the project to get the snippet from. </param>
-        /// <returns> A <see cref="RequestResult" /> representing the results of the request. </returns>
-        public RequestResult GetContent(uint id, uint projectId)
+        /// <returns> A <see cref="RequestResult{String}" /> representing the results of the request. </returns>
+        public RequestResult<string> GetContent(uint id, uint projectId)
         {
             var request = new GetProjectSnippetContentRequest(id, projectId);
 
             var result = RequestExecutor.Execute(request);
 
-            return new RequestResult(result);
+            return new RequestResult<string>(result, result.Content);
         }
 
         /// <summary> Gets a snippet's content by its ID and the project ID it is associated with. </summary>
         /// <param name="id"> The ID of the snippet. </param>
         /// <param name="projectId"> The ID of the project to get the snippet from. </param>
-        /// <returns> A <see cref="RequestResult" /> representing the results of the request. </returns>
-        public async Task<RequestResult> GetContentAsync(uint id, uint projectId)
+        /// <returns> A <see cref="RequestResult{String}" /> representing the results of the request. </returns>
+        public async Task<RequestResult<string>> GetContentAsync(uint id, uint projectId)
         {
             var request = new GetProjectSnippetContentRequest(id, projectId);
 
             var result = await RequestExecutor.ExecuteAsync(request);
 
-            return new RequestResult(result);
+            return new RequestResult<string>(result, result.Content);
         }
 
         /// <summary> Updates a project snippet associated with the provided project ID. </summary>
