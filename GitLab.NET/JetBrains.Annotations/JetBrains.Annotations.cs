@@ -34,10 +34,8 @@ using System;
 
 namespace JetBrains.Annotations
 {
-    /// <summary>
-    ///     Indicates that the value of the marked element could be <c> null </c> sometimes, so the check for
-    ///     <c> null </c> is necessary before its usage.
-    /// </summary>
+    /// <summary> Indicates that the value of the marked element could be <c> null </c> sometimes, so the check for
+    ///     <c> null </c> is necessary before its usage. </summary>
     /// <example>
     ///     <code>
     /// [CanBeNull] object Test() => null;
@@ -430,10 +428,8 @@ namespace JetBrains.Annotations
         InstantiatedNoFixedConstructorSignature = 8
     }
 
-    /// <summary>
-    ///     Specify what is considered used implicitly when marked with <see cref="MeansImplicitUseAttribute" /> or
-    ///     <see cref="UsedImplicitlyAttribute" />.
-    /// </summary>
+    /// <summary> Specify what is considered used implicitly when marked with <see cref="MeansImplicitUseAttribute" /> or
+    ///     <see cref="UsedImplicitlyAttribute" />. </summary>
     [Flags]
     internal enum ImplicitUseTargetFlags
     {
@@ -473,10 +469,8 @@ namespace JetBrains.Annotations
     [AttributeUsage(AttributeTargets.Parameter)]
     internal sealed class InstantHandleAttribute : Attribute { }
 
-    /// <summary>
-    ///     Indicates that a method does not make any observable state changes. The same as
-    ///     <c> System.Diagnostics.Contracts.PureAttribute </c>.
-    /// </summary>
+    /// <summary> Indicates that a method does not make any observable state changes. The same as
+    ///     <c> System.Diagnostics.Contracts.PureAttribute </c>. </summary>
     /// <example>
     ///     <code>
     /// [Pure] int Multiply(int x, int y) => x * y;
@@ -599,11 +593,9 @@ namespace JetBrains.Annotations
     [AttributeUsage(AttributeTargets.Parameter | AttributeTargets.Method, AllowMultiple = true)]
     internal sealed class MacroAttribute : Attribute
     {
-        /// <summary>
-        ///     Allows specifying a macro that will be executed for a
+        /// <summary> Allows specifying a macro that will be executed for a
         ///     <see cref="SourceTemplateAttribute"> source template </see>
-        ///     parameter when the template is expanded.
-        /// </summary>
+        ///     parameter when the template is expanded. </summary>
         public string Expression { get; set; }
 
         /// <summary> Allows specifying which occurrence of the target parameter becomes editable when the template is deployed. </summary>
@@ -910,10 +902,8 @@ namespace JetBrains.Annotations
     [AttributeUsage(AttributeTargets.Method)]
     internal sealed class AssertionMethodAttribute : Attribute { }
 
-    /// <summary>
-    ///     Indicates the condition parameter of the assertion method. The method itself should be marked by
-    ///     <see cref="AssertionMethodAttribute" /> attribute. The mandatory argument of the attribute is the assertion type.
-    /// </summary>
+    /// <summary> Indicates the condition parameter of the assertion method. The method itself should be marked by
+    ///     <see cref="AssertionMethodAttribute" /> attribute. The mandatory argument of the attribute is the assertion type. </summary>
     [AttributeUsage(AttributeTargets.Parameter)]
     internal sealed class AssertionConditionAttribute : Attribute
     {
@@ -968,10 +958,8 @@ namespace JetBrains.Annotations
     [AttributeUsage(AttributeTargets.Parameter)]
     internal sealed class RegexPatternAttribute : Attribute { }
 
-    /// <summary>
-    ///     XAML attribute. Indicates the type that has <c> ItemsSource </c> property and should be treated as
-    ///     <c> ItemsControl </c>-derived type, to enable inner items <c> DataContext </c> type resolve.
-    /// </summary>
+    /// <summary> XAML attribute. Indicates the type that has <c> ItemsSource </c> property and should be treated as
+    ///     <c> ItemsControl </c>-derived type, to enable inner items <c> DataContext </c> type resolve. </summary>
     [AttributeUsage(AttributeTargets.Class)]
     internal sealed class XamlItemsControlAttribute : Attribute { }
 

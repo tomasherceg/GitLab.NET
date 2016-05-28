@@ -1,5 +1,6 @@
 ﻿// ReSharper disable UnusedMember.Global
 // ReSharper disable ClassNeverInstantiated.Global
+
 namespace GitLab.NET.ResponseModels
 {
     /// <summary> Provides information about an external identity. </summary>

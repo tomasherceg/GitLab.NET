@@ -30,6 +30,14 @@ namespace GitLab.NET.Tests
         }
 
         [Fact]
+        public void Constructor_ValidParameters_SetsProjectSnippets()
+        {
+            var sut = new GitLabClient(ValidHostUri);
+
+            Assert.NotNull(sut.ProjectSnippets);
+        }
+
+        [Fact]
         public void Constructor_ValidParameters_SetsSession()
         {
             var sut = new GitLabClient(ValidHostUri);
