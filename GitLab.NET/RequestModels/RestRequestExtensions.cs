@@ -1,4 +1,6 @@
-﻿using RestSharp;
+﻿// ReSharper disable UnusedMember.Global
+
+using RestSharp;
 
 namespace GitLab.NET.RequestModels
 {

@@ -5,19 +5,19 @@ using Xunit;
 
 namespace GitLab.NET.Tests.RequestModels
 {
-    public class GetKeyWithUserRequestTests
+    public class GetProjectSnippetsRequestTests
     {
         [Fact]
-        public void GetRequest_AddsIdParameter()
+        public void GetRequest_AddsProjectIdParameter()
         {
             const uint expected = 5;
             var expectedParameter = new Parameter
             {
-                Name = "id",
+                Name = "projectId",
                 Value = expected,
                 Type = ParameterType.UrlSegment
             };
-            var sut = new GetKeyWithUserRequest(expected);
+            var sut = new GetProjectSnippetsRequest(expected);
 
             var result = sut.GetRequest();
 
@@ -27,17 +27,17 @@ namespace GitLab.NET.Tests.RequestModels
         [Fact]
         public void GetRequest_SetsCorrectResource()
         {
-            var sut = new GetKeyWithUserRequest(0);
+            var sut = new GetProjectSnippetsRequest(0);
 
             var result = sut.GetRequest();
 
-            Assert.Equal(GetKeyWithUserRequest.Resource, result.Resource);
+            Assert.Equal(GetProjectSnippetsRequest.Resource, result.Resource);
         }
 
         [Fact]
         public void GetRequest_SetsMethodToGet()
         {
-            var sut = new GetKeyWithUserRequest(0);
+            var sut = new GetProjectSnippetsRequest(0);
 
             var result = sut.GetRequest();
 

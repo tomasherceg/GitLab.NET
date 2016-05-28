@@ -1,4 +1,6 @@
-﻿namespace GitLab.NET.ResponseModels
+﻿// ReSharper disable UnusedMember.Global
+
+namespace GitLab.NET.ResponseModels
 {
     /// <summary> Stores information about an email address. </summary>
     public class EmailAddress

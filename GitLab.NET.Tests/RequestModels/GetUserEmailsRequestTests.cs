@@ -18,29 +18,9 @@ namespace GitLab.NET.Tests.RequestModels
         }
 
         [Fact]
-        public void GetRequest_IdIsSet_SetsCorrectResource()
-        {
-            var sut = new GetUserEmailsRequest(0);
-
-            var result = sut.GetRequest();
-
-            Assert.Equal(GetUserEmailsRequest.SpecifiedUserResource, result.Resource);
-        }
-
-        [Fact]
         public void GetRequest_IdIsNotSet_SetsMethodToGet()
         {
             var sut = new GetUserEmailsRequest();
-
-            var result = sut.GetRequest();
-
-            Assert.Equal(Method.GET, result.Method);
-        }
-
-        [Fact]
-        public void GetRequest_IdIsSet_SetsMethodToGet()
-        {
-            var sut = new GetUserEmailsRequest(0);
 
             var result = sut.GetRequest();
 
@@ -62,6 +42,26 @@ namespace GitLab.NET.Tests.RequestModels
             var result = sut.GetRequest();
 
             Assert.Contains(expectedParameter, result.Parameters, new ParameterEqualityComparer());
+        }
+
+        [Fact]
+        public void GetRequest_IdIsSet_SetsCorrectResource()
+        {
+            var sut = new GetUserEmailsRequest(0);
+
+            var result = sut.GetRequest();
+
+            Assert.Equal(GetUserEmailsRequest.SpecifiedUserResource, result.Resource);
+        }
+
+        [Fact]
+        public void GetRequest_IdIsSet_SetsMethodToGet()
+        {
+            var sut = new GetUserEmailsRequest(0);
+
+            var result = sut.GetRequest();
+
+            Assert.Equal(Method.GET, result.Method);
         }
     }
 }

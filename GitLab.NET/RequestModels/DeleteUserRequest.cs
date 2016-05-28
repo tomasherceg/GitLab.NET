@@ -6,7 +6,7 @@ namespace GitLab.NET.RequestModels
     {
         public const string Resource = "users/{id}";
 
-        private uint _id;
+        private readonly uint _id;
 
         public DeleteUserRequest(uint id)
         {

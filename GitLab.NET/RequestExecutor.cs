@@ -35,7 +35,7 @@ namespace GitLab.NET
         /// <typeparam name="T"> The type to deserialize the response to. </typeparam>
         /// <param name="request"> The request model to execute. </param>
         /// <param name="authenticate"> Whether or not to use the provided authenticator for this request. </param>
-        /// <returns> An object of type T with the deserialized data. </returns>
+        /// <returns> An <see cref="IRestResponse{T}" /> instance containing the results of the request. </returns>
         public IRestResponse<T> Execute<T>(IRequestModel request, bool authenticate = true) where T : new()
         {
             if (request == null)
@@ -54,7 +54,7 @@ namespace GitLab.NET
         /// <typeparam name="T"> The type to deserialize the response to. </typeparam>
         /// <param name="request"> The request model to execute. </param>
         /// <param name="authenticate"> Whether or not to use the provided authenticator for this request. </param>
-        /// <returns> An object of type T with the deserialized data. </returns>
+        /// <returns> An <see cref="IRestResponse{T}" /> instance containing the results of the request. </returns>
         public async Task<IRestResponse<T>> ExecuteAsync<T>(IRequestModel request, bool authenticate = true) where T : new()
         {
             if (request == null)
@@ -63,6 +63,42 @@ namespace GitLab.NET
             var client = authenticate ? _restClientFactory.Create(_baseUri, _authenticator) : _restClientFactory.Create(_baseUri);
 
             var response = await client.ExecuteTaskAsync<T>(request.GetRequest());
+
+            HandleException(response);
+
+            return response;
+        }
+
+        /// <summary> Executes a request synchronously and returns its result. </summary>
+        /// <param name="request"> The request model to execute. </param>
+        /// <param name="authenticate"> Whether or not to use the provided authenticator for this request. </param>
+        /// <returns> An <see cref="IRestResponse" /> instance containing the results of the request. </returns>
+        public IRestResponse Execute(IRequestModel request, bool authenticate = true)
+        {
+            if (request == null)
+                throw new ArgumentNullException(nameof(request));
+
+            var client = authenticate ? _restClientFactory.Create(_baseUri, _authenticator) : _restClientFactory.Create(_baseUri);
+
+            var response = client.Execute(request.GetRequest());
+
+            HandleException(response);
+
+            return response;
+        }
+
+        /// <summary> Executes a request asynchronously and returns its result. </summary>
+        /// <param name="request"> The request model to execute. </param>
+        /// <param name="authenticate"> Whether or not to use the provided authenticator for this request. </param>
+        /// <returns> An <see cref="IRestResponse" /> instance containing the results of the request. </returns>
+        public async Task<IRestResponse> ExecuteAsync(IRequestModel request, bool authenticate = true)
+        {
+            if (request == null)
+                throw new ArgumentNullException(nameof(request));
+
+            var client = authenticate ? _restClientFactory.Create(_baseUri, _authenticator) : _restClientFactory.Create(_baseUri);
+
+            var response = await client.ExecuteTaskAsync(request.GetRequest());
 
             HandleException(response);
 

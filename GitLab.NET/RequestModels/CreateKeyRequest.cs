@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using RestSharp;
+﻿using RestSharp;
 
 namespace GitLab.NET.RequestModels
 {
@@ -11,10 +6,10 @@ namespace GitLab.NET.RequestModels
     {
         public const string ForCurrentUserResource = "user/keys";
         public const string ForSpecifiedUserResource = "users/{userId}/keys";
+        private readonly string _key;
+        private readonly string _title;
 
         private readonly uint? _userId;
-        private readonly string _title;
-        private readonly string _key;
 
         public CreateKeyRequest(string title, string key, uint? userId = null)
         {

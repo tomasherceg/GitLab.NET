@@ -9,22 +9,6 @@ namespace GitLab.NET.Tests
     public class SessionRepositoryTests
     {
         [Fact]
-        public void RequestSession_UsernameIsNull_ThrowsArugmentNullException()
-        {
-            var sut = new SessionRepository(Substitute.For<IRequestExecutor>());
-
-            Assert.Throws<ArgumentNullException>(() => sut.RequestSession(null, "password"));
-        }
-
-        [Fact]
-        public async Task RequestSessionAsync_UsernameIsNull_ThrowsArgumentNullException()
-        {
-            var sut = new SessionRepository(Substitute.For<IRequestExecutor>());
-
-            await Assert.ThrowsAsync<ArgumentNullException>(() => sut.RequestSessionAsync(null, "password"));
-        }
-
-        [Fact]
         public void RequestSession_PasswordIsNull_ThrowsArgumentNullException()
         {
             var sut = new SessionRepository(Substitute.For<IRequestExecutor>());
@@ -33,11 +17,11 @@ namespace GitLab.NET.Tests
         }
 
         [Fact]
-        public async Task RequestSessionAsync_PasswordIsNull_ThrowsArgumentNullException()
+        public void RequestSession_UsernameIsNull_ThrowsArugmentNullException()
         {
             var sut = new SessionRepository(Substitute.For<IRequestExecutor>());
 
-            await Assert.ThrowsAsync<ArgumentNullException>(() => sut.RequestSessionAsync("username", null));
+            Assert.Throws<ArgumentNullException>(() => sut.RequestSession(null, "password"));
         }
 
         [Fact]
@@ -49,6 +33,22 @@ namespace GitLab.NET.Tests
             sut.RequestSession("username", "password");
 
             requestExecutor.Received().Execute<User>(Arg.Any<IRequestModel>(), false);
+        }
+
+        [Fact]
+        public async Task RequestSessionAsync_PasswordIsNull_ThrowsArgumentNullException()
+        {
+            var sut = new SessionRepository(Substitute.For<IRequestExecutor>());
+
+            await Assert.ThrowsAsync<ArgumentNullException>(() => sut.RequestSessionAsync("username", null));
+        }
+
+        [Fact]
+        public async Task RequestSessionAsync_UsernameIsNull_ThrowsArgumentNullException()
+        {
+            var sut = new SessionRepository(Substitute.For<IRequestExecutor>());
+
+            await Assert.ThrowsAsync<ArgumentNullException>(() => sut.RequestSessionAsync(null, "password"));
         }
 
         [Fact]
