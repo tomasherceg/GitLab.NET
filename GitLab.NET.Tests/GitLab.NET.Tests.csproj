@@ -64,6 +64,7 @@
   <ItemGroup>
     <Compile Include="GitLabClientTests.cs" />
     <Compile Include="HeaderHelperTests.cs" />
+    <Compile Include="LicenseRepositoryTests.cs" />
     <Compile Include="PaginatedResultTests.cs" />
     <Compile Include="PrivateTokenAuthenticatorTests.cs" />
     <Compile Include="ProjectSnippetRepositoryTests.cs" />
@@ -84,6 +85,8 @@
     <Compile Include="RequestModels\GetKeyRequestTests.cs" />
     <Compile Include="RequestModels\GetKeyWithUserRequestTests.cs" />
     <Compile Include="RequestModels\GetGitLabLicenseRequestTests.cs" />
+    <Compile Include="RequestModels\GetLicenseRequestTests.cs" />
+    <Compile Include="RequestModels\GetLicensesRequestTests.cs" />
     <Compile Include="RequestModels\GetProjectSnippetContentRequestTests.cs" />
     <Compile Include="RequestModels\GetProjectSnippetRequestTests.cs" />
     <Compile Include="RequestModels\GetProjectSnippetsRequestTests.cs" />
