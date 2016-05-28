@@ -22,11 +22,27 @@ namespace GitLab.NET.Tests
         }
 
         [Fact]
+        public void Constructor_ValidParameters_SetsGitLabLicense()
+        {
+            var sut = new GitLabClient(ValidHostUri);
+
+            Assert.NotNull(sut.GitLabLicense);
+        }
+
+        [Fact]
         public void Constructor_ValidParameters_SetsKeys()
         {
             var sut = new GitLabClient(ValidHostUri);
 
             Assert.NotNull(sut.Keys);
+        }
+
+        [Fact]
+        public void Constructor_ValidParameters_SetsLicenses()
+        {
+            var sut = new GitLabClient(ValidHostUri);
+
+            Assert.NotNull(sut.Licenses);
         }
 
         [Fact]
