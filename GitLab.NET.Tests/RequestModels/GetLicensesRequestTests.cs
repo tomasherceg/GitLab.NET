@@ -1,6 +1,4 @@
-﻿using NSubstitute;
-using System;
-using GitLab.NET.RequestModels;
+﻿using GitLab.NET.RequestModels;
 using GitLab.NET.Tests.TestHelpers;
 using RestSharp;
 using Xunit;
@@ -9,26 +7,6 @@ namespace GitLab.NET.Tests.RequestModels
 {
     public class GetLicensesRequestTests
     {
-        [Fact]
-        public void GetRequest_SetsMethodToGet()
-        {
-            var sut = new GetLicensesRequest();
-
-            var result = sut.GetRequest();
-
-            Assert.Equal(Method.GET, result.Method);
-        }
-
-        [Fact]
-        public void GetRequest_SetsCorrectResource()
-        {
-            var sut = new GetLicensesRequest();
-
-            var result = sut.GetRequest();
-
-            Assert.Equal(GetLicensesRequest.Resource, result.Resource);
-        }
-
         [Fact]
         public void GetRequest_PopularIsSet_AddsPopularParameter()
         {
@@ -44,6 +22,26 @@ namespace GitLab.NET.Tests.RequestModels
             var result = sut.GetRequest();
 
             Assert.Contains(expectedParameter, result.Parameters, new ParameterEqualityComparer());
+        }
+
+        [Fact]
+        public void GetRequest_SetsCorrectResource()
+        {
+            var sut = new GetLicensesRequest();
+
+            var result = sut.GetRequest();
+
+            Assert.Equal(GetLicensesRequest.Resource, result.Resource);
+        }
+
+        [Fact]
+        public void GetRequest_SetsMethodToGet()
+        {
+            var sut = new GetLicensesRequest();
+
+            var result = sut.GetRequest();
+
+            Assert.Equal(Method.GET, result.Method);
         }
     }
 }

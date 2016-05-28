@@ -1,7 +1,10 @@
-﻿using System;
+﻿// ReSharper disable UnusedMember.Global
+
+using System;
 
 namespace GitLab.NET.ResponseModels
 {
+    /// <summary> Stores information about the GitLab license for the currently connected server. </summary>
     public class GitLabLicense
     {
         /// <summary> The date and time this license starts at. </summary>

@@ -1,7 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
+﻿// ReSharper disable UnusedMember.Global
+
 using System.Threading.Tasks;
 using GitLab.NET.RequestModels;
 using GitLab.NET.ResponseModels;
@@ -15,10 +13,8 @@ namespace GitLab.NET
         /// <param name="restExecutor"> An instance of <see cref="IRequestExecutor" /> to use for this repository. </param>
         public GitLabLicenseRepository(IRequestExecutor restExecutor) : base(restExecutor) { }
 
-        /// <summary>
-        /// Gets information about the license for the server's GitLab installation.
-        /// </summary>
-        /// <returns>A <see cref="RequestResult{GitLabLicense}" /> representing the results of the request.</returns>
+        /// <summary> Gets information about the license for the server's GitLab installation. </summary>
+        /// <returns> A <see cref="RequestResult{GitLabLicense}" /> representing the results of the request. </returns>
         public RequestResult<GitLabLicense> Get()
         {
             var request = new GetGitLabLicenseRequest();
@@ -28,10 +24,8 @@ namespace GitLab.NET
             return new RequestResult<GitLabLicense>(result);
         }
 
-        /// <summary>
-        /// Gets information about the license for the server's GitLab installation.
-        /// </summary>
-        /// <returns>A <see cref="RequestResult{GitLabLicense}" /> representing the results of the request.</returns>
+        /// <summary> Gets information about the license for the server's GitLab installation. </summary>
+        /// <returns> A <see cref="RequestResult{GitLabLicense}" /> representing the results of the request. </returns>
         public async Task<RequestResult<GitLabLicense>> GetAsync()
         {
             var request = new GetGitLabLicenseRequest();

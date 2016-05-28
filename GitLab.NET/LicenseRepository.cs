@@ -1,4 +1,6 @@
-﻿using System;
+﻿// ReSharper disable UnusedMember.Global
+
+using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using GitLab.NET.RequestModels;
