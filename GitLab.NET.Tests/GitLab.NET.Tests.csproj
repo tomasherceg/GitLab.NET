@@ -83,6 +83,7 @@
     <Compile Include="RequestModels\GetEmailsRequestTests.cs" />
     <Compile Include="RequestModels\GetKeyRequestTests.cs" />
     <Compile Include="RequestModels\GetKeyWithUserRequestTests.cs" />
+    <Compile Include="RequestModels\GetGitLabLicenseRequestTests.cs" />
     <Compile Include="RequestModels\GetProjectSnippetContentRequestTests.cs" />
     <Compile Include="RequestModels\GetProjectSnippetRequestTests.cs" />
     <Compile Include="RequestModels\GetProjectSnippetsRequestTests.cs" />
