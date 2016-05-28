@@ -67,6 +67,7 @@
     <Compile Include="GitLabClientTests.cs" />
     <Compile Include="HeaderHelperTests.cs" />
     <Compile Include="LicenseRepositoryTests.cs" />
+    <Compile Include="NamespaceRepositoryTests.cs" />
     <Compile Include="PaginatedResultTests.cs" />
     <Compile Include="PrivateTokenAuthenticatorTests.cs" />
     <Compile Include="ProjectSnippetRepositoryTests.cs" />
@@ -95,6 +96,7 @@
     <Compile Include="RequestModels\GetBuildVariableRequestTests.cs" />
     <Compile Include="RequestModels\GetBuildVariablesRequestTests.cs" />
     <Compile Include="RequestModels\GetEmailsRequestTests.cs" />
+    <Compile Include="RequestModels\GetNamespacesRequestTests.cs" />
     <Compile Include="RequestModels\GetRepositoryContributorsRequestTests.cs" />
     <Compile Include="RequestModels\GetRepositoryFileArchiveRequestTests.cs" />
     <Compile Include="RequestModels\GetKeyRequestTests.cs" />

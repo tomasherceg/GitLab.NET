@@ -72,6 +72,7 @@
     <Compile Include="KeyRepository.cs" />
     <Compile Include="GitLabLicenseRepository.cs" />
     <Compile Include="LicenseRepository.cs" />
+    <Compile Include="NamespaceRepository.cs" />
     <Compile Include="ProjectSnippetRepository.cs" />
     <Compile Include="RepositoryBase.cs" />
     <Compile Include="PaginatedResult.cs" />
@@ -95,6 +96,7 @@
     <Compile Include="RequestModels\GetBuildVariableRequest.cs" />
     <Compile Include="RequestModels\GetBuildVariablesRequest.cs" />
     <Compile Include="RequestModels\GetEmailsRequest.cs" />
+    <Compile Include="RequestModels\GetNamespacesRequest.cs" />
     <Compile Include="RequestModels\GetRepositoryContributorsRequest.cs" />
     <Compile Include="RequestModels\GetRepositoryFileArchiveRequest.cs" />
     <Compile Include="RequestModels\GetKeyRequest.cs" />
@@ -123,6 +125,7 @@
     <Compile Include="ResponseModels\GitLabLicense.cs" />
     <Compile Include="ResponseModels\License.cs" />
     <Compile Include="ResponseModels\Licensee.cs" />
+    <Compile Include="ResponseModels\Namespace.cs" />
     <Compile Include="ResponseModels\ProjectSnippet.cs" />
     <Compile Include="ResponseModels\ProjectSnippetAuthor.cs" />
     <Compile Include="ResponseModels\RepositoryCommit.cs" />
