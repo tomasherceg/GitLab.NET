@@ -1,9 +1,7 @@
 ﻿// ReSharper disable MemberCanBePrivate.Global
 // ReSharper disable UnusedAutoPropertyAccessor.Global
 
-using System.Collections.Generic;
 using System.Net;
-using System.Web.Script.Serialization;
 using RestSharp;
 
 namespace GitLab.NET

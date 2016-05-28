@@ -28,6 +28,9 @@ namespace GitLab.NET
         /// <summary> Provides a wrapper around the GitLab keys API. </summary>
         public KeyRepository Keys { get; }
 
+        /// <summary> Provides a wrapper around the GitLab license API. </summary>
+        public GitLabLicenseRepository GitLabLicense { get; }
+
         /// <summary> Provides a wrapper around the GitLab project snippets API. </summary>
         public ProjectSnippetRepository ProjectSnippets { get; }
 
@@ -53,6 +56,7 @@ namespace GitLab.NET
             var restExecutor = new RequestExecutor(new RestClientFactory(), baseUri, _authenticator);
 
             Emails = new EmailRepository(restExecutor);
+            GitLabLicense = new GitLabLicenseRepository(restExecutor);
             Keys = new KeyRepository(restExecutor);
             ProjectSnippets = new ProjectSnippetRepository(restExecutor);
             Session = new SessionRepository(restExecutor);

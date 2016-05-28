@@ -68,6 +68,7 @@
     <Compile Include="IRestClientFactory.cs" />
     <Compile Include="IRequestExecutor.cs" />
     <Compile Include="KeyRepository.cs" />
+    <Compile Include="GitLabLicenseRepository.cs" />
     <Compile Include="ProjectSnippetRepository.cs" />
     <Compile Include="RepositoryBase.cs" />
     <Compile Include="PaginatedResult.cs" />
@@ -83,6 +84,7 @@
     <Compile Include="RequestModels\GetEmailsRequest.cs" />
     <Compile Include="RequestModels\GetKeyRequest.cs" />
     <Compile Include="RequestModels\GetKeyWithUserRequest.cs" />
+    <Compile Include="RequestModels\GetGitLabLicenseRequest.cs" />
     <Compile Include="RequestModels\GetProjectSnippetContentRequest.cs" />
     <Compile Include="RequestModels\GetProjectSnippetRequest.cs" />
     <Compile Include="RequestModels\GetProjectSnippetsRequest.cs" />
@@ -95,6 +97,8 @@
     <Compile Include="RequestResult.cs" />
     <Compile Include="ResponseModels\EmailAddress.cs" />
     <Compile Include="ResponseModels\Identity.cs" />
+    <Compile Include="ResponseModels\GitLabLicense.cs" />
+    <Compile Include="ResponseModels\Licensee.cs" />
     <Compile Include="ResponseModels\ProjectSnippet.cs" />
     <Compile Include="ResponseModels\ProjectSnippetAuthor.cs" />
     <Compile Include="ResponseModels\SshKey.cs" />
