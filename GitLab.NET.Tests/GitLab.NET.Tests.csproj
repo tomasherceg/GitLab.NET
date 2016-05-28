@@ -62,6 +62,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="BuildTriggerRepositoryTests.cs" />
     <Compile Include="BuildVariableRepositoryTests.cs" />
     <Compile Include="GitLabClientTests.cs" />
     <Compile Include="HeaderHelperTests.cs" />
@@ -75,18 +76,22 @@
     <Compile Include="RequestExecutorTests.cs" />
     <Compile Include="RequestModels\BlockUserRequestTests.cs" />
     <Compile Include="RequestModels\CompareRepositoryRequestTests.cs" />
+    <Compile Include="RequestModels\CreateBuildTriggerRequestTests.cs" />
     <Compile Include="RequestModels\CreateBuildVariableRequestTests.cs" />
     <Compile Include="RequestModels\CreateEmailRequestTests.cs" />
     <Compile Include="RequestModels\CreateKeyRequestTests.cs" />
     <Compile Include="RequestModels\CreateProjectSnippetRequestTests.cs" />
     <Compile Include="RequestModels\CreateSessionRequestTests.cs" />
     <Compile Include="RequestModels\CreateUserRequestTests.cs" />
+    <Compile Include="RequestModels\DeleteBuildTriggerRequestTests.cs" />
     <Compile Include="RequestModels\DeleteBuildVariableRequestTests.cs" />
     <Compile Include="RequestModels\DeleteEmailRequestTests.cs" />
     <Compile Include="RequestModels\DeleteKeyRequestTests.cs" />
     <Compile Include="RequestModels\DeleteProjectSnippetRequestTests.cs" />
     <Compile Include="RequestModels\DeleteUserRequestTests.cs" />
     <Compile Include="RequestModels\GetBlobRawContentRequestTests.cs" />
+    <Compile Include="RequestModels\GetBuildTriggerRequestTests.cs" />
+    <Compile Include="RequestModels\GetBuildTriggersRequestTests.cs" />
     <Compile Include="RequestModels\GetBuildVariableRequestTests.cs" />
     <Compile Include="RequestModels\GetBuildVariablesRequestTests.cs" />
     <Compile Include="RequestModels\GetEmailsRequestTests.cs" />

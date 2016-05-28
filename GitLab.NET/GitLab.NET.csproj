@@ -50,6 +50,7 @@
     <Reference Include="System.Web.Extensions" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="BuildTriggerRepository.cs" />
     <Compile Include="BuildVariableRepository.cs" />
     <Compile Include="EmailRepository.cs" />
     <Compile Include="Exceptions\BadRequestException.cs" />
@@ -77,16 +78,20 @@
     <Compile Include="RepositoryRepository.cs" />
     <Compile Include="RequestModels\BlockUserRequest.cs" />
     <Compile Include="RequestModels\CompareRepositoryRequest.cs" />
+    <Compile Include="RequestModels\CreateBuildTriggerRequest.cs" />
     <Compile Include="RequestModels\CreateBuildVariableRequest.cs" />
     <Compile Include="RequestModels\CreateEmailRequest.cs" />
     <Compile Include="RequestModels\CreateKeyRequest.cs" />
     <Compile Include="RequestModels\CreateProjectSnippetRequest.cs" />
     <Compile Include="RequestModels\CreateUserRequest.cs" />
+    <Compile Include="RequestModels\DeleteBuildTriggerRequest.cs" />
     <Compile Include="RequestModels\DeleteBuildVariableRequest.cs" />
     <Compile Include="RequestModels\DeleteEmailRequest.cs" />
     <Compile Include="RequestModels\DeleteKeyRequest.cs" />
     <Compile Include="RequestModels\DeleteProjectSnippetRequest.cs" />
     <Compile Include="RequestModels\DeleteUserRequest.cs" />
+    <Compile Include="RequestModels\GetBuildTriggerRequest.cs" />
+    <Compile Include="RequestModels\GetBuildTriggersRequest.cs" />
     <Compile Include="RequestModels\GetBuildVariableRequest.cs" />
     <Compile Include="RequestModels\GetBuildVariablesRequest.cs" />
     <Compile Include="RequestModels\GetEmailsRequest.cs" />
@@ -111,6 +116,7 @@
     <Compile Include="RequestModels\UpdateProjectSnippetRequest.cs" />
     <Compile Include="RequestModels\UpdateUserRequest.cs" />
     <Compile Include="RequestResult.cs" />
+    <Compile Include="ResponseModels\BuildTrigger.cs" />
     <Compile Include="ResponseModels\BuildVariable.cs" />
     <Compile Include="ResponseModels\EmailAddress.cs" />
     <Compile Include="ResponseModels\Identity.cs" />

@@ -22,6 +22,9 @@ namespace GitLab.NET
             }
         }
 
+        /// <summary> Provides a wrapper around the GitLab build triggers API. </summary>
+        public BuildTriggerRepository BuildTriggers { get; }
+
         /// <summary> Provides a wrapper around the GitLab build variables API. </summary>
         public BuildVariableRepository BuildVariables { get; }
 
@@ -64,6 +67,7 @@ namespace GitLab.NET
             };
             var restExecutor = new RequestExecutor(new RestClientFactory(), baseUri, _authenticator);
 
+            BuildTriggers = new BuildTriggerRepository(restExecutor);
             BuildVariables = new BuildVariableRepository(restExecutor);
             Emails = new EmailRepository(restExecutor);
             GitLabLicense = new GitLabLicenseRepository(restExecutor);
