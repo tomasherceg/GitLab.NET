@@ -2,7 +2,7 @@
 <package >
   <metadata>
     <id>GitLab.NET</id>
-    <version>0.0.2.0</version>
+    <version>0.0.2</version>
     <title>GitLab.NET</title>
     <authors>Anthony Stivers, Ryan Marshall</authors>
     <owners>Anthony Stivers, Ryan Marshall</owners>

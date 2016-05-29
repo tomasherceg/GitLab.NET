@@ -1,6 +1,7 @@
 ﻿// ReSharper disable UnusedMember.Global
 
 using System;
+using System.Collections.Generic;
 
 namespace GitLab.NET.ResponseModels
 {
@@ -71,7 +72,7 @@ namespace GitLab.NET.ResponseModels
         public DateTime? CurrentSignInAt { get; set; }
 
         /// <summary> The external identites attached to the user's account. </summary>
-        public Identity[] Identities { get; set; }
+        public List<Identity> Identities { get; set; }
 
         /// <summary> Whether or not the user can create groups. </summary>
         public bool? CanCreateGroup { get; set; }

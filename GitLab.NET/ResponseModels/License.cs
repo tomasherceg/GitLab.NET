@@ -1,5 +1,7 @@
 ﻿// ReSharper disable UnusedMember.Global
 
+using System.Collections.Generic;
+
 namespace GitLab.NET.ResponseModels
 {
     /// <summary> Stores information about a GitLab license template. </summary>
@@ -14,6 +16,9 @@ namespace GitLab.NET.ResponseModels
         /// <summary> The nickname for this license. </summary>
         public string Nickname { get; set; }
 
+        /// <summary> Whether or not this license template is popular. </summary>
+        public bool? Popular { get; set; }
+
         /// <summary> The HTML URL for this license. </summary>
         public string HtmlUrl { get; set; }
 
@@ -24,13 +29,13 @@ namespace GitLab.NET.ResponseModels
         public string Description { get; set; }
 
         /// <summary> The conditions of this license. </summary>
-        public string[] Conditions { get; set; }
+        public List<string> Conditions { get; set; }
 
         /// <summary> The permissions provided by this license. </summary>
-        public string[] Permissions { get; set; }
+        public List<string> Permissions { get; set; }
 
         /// <summary> The limitations set by this license. </summary>
-        public string[] Limitations { get; set; }
+        public List<string> Limitations { get; set; }
 
         /// <summary> The license content. </summary>
         public string Content { get; set; }
