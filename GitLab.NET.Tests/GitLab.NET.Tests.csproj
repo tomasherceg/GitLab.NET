@@ -64,9 +64,17 @@
   <ItemGroup>
     <Compile Include="Repositories\BuildTriggerRepositoryTests.cs" />
     <Compile Include="Repositories\BuildVariableRepositoryTests.cs" />
+    <Compile Include="Repositories\CommitRepositoryTests.cs" />
     <Compile Include="Repositories\DeployKeyRepositoryTests.cs" />
     <Compile Include="GitLabClientTests.cs" />
     <Compile Include="Repositories\LabelRepositoryTests.cs" />
+    <Compile Include="RequestModels\CreateCommitCommentRequestTests.cs" />
+    <Compile Include="RequestModels\CreateCommitStatusRequestTests.cs" />
+    <Compile Include="RequestModels\GetCommitCommentsRequestTests.cs" />
+    <Compile Include="RequestModels\GetCommitDiffRequestTests.cs" />
+    <Compile Include="RequestModels\GetCommitRequestTests.cs" />
+    <Compile Include="RequestModels\GetCommitsRequestTests.cs" />
+    <Compile Include="RequestModels\GetCommitStatusRequestTests.cs" />
     <Compile Include="RestHelpers\HeaderHelperTests.cs" />
     <Compile Include="Repositories\LicenseRepositoryTests.cs" />
     <Compile Include="Repositories\NamespaceRepositoryTests.cs" />

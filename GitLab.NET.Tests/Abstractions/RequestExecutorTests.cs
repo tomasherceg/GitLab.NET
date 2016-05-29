@@ -9,6 +9,7 @@ using Xunit;
 
 namespace GitLab.NET.Tests.Abstractions
 {
+    [Serializable]
     public class TestException : Exception { }
 
     public class RequestExecutorTests

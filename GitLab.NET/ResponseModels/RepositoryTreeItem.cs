@@ -16,6 +16,6 @@ namespace GitLab.NET.ResponseModels
         public string Type { get; set; }
 
         /// <summary> The mode for this tree item. </summary>
-        public RepositoryTreeItemMode Mode { get; set; }
+        public string Mode { get; set; }
     }
 }
