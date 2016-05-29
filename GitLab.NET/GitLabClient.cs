@@ -40,6 +40,9 @@ namespace GitLab.NET
         /// <summary> Provides a wrapper around the GitLab emails API. </summary>
         public EmailRepository Emails { get; }
 
+        /// <summary> Provides a wrapper around the GitLab files API. </summary>
+        public FileRepository Files { get; }
+
         /// <summary> Provides a wrapper around the GitLab license API. </summary>
         public GitLabLicenseRepository GitLabLicense { get; }
 
@@ -93,6 +96,7 @@ namespace GitLab.NET
             Commits = new CommitRepository(restExecutor);
             DeployKeys = new DeployKeyRepository(restExecutor);
             Emails = new EmailRepository(restExecutor);
+            Files = new FileRepository(restExecutor);
             GitLabLicense = new GitLabLicenseRepository(restExecutor);
             Keys = new KeyRepository(restExecutor);
             Labels = new LabelRepository(restExecutor);
