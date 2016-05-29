@@ -23,6 +23,12 @@ namespace GitLab.NET.ResponseModels
         /// <summary> The email address of the commit's author. </summary>
         public string AuthorEmail { get; set; }
 
+        /// <summary> The committer's name. </summary>
+        public string CommitterName { get; set; }
+
+        /// <summary> The committer's email address. </summary>
+        public string CommitterEmail { get; set; }
+
         /// <summary> The commit message. </summary>
         public string Message { get; set; }
 
