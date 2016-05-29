@@ -52,6 +52,7 @@
   <ItemGroup>
     <Compile Include="Repositories\BuildTriggerRepository.cs" />
     <Compile Include="Repositories\BuildVariableRepository.cs" />
+    <Compile Include="Repositories\CommitRepository.cs" />
     <Compile Include="Repositories\DeployKeyRepository.cs" />
     <Compile Include="Repositories\EmailRepository.cs" />
     <Compile Include="Exceptions\BadRequestException.cs" />
@@ -65,6 +66,17 @@
     <Compile Include="Exceptions\UnprocessableException.cs" />
     <Compile Include="GitLabClient.cs" />
     <Compile Include="Config.cs" />
+    <Compile Include="RequestModels\CreateCommitCommentRequest.cs" />
+    <Compile Include="RequestModels\CreateCommitStatusRequest.cs" />
+    <Compile Include="RequestModels\GetCommitCommentsRequest.cs" />
+    <Compile Include="RequestModels\GetCommitDiffRequest.cs" />
+    <Compile Include="RequestModels\GetCommitRequest.cs" />
+    <Compile Include="RequestModels\GetCommitsRequest.cs" />
+    <Compile Include="RequestModels\GetCommitStatusRequest.cs" />
+    <Compile Include="ResponseModels\Author.cs" />
+    <Compile Include="ResponseModels\Commit.cs" />
+    <Compile Include="ResponseModels\CommitComment.cs" />
+    <Compile Include="ResponseModels\CommitStatus.cs" />
     <Compile Include="RestHelpers\HeaderHelper.cs" />
     <Compile Include="Authenticators\IPrivateTokenAuthenticator.cs" />
     <Compile Include="RequestModels\IRequestModel.cs" />
@@ -149,9 +161,8 @@
     <Compile Include="ResponseModels\RepositoryCommit.cs" />
     <Compile Include="ResponseModels\RepositoryComparison.cs" />
     <Compile Include="ResponseModels\RepositoryContributor.cs" />
-    <Compile Include="ResponseModels\RepositoryDiff.cs" />
+    <Compile Include="ResponseModels\CommitDiff.cs" />
     <Compile Include="ResponseModels\RepositoryTreeItem.cs" />
-    <Compile Include="ResponseModels\RepositoryTreeItemMode.cs" />
     <Compile Include="ResponseModels\SshKey.cs" />
     <Compile Include="ResponseModels\SystemHook.cs" />
     <Compile Include="ResponseModels\SystemHookEvent.cs" />

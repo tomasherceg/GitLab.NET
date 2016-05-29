@@ -31,6 +31,9 @@ namespace GitLab.NET
         /// <summary> Provides a wrapper around the GitLab build variables API. </summary>
         public BuildVariableRepository BuildVariables { get; }
 
+        /// <summary> Provides a wrapper around the GitLab commits API. </summary>
+        public CommitRepository Commits { get; }
+
         /// <summary> Provides a wrapper around the GitLab deploy keys API. </summary>
         public DeployKeyRepository DeployKeys { get; }
 
@@ -84,6 +87,7 @@ namespace GitLab.NET
 
             BuildTriggers = new BuildTriggerRepository(restExecutor);
             BuildVariables = new BuildVariableRepository(restExecutor);
+            Commits = new CommitRepository(restExecutor);
             DeployKeys = new DeployKeyRepository(restExecutor);
             Emails = new EmailRepository(restExecutor);
             GitLabLicense = new GitLabLicenseRepository(restExecutor);

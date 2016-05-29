@@ -22,7 +22,7 @@ namespace GitLab.NET.Tests.TestHelpers
 
         public int GetHashCode(Parameter obj)
         {
-            throw new NotImplementedException();
+            return 0;
         }
     }
 }

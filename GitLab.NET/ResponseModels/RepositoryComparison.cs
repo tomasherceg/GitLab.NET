@@ -14,7 +14,7 @@ namespace GitLab.NET.ResponseModels
         public List<RepositoryCommit> Commits { get; set; }
 
         /// <summary> The diffs between the primary and secondary items in the comparison. </summary>
-        public List<RepositoryDiff> Diffs { get; set; }
+        public List<CommitDiff> Diffs { get; set; }
 
         /// <summary> Whether or not the comparison timed out. </summary>
         public bool CompareTimeout { get; set; }
