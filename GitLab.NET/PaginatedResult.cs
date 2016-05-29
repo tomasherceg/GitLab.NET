@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using GitLab.NET.RestHelpers;
 using RestSharp;
 
 namespace GitLab.NET

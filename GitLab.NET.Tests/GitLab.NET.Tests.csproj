@@ -62,20 +62,21 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="BuildTriggerRepositoryTests.cs" />
-    <Compile Include="BuildVariableRepositoryTests.cs" />
-    <Compile Include="DeployKeyRepositoryTests.cs" />
+    <Compile Include="Repositories\BuildTriggerRepositoryTests.cs" />
+    <Compile Include="Repositories\BuildVariableRepositoryTests.cs" />
+    <Compile Include="Repositories\DeployKeyRepositoryTests.cs" />
     <Compile Include="GitLabClientTests.cs" />
-    <Compile Include="HeaderHelperTests.cs" />
-    <Compile Include="LicenseRepositoryTests.cs" />
-    <Compile Include="NamespaceRepositoryTests.cs" />
+    <Compile Include="Repositories\LabelRepositoryTests.cs" />
+    <Compile Include="RestHelpers\HeaderHelperTests.cs" />
+    <Compile Include="Repositories\LicenseRepositoryTests.cs" />
+    <Compile Include="Repositories\NamespaceRepositoryTests.cs" />
     <Compile Include="PaginatedResultTests.cs" />
-    <Compile Include="PrivateTokenAuthenticatorTests.cs" />
-    <Compile Include="ProjectSnippetRepositoryTests.cs" />
+    <Compile Include="Authenticators\PrivateTokenAuthenticatorTests.cs" />
+    <Compile Include="Repositories\ProjectSnippetRepositoryTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="RepositoryBaseTests.cs" />
-    <Compile Include="RepositoryRepositoryTests.cs" />
-    <Compile Include="RequestExecutorTests.cs" />
+    <Compile Include="Repositories\RepositoryBaseTests.cs" />
+    <Compile Include="Repositories\RepositoryRepositoryTests.cs" />
+    <Compile Include="Abstractions\RequestExecutorTests.cs" />
     <Compile Include="RequestModels\BlockUserRequestTests.cs" />
     <Compile Include="RequestModels\CompareRepositoryRequestTests.cs" />
     <Compile Include="RequestModels\CreateBuildTriggerRequestTests.cs" />
@@ -83,6 +84,7 @@
     <Compile Include="RequestModels\CreateDeployKeyRequestTests.cs" />
     <Compile Include="RequestModels\CreateEmailRequestTests.cs" />
     <Compile Include="RequestModels\CreateKeyRequestTests.cs" />
+    <Compile Include="RequestModels\CreateLabelRequestTests.cs" />
     <Compile Include="RequestModels\CreateProjectSnippetRequestTests.cs" />
     <Compile Include="RequestModels\CreateSessionRequestTests.cs" />
     <Compile Include="RequestModels\CreateSystemHookRequestTests.cs" />
@@ -92,6 +94,7 @@
     <Compile Include="RequestModels\DeleteDeployKeyRequestTests.cs" />
     <Compile Include="RequestModels\DeleteEmailRequestTests.cs" />
     <Compile Include="RequestModels\DeleteKeyRequestTests.cs" />
+    <Compile Include="RequestModels\DeleteLabelRequestTests.cs" />
     <Compile Include="RequestModels\DeleteProjectSnippetRequestTests.cs" />
     <Compile Include="RequestModels\DeleteSystemHookRequestTests.cs" />
     <Compile Include="RequestModels\DeleteUserRequestTests.cs" />
@@ -103,6 +106,7 @@
     <Compile Include="RequestModels\GetDeployKeyRequestTests.cs" />
     <Compile Include="RequestModels\GetDeployKeysRequestTests.cs" />
     <Compile Include="RequestModels\GetEmailsRequestTests.cs" />
+    <Compile Include="RequestModels\GetLabelsRequestTests.cs" />
     <Compile Include="RequestModels\GetNamespacesRequestTests.cs" />
     <Compile Include="RequestModels\GetRepositoryContributorsRequestTests.cs" />
     <Compile Include="RequestModels\GetRepositoryFileArchiveRequestTests.cs" />
@@ -121,16 +125,19 @@
     <Compile Include="RequestModels\GetUserKeysRequestTests.cs" />
     <Compile Include="RequestModels\GetUserRequestTests.cs" />
     <Compile Include="RequestModels\GetUsersRequestTests.cs" />
+    <Compile Include="RequestModels\SubscribeLabelRequestTests.cs" />
     <Compile Include="RequestModels\TestSystemHookRequestTests.cs" />
     <Compile Include="RequestModels\UnblockUserRequestTests.cs" />
+    <Compile Include="RequestModels\UnsubscribeLabelRequestTests.cs" />
     <Compile Include="RequestModels\UpdateBuildVariableRequestTests.cs" />
+    <Compile Include="RequestModels\UpdateLabelRequestTests.cs" />
     <Compile Include="RequestModels\UpdateProjectSnippetRequestTests.cs" />
     <Compile Include="RequestModels\UpdateUserRequestTests.cs" />
-    <Compile Include="SystemHookRepositoryTests.cs" />
+    <Compile Include="Repositories\SystemHookRepositoryTests.cs" />
     <Compile Include="TestHelpers\EmptyOrWhiteSpace.cs" />
     <Compile Include="TestHelpers\ParameterEqualityComparer.cs" />
-    <Compile Include="SessionRepositoryTests.cs" />
-    <Compile Include="UserRepositoryTests.cs" />
+    <Compile Include="Repositories\SessionRepositoryTests.cs" />
+    <Compile Include="Repositories\UserRepositoryTests.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />

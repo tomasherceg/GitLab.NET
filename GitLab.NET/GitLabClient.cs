@@ -1,4 +1,7 @@
 ﻿using System;
+using GitLab.NET.Abstractions;
+using GitLab.NET.Authenticators;
+using GitLab.NET.Repositories;
 
 namespace GitLab.NET
 {
@@ -39,6 +42,9 @@ namespace GitLab.NET
 
         /// <summary> Provides a wrapper around the GitLab keys API. </summary>
         public KeyRepository Keys { get; }
+
+        /// <summary> Provides a wrapper around the GitLab labels API. </summary>
+        public LabelRepository Labels { get; }
 
         /// <summary> Provides a wrapper around the GitLab license template API. </summary>
         public LicenseRepository Licenses { get; }
@@ -82,6 +88,7 @@ namespace GitLab.NET
             Emails = new EmailRepository(restExecutor);
             GitLabLicense = new GitLabLicenseRepository(restExecutor);
             Keys = new KeyRepository(restExecutor);
+            Labels = new LabelRepository(restExecutor);
             Licenses = new LicenseRepository(restExecutor);
             Namespaces = new NamespaceRepository(restExecutor);
             ProjectSnippets = new ProjectSnippetRepository(restExecutor);

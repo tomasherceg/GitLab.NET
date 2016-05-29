@@ -5,19 +5,19 @@ using Xunit;
 
 namespace GitLab.NET.Tests.RequestModels
 {
-    public class CreateSystemHookRequestTests
+    public class GetLabelsRequestTests
     {
         [Fact]
-        public void GetRequest_AddsUrlParameter()
+        public void GetRequest_AddsProjectIdParameter()
         {
-            const string expected = "url";
+            const uint expected = 5;
             var expectedParameter = new Parameter
             {
-                Name = "url",
+                Name = "projectId",
                 Value = expected,
-                Type = ParameterType.GetOrPost
+                Type = ParameterType.UrlSegment
             };
-            var sut = new CreateSystemHookRequest(expected);
+            var sut = new GetLabelsRequest(expected);
 
             var result = sut.GetRequest();
 
@@ -27,21 +27,21 @@ namespace GitLab.NET.Tests.RequestModels
         [Fact]
         public void GetRequest_SetsCorrectResource()
         {
-            var sut = new CreateSystemHookRequest("url");
+            var sut = new GetLabelsRequest(0);
 
             var result = sut.GetRequest();
 
-            Assert.Equal(CreateSystemHookRequest.Resource, result.Resource);
+            Assert.Equal(GetLabelsRequest.Resource, result.Resource);
         }
 
         [Fact]
-        public void GetRequest_SetsMethodToPost()
+        public void GetRequest_SetsMethodToGet()
         {
-            var sut = new CreateSystemHookRequest("url");
+            var sut = new GetLabelsRequest(0);
 
             var result = sut.GetRequest();
 
-            Assert.Equal(Method.POST, result.Method);
+            Assert.Equal(Method.GET, result.Method);
         }
     }
 }

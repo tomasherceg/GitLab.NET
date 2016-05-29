@@ -1,6 +1,4 @@
-﻿using NSubstitute;
-using System;
-using GitLab.NET.RequestModels;
+﻿using GitLab.NET.RequestModels;
 using GitLab.NET.Tests.TestHelpers;
 using RestSharp;
 using Xunit;
