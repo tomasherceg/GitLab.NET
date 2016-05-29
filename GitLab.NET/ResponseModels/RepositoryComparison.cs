@@ -8,10 +8,10 @@ namespace GitLab.NET.ResponseModels
     public class RepositoryComparison
     {
         /// <summary> The last commit for the primary item in the comparison. </summary>
-        public RepositoryCommit Commit { get; set; }
+        public Commit Commit { get; set; }
 
         /// <summary> The commits for the secondary item in the comparison. </summary>
-        public List<RepositoryCommit> Commits { get; set; }
+        public List<Commit> Commits { get; set; }
 
         /// <summary> The diffs between the primary and secondary items in the comparison. </summary>
         public List<CommitDiff> Diffs { get; set; }

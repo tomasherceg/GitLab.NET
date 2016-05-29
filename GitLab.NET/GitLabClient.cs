@@ -67,6 +67,9 @@ namespace GitLab.NET
         /// <summary> Provides a wrapper around the GitLab system hooks API. </summary>
         public SystemHookRepository SystemHooks { get; }
 
+        /// <summary> Provides a wrapper around the GitLab tags API. </summary>
+        public TagRepository Tags { get; }
+
         /// <summary> Provides a wrapper around the GitLab users API. </summary>
         public UserRepository Users { get; }
 
@@ -99,6 +102,7 @@ namespace GitLab.NET
             Repositories = new RepositoryRepository(restExecutor);
             Session = new SessionRepository(restExecutor);
             SystemHooks = new SystemHookRepository(restExecutor);
+            Tags = new TagRepository(restExecutor);
             Users = new UserRepository(restExecutor);
         }
     }
