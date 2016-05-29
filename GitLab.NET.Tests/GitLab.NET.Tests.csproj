@@ -85,6 +85,7 @@
     <Compile Include="RequestModels\CreateKeyRequestTests.cs" />
     <Compile Include="RequestModels\CreateProjectSnippetRequestTests.cs" />
     <Compile Include="RequestModels\CreateSessionRequestTests.cs" />
+    <Compile Include="RequestModels\CreateSystemHookRequestTests.cs" />
     <Compile Include="RequestModels\CreateUserRequestTests.cs" />
     <Compile Include="RequestModels\DeleteBuildTriggerRequestTests.cs" />
     <Compile Include="RequestModels\DeleteBuildVariableRequestTests.cs" />
@@ -92,6 +93,7 @@
     <Compile Include="RequestModels\DeleteEmailRequestTests.cs" />
     <Compile Include="RequestModels\DeleteKeyRequestTests.cs" />
     <Compile Include="RequestModels\DeleteProjectSnippetRequestTests.cs" />
+    <Compile Include="RequestModels\DeleteSystemHookRequestTests.cs" />
     <Compile Include="RequestModels\DeleteUserRequestTests.cs" />
     <Compile Include="RequestModels\GetBlobRawContentRequestTests.cs" />
     <Compile Include="RequestModels\GetBuildTriggerRequestTests.cs" />
@@ -114,14 +116,17 @@
     <Compile Include="RequestModels\GetProjectSnippetsRequestTests.cs" />
     <Compile Include="RequestModels\GetRepositoryRawFileContentRequestTests.cs" />
     <Compile Include="RequestModels\GetRepositoryTreeRequestTests.cs" />
+    <Compile Include="RequestModels\GetSystemHooksRequestTests.cs" />
     <Compile Include="RequestModels\GetUserEmailsRequestTests.cs" />
     <Compile Include="RequestModels\GetUserKeysRequestTests.cs" />
     <Compile Include="RequestModels\GetUserRequestTests.cs" />
     <Compile Include="RequestModels\GetUsersRequestTests.cs" />
+    <Compile Include="RequestModels\TestSystemHookRequestTests.cs" />
     <Compile Include="RequestModels\UnblockUserRequestTests.cs" />
     <Compile Include="RequestModels\UpdateBuildVariableRequestTests.cs" />
     <Compile Include="RequestModels\UpdateProjectSnippetRequestTests.cs" />
     <Compile Include="RequestModels\UpdateUserRequestTests.cs" />
+    <Compile Include="SystemHookRepositoryTests.cs" />
     <Compile Include="TestHelpers\EmptyOrWhiteSpace.cs" />
     <Compile Include="TestHelpers\ParameterEqualityComparer.cs" />
     <Compile Include="SessionRepositoryTests.cs" />

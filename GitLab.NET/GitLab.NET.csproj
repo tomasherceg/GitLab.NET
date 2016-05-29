@@ -86,6 +86,7 @@
     <Compile Include="RequestModels\CreateEmailRequest.cs" />
     <Compile Include="RequestModels\CreateKeyRequest.cs" />
     <Compile Include="RequestModels\CreateProjectSnippetRequest.cs" />
+    <Compile Include="RequestModels\CreateSystemHookRequest.cs" />
     <Compile Include="RequestModels\CreateUserRequest.cs" />
     <Compile Include="RequestModels\DeleteBuildTriggerRequest.cs" />
     <Compile Include="RequestModels\DeleteBuildVariableRequest.cs" />
@@ -93,6 +94,7 @@
     <Compile Include="RequestModels\DeleteEmailRequest.cs" />
     <Compile Include="RequestModels\DeleteKeyRequest.cs" />
     <Compile Include="RequestModels\DeleteProjectSnippetRequest.cs" />
+    <Compile Include="RequestModels\DeleteSystemHookRequest.cs" />
     <Compile Include="RequestModels\DeleteUserRequest.cs" />
     <Compile Include="RequestModels\GetBuildTriggerRequest.cs" />
     <Compile Include="RequestModels\GetBuildTriggersRequest.cs" />
@@ -115,9 +117,11 @@
     <Compile Include="RequestModels\GetRepositoryRawBlobContentRequest.cs" />
     <Compile Include="RequestModels\GetRepositoryRawFileContentRequest.cs" />
     <Compile Include="RequestModels\GetRepositoryTreeRequest.cs" />
+    <Compile Include="RequestModels\GetSystemHooksRequest.cs" />
     <Compile Include="RequestModels\GetUserEmailsRequest.cs" />
     <Compile Include="RequestModels\GetUserKeysRequest.cs" />
     <Compile Include="RequestModels\RestRequestExtensions.cs" />
+    <Compile Include="RequestModels\TestSystemHookRequest.cs" />
     <Compile Include="RequestModels\UnblockUserRequest.cs" />
     <Compile Include="RequestModels\UpdateBuildVariableRequest.cs" />
     <Compile Include="RequestModels\UpdateProjectSnippetRequest.cs" />
@@ -141,6 +145,8 @@
     <Compile Include="ResponseModels\RepositoryTreeItem.cs" />
     <Compile Include="ResponseModels\RepositoryTreeItemMode.cs" />
     <Compile Include="ResponseModels\SshKey.cs" />
+    <Compile Include="ResponseModels\SystemHook.cs" />
+    <Compile Include="ResponseModels\SystemHookEvent.cs" />
     <Compile Include="ResponseModels\User.cs" />
     <Compile Include="ResponseModels\VisibilityLevel.cs" />
     <Compile Include="RestClientFactory.cs" />
@@ -151,6 +157,7 @@
     <Compile Include="RequestModels\GetUserRequest.cs" />
     <Compile Include="RequestModels\GetUsersRequest.cs" />
     <Compile Include="SessionRepository.cs" />
+    <Compile Include="SystemHookRepository.cs" />
     <Compile Include="UserRepository.cs" />
   </ItemGroup>
   <ItemGroup>
