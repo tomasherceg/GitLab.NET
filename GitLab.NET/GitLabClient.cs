@@ -85,29 +85,27 @@ namespace GitLab.NET
                 throw new ArgumentNullException(nameof(hostUri));
 
             var baseUri = new Uri(hostUri, ApiPath);
-            _authenticator = new PrivateTokenAuthenticator
-            {
-                PrivateToken = privateToken
-            };
-            var restExecutor = new RequestExecutor(new RestClientFactory(), baseUri, _authenticator);
+            _authenticator = new PrivateTokenAuthenticator(privateToken);
+            var clientFactory = new ClientFactory(baseUri, _authenticator);
+            var requestFactory = new RequestFactory(clientFactory);
 
-            BuildTriggers = new BuildTriggerRepository(restExecutor);
-            BuildVariables = new BuildVariableRepository(restExecutor);
-            Commits = new CommitRepository(restExecutor);
-            DeployKeys = new DeployKeyRepository(restExecutor);
-            Emails = new EmailRepository(restExecutor);
-            Files = new FileRepository(restExecutor);
-            GitLabLicense = new GitLabLicenseRepository(restExecutor);
-            Keys = new KeyRepository(restExecutor);
-            Labels = new LabelRepository(restExecutor);
-            Licenses = new LicenseRepository(restExecutor);
-            Namespaces = new NamespaceRepository(restExecutor);
-            ProjectSnippets = new ProjectSnippetRepository(restExecutor);
-            Repositories = new RepositoryRepository(restExecutor);
-            Session = new SessionRepository(restExecutor);
-            SystemHooks = new SystemHookRepository(restExecutor);
-            Tags = new TagRepository(restExecutor);
-            Users = new UserRepository(restExecutor);
+            BuildTriggers = new BuildTriggerRepository(requestFactory);
+            BuildVariables = new BuildVariableRepository(requestFactory);
+            Commits = new CommitRepository(requestFactory);
+            DeployKeys = new DeployKeyRepository(requestFactory);
+            Emails = new EmailRepository(requestFactory);
+            Files = new FileRepository(requestFactory);
+            GitLabLicense = new GitLabLicenseRepository(requestFactory);
+            Keys = new KeyRepository(requestFactory);
+            Labels = new LabelRepository(requestFactory);
+            Licenses = new LicenseRepository(requestFactory);
+            Namespaces = new NamespaceRepository(requestFactory);
+            ProjectSnippets = new ProjectSnippetRepository(requestFactory);
+            Repositories = new RepositoryRepository(requestFactory);
+            Session = new SessionRepository(requestFactory);
+            SystemHooks = new SystemHookRepository(requestFactory);
+            Tags = new TagRepository(requestFactory);
+            Users = new UserRepository(requestFactory);
         }
     }
 }

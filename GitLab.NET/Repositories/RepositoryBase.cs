@@ -6,17 +6,17 @@ namespace GitLab.NET.Repositories
     /// <summary> Base implementation of a repository. </summary>
     public abstract class RepositoryBase
     {
-        /// <summary> The <see cref="IRequestExecutor" /> instance for this class. </summary>
-        protected readonly IRequestExecutor RequestExecutor;
+        /// <summary> The <see cref="IRequestFactory" /> instance for this class. </summary>
+        protected readonly IRequestFactory RequestFactory;
 
         /// <summary> Base constructor for a <see cref="RepositoryBase" /> class. </summary>
-        /// <param name="restExecutor"> </param>
-        protected RepositoryBase(IRequestExecutor restExecutor)
+        /// <param name="requestFactory">An instance of <see cref="IRequestFactory" /> to use for this repository.</param>
+        protected RepositoryBase(IRequestFactory requestFactory)
         {
-            if (restExecutor == null)
-                throw new ArgumentNullException(nameof(restExecutor));
+            if (requestFactory == null)
+                throw new ArgumentNullException(nameof(requestFactory));
 
-            RequestExecutor = restExecutor;
+            RequestFactory = requestFactory;
         }
     }
 }

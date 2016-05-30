@@ -50,20 +50,18 @@
     <Reference Include="System.Web.Extensions" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Abstractions\ClientFactory.cs" />
+    <Compile Include="Abstractions\IClientFactory.cs" />
+    <Compile Include="Abstractions\IRequest.cs" />
+    <Compile Include="Abstractions\IRequestFactory.cs" />
+    <Compile Include="Abstractions\Method.cs" />
+    <Compile Include="Abstractions\Request.cs" />
+    <Compile Include="Abstractions\RequestFactory.cs" />
     <Compile Include="Repositories\BuildTriggerRepository.cs" />
     <Compile Include="Repositories\BuildVariableRepository.cs" />
     <Compile Include="Repositories\CommitRepository.cs" />
     <Compile Include="Repositories\DeployKeyRepository.cs" />
     <Compile Include="Repositories\EmailRepository.cs" />
-    <Compile Include="Exceptions\BadRequestException.cs" />
-    <Compile Include="Exceptions\ConflictException.cs" />
-    <Compile Include="Exceptions\ForbiddenException.cs" />
-    <Compile Include="Exceptions\MethodNotAllowedException.cs" />
-    <Compile Include="Exceptions\NotFoundException.cs" />
-    <Compile Include="Exceptions\ServerErrorException.cs" />
-    <Compile Include="Exceptions\UnauthorizedException.cs" />
-    <Compile Include="Exceptions\UnhandledErrorException.cs" />
-    <Compile Include="Exceptions\UnprocessableException.cs" />
     <Compile Include="GitLabClient.cs" />
     <Compile Include="Config.cs" />
     <Compile Include="Repositories\FileRepository.cs" />
@@ -95,8 +93,6 @@
     <Compile Include="RestHelpers\HeaderHelper.cs" />
     <Compile Include="Authenticators\IPrivateTokenAuthenticator.cs" />
     <Compile Include="RequestModels\IRequestModel.cs" />
-    <Compile Include="Abstractions\IRestClientFactory.cs" />
-    <Compile Include="Abstractions\IRequestExecutor.cs" />
     <Compile Include="Repositories\KeyRepository.cs" />
     <Compile Include="Repositories\GitLabLicenseRepository.cs" />
     <Compile Include="Repositories\LabelRepository.cs" />
@@ -108,7 +104,6 @@
     <Compile Include="Repositories\RepositoryRepository.cs" />
     <Compile Include="RequestModels\BlockUserRequest.cs" />
     <Compile Include="RequestModels\CompareRepositoryRequest.cs" />
-    <Compile Include="RequestModels\CreateBuildTriggerRequest.cs" />
     <Compile Include="RequestModels\CreateBuildVariableRequest.cs" />
     <Compile Include="RequestModels\CreateDeployKeyRequest.cs" />
     <Compile Include="RequestModels\CreateEmailRequest.cs" />
@@ -117,7 +112,6 @@
     <Compile Include="RequestModels\CreateProjectSnippetRequest.cs" />
     <Compile Include="RequestModels\CreateSystemHookRequest.cs" />
     <Compile Include="RequestModels\CreateUserRequest.cs" />
-    <Compile Include="RequestModels\DeleteBuildTriggerRequest.cs" />
     <Compile Include="RequestModels\DeleteBuildVariableRequest.cs" />
     <Compile Include="RequestModels\DeleteDeployKeyRequest.cs" />
     <Compile Include="RequestModels\DeleteEmailRequest.cs" />
@@ -126,8 +120,6 @@
     <Compile Include="RequestModels\DeleteProjectSnippetRequest.cs" />
     <Compile Include="RequestModels\DeleteSystemHookRequest.cs" />
     <Compile Include="RequestModels\DeleteUserRequest.cs" />
-    <Compile Include="RequestModels\GetBuildTriggerRequest.cs" />
-    <Compile Include="RequestModels\GetBuildTriggersRequest.cs" />
     <Compile Include="RequestModels\GetBuildVariableRequest.cs" />
     <Compile Include="RequestModels\GetBuildVariablesRequest.cs" />
     <Compile Include="RequestModels\GetDeployKeyRequest.cs" />
@@ -182,8 +174,6 @@
     <Compile Include="ResponseModels\SystemHookEvent.cs" />
     <Compile Include="ResponseModels\User.cs" />
     <Compile Include="ResponseModels\VisibilityLevel.cs" />
-    <Compile Include="Abstractions\RestClientFactory.cs" />
-    <Compile Include="Abstractions\RequestExecutor.cs" />
     <Compile Include="Authenticators\PrivateTokenAuthenticator.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="RequestModels\CreateSessionRequest.cs" />

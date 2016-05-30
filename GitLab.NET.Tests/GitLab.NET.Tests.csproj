@@ -99,7 +99,6 @@
     <Compile Include="Abstractions\RequestExecutorTests.cs" />
     <Compile Include="RequestModels\BlockUserRequestTests.cs" />
     <Compile Include="RequestModels\CompareRepositoryRequestTests.cs" />
-    <Compile Include="RequestModels\CreateBuildTriggerRequestTests.cs" />
     <Compile Include="RequestModels\CreateBuildVariableRequestTests.cs" />
     <Compile Include="RequestModels\CreateDeployKeyRequestTests.cs" />
     <Compile Include="RequestModels\CreateEmailRequestTests.cs" />
@@ -109,7 +108,6 @@
     <Compile Include="RequestModels\CreateSessionRequestTests.cs" />
     <Compile Include="RequestModels\CreateSystemHookRequestTests.cs" />
     <Compile Include="RequestModels\CreateUserRequestTests.cs" />
-    <Compile Include="RequestModels\DeleteBuildTriggerRequestTests.cs" />
     <Compile Include="RequestModels\DeleteBuildVariableRequestTests.cs" />
     <Compile Include="RequestModels\DeleteDeployKeyRequestTests.cs" />
     <Compile Include="RequestModels\DeleteEmailRequestTests.cs" />
@@ -119,8 +117,6 @@
     <Compile Include="RequestModels\DeleteSystemHookRequestTests.cs" />
     <Compile Include="RequestModels\DeleteUserRequestTests.cs" />
     <Compile Include="RequestModels\GetBlobRawContentRequestTests.cs" />
-    <Compile Include="RequestModels\GetBuildTriggerRequestTests.cs" />
-    <Compile Include="RequestModels\GetBuildTriggersRequestTests.cs" />
     <Compile Include="RequestModels\GetBuildVariableRequestTests.cs" />
     <Compile Include="RequestModels\GetBuildVariablesRequestTests.cs" />
     <Compile Include="RequestModels\GetDeployKeyRequestTests.cs" />
