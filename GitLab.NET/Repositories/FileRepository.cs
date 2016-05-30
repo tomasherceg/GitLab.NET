@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Threading.Tasks;
 using GitLab.NET.Abstractions;
-using GitLab.NET.RequestModels;
 using GitLab.NET.ResponseModels;
 
 namespace GitLab.NET.Repositories
@@ -10,8 +9,8 @@ namespace GitLab.NET.Repositories
     public class FileRepository : RepositoryBase
     {
         /// <summary> Creates a new <see cref="FileRepository" /> instance. </summary>
-        /// <param name="restExecutor"> An instance of <see cref="IRequestExecutor" /> to use for this repository. </param>
-        public FileRepository(IRequestExecutor restExecutor) : base(restExecutor) { }
+        /// <param name="requestFactory"> An instance of <see cref="IRequestFactory" /> to use for this repository. </param>
+        public FileRepository(IRequestFactory requestFactory) : base(requestFactory) { }
 
         /// <summary> Creates a new file. </summary>
         /// <param name="projectId"> The ID of the project. </param>
@@ -35,11 +34,16 @@ namespace GitLab.NET.Repositories
             if (commitMessage == null)
                 throw new ArgumentNullException(nameof(commitMessage));
 
-            var request = new CreateFileRequest(projectId, filePath, branchName, content, commitMessage, encoding);
+            var request = RequestFactory.Create("projects/{projectId}/repository/files", Method.Post);
 
-            var result = RequestExecutor.Execute<RepositoryFile>(request);
+            request.AddUrlSegment("projectId", projectId);
+            request.AddParameter("file_path", filePath);
+            request.AddParameter("branch_name", branchName);
+            request.AddParameter("content", content);
+            request.AddParameter("commit_message", commitMessage);
+            request.AddParameterIfNotNull("encoding", encoding);
 
-            return new RequestResult<RepositoryFile>(result);
+            return request.Execute<RepositoryFile>();
         }
 
         /// <summary> Creates a new file. </summary>
@@ -64,11 +68,16 @@ namespace GitLab.NET.Repositories
             if (commitMessage == null)
                 throw new ArgumentNullException(nameof(commitMessage));
 
-            var request = new CreateFileRequest(projectId, filePath, branchName, content, commitMessage, encoding);
+            var request = RequestFactory.Create("projects/{projectId}/repository/files", Method.Post);
 
-            var result = await RequestExecutor.ExecuteAsync<RepositoryFile>(request);
+            request.AddUrlSegment("projectId", projectId);
+            request.AddParameter("file_path", filePath);
+            request.AddParameter("branch_name", branchName);
+            request.AddParameter("content", content);
+            request.AddParameter("commit_message", commitMessage);
+            request.AddParameterIfNotNull("encoding", encoding);
 
-            return new RequestResult<RepositoryFile>(result);
+            return await request.ExecuteAsync<RepositoryFile>();
         }
 
         /// <summary> Deletes a file. </summary>
@@ -88,11 +97,14 @@ namespace GitLab.NET.Repositories
             if (commitMessage == null)
                 throw new ArgumentNullException(nameof(commitMessage));
 
-            var request = new DeleteFileRequest(projectId, filePath, branchName, commitMessage);
+            var request = RequestFactory.Create("projects/{projectId}/repository/files", Method.Delete);
 
-            var result = RequestExecutor.Execute<RepositoryFile>(request);
+            request.AddUrlSegment("projectId", projectId);
+            request.AddParameter("file_path", filePath);
+            request.AddParameter("branch_name", branchName);
+            request.AddParameter("commit_message", commitMessage);
 
-            return new RequestResult<RepositoryFile>(result);
+            return request.Execute<RepositoryFile>();
         }
 
         /// <summary> Deletes a file. </summary>
@@ -112,19 +124,22 @@ namespace GitLab.NET.Repositories
             if (commitMessage == null)
                 throw new ArgumentNullException(nameof(commitMessage));
 
-            var request = new DeleteFileRequest(projectId, filePath, branchName, commitMessage);
+            var request = RequestFactory.Create("projects/{projectId}/repository/files", Method.Delete);
 
-            var result = await RequestExecutor.ExecuteAsync<RepositoryFile>(request);
+            request.AddUrlSegment("projectId", projectId);
+            request.AddParameter("file_path", filePath);
+            request.AddParameter("branch_name", branchName);
+            request.AddParameter("commit_message", commitMessage);
 
-            return new RequestResult<RepositoryFile>(result);
+            return await request.ExecuteAsync<RepositoryFile>();
         }
 
-        /// <summary> Gets a file by its path. </summary>
+        /// <summary> Finds a file by its path. </summary>
         /// <param name="projectId"> The ID of the project. </param>
         /// <param name="filePath"> The path of the file. </param>
         /// <param name="refName"> The branch or tag name for the file. </param>
         /// <returns> A <see cref="RequestResult{RepositoryFile}" /> representing the results of the request. </returns>
-        public RequestResult<RepositoryFile> Get(uint projectId, string filePath, string refName)
+        public RequestResult<RepositoryFile> Find(uint projectId, string filePath, string refName)
         {
             if (filePath == null)
                 throw new ArgumentNullException(nameof(filePath));
@@ -132,19 +147,21 @@ namespace GitLab.NET.Repositories
             if (refName == null)
                 throw new ArgumentNullException(nameof(refName));
 
-            var request = new GetFileRequest(projectId, filePath, refName);
+            var request = RequestFactory.Create("projects/{projectId}/repository/files", Method.Get);
 
-            var result = RequestExecutor.Execute<RepositoryFile>(request);
+            request.AddUrlSegment("projectId", projectId);
+            request.AddParameter("file_path", filePath);
+            request.AddParameter("ref", refName);
 
-            return new RequestResult<RepositoryFile>(result);
+            return request.Execute<RepositoryFile>();
         }
 
-        /// <summary> Gets a file by its path. </summary>
+        /// <summary> Finds a file by its path. </summary>
         /// <param name="projectId"> The ID of the project. </param>
         /// <param name="filePath"> The path of the file. </param>
         /// <param name="refName"> The branch or tag name for the file. </param>
         /// <returns> A <see cref="RequestResult{RepositoryFile}" /> representing the results of the request. </returns>
-        public async Task<RequestResult<RepositoryFile>> GetAsync(uint projectId, string filePath, string refName)
+        public async Task<RequestResult<RepositoryFile>> FindAsync(uint projectId, string filePath, string refName)
         {
             if (filePath == null)
                 throw new ArgumentNullException(nameof(filePath));
@@ -152,11 +169,13 @@ namespace GitLab.NET.Repositories
             if (refName == null)
                 throw new ArgumentNullException(nameof(refName));
 
-            var request = new GetFileRequest(projectId, filePath, refName);
+            var request = RequestFactory.Create("projects/{projectId}/repository/files", Method.Get);
 
-            var result = await RequestExecutor.ExecuteAsync<RepositoryFile>(request);
+            request.AddUrlSegment("projectId", projectId);
+            request.AddParameter("file_path", filePath);
+            request.AddParameter("ref", refName);
 
-            return new RequestResult<RepositoryFile>(result);
+            return await request.ExecuteAsync<RepositoryFile>();
         }
 
         /// <summary> Updates a file. </summary>
@@ -181,11 +200,16 @@ namespace GitLab.NET.Repositories
             if (commitMessage == null)
                 throw new ArgumentNullException(nameof(commitMessage));
 
-            var request = new UpdateFileRequest(projectId, filePath, branchName, content, commitMessage, encoding);
+            var request = RequestFactory.Create("projects/{projectId}/repository/files", Method.Put);
 
-            var result = RequestExecutor.Execute<RepositoryFile>(request);
+            request.AddUrlSegment("projectId", projectId);
+            request.AddParameter("file_path", filePath);
+            request.AddParameter("branch_name", branchName);
+            request.AddParameter("content", content);
+            request.AddParameter("commit_message", commitMessage);
+            request.AddParameterIfNotNull("encoding", encoding);
 
-            return new RequestResult<RepositoryFile>(result);
+            return request.Execute<RepositoryFile>();
         }
 
         /// <summary> Updates a file. </summary>
@@ -210,11 +234,16 @@ namespace GitLab.NET.Repositories
             if (commitMessage == null)
                 throw new ArgumentNullException(nameof(commitMessage));
 
-            var request = new UpdateFileRequest(projectId, filePath, branchName, content, commitMessage, encoding);
+            var request = RequestFactory.Create("projects/{projectId}/repository/files", Method.Put);
 
-            var result = await RequestExecutor.ExecuteAsync<RepositoryFile>(request);
+            request.AddUrlSegment("projectId", projectId);
+            request.AddParameter("file_path", filePath);
+            request.AddParameter("branch_name", branchName);
+            request.AddParameter("content", content);
+            request.AddParameter("commit_message", commitMessage);
+            request.AddParameterIfNotNull("encoding", encoding);
 
-            return new RequestResult<RepositoryFile>(result);
+            return await request.ExecuteAsync<RepositoryFile>();
         }
     }
 }

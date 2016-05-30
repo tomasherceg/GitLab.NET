@@ -1,10 +1,7 @@
-﻿// ReSharper disable UnusedMember.Global
-
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using GitLab.NET.Abstractions;
-using GitLab.NET.RequestModels;
 using GitLab.NET.ResponseModels;
 
 namespace GitLab.NET.Repositories
@@ -13,8 +10,8 @@ namespace GitLab.NET.Repositories
     public class TagRepository : RepositoryBase
     {
         /// <summary> Creates a new <see cref="TagRepository" /> instance. </summary>
-        /// <param name="restExecutor"> An instance of <see cref="IRequestExecutor" /> to use for this repository. </param>
-        public TagRepository(IRequestExecutor restExecutor) : base(restExecutor) { }
+        /// <param name="requestFactory"> An instance of <see cref="IRequestFactory" /> to use for this repository. </param>
+        public TagRepository(IRequestFactory requestFactory) : base(requestFactory) { }
 
         /// <summary> Creates a new tag. </summary>
         /// <param name="projectId"> The ID of the project. </param>
@@ -31,11 +28,15 @@ namespace GitLab.NET.Repositories
             if (refName == null)
                 throw new ArgumentNullException(nameof(refName));
 
-            var request = new CreateTagRequest(projectId, tagName, refName, message, releaseDescription);
+            var request = RequestFactory.Create("projects/{projectId}/repository/tags", Method.Post);
 
-            var result = RequestExecutor.Execute<Tag>(request);
+            request.AddUrlSegment("projectId", projectId);
+            request.AddParameter("tag_name", tagName);
+            request.AddParameter("ref", refName);
+            request.AddParameterIfNotNull("message", message);
+            request.AddParameterIfNotNull("release_description", releaseDescription);
 
-            return new RequestResult<Tag>(result);
+            return request.Execute<Tag>();
         }
 
         /// <summary> Creates a new tag. </summary>
@@ -53,11 +54,15 @@ namespace GitLab.NET.Repositories
             if (refName == null)
                 throw new ArgumentNullException(nameof(refName));
 
-            var request = new CreateTagRequest(projectId, tagName, refName, message, releaseDescription);
+            var request = RequestFactory.Create("projects/{projectId}/repository/tags", Method.Post);
 
-            var result = await RequestExecutor.ExecuteAsync<Tag>(request);
+            request.AddUrlSegment("projectId", projectId);
+            request.AddParameter("tag_name", tagName);
+            request.AddParameter("ref", refName);
+            request.AddParameterIfNotNull("message", message);
+            request.AddParameterIfNotNull("release_description", releaseDescription);
 
-            return new RequestResult<Tag>(result);
+            return await request.ExecuteAsync<Tag>();
         }
 
         /// <summary> Creates a release associated with the specified tag. </summary>
@@ -73,11 +78,13 @@ namespace GitLab.NET.Repositories
             if (description == null)
                 throw new ArgumentNullException(nameof(description));
 
-            var request = new CreateReleaseRequest(projectId, tagName, description);
+            var request = RequestFactory.Create("projects/{projectId}/repository/tags/{tagName}/release", Method.Post);
 
-            var result = RequestExecutor.Execute<Tag>(request);
+            request.AddUrlSegment("projectId", projectId);
+            request.AddUrlSegment("tagName", tagName);
+            request.AddParameter("description", description);
 
-            return new RequestResult<Tag>(result);
+            return request.Execute<Tag>();
         }
 
         /// <summary> Creates a release associated with the specified tag. </summary>
@@ -93,11 +100,13 @@ namespace GitLab.NET.Repositories
             if (description == null)
                 throw new ArgumentNullException(nameof(description));
 
-            var request = new CreateReleaseRequest(projectId, tagName, description);
+            var request = RequestFactory.Create("projects/{projectId}/repository/tags/{tagName}/release", Method.Post);
 
-            var result = await RequestExecutor.ExecuteAsync<Tag>(request);
+            request.AddUrlSegment("projectId", projectId);
+            request.AddUrlSegment("tagName", tagName);
+            request.AddParameter("description", description);
 
-            return new RequestResult<Tag>(result);
+            return await request.ExecuteAsync<Tag>();
         }
 
         /// <summary> Deletes a tag. </summary>
@@ -109,11 +118,12 @@ namespace GitLab.NET.Repositories
             if (tagName == null)
                 throw new ArgumentNullException(nameof(tagName));
 
-            var request = new DeleteTagRequest(projectId, tagName);
+            var request = RequestFactory.Create("projects/{projectId}/repository/tags/{tagName}", Method.Delete);
 
-            var result = RequestExecutor.Execute<Tag>(request);
+            request.AddUrlSegment("projectId", projectId);
+            request.AddUrlSegment("tagName", tagName);
 
-            return new RequestResult<Tag>(result);
+            return request.Execute<Tag>();
         }
 
         /// <summary> Deletes a tag. </summary>
@@ -125,11 +135,46 @@ namespace GitLab.NET.Repositories
             if (tagName == null)
                 throw new ArgumentNullException(nameof(tagName));
 
-            var request = new DeleteTagRequest(projectId, tagName);
+            var request = RequestFactory.Create("projects/{projectId}/repository/tags/{tagName}", Method.Delete);
 
-            var result = await RequestExecutor.ExecuteAsync<Tag>(request);
+            request.AddUrlSegment("projectId", projectId);
+            request.AddUrlSegment("tagName", tagName);
 
-            return new RequestResult<Tag>(result);
+            return await request.ExecuteAsync<Tag>();
+        }
+
+        /// <summary> Finds a tag by name. </summary>
+        /// <param name="projectId"> The ID of the project. </param>
+        /// <param name="tagName"> The name of the desired tag. </param>
+        /// <returns> A <see cref="RequestResult{Tag}" /> representing the results of the request. </returns>
+        public RequestResult<Tag> Find(uint projectId, string tagName)
+        {
+            if (tagName == null)
+                throw new ArgumentNullException(nameof(tagName));
+
+            var request = RequestFactory.Create("projects/{projectId}/repository/tags/{tagName}", Method.Get);
+
+            request.AddUrlSegment("projectId", projectId);
+            request.AddUrlSegment("tagName", tagName);
+
+            return request.Execute<Tag>();
+        }
+
+        /// <summary> Finds a tag by name. </summary>
+        /// <param name="projectId"> The ID of the project. </param>
+        /// <param name="tagName"> The name of the desired tag. </param>
+        /// <returns> A <see cref="RequestResult{Tag}" /> representing the results of the request. </returns>
+        public async Task<RequestResult<Tag>> FindAsync(uint projectId, string tagName)
+        {
+            if (tagName == null)
+                throw new ArgumentNullException(nameof(tagName));
+
+            var request = RequestFactory.Create("projects/{projectId}/repository/tags/{tagName}", Method.Get);
+
+            request.AddUrlSegment("projectId", projectId);
+            request.AddUrlSegment("tagName", tagName);
+
+            return await request.ExecuteAsync<Tag>();
         }
 
         /// <summary> Gets all tags associated with the specified project. </summary>
@@ -140,11 +185,11 @@ namespace GitLab.NET.Repositories
         /// </returns>
         public RequestResult<List<Tag>> GetAll(uint projectId)
         {
-            var request = new GetTagsRequest(projectId);
+            var request = RequestFactory.Create("projects/{projectId}/repository/tags", Method.Get);
 
-            var result = RequestExecutor.Execute<List<Tag>>(request);
+            request.AddUrlSegment("projectId", projectId);
 
-            return new RequestResult<List<Tag>>(result);
+            return request.Execute<List<Tag>>();
         }
 
         /// <summary> Gets all tags associated with the specified project. </summary>
@@ -155,43 +200,11 @@ namespace GitLab.NET.Repositories
         /// </returns>
         public async Task<RequestResult<List<Tag>>> GetAllAsync(uint projectId)
         {
-            var request = new GetTagsRequest(projectId);
+            var request = RequestFactory.Create("projects/{projectId}/repository/tags", Method.Get);
 
-            var result = await RequestExecutor.ExecuteAsync<List<Tag>>(request);
+            request.AddUrlSegment("projectId", projectId);
 
-            return new RequestResult<List<Tag>>(result);
-        }
-
-        /// <summary> Gets a tag by name. </summary>
-        /// <param name="projectId"> The ID of the project. </param>
-        /// <param name="tagName"> The name of the desired tag. </param>
-        /// <returns> A <see cref="RequestResult{Tag}" /> representing the results of the request. </returns>
-        public RequestResult<Tag> GetByName(uint projectId, string tagName)
-        {
-            if (tagName == null)
-                throw new ArgumentNullException(nameof(tagName));
-
-            var request = new GetTagRequest(projectId, tagName);
-
-            var result = RequestExecutor.Execute<Tag>(request);
-
-            return new RequestResult<Tag>(result);
-        }
-
-        /// <summary> Gets a tag by name. </summary>
-        /// <param name="projectId"> The ID of the project. </param>
-        /// <param name="tagName"> The name of the desired tag. </param>
-        /// <returns> A <see cref="RequestResult{Tag}" /> representing the results of the request. </returns>
-        public async Task<RequestResult<Tag>> GetByNameAsync(uint projectId, string tagName)
-        {
-            if (tagName == null)
-                throw new ArgumentNullException(nameof(tagName));
-
-            var request = new GetTagRequest(projectId, tagName);
-
-            var result = await RequestExecutor.ExecuteAsync<Tag>(request);
-
-            return new RequestResult<Tag>(result);
+            return await request.ExecuteAsync<List<Tag>>();
         }
 
         /// <summary> Updates a release associated with the specified tag. </summary>
@@ -207,11 +220,13 @@ namespace GitLab.NET.Repositories
             if (description == null)
                 throw new ArgumentNullException(nameof(description));
 
-            var request = new UpdateReleaseRequest(projectId, tagName, description);
+            var request = RequestFactory.Create("projects/{projectId}/repository/tags/{tagName}/release", Method.Put);
 
-            var result = RequestExecutor.Execute<Tag>(request);
+            request.AddUrlSegment("projectId", projectId);
+            request.AddUrlSegment("tagName", tagName);
+            request.AddParameter("description", description);
 
-            return new RequestResult<Tag>(result);
+            return request.Execute<Tag>();
         }
 
         /// <summary> Updates a release associated with the specified tag. </summary>
@@ -227,11 +242,13 @@ namespace GitLab.NET.Repositories
             if (description == null)
                 throw new ArgumentNullException(nameof(description));
 
-            var request = new UpdateReleaseRequest(projectId, tagName, description);
+            var request = RequestFactory.Create("projects/{projectId}/repository/tags/{tagName}/release", Method.Put);
 
-            var result = await RequestExecutor.ExecuteAsync<Tag>(request);
+            request.AddUrlSegment("projectId", projectId);
+            request.AddUrlSegment("tagName", tagName);
+            request.AddParameter("description", description);
 
-            return new RequestResult<Tag>(result);
+            return await request.ExecuteAsync<Tag>();
         }
     }
 }

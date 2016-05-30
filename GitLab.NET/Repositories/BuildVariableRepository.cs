@@ -1,10 +1,6 @@
-﻿// ReSharper disable UnusedMember.Global
-
-using System;
-using System.Collections.Generic;
+﻿using System;
 using System.Threading.Tasks;
 using GitLab.NET.Abstractions;
-using GitLab.NET.RequestModels;
 using GitLab.NET.ResponseModels;
 
 namespace GitLab.NET.Repositories
@@ -13,8 +9,8 @@ namespace GitLab.NET.Repositories
     public class BuildVariableRepository : RepositoryBase
     {
         /// <summary> Creates a new <see cref="BuildVariableRepository" /> instance. </summary>
-        /// <param name="restExecutor"> An instance of <see cref="IRequestExecutor" /> to use for this repository. </param>
-        public BuildVariableRepository(IRequestExecutor restExecutor) : base(restExecutor) { }
+        /// <param name="requestFactory"> An instance of <see cref="IRequestFactory" /> to use for this repository. </param>
+        public BuildVariableRepository(IRequestFactory requestFactory) : base(requestFactory) { }
 
         /// <summary> Creates a new build variable. </summary>
         /// <param name="projectId"> The ID of the project. </param>
@@ -29,11 +25,13 @@ namespace GitLab.NET.Repositories
             if (value == null)
                 throw new ArgumentNullException(nameof(value));
 
-            var request = new CreateBuildVariableRequest(projectId, key, value);
+            var request = RequestFactory.Create("projects/{projectId}/variables", Method.Post);
 
-            var result = RequestExecutor.Execute<BuildVariable>(request);
+            request.AddUrlSegment("projectId", projectId);
+            request.AddParameter("key", key);
+            request.AddParameter("value", value);
 
-            return new RequestResult<BuildVariable>(result);
+            return request.Execute<BuildVariable>();
         }
 
         /// <summary> Creates a new build variable. </summary>
@@ -49,11 +47,13 @@ namespace GitLab.NET.Repositories
             if (value == null)
                 throw new ArgumentNullException(nameof(value));
 
-            var request = new CreateBuildVariableRequest(projectId, key, value);
+            var request = RequestFactory.Create("projects/{projectId}/variables", Method.Post);
 
-            var result = await RequestExecutor.ExecuteAsync<BuildVariable>(request);
+            request.AddUrlSegment("projectId", projectId);
+            request.AddParameter("key", key);
+            request.AddParameter("value", value);
 
-            return new RequestResult<BuildVariable>(result);
+            return await request.ExecuteAsync<BuildVariable>();
         }
 
         /// <summary> Deletes a build variable by the specified key. </summary>
@@ -65,11 +65,12 @@ namespace GitLab.NET.Repositories
             if (key == null)
                 throw new ArgumentNullException(nameof(key));
 
-            var request = new DeleteBuildVariableRequest(projectId, key);
+            var request = RequestFactory.Create("projects/{projectId}/variables/{key}", Method.Delete);
 
-            var result = RequestExecutor.Execute<BuildVariable>(request);
+            request.AddUrlSegment("projectId", projectId);
+            request.AddUrlSegment("key", key);
 
-            return new RequestResult<BuildVariable>(result);
+            return request.Execute<BuildVariable>();
         }
 
         /// <summary> Deletes a build variable by the specified key. </summary>
@@ -81,11 +82,46 @@ namespace GitLab.NET.Repositories
             if (key == null)
                 throw new ArgumentNullException(nameof(key));
 
-            var request = new DeleteBuildVariableRequest(projectId, key);
+            var request = RequestFactory.Create("projects/{projectId}/variables/{key}", Method.Delete);
 
-            var result = await RequestExecutor.ExecuteAsync<BuildVariable>(request);
+            request.AddUrlSegment("projectId", projectId);
+            request.AddUrlSegment("key", key);
 
-            return new RequestResult<BuildVariable>(result);
+            return await request.ExecuteAsync<BuildVariable>();
+        }
+
+        /// <summary> Gets a build variable by the specified key. </summary>
+        /// <param name="projectId"> The ID of the project. </param>
+        /// <param name="key"> The key of the desired build variable. </param>
+        /// <returns> A <see cref="RequestResult{BuildVariable}" /> representing the results of the request. </returns>
+        public RequestResult<BuildVariable> Find(uint projectId, string key)
+        {
+            if (key == null)
+                throw new ArgumentNullException(nameof(key));
+
+            var request = RequestFactory.Create("projects/{projectId}/variables/{key}", Method.Get);
+
+            request.AddUrlSegment("projectId", projectId);
+            request.AddUrlSegment("key", key);
+
+            return request.Execute<BuildVariable>();
+        }
+
+        /// <summary> Gets a build variable by the specified key. </summary>
+        /// <param name="projectId"> The ID of the project. </param>
+        /// <param name="key"> The key of the desired build variable. </param>
+        /// <returns> A <see cref="RequestResult{BuildVariable}" /> representing the results of the request. </returns>
+        public async Task<RequestResult<BuildVariable>> FindAsync(uint projectId, string key)
+        {
+            if (key == null)
+                throw new ArgumentNullException(nameof(key));
+
+            var request = RequestFactory.Create("projects/{projectId}/variables/{key}", Method.Get);
+
+            request.AddUrlSegment("projectId", projectId);
+            request.AddUrlSegment("key", key);
+
+            return await request.ExecuteAsync<BuildVariable>();
         }
 
         /// <summary> Gets all build variables for the specified project. </summary>
@@ -93,11 +129,11 @@ namespace GitLab.NET.Repositories
         /// <returns> A <see cref="PaginatedResult{BuildVariable}" /> representing the results of the request. </returns>
         public PaginatedResult<BuildVariable> GetAll(uint projectId)
         {
-            var request = new GetBuildVariablesRequest(projectId);
+            var request = RequestFactory.Create("projects/{projectId}/variables", Method.Get);
 
-            var result = RequestExecutor.Execute<List<BuildVariable>>(request);
+            request.AddUrlSegment("projectId", projectId);
 
-            return new PaginatedResult<BuildVariable>(result);
+            return request.ExecutePaginated<BuildVariable>();
         }
 
         /// <summary> Gets all build variables for the specified project. </summary>
@@ -105,43 +141,11 @@ namespace GitLab.NET.Repositories
         /// <returns> A <see cref="PaginatedResult{BuildVariable}" /> representing the results of the request. </returns>
         public async Task<PaginatedResult<BuildVariable>> GetAllAsync(uint projectId)
         {
-            var request = new GetBuildVariablesRequest(projectId);
+            var request = RequestFactory.Create("projects/{projectId}/variables", Method.Get);
 
-            var result = await RequestExecutor.ExecuteAsync<List<BuildVariable>>(request);
+            request.AddUrlSegment("projectId", projectId);
 
-            return new PaginatedResult<BuildVariable>(result);
-        }
-
-        /// <summary> Gets a build variable by the specified key. </summary>
-        /// <param name="projectId"> The ID of the project. </param>
-        /// <param name="key"> The key of the desired build variable. </param>
-        /// <returns> A <see cref="RequestResult{BuildVariable}" /> representing the results of the request. </returns>
-        public RequestResult<BuildVariable> GetByKey(uint projectId, string key)
-        {
-            if (key == null)
-                throw new ArgumentNullException(nameof(key));
-
-            var request = new GetBuildVariableRequest(projectId, key);
-
-            var result = RequestExecutor.Execute<BuildVariable>(request);
-
-            return new RequestResult<BuildVariable>(result);
-        }
-
-        /// <summary> Gets a build variable by the specified key. </summary>
-        /// <param name="projectId"> The ID of the project. </param>
-        /// <param name="key"> The key of the desired build variable. </param>
-        /// <returns> A <see cref="RequestResult{BuildVariable}" /> representing the results of the request. </returns>
-        public async Task<RequestResult<BuildVariable>> GetByKeyAsync(uint projectId, string key)
-        {
-            if (key == null)
-                throw new ArgumentNullException(nameof(key));
-
-            var request = new GetBuildVariableRequest(projectId, key);
-
-            var result = await RequestExecutor.ExecuteAsync<BuildVariable>(request);
-
-            return new RequestResult<BuildVariable>(result);
+            return await request.ExecutePaginatedAsync<BuildVariable>();
         }
 
         /// <summary> Updates an existing build variable. </summary>
@@ -157,11 +161,13 @@ namespace GitLab.NET.Repositories
             if (value == null)
                 throw new ArgumentNullException(nameof(value));
 
-            var request = new UpdateBuildVariableRequest(projectId, key, value);
+            var request = RequestFactory.Create("projects/{projectId}/variables/{key}", Method.Put);
 
-            var result = RequestExecutor.Execute<BuildVariable>(request);
+            request.AddUrlSegment("projectId", projectId);
+            request.AddUrlSegment("key", key);
+            request.AddParameter("value", value);
 
-            return new RequestResult<BuildVariable>(result);
+            return request.Execute<BuildVariable>();
         }
 
         /// <summary> Updates an existing build variable. </summary>
@@ -177,11 +183,13 @@ namespace GitLab.NET.Repositories
             if (value == null)
                 throw new ArgumentNullException(nameof(value));
 
-            var request = new UpdateBuildVariableRequest(projectId, key, value);
+            var request = RequestFactory.Create("projects/{projectId}/variables/{key}", Method.Put);
 
-            var result = await RequestExecutor.ExecuteAsync<BuildVariable>(request);
+            request.AddUrlSegment("projectId", projectId);
+            request.AddUrlSegment("key", key);
+            request.AddParameter("value", value);
 
-            return new RequestResult<BuildVariable>(result);
+            return await request.ExecuteAsync<BuildVariable>();
         }
     }
 }

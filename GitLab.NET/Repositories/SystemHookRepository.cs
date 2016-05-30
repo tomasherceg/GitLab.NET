@@ -1,10 +1,7 @@
-﻿// ReSharper disable UnusedMember.Global
-
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using GitLab.NET.Abstractions;
-using GitLab.NET.RequestModels;
 using GitLab.NET.ResponseModels;
 
 namespace GitLab.NET.Repositories
@@ -13,8 +10,8 @@ namespace GitLab.NET.Repositories
     public class SystemHookRepository : RepositoryBase
     {
         /// <summary> Creates a new <see cref="SystemHookRepository" /> instance. </summary>
-        /// <param name="restExecutor"> An instance of <see cref="IRequestExecutor" /> to use for this repository. </param>
-        public SystemHookRepository(IRequestExecutor restExecutor) : base(restExecutor) { }
+        /// <param name="requestFactory"> An instance of <see cref="IRequestFactory" /> to use for this repository. </param>
+        public SystemHookRepository(IRequestFactory requestFactory) : base(requestFactory) { }
 
         /// <summary> Creates a new system hook. </summary>
         /// <param name="url"> The URL to use for the new system hook. </param>
@@ -24,11 +21,11 @@ namespace GitLab.NET.Repositories
             if (url == null)
                 throw new ArgumentNullException(nameof(url));
 
-            var request = new CreateSystemHookRequest(url);
+            var request = RequestFactory.Create("hooks", Method.Post);
 
-            var result = RequestExecutor.Execute<SystemHook>(request);
+            request.AddParameter("url", url);
 
-            return new RequestResult<SystemHook>(result);
+            return request.Execute<SystemHook>();
         }
 
         /// <summary> Creates a new system hook. </summary>
@@ -39,11 +36,11 @@ namespace GitLab.NET.Repositories
             if (url == null)
                 throw new ArgumentNullException(nameof(url));
 
-            var request = new CreateSystemHookRequest(url);
+            var request = RequestFactory.Create("hooks", Method.Post);
 
-            var result = await RequestExecutor.ExecuteAsync<SystemHook>(request);
+            request.AddParameter("url", url);
 
-            return new RequestResult<SystemHook>(result);
+            return await request.ExecuteAsync<SystemHook>();
         }
 
         /// <summary> Deletes a system hook. </summary>
@@ -51,11 +48,11 @@ namespace GitLab.NET.Repositories
         /// <returns> A <see cref="RequestResult{SystemHook}" /> representing the results of the request. </returns>
         public RequestResult<SystemHook> Delete(uint hookId)
         {
-            var request = new DeleteSystemHookRequest(hookId);
+            var request = RequestFactory.Create("hooks/{hookId}", Method.Delete);
 
-            var result = RequestExecutor.Execute<SystemHook>(request);
+            request.AddUrlSegment("hookId", hookId);
 
-            return new RequestResult<SystemHook>(result);
+            return request.Execute<SystemHook>();
         }
 
         /// <summary> Deletes a system hook. </summary>
@@ -63,11 +60,11 @@ namespace GitLab.NET.Repositories
         /// <returns> A <see cref="RequestResult{SystemHook}" /> representing the results of the request. </returns>
         public async Task<RequestResult<SystemHook>> DeleteAsync(uint hookId)
         {
-            var request = new DeleteSystemHookRequest(hookId);
+            var request = RequestFactory.Create("hooks/{hookId}", Method.Delete);
 
-            var result = await RequestExecutor.ExecuteAsync<SystemHook>(request);
+            request.AddUrlSegment("hookId", hookId);
 
-            return new RequestResult<SystemHook>(result);
+            return await request.ExecuteAsync<SystemHook>();
         }
 
         /// <summary> Gets all system hooks. </summary>
@@ -77,11 +74,9 @@ namespace GitLab.NET.Repositories
         /// </returns>
         public RequestResult<List<SystemHook>> GetAll()
         {
-            var request = new GetSystemHooksRequest();
+            var request = RequestFactory.Create("hooks", Method.Get);
 
-            var result = RequestExecutor.Execute<List<SystemHook>>(request);
-
-            return new RequestResult<List<SystemHook>>(result);
+            return request.Execute<List<SystemHook>>();
         }
 
         /// <summary> Gets all system hooks. </summary>
@@ -91,11 +86,9 @@ namespace GitLab.NET.Repositories
         /// </returns>
         public async Task<RequestResult<List<SystemHook>>> GetAllAsync()
         {
-            var request = new GetSystemHooksRequest();
+            var request = RequestFactory.Create("hooks", Method.Get);
 
-            var result = await RequestExecutor.ExecuteAsync<List<SystemHook>>(request);
-
-            return new RequestResult<List<SystemHook>>(result);
+            return await request.ExecuteAsync<List<SystemHook>>();
         }
 
         /// <summary> Tests a system hook. </summary>
@@ -103,11 +96,11 @@ namespace GitLab.NET.Repositories
         /// <returns> A <see cref="RequestResult{SystemHookEvent}" /> representing the results of the request. </returns>
         public RequestResult<SystemHookEvent> Test(uint hookId)
         {
-            var request = new TestSystemHookRequest(hookId);
+            var request = RequestFactory.Create("hooks/{hookId}", Method.Get);
 
-            var result = RequestExecutor.Execute<SystemHookEvent>(request);
+            request.AddUrlSegment("hookId", hookId);
 
-            return new RequestResult<SystemHookEvent>(result);
+            return request.Execute<SystemHookEvent>();
         }
 
         /// <summary> Tests a system hook. </summary>
@@ -115,11 +108,11 @@ namespace GitLab.NET.Repositories
         /// <returns> A <see cref="RequestResult{SystemHookEvent}" /> representing the results of the request. </returns>
         public async Task<RequestResult<SystemHookEvent>> TestAsync(uint hookId)
         {
-            var request = new TestSystemHookRequest(hookId);
+            var request = RequestFactory.Create("hooks/{hookId}", Method.Get);
 
-            var result = await RequestExecutor.ExecuteAsync<SystemHookEvent>(request);
+            request.AddUrlSegment("hookId", hookId);
 
-            return new RequestResult<SystemHookEvent>(result);
+            return await request.ExecuteAsync<SystemHookEvent>();
         }
     }
 }

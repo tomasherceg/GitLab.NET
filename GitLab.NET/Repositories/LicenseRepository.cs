@@ -1,10 +1,7 @@
-﻿// ReSharper disable UnusedMember.Global
-
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using GitLab.NET.Abstractions;
-using GitLab.NET.RequestModels;
 using GitLab.NET.ResponseModels;
 
 namespace GitLab.NET.Repositories
@@ -13,41 +10,45 @@ namespace GitLab.NET.Repositories
     public class LicenseRepository : RepositoryBase
     {
         /// <summary> Creates a new <see cref="LicenseRepository" /> instance. </summary>
-        /// <param name="restExecutor"> An instance of <see cref="IRequestExecutor" /> to use for this repository. </param>
-        public LicenseRepository(IRequestExecutor restExecutor) : base(restExecutor) { }
+        /// <param name="requestFactory"> An instance of <see cref="IRequestFactory" /> to use for this repository. </param>
+        public LicenseRepository(IRequestFactory requestFactory) : base(requestFactory) { }
 
-        /// <summary> Gets a license matching the specified key. </summary>
+        /// <summary> Finds a license template matching the specified key. </summary>
         /// <param name="key"> The key for the desired license. </param>
         /// <param name="project"> The project name to replace references in the license with. </param>
         /// <param name="fullName"> The full name of the copyright holder to replace references in the license with. </param>
         /// <returns> A <see cref="RequestResult{License}" /> representing the results of the request. </returns>
-        public RequestResult<License> Get(string key, string project = null, string fullName = null)
+        public RequestResult<License> Find(string key, string project = null, string fullName = null)
         {
             if (key == null)
                 throw new ArgumentNullException(nameof(key));
 
-            var request = new GetLicenseRequest(key, project, fullName);
+            var request = RequestFactory.Create("licenses/{key}", Method.Get);
 
-            var result = RequestExecutor.Execute<License>(request);
+            request.AddUrlSegment("key", key);
+            request.AddParameterIfNotNull("project", project);
+            request.AddParameterIfNotNull("fullname", fullName);
 
-            return new RequestResult<License>(result);
+            return request.Execute<License>();
         }
 
-        /// <summary> Gets a license matching the specified key. </summary>
+        /// <summary> Finds a license template matching the specified key. </summary>
         /// <param name="key"> The key for the desired license. </param>
         /// <param name="project"> The project name to replace references in the license with. </param>
         /// <param name="fullName"> The full name of the copyright holder to replace references in the license with. </param>
         /// <returns> A <see cref="RequestResult{License}" /> representing the results of the request. </returns>
-        public async Task<RequestResult<License>> GetAsync(string key, string project = null, string fullName = null)
+        public async Task<RequestResult<License>> FindAsync(string key, string project = null, string fullName = null)
         {
             if (key == null)
                 throw new ArgumentNullException(nameof(key));
 
-            var request = new GetLicenseRequest(key, project, fullName);
+            var request = RequestFactory.Create("licenses/{key}", Method.Get);
 
-            var result = await RequestExecutor.ExecuteAsync<License>(request);
+            request.AddUrlSegment("key", key);
+            request.AddParameterIfNotNull("project", project);
+            request.AddParameterIfNotNull("fullname", fullName);
 
-            return new RequestResult<License>(result);
+            return await request.ExecuteAsync<License>();
         }
 
         /// <summary> Gets all license templates. </summary>
@@ -58,11 +59,11 @@ namespace GitLab.NET.Repositories
         /// </returns>
         public RequestResult<List<License>> GetAll(bool? popular = null)
         {
-            var request = new GetLicensesRequest(popular);
+            var request = RequestFactory.Create("licenses", Method.Get);
 
-            var result = RequestExecutor.Execute<List<License>>(request);
+            request.AddParameterIfNotNull("popular", popular);
 
-            return new RequestResult<List<License>>(result);
+            return request.Execute<List<License>>();
         }
 
         /// <summary> Gets all license templates. </summary>
@@ -73,11 +74,11 @@ namespace GitLab.NET.Repositories
         /// </returns>
         public async Task<RequestResult<List<License>>> GetAllAsync(bool? popular = null)
         {
-            var request = new GetLicensesRequest(popular);
+            var request = RequestFactory.Create("licenses", Method.Get);
 
-            var result = await RequestExecutor.ExecuteAsync<List<License>>(request);
+            request.AddParameterIfNotNull("popular", popular);
 
-            return new RequestResult<List<License>>(result);
+            return await request.ExecuteAsync<List<License>>();
         }
     }
 }

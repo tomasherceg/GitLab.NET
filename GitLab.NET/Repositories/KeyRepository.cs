@@ -1,9 +1,7 @@
-﻿// ReSharper disable UnusedMember.Global
-
+﻿using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using GitLab.NET.Abstractions;
-using GitLab.NET.RequestModels;
 using GitLab.NET.ResponseModels;
 
 namespace GitLab.NET.Repositories
@@ -12,217 +10,163 @@ namespace GitLab.NET.Repositories
     public class KeyRepository : RepositoryBase
     {
         /// <summary> Creates a new <see cref="KeyRepository" /> instance. </summary>
-        /// <param name="restExecutor"> An instance of <see cref="IRequestExecutor" /> to use for this repository. </param>
-        public KeyRepository(IRequestExecutor restExecutor) : base(restExecutor) { }
+        /// <param name="requestFactory"> An instance of <see cref="IRequestFactory" /> to use for this repository. </param>
+        public KeyRepository(IRequestFactory requestFactory) : base(requestFactory) { }
 
-        /// <summary> Creates a new SSH key under the currently authenticated user's account. </summary>
-        /// <param name="title"> The title for the new SSH key. </param>
-        /// <param name="key"> The key for the new SSH key. </param>
-        /// <returns> A <see cref="RequestResult{SshKey}" /> representing the results of the request. </returns>
-        public RequestResult<SshKey> Create(string title, string key)
-        {
-            var request = new CreateKeyRequest(title, key);
-
-            var result = RequestExecutor.Execute<SshKey>(request);
-
-            return new RequestResult<SshKey>(result);
-        }
-
-        /// <summary> Creates a new SSH key under the currently authenticated user's account. </summary>
-        /// <param name="title"> The title for the new SSH key. </param>
-        /// <param name="key"> The key for the new SSH key. </param>
-        /// <returns> A <see cref="RequestResult{SshKey}" /> representing the results of the request. </returns>
-        public async Task<RequestResult<SshKey>> CreateAsync(string title, string key)
-        {
-            var request = new CreateKeyRequest(title, key);
-
-            var result = await RequestExecutor.ExecuteAsync<SshKey>(request);
-
-            return new RequestResult<SshKey>(result);
-        }
-
-        /// <summary> Creates a new SSH key under the specified user's account. </summary>
+        /// <summary> Creates a new SSH key under the currently authenticated user's account or the specified user's account. </summary>
         /// <param name="title"> The title for the new SSH key. </param>
         /// <param name="key"> The key for the new SSH key. </param>
         /// <param name="userId"> The user's ID. </param>
         /// <returns> A <see cref="RequestResult{SshKey}" /> representing the results of the request. </returns>
-        public RequestResult<SshKey> Create(string title, string key, uint userId)
+        public RequestResult<SshKey> Create(string title, string key, uint? userId = null)
         {
-            var request = new CreateKeyRequest(title, key, userId);
+            if (title == null)
+                throw new ArgumentNullException(nameof(title));
 
-            var result = RequestExecutor.Execute<SshKey>(request);
+            if (key == null)
+                throw new ArgumentNullException(nameof(key));
 
-            return new RequestResult<SshKey>(result);
+            var resource = userId != null ? "users/{userId}/keys" : "user/keys";
+            var request = RequestFactory.Create(resource, Method.Post);
+
+            request.AddUrlSegmentIfNotNull("userId", userId);
+            request.AddParameter("title", title);
+            request.AddParameter("key", key);
+
+            return request.Execute<SshKey>();
         }
 
-        /// <summary> Creates a new SSH key under the specified user's account. </summary>
+        /// <summary> Creates a new SSH key under the currently authenticated user's account or the specified user's account. </summary>
         /// <param name="title"> The title for the new SSH key. </param>
         /// <param name="key"> The key for the new SSH key. </param>
         /// <param name="userId"> The user's ID. </param>
         /// <returns> A <see cref="RequestResult{SshKey}" /> representing the results of the request. </returns>
-        public async Task<RequestResult<SshKey>> CreateAsync(string title, string key, uint userId)
+        public async Task<RequestResult<SshKey>> CreateAsync(string title, string key, uint? userId = null)
         {
-            var request = new CreateKeyRequest(title, key, userId);
+            if (title == null)
+                throw new ArgumentNullException(nameof(title));
 
-            var result = await RequestExecutor.ExecuteAsync<SshKey>(request);
+            if (key == null)
+                throw new ArgumentNullException(nameof(key));
 
-            return new RequestResult<SshKey>(result);
+            var resource = userId != null ? "users/{userId}/keys" : "user/keys";
+            var request = RequestFactory.Create(resource, Method.Post);
+
+            request.AddUrlSegmentIfNotNull("userId", userId);
+            request.AddParameter("title", title);
+            request.AddParameter("key", key);
+
+            return await request.ExecuteAsync<SshKey>();
         }
 
-        /// <summary> Delete's an SSH key from the currently authenticated user's account. </summary>
-        /// <param name="id"> The ID of the key to delete. </param>
-        /// <returns> A <see cref="RequestResult{SshKey}" /> representing the results of the request. </returns>
-        public RequestResult<SshKey> Delete(uint id)
-        {
-            var request = new DeleteKeyRequest(id);
-
-            var result = RequestExecutor.Execute<SshKey>(request);
-
-            return new RequestResult<SshKey>(result);
-        }
-
-        /// <summary> Delete's an SSH key from the currently authenticated user's account. </summary>
-        /// <param name="id"> The ID of the key to delete. </param>
-        /// <returns> A <see cref="RequestResult{SshKey}" /> representing the results of the request. </returns>
-        public async Task<RequestResult<SshKey>> DeleteAsync(uint id)
-        {
-            var request = new DeleteKeyRequest(id);
-
-            var result = await RequestExecutor.ExecuteAsync<SshKey>(request);
-
-            return new RequestResult<SshKey>(result);
-        }
-
-        /// <summary> Delete's an SSH key from the specified user's account. </summary>
+        /// <summary> Delete's an SSH key from the currently authenticated user's account or the specified user's account. </summary>
         /// <param name="id"> The ID of the key to delete. </param>
         /// <param name="userId"> The ID of the user. </param>
         /// <returns> A <see cref="RequestResult{SshKey}" /> representing the results of the request. </returns>
-        public RequestResult<SshKey> Delete(uint id, uint userId)
+        public RequestResult<SshKey> Delete(uint id, uint? userId = null)
         {
-            var request = new DeleteKeyRequest(id, userId);
+            var resource = userId != null ? "users/{userId}/keys/{id}" : "user/keys/{id}";
+            var request = RequestFactory.Create(resource, Method.Delete);
 
-            var result = RequestExecutor.Execute<SshKey>(request);
+            request.AddUrlSegmentIfNotNull("userId", userId);
+            request.AddUrlSegment("id", id);
 
-            return new RequestResult<SshKey>(result);
+            return request.Execute<SshKey>();
         }
 
-        /// <summary> Delete's an SSH key from the specified user's account. </summary>
+        /// <summary> Delete's an SSH key from the currently authenticated user's account or the specified user's account. </summary>
         /// <param name="id"> The ID of the key to delete. </param>
         /// <param name="userId"> The ID of the user. </param>
         /// <returns> A <see cref="RequestResult{SshKey}" /> representing the results of the request. </returns>
-        public async Task<RequestResult<SshKey>> DeleteAsync(uint id, uint userId)
+        public async Task<RequestResult<SshKey>> DeleteAsync(uint id, uint? userId = null)
         {
-            var request = new DeleteKeyRequest(id, userId);
+            var resource = userId != null ? "users/{userId}/keys/{id}" : "user/keys/{id}";
+            var request = RequestFactory.Create(resource, Method.Delete);
 
-            var result = await RequestExecutor.ExecuteAsync<SshKey>(request);
+            request.AddUrlSegmentIfNotNull("userId", userId);
+            request.AddUrlSegment("id", id);
 
-            return new RequestResult<SshKey>(result);
+            return await request.ExecuteAsync<SshKey>();
         }
 
-        /// <summary> Gets an SSH key by ID. </summary>
+        /// <summary> Finds an SSH key by ID. </summary>
         /// <param name="id"> The ID of the SSH key. </param>
         /// <returns> A <see cref="RequestResult{SshKey}" /> representing the results of the request. </returns>
-        public RequestResult<SshKey> GetById(uint id)
+        public RequestResult<SshKey> Find(uint id)
         {
-            var request = new GetKeyRequest(id);
+            var request = RequestFactory.Create("user/keys/{id}", Method.Get);
 
-            var result = RequestExecutor.Execute<SshKey>(request);
+            request.AddUrlSegment("id", id);
 
-            return new RequestResult<SshKey>(result);
+            return request.Execute<SshKey>();
         }
 
-        /// <summary> Gets an SSH key by ID. </summary>
+        /// <summary> Finds an SSH key by ID. </summary>
         /// <param name="id"> The ID of the SSH key. </param>
         /// <returns> A <see cref="RequestResult{SshKey}" /> representing the results of the request. </returns>
-        public async Task<RequestResult<SshKey>> GetByIdAsync(uint id)
+        public async Task<RequestResult<SshKey>> FindAsync(uint id)
         {
-            var request = new GetKeyRequest(id);
+            var request = RequestFactory.Create("user/keys/{id}", Method.Get);
 
-            var result = await RequestExecutor.ExecuteAsync<SshKey>(request);
+            request.AddUrlSegment("id", id);
 
-            return new RequestResult<SshKey>(result);
+            return await request.ExecuteAsync<SshKey>();
         }
 
-        /// <summary> Gets an SSH key and user information by ID. </summary>
+        /// <summary> Finds an SSH key and user information by ID. </summary>
         /// <param name="id"> The ID of the SSH key. </param>
         /// <returns> A <see cref="RequestResult{SshKey}" /> representing the results of the request. </returns>
-        public RequestResult<SshKey> GetByIdWithUser(uint id)
+        public RequestResult<SshKey> FindWithUser(uint id)
         {
-            var request = new GetKeyWithUserRequest(id);
+            var request = RequestFactory.Create("keys/{id}", Method.Get);
 
-            var result = RequestExecutor.Execute<SshKey>(request);
+            request.AddUrlSegment("id", id);
 
-            return new RequestResult<SshKey>(result);
+            return request.Execute<SshKey>();
         }
 
-        /// <summary> Gets an SSH key and user information by ID. </summary>
+        /// <summary> Finds an SSH key and user information by ID. </summary>
         /// <param name="id"> The ID of the SSH key. </param>
         /// <returns> A <see cref="RequestResult{SshKey}" /> representing the results of the request. </returns>
-        public async Task<RequestResult<SshKey>> GetByIdWithUserAsync(uint id)
+        public async Task<RequestResult<SshKey>> FindWithUserAsync(uint id)
         {
-            var request = new GetKeyWithUserRequest(id);
+            var request = RequestFactory.Create("keys/{id}", Method.Get);
 
-            var result = await RequestExecutor.ExecuteAsync<SshKey>(request);
+            request.AddUrlSegment("id", id);
 
-            return new RequestResult<SshKey>(result);
+            return await request.ExecuteAsync<SshKey>();
         }
 
-        /// <summary> Gets the currently authenticated user's SSH keys. </summary>
+        /// <summary> Gets all SSH keys for the current user or the specified user. </summary>
+        /// <param name="userId"> The ID of the user. </param>
         /// <returns>
         ///     A <see cref="RequestResult{T}" /> containing a <see cref="List{SshKey}" /> representing the results of the
         ///     request.
         /// </returns>
-        public RequestResult<List<SshKey>> GetForUser()
+        public RequestResult<List<SshKey>> GetAll(uint? userId = null)
         {
-            var request = new GetUserKeysRequest();
+            var resource = userId != null ? "users/{userId}/keys" : "user/keys";
+            var request = RequestFactory.Create(resource, Method.Get);
 
-            var result = RequestExecutor.Execute<List<SshKey>>(request);
+            request.AddUrlSegmentIfNotNull("userId", userId);
 
-            return new RequestResult<List<SshKey>>(result);
+            return request.Execute<List<SshKey>>();
         }
 
-        /// <summary> Gets the currently authenticated user's SSH keys. </summary>
+        /// <summary> Gets all SSH keys for the current user or the specified user. </summary>
+        /// <param name="userId"> The ID of the user. </param>
         /// <returns>
         ///     A <see cref="RequestResult{T}" /> containing a <see cref="List{SshKey}" /> representing the results of the
         ///     request.
         /// </returns>
-        public async Task<RequestResult<List<SshKey>>> GetForUserAsync()
+        public async Task<RequestResult<List<SshKey>>> GetAllAsync(uint? userId = null)
         {
-            var request = new GetUserKeysRequest();
+            var resource = userId != null ? "users/{userId}/keys" : "user/keys";
+            var request = RequestFactory.Create(resource, Method.Get);
 
-            var result = await RequestExecutor.ExecuteAsync<List<SshKey>>(request);
+            request.AddUrlSegmentIfNotNull("userId", userId);
 
-            return new RequestResult<List<SshKey>>(result);
-        }
-
-        /// <summary> Gets the specified user's SSH keys. </summary>
-        /// <param name="userId"> The user's ID. </param>
-        /// <returns>
-        ///     A <see cref="RequestResult{T}" /> containing a <see cref="List{SshKey}" /> representing the results of the
-        ///     request.
-        /// </returns>
-        public RequestResult<List<SshKey>> GetForUser(uint userId)
-        {
-            var request = new GetUserKeysRequest(userId);
-
-            var result = RequestExecutor.Execute<List<SshKey>>(request);
-
-            return new RequestResult<List<SshKey>>(result);
-        }
-
-        /// <summary> Gets the specified user's SSH keys. </summary>
-        /// <param name="userId"> The user's ID. </param>
-        /// <returns>
-        ///     A <see cref="RequestResult{T}" /> containing a <see cref="List{SshKey}" /> representing the results of the
-        ///     request.
-        /// </returns>
-        public async Task<RequestResult<List<SshKey>>> GetForUserAsync(uint userId)
-        {
-            var request = new GetUserKeysRequest(userId);
-
-            var result = await RequestExecutor.ExecuteAsync<List<SshKey>>(request);
-
-            return new RequestResult<List<SshKey>>(result);
+            return await request.ExecuteAsync<List<SshKey>>();
         }
     }
 }

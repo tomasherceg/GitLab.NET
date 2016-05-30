@@ -1,10 +1,6 @@
-﻿// ReSharper disable UnusedMember.Global
-
-using System;
-using System.Collections.Generic;
+﻿using System;
 using System.Threading.Tasks;
 using GitLab.NET.Abstractions;
-using GitLab.NET.RequestModels;
 using GitLab.NET.ResponseModels;
 
 namespace GitLab.NET.Repositories
@@ -13,8 +9,8 @@ namespace GitLab.NET.Repositories
     public class ProjectSnippetRepository : RepositoryBase
     {
         /// <summary> Creates a new <see cref="ProjectSnippetRepository" /> instance. </summary>
-        /// <param name="restExecutor"> An instance of <see cref="IRequestExecutor" /> to use for this repository. </param>
-        public ProjectSnippetRepository(IRequestExecutor restExecutor) : base(restExecutor) { }
+        /// <param name="requestFactory"> An instance of <see cref="IRequestFactory" /> to use for this repository. </param>
+        public ProjectSnippetRepository(IRequestFactory requestFactory) : base(requestFactory) { }
 
         /// <summary> Creates a new project snippet associated with the provided project ID. </summary>
         /// <param name="projectId"> The ID of the project to create this snippet for. </param>
@@ -34,11 +30,15 @@ namespace GitLab.NET.Repositories
             if (code == null)
                 throw new ArgumentNullException(nameof(code));
 
-            var request = new CreateProjectSnippetRequest(projectId, title, fileName, code, visibilityLevel);
+            var request = RequestFactory.Create("projects/{projectId}/snippets", Method.Post);
 
-            var result = RequestExecutor.Execute<ProjectSnippet>(request);
+            request.AddUrlSegment("projectId", projectId);
+            request.AddParameter("title", title);
+            request.AddParameter("file_name", fileName);
+            request.AddParameter("code", code);
+            request.AddParameter("visibility_level", visibilityLevel);
 
-            return new RequestResult<ProjectSnippet>(result);
+            return request.Execute<ProjectSnippet>();
         }
 
         /// <summary> Creates a new project snippet associated with the provided project ID. </summary>
@@ -59,11 +59,15 @@ namespace GitLab.NET.Repositories
             if (code == null)
                 throw new ArgumentNullException(nameof(code));
 
-            var request = new CreateProjectSnippetRequest(projectId, title, fileName, code, visibilityLevel);
+            var request = RequestFactory.Create("projects/{projectId}/snippets", Method.Post);
 
-            var result = await RequestExecutor.ExecuteAsync<ProjectSnippet>(request);
+            request.AddUrlSegment("projectId", projectId);
+            request.AddParameter("title", title);
+            request.AddParameter("file_name", fileName);
+            request.AddParameter("code", code);
+            request.AddParameter("visibility_level", visibilityLevel);
 
-            return new RequestResult<ProjectSnippet>(result);
+            return await request.ExecuteAsync<ProjectSnippet>();
         }
 
         /// <summary> Deletes a project snippet. </summary>
@@ -72,11 +76,12 @@ namespace GitLab.NET.Repositories
         /// <returns> A <see cref="RequestResult{ProjectSnippet}" /> representing the results of the request. </returns>
         public RequestResult<ProjectSnippet> Delete(uint id, uint projectId)
         {
-            var request = new DeleteProjectSnippetRequest(id, projectId);
+            var request = RequestFactory.Create("projects/{projectId}/snippets/{id}", Method.Delete);
 
-            var result = RequestExecutor.Execute<ProjectSnippet>(request);
+            request.AddUrlSegment("projectId", projectId);
+            request.AddUrlSegment("id", id);
 
-            return new RequestResult<ProjectSnippet>(result);
+            return request.Execute<ProjectSnippet>();
         }
 
         /// <summary> Deletes a project snippet. </summary>
@@ -85,11 +90,40 @@ namespace GitLab.NET.Repositories
         /// <returns> A <see cref="RequestResult{ProjectSnippet}" /> representing the results of the request. </returns>
         public async Task<RequestResult<ProjectSnippet>> DeleteAsync(uint id, uint projectId)
         {
-            var request = new DeleteProjectSnippetRequest(id, projectId);
+            var request = RequestFactory.Create("projects/{projectId}/snippets/{id}", Method.Delete);
 
-            var result = await RequestExecutor.ExecuteAsync<ProjectSnippet>(request);
+            request.AddUrlSegment("projectId", projectId);
+            request.AddUrlSegment("id", id);
 
-            return new RequestResult<ProjectSnippet>(result);
+            return await request.ExecuteAsync<ProjectSnippet>();
+        }
+
+        /// <summary> Finds a snippet by its ID and the project ID it is associated with. </summary>
+        /// <param name="id"> The ID of the snippet to retrieve. </param>
+        /// <param name="projectId"> The ID of the project to get snippets from. </param>
+        /// <returns> A <see cref="RequestResult{ProjectSnippet}" /> representing the results of the request. </returns>
+        public RequestResult<ProjectSnippet> FindById(uint id, uint projectId)
+        {
+            var request = RequestFactory.Create("projects/{projectId}/snippets/{id}", Method.Get);
+
+            request.AddUrlSegment("projectId", projectId);
+            request.AddUrlSegment("id", id);
+
+            return request.Execute<ProjectSnippet>();
+        }
+
+        /// <summary> Finds a snippet by its ID and the project ID it is associated with. </summary>
+        /// <param name="id"> The ID of the snippet to retrieve. </param>
+        /// <param name="projectId"> The ID of the project to get snippets from. </param>
+        /// <returns> A <see cref="RequestResult{ProjectSnippet}" /> representing the results of the request. </returns>
+        public async Task<RequestResult<ProjectSnippet>> FindAsync(uint id, uint projectId)
+        {
+            var request = RequestFactory.Create("projects/{projectId}/snippets/{id}", Method.Get);
+
+            request.AddUrlSegment("projectId", projectId);
+            request.AddUrlSegment("id", id);
+
+            return await request.ExecuteAsync<ProjectSnippet>();
         }
 
         /// <summary> Gets all of the project snippets associated with a project. </summary>
@@ -97,11 +131,11 @@ namespace GitLab.NET.Repositories
         /// <returns> A <see cref="PaginatedResult{ProjectSnippet}" /> representing the results of the request. </returns>
         public PaginatedResult<ProjectSnippet> GetAll(uint projectId)
         {
-            var request = new GetProjectSnippetsRequest(projectId);
+            var request = RequestFactory.Create("projects/{projectId}/snippets", Method.Get);
 
-            var result = RequestExecutor.Execute<List<ProjectSnippet>>(request);
+            request.AddUrlSegment("projectId", projectId);
 
-            return new PaginatedResult<ProjectSnippet>(result);
+            return request.ExecutePaginated<ProjectSnippet>();
         }
 
         /// <summary> Gets all of the project snippets associated with a project. </summary>
@@ -109,37 +143,11 @@ namespace GitLab.NET.Repositories
         /// <returns> A <see cref="PaginatedResult{ProjectSnippet}" /> representing the results of the request. </returns>
         public async Task<PaginatedResult<ProjectSnippet>> GetAllAsync(uint projectId)
         {
-            var request = new GetProjectSnippetsRequest(projectId);
+            var request = RequestFactory.Create("projects/{projectId}/snippets", Method.Get);
 
-            var result = await RequestExecutor.ExecuteAsync<List<ProjectSnippet>>(request);
+            request.AddUrlSegment("projectId", projectId);
 
-            return new PaginatedResult<ProjectSnippet>(result);
-        }
-
-        /// <summary> Gets a snippet by its ID and the project ID it is associated with. </summary>
-        /// <param name="id"> The ID of the snippet to retrieve. </param>
-        /// <param name="projectId"> The ID of the project to get snippets from. </param>
-        /// <returns> A <see cref="RequestResult{ProjectSnippet}" /> representing the results of the request. </returns>
-        public RequestResult<ProjectSnippet> GetById(uint id, uint projectId)
-        {
-            var request = new GetProjectSnippetRequest(id, projectId);
-
-            var result = RequestExecutor.Execute<ProjectSnippet>(request);
-
-            return new RequestResult<ProjectSnippet>(result);
-        }
-
-        /// <summary> Gets a snippet by its ID and the project ID it is associated with. </summary>
-        /// <param name="id"> The ID of the snippet to retrieve. </param>
-        /// <param name="projectId"> The ID of the project to get snippets from. </param>
-        /// <returns> A <see cref="RequestResult{ProjectSnippet}" /> representing the results of the request. </returns>
-        public async Task<RequestResult<ProjectSnippet>> GetByIdAsync(uint id, uint projectId)
-        {
-            var request = new GetProjectSnippetRequest(id, projectId);
-
-            var result = await RequestExecutor.ExecuteAsync<ProjectSnippet>(request);
-
-            return new RequestResult<ProjectSnippet>(result);
+            return await request.ExecutePaginatedAsync<ProjectSnippet>();
         }
 
         /// <summary> Gets a snippet's content by its ID and the project ID it is associated with. </summary>
@@ -148,11 +156,12 @@ namespace GitLab.NET.Repositories
         /// <returns> A <see cref="RequestResult{String}" /> representing the results of the request. </returns>
         public RequestResult<string> GetContent(uint id, uint projectId)
         {
-            var request = new GetProjectSnippetContentRequest(id, projectId);
+            var request = RequestFactory.Create("projects/{projectId}/snippets/{id}/raw", Method.Get);
 
-            var result = RequestExecutor.Execute(request);
+            request.AddUrlSegment("projectId", projectId);
+            request.AddUrlSegment("id", id);
 
-            return new RequestResult<string>(result, result.Content);
+            return request.ExecuteContent();
         }
 
         /// <summary> Gets a snippet's content by its ID and the project ID it is associated with. </summary>
@@ -161,11 +170,12 @@ namespace GitLab.NET.Repositories
         /// <returns> A <see cref="RequestResult{String}" /> representing the results of the request. </returns>
         public async Task<RequestResult<string>> GetContentAsync(uint id, uint projectId)
         {
-            var request = new GetProjectSnippetContentRequest(id, projectId);
+            var request = RequestFactory.Create("projects/{projectId}/snippets/{id}/raw", Method.Get);
 
-            var result = await RequestExecutor.ExecuteAsync(request);
+            request.AddUrlSegment("projectId", projectId);
+            request.AddUrlSegment("id", id);
 
-            return new RequestResult<string>(result, result.Content);
+            return await request.ExecuteContentAsync();
         }
 
         /// <summary> Updates a project snippet associated with the provided project ID. </summary>
@@ -178,11 +188,19 @@ namespace GitLab.NET.Repositories
         /// <returns> A <see cref="RequestResult{ProjectSnippet}" /> representing the results of the request. </returns>
         public RequestResult<ProjectSnippet> Update(uint projectId, uint id, string title = null, string fileName = null, string code = null, VisibilityLevel? visibilityLevel = null)
         {
-            var request = new UpdateProjectSnippetRequest(projectId, id, title, fileName, code, visibilityLevel);
+            if (title == null && fileName == null && code == null && visibilityLevel == null)
+                throw new NullReferenceException("You must pass at least one parameter to update.");
 
-            var result = RequestExecutor.Execute<ProjectSnippet>(request);
+            var request = RequestFactory.Create("projects/{projectId}/snippets/{id}", Method.Put);
 
-            return new RequestResult<ProjectSnippet>(result);
+            request.AddUrlSegment("projectId", projectId);
+            request.AddUrlSegment("id", id);
+            request.AddParameterIfNotNull("title", title);
+            request.AddParameterIfNotNull("file_name", fileName);
+            request.AddParameterIfNotNull("code", code);
+            request.AddParameterIfNotNull("visibility_level", visibilityLevel);
+
+            return request.Execute<ProjectSnippet>();
         }
 
         /// <summary> Updates a project snippet associated with the provided project ID. </summary>
@@ -195,11 +213,19 @@ namespace GitLab.NET.Repositories
         /// <returns> A <see cref="RequestResult{ProjectSnippet}" /> representing the results of the request. </returns>
         public async Task<RequestResult<ProjectSnippet>> UpdateAsync(uint projectId, uint id, string title = null, string fileName = null, string code = null, VisibilityLevel? visibilityLevel = null)
         {
-            var request = new UpdateProjectSnippetRequest(projectId, id, title, fileName, code, visibilityLevel);
+            if (title == null && fileName == null && code == null && visibilityLevel == null)
+                throw new NullReferenceException("You must pass at least one parameter to update.");
 
-            var result = await RequestExecutor.ExecuteAsync<ProjectSnippet>(request);
+            var request = RequestFactory.Create("projects/{projectId}/snippets/{id}", Method.Put);
 
-            return new RequestResult<ProjectSnippet>(result);
+            request.AddUrlSegment("projectId", projectId);
+            request.AddUrlSegment("id", id);
+            request.AddParameterIfNotNull("title", title);
+            request.AddParameterIfNotNull("file_name", fileName);
+            request.AddParameterIfNotNull("code", code);
+            request.AddParameterIfNotNull("visibility_level", visibilityLevel);
+
+            return await request.ExecuteAsync<ProjectSnippet>();
         }
     }
 }

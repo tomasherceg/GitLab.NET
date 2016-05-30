@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using GitLab.NET.Abstractions;
-using GitLab.NET.RequestModels;
 using GitLab.NET.ResponseModels;
 
 namespace GitLab.NET.Repositories
@@ -11,8 +10,8 @@ namespace GitLab.NET.Repositories
     public class CommitRepository : RepositoryBase
     {
         /// <summary> Creates a new <see cref="CommitRepository" /> instance. </summary>
-        /// <param name="restExecutor"> An instance of <see cref="IRequestExecutor" /> to use for this repository. </param>
-        public CommitRepository(IRequestExecutor restExecutor) : base(restExecutor) { }
+        /// <param name="requestFactory"> An instance of <see cref="IRequestFactory" /> to use for this repository. </param>
+        public CommitRepository(IRequestFactory requestFactory) : base(requestFactory) { }
 
         /// <summary> Creates a new commit comment. </summary>
         /// <param name="projectId"> The ID of the project. </param>
@@ -30,11 +29,16 @@ namespace GitLab.NET.Repositories
             if (note == null)
                 throw new ArgumentNullException(nameof(note));
 
-            var request = new CreateCommitCommentRequest(projectId, commitSha, note, path, line, lineType);
+            var request = RequestFactory.Create("projects/{projectId}/repository/commits/{commitSha}/comments", Method.Post);
 
-            var result = RequestExecutor.Execute<CommitComment>(request);
+            request.AddUrlSegment("projectId", projectId);
+            request.AddUrlSegment("commitSha", commitSha);
+            request.AddParameter("note", note);
+            request.AddParameterIfNotNull("path", path);
+            request.AddParameterIfNotNull("line", line);
+            request.AddParameterIfNotNull("line_type", lineType);
 
-            return new RequestResult<CommitComment>(result);
+            return request.Execute<CommitComment>();
         }
 
         /// <summary> Creates a new commit comment. </summary>
@@ -53,11 +57,16 @@ namespace GitLab.NET.Repositories
             if (note == null)
                 throw new ArgumentNullException(nameof(note));
 
-            var request = new CreateCommitCommentRequest(projectId, commitSha, note, path, line, lineType);
+            var request = RequestFactory.Create("projects/{projectId}/repository/commits/{commitSha}/comments", Method.Post);
 
-            var result = await RequestExecutor.ExecuteAsync<CommitComment>(request);
+            request.AddUrlSegment("projectId", projectId);
+            request.AddUrlSegment("commitSha", commitSha);
+            request.AddParameter("note", note);
+            request.AddParameterIfNotNull("path", path);
+            request.AddParameterIfNotNull("line", line);
+            request.AddParameterIfNotNull("line_type", lineType);
 
-            return new RequestResult<CommitComment>(result);
+            return await request.ExecuteAsync<CommitComment>();
         }
 
         /// <summary> Creates a status for a commit. </summary>
@@ -77,11 +86,17 @@ namespace GitLab.NET.Repositories
             if (state == null)
                 throw new ArgumentNullException(nameof(state));
 
-            var request = new CreateCommitStatusRequest(projectId, commitSha, state, refName, name, targetUrl, description);
+            var request = RequestFactory.Create("projects/{projectId}/statuses/{commitSha}", Method.Post);
 
-            var result = RequestExecutor.Execute<CommitStatus>(request);
+            request.AddUrlSegment("projectId", projectId);
+            request.AddUrlSegment("commitSha", commitSha);
+            request.AddParameter("state", state);
+            request.AddParameterIfNotNull("ref", refName);
+            request.AddParameterIfNotNull("name", name);
+            request.AddParameterIfNotNull("target_url", targetUrl);
+            request.AddParameterIfNotNull("description", description);
 
-            return new RequestResult<CommitStatus>(result);
+            return request.Execute<CommitStatus>();
         }
 
         /// <summary> Creates a status for a commit. </summary>
@@ -107,11 +122,51 @@ namespace GitLab.NET.Repositories
             if (state == null)
                 throw new ArgumentNullException(nameof(state));
 
-            var request = new CreateCommitStatusRequest(projectId, commitSha, state, refName, name, targetUrl, description);
+            var request = RequestFactory.Create("projects/{projectId}/statuses/{commitSha}", Method.Post);
 
-            var result = await RequestExecutor.ExecuteAsync<CommitStatus>(request);
+            request.AddUrlSegment("projectId", projectId);
+            request.AddUrlSegment("commitSha", commitSha);
+            request.AddParameter("state", state);
+            request.AddParameterIfNotNull("ref", refName);
+            request.AddParameterIfNotNull("name", name);
+            request.AddParameterIfNotNull("target_url", targetUrl);
+            request.AddParameterIfNotNull("description", description);
 
-            return new RequestResult<CommitStatus>(result);
+            return await request.ExecuteAsync<CommitStatus>();
+        }
+
+        /// <summary> Gets a commit by its SHA. </summary>
+        /// <param name="projectId"> The ID of the project. </param>
+        /// <param name="commitSha"> The SHA of the desired commit. </param>
+        /// <returns> A <see cref="RequestResult{Commit}" /> representing the results of the request. </returns>
+        public RequestResult<Commit> Find(uint projectId, string commitSha)
+        {
+            if (commitSha == null)
+                throw new ArgumentNullException(nameof(commitSha));
+
+            var request = RequestFactory.Create("projects/{projectId}/repository/commits/{commitSha}", Method.Get);
+
+            request.AddUrlSegment("projectId", projectId);
+            request.AddUrlSegment("commitSha", commitSha);
+
+            return request.Execute<Commit>();
+        }
+
+        /// <summary> Gets a commit by its SHA. </summary>
+        /// <param name="projectId"> The ID of the project. </param>
+        /// <param name="commitSha"> The SHA of the desired commit. </param>
+        /// <returns> A <see cref="RequestResult{Commit}" /> representing the results of the request. </returns>
+        public async Task<RequestResult<Commit>> FindAsync(uint projectId, string commitSha)
+        {
+            if (commitSha == null)
+                throw new ArgumentNullException(nameof(commitSha));
+
+            var request = RequestFactory.Create("projects/{projectId}/repository/commits/{commitSha}", Method.Get);
+
+            request.AddUrlSegment("projectId", projectId);
+            request.AddUrlSegment("commitSha", commitSha);
+
+            return await request.ExecuteAsync<Commit>();
         }
 
         /// <summary> Gets all commits for the specified project. </summary>
@@ -125,11 +180,14 @@ namespace GitLab.NET.Repositories
         /// </returns>
         public RequestResult<List<Commit>> GetAll(uint projectId, string refName = null, DateTime? since = null, DateTime? until = null)
         {
-            var request = new GetCommitsRequest(projectId, refName, since, until);
+            var request = RequestFactory.Create("projects/{projectId}/repository/commits", Method.Get);
 
-            var result = RequestExecutor.Execute<List<Commit>>(request);
+            request.AddUrlSegment("projectId", projectId);
+            request.AddParameterIfNotNull("ref_name", refName);
+            request.AddParameterIfNotNull("since", since);
+            request.AddParameterIfNotNull("until", until);
 
-            return new RequestResult<List<Commit>>(result);
+            return request.Execute<List<Commit>>();
         }
 
         /// <summary> Gets all commits for the specified project. </summary>
@@ -143,43 +201,14 @@ namespace GitLab.NET.Repositories
         /// </returns>
         public async Task<RequestResult<List<Commit>>> GetAllAsync(uint projectId, string refName = null, DateTime? since = null, DateTime? until = null)
         {
-            var request = new GetCommitsRequest(projectId, refName, since, until);
+            var request = RequestFactory.Create("projects/{projectId}/repository/commits", Method.Get);
 
-            var result = await RequestExecutor.ExecuteAsync<List<Commit>>(request);
+            request.AddUrlSegment("projectId", projectId);
+            request.AddParameterIfNotNull("ref_name", refName);
+            request.AddParameterIfNotNull("since", since);
+            request.AddParameterIfNotNull("until", until);
 
-            return new RequestResult<List<Commit>>(result);
-        }
-
-        /// <summary> Gets a commit by its SHA. </summary>
-        /// <param name="projectId"> The ID of the project. </param>
-        /// <param name="commitSha"> The SHA of the desired commit. </param>
-        /// <returns> A <see cref="RequestResult{Commit}" /> representing the results of the request. </returns>
-        public RequestResult<Commit> GetBySha(uint projectId, string commitSha)
-        {
-            if (commitSha == null)
-                throw new ArgumentNullException(nameof(commitSha));
-
-            var request = new GetCommitRequest(projectId, commitSha);
-
-            var result = RequestExecutor.Execute<Commit>(request);
-
-            return new RequestResult<Commit>(result);
-        }
-
-        /// <summary> Gets a commit by its SHA. </summary>
-        /// <param name="projectId"> The ID of the project. </param>
-        /// <param name="commitSha"> The SHA of the desired commit. </param>
-        /// <returns> A <see cref="RequestResult{Commit}" /> representing the results of the request. </returns>
-        public async Task<RequestResult<Commit>> GetByShaAsync(uint projectId, string commitSha)
-        {
-            if (commitSha == null)
-                throw new ArgumentNullException(nameof(commitSha));
-
-            var request = new GetCommitRequest(projectId, commitSha);
-
-            var result = await RequestExecutor.ExecuteAsync<Commit>(request);
-
-            return new RequestResult<Commit>(result);
+            return await request.ExecuteAsync<List<Commit>>();
         }
 
         /// <summary> Gets the comments for a commit. </summary>
@@ -191,11 +220,12 @@ namespace GitLab.NET.Repositories
             if (commitSha == null)
                 throw new ArgumentNullException(nameof(commitSha));
 
-            var request = new GetCommitCommentsRequest(projectId, commitSha);
+            var request = RequestFactory.Create("projects/{projectId}/repository/commits/{commitSha}/comments", Method.Get);
 
-            var result = RequestExecutor.Execute<List<CommitComment>>(request);
+            request.AddUrlSegment("projectId", projectId);
+            request.AddUrlSegment("commitSha", commitSha);
 
-            return new PaginatedResult<CommitComment>(result);
+            return request.ExecutePaginated<CommitComment>();
         }
 
         /// <summary> Gets the comments for a commit. </summary>
@@ -207,11 +237,12 @@ namespace GitLab.NET.Repositories
             if (commitSha == null)
                 throw new ArgumentNullException(nameof(commitSha));
 
-            var request = new GetCommitCommentsRequest(projectId, commitSha);
+            var request = RequestFactory.Create("projects/{projectId}/repository/commits/{commitSha}/comments", Method.Get);
 
-            var result = await RequestExecutor.ExecuteAsync<List<CommitComment>>(request);
+            request.AddUrlSegment("projectId", projectId);
+            request.AddUrlSegment("commitSha", commitSha);
 
-            return new PaginatedResult<CommitComment>(result);
+            return await request.ExecutePaginatedAsync<CommitComment>();
         }
 
         /// <summary> Gets a commit diff. </summary>
@@ -223,11 +254,12 @@ namespace GitLab.NET.Repositories
             if (commitSha == null)
                 throw new ArgumentNullException(nameof(commitSha));
 
-            var request = new GetCommitDiffRequest(projectId, commitSha);
+            var request = RequestFactory.Create("projects/{projectId}/repository/commits/{commitSha}/diff", Method.Get);
 
-            var result = RequestExecutor.Execute<CommitDiff>(request);
+            request.AddUrlSegment("projectId", projectId);
+            request.AddUrlSegment("commitSha", commitSha);
 
-            return new RequestResult<CommitDiff>(result);
+            return request.Execute<CommitDiff>();
         }
 
         /// <summary> Gets a commit diff. </summary>
@@ -239,11 +271,12 @@ namespace GitLab.NET.Repositories
             if (commitSha == null)
                 throw new ArgumentNullException(nameof(commitSha));
 
-            var request = new GetCommitDiffRequest(projectId, commitSha);
+            var request = RequestFactory.Create("projects/{projectId}/repository/commits/{commitSha}/diff", Method.Get);
 
-            var result = await RequestExecutor.ExecuteAsync<CommitDiff>(request);
+            request.AddUrlSegment("projectId", projectId);
+            request.AddUrlSegment("commitSha", commitSha);
 
-            return new RequestResult<CommitDiff>(result);
+            return await request.ExecuteAsync<CommitDiff>();
         }
 
         /// <summary> Gets the status for a commit. </summary>
@@ -259,11 +292,16 @@ namespace GitLab.NET.Repositories
             if (commitSha == null)
                 throw new ArgumentNullException(nameof(commitSha));
 
-            var request = new GetCommitStatusRequest(projectId, commitSha, refName, stage, name, all);
+            var request = RequestFactory.Create("projects/{projectId}/repository/commits/{commitSha}/statuses", Method.Get);
 
-            var result = RequestExecutor.Execute<List<CommitStatus>>(request);
+            request.AddUrlSegment("projectId", projectId);
+            request.AddUrlSegment("commitSha", commitSha);
+            request.AddParameterIfNotNull("ref_name", refName);
+            request.AddParameterIfNotNull("stage", stage);
+            request.AddParameterIfNotNull("name", name);
+            request.AddParameterIfNotNull("all", all);
 
-            return new PaginatedResult<CommitStatus>(result);
+            return request.ExecutePaginated<CommitStatus>();
         }
 
         /// <summary> Gets the status for a commit. </summary>
@@ -279,11 +317,16 @@ namespace GitLab.NET.Repositories
             if (commitSha == null)
                 throw new ArgumentNullException(nameof(commitSha));
 
-            var request = new GetCommitStatusRequest(projectId, commitSha, refName, stage, name, all);
+            var request = RequestFactory.Create("projects/{projectId}/repository/commits/{commitSha}/statuses", Method.Get);
 
-            var result = await RequestExecutor.ExecuteAsync<List<CommitStatus>>(request);
+            request.AddUrlSegment("projectId", projectId);
+            request.AddUrlSegment("commitSha", commitSha);
+            request.AddParameterIfNotNull("ref_name", refName);
+            request.AddParameterIfNotNull("stage", stage);
+            request.AddParameterIfNotNull("name", name);
+            request.AddParameterIfNotNull("all", all);
 
-            return new PaginatedResult<CommitStatus>(result);
+            return await request.ExecutePaginatedAsync<CommitStatus>();
         }
 
         /// <summary> Updates the status for a commit. </summary>

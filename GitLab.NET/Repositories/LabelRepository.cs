@@ -1,10 +1,7 @@
-﻿// ReSharper disable UnusedMember.Global
-
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using GitLab.NET.Abstractions;
-using GitLab.NET.RequestModels;
 using GitLab.NET.ResponseModels;
 
 namespace GitLab.NET.Repositories
@@ -13,8 +10,8 @@ namespace GitLab.NET.Repositories
     public class LabelRepository : RepositoryBase
     {
         /// <summary> Creates a new <see cref="LabelRepository" /> instance. </summary>
-        /// <param name="restExecutor"> An instance of <see cref="IRequestExecutor" /> to use for this repository. </param>
-        public LabelRepository(IRequestExecutor restExecutor) : base(restExecutor) { }
+        /// <param name="requestFactory"> An instance of <see cref="IRequestFactory" /> to use for this repository. </param>
+        public LabelRepository(IRequestFactory requestFactory) : base(requestFactory) { }
 
         /// <summary> Creates a new label. </summary>
         /// <param name="projectId"> The ID of the project to attach this label to. </param>
@@ -30,11 +27,14 @@ namespace GitLab.NET.Repositories
             if (color == null)
                 throw new ArgumentNullException(nameof(color));
 
-            var request = new CreateLabelRequest(projectId, name, color, description);
+            var request = RequestFactory.Create("projects/{projectId}/labels", Method.Post);
 
-            var result = RequestExecutor.Execute<Label>(request);
+            request.AddUrlSegment("projectId", projectId);
+            request.AddParameter("name", name);
+            request.AddParameter("color", color);
+            request.AddParameterIfNotNull("description", description);
 
-            return new RequestResult<Label>(result);
+            return request.Execute<Label>();
         }
 
         /// <summary> Creates a new label. </summary>
@@ -51,11 +51,14 @@ namespace GitLab.NET.Repositories
             if (color == null)
                 throw new ArgumentNullException(nameof(color));
 
-            var request = new CreateLabelRequest(projectId, name, color, description);
+            var request = RequestFactory.Create("projects/{projectId}/labels", Method.Post);
 
-            var result = await RequestExecutor.ExecuteAsync<Label>(request);
+            request.AddUrlSegment("projectId", projectId);
+            request.AddParameter("name", name);
+            request.AddParameter("color", color);
+            request.AddParameterIfNotNull("description", description);
 
-            return new RequestResult<Label>(result);
+            return await request.ExecuteAsync<Label>();
         }
 
         /// <summary> Deletes a label. </summary>
@@ -67,11 +70,12 @@ namespace GitLab.NET.Repositories
             if (name == null)
                 throw new ArgumentNullException(nameof(name));
 
-            var request = new DeleteLabelRequest(projectId, name);
+            var request = RequestFactory.Create("projects/{projectId}/labels", Method.Delete);
 
-            var result = RequestExecutor.Execute<Label>(request);
+            request.AddUrlSegment("projectId", projectId);
+            request.AddParameter("name", name);
 
-            return new RequestResult<Label>(result);
+            return request.Execute<Label>();
         }
 
         /// <summary> Deletes a label. </summary>
@@ -83,11 +87,12 @@ namespace GitLab.NET.Repositories
             if (name == null)
                 throw new ArgumentNullException(nameof(name));
 
-            var request = new DeleteLabelRequest(projectId, name);
+            var request = RequestFactory.Create("projects/{projectId}/labels", Method.Delete);
 
-            var result = await RequestExecutor.ExecuteAsync<Label>(request);
+            request.AddUrlSegment("projectId", projectId);
+            request.AddParameter("name", name);
 
-            return new RequestResult<Label>(result);
+            return await request.ExecuteAsync<Label>();
         }
 
         /// <summary> Gets all labels attached to the specified project. </summary>
@@ -98,11 +103,11 @@ namespace GitLab.NET.Repositories
         /// </returns>
         public RequestResult<List<Label>> GetAll(uint projectId)
         {
-            var request = new GetLabelsRequest(projectId);
+            var request = RequestFactory.Create("projects/{projectId}/labels", Method.Get);
 
-            var result = RequestExecutor.Execute<List<Label>>(request);
+            request.AddUrlSegment("projectId", projectId);
 
-            return new RequestResult<List<Label>>(result);
+            return request.Execute<List<Label>>();
         }
 
         /// <summary> Gets all labels attached to the specified project. </summary>
@@ -113,11 +118,11 @@ namespace GitLab.NET.Repositories
         /// </returns>
         public async Task<RequestResult<List<Label>>> GetAllAsync(uint projectId)
         {
-            var request = new GetLabelsRequest(projectId);
+            var request = RequestFactory.Create("projects/{projectId}/labels", Method.Get);
 
-            var result = await RequestExecutor.ExecuteAsync<List<Label>>(request);
+            request.AddUrlSegment("projectId", projectId);
 
-            return new RequestResult<List<Label>>(result);
+            return await request.ExecuteAsync<List<Label>>();
         }
 
         /// <summary> Subscribes to a label. </summary>
@@ -129,11 +134,12 @@ namespace GitLab.NET.Repositories
             if (name == null)
                 throw new ArgumentNullException(nameof(name));
 
-            var request = new SubscribeLabelRequest(projectId, name);
+            var request = RequestFactory.Create("projects/{projectId}/labels/{labelId}/subscription", Method.Post);
 
-            var result = RequestExecutor.Execute<Label>(request);
+            request.AddUrlSegment("projectId", projectId);
+            request.AddUrlSegment("labelId", name);
 
-            return new RequestResult<Label>(result);
+            return request.Execute<Label>();
         }
 
         /// <summary> Subscribes to a label. </summary>
@@ -145,11 +151,12 @@ namespace GitLab.NET.Repositories
             if (name == null)
                 throw new ArgumentNullException(nameof(name));
 
-            var request = new SubscribeLabelRequest(projectId, name);
+            var request = RequestFactory.Create("projects/{projectId}/labels/{labelId}/subscription", Method.Post);
 
-            var result = await RequestExecutor.ExecuteAsync<Label>(request);
+            request.AddUrlSegment("projectId", projectId);
+            request.AddUrlSegment("labelId", name);
 
-            return new RequestResult<Label>(result);
+            return await request.ExecuteAsync<Label>();
         }
 
         /// <summary> Unsubscribes from a label. </summary>
@@ -161,11 +168,12 @@ namespace GitLab.NET.Repositories
             if (name == null)
                 throw new ArgumentNullException(nameof(name));
 
-            var request = new UnsubscribeLabelRequest(projectId, name);
+            var request = RequestFactory.Create("projects/{projectId}/labels/{labelId}/subscription", Method.Delete);
 
-            var result = RequestExecutor.Execute<Label>(request);
+            request.AddUrlSegment("projectId", projectId);
+            request.AddUrlSegment("labelId", name);
 
-            return new RequestResult<Label>(result);
+            return request.Execute<Label>();
         }
 
         /// <summary> Unsubscribes from a label. </summary>
@@ -177,11 +185,12 @@ namespace GitLab.NET.Repositories
             if (name == null)
                 throw new ArgumentNullException(nameof(name));
 
-            var request = new UnsubscribeLabelRequest(projectId, name);
+            var request = RequestFactory.Create("projects/{projectId}/labels/{labelId}/subscription", Method.Delete);
 
-            var result = await RequestExecutor.ExecuteAsync<Label>(request);
+            request.AddUrlSegment("projectId", projectId);
+            request.AddUrlSegment("labelId", name);
 
-            return new RequestResult<Label>(result);
+            return await request.ExecuteAsync<Label>();
         }
 
         /// <summary> Updates a label. </summary>
@@ -196,11 +205,18 @@ namespace GitLab.NET.Repositories
             if (name == null)
                 throw new ArgumentNullException(nameof(name));
 
-            var request = new UpdateLabelRequest(projectId, name, newName, color, description);
+            if (newName == null && color == null && description == null)
+                throw new NullReferenceException("You must provide at least one parameter.");
 
-            var result = RequestExecutor.Execute<Label>(request);
+            var request = RequestFactory.Create("projects/{projectId}/labels", Method.Put);
 
-            return new RequestResult<Label>(result);
+            request.AddUrlSegment("projectId", projectId);
+            request.AddParameter("name", name);
+            request.AddParameterIfNotNull("new_name", newName);
+            request.AddParameterIfNotNull("color", color);
+            request.AddParameterIfNotNull("description", description);
+
+            return request.Execute<Label>();
         }
 
         /// <summary> Updates a label. </summary>
@@ -215,11 +231,15 @@ namespace GitLab.NET.Repositories
             if (name == null)
                 throw new ArgumentNullException(nameof(name));
 
-            var request = new UpdateLabelRequest(projectId, name, newName, color, description);
+            var request = RequestFactory.Create("projects/{projectId}/labels", Method.Put);
 
-            var result = await RequestExecutor.ExecuteAsync<Label>(request);
+            request.AddUrlSegment("projectId", projectId);
+            request.AddParameter("name", name);
+            request.AddParameterIfNotNull("new_name", newName);
+            request.AddParameterIfNotNull("color", color);
+            request.AddParameterIfNotNull("description", description);
 
-            return new RequestResult<Label>(result);
+            return await request.ExecuteAsync<Label>();
         }
     }
 }
