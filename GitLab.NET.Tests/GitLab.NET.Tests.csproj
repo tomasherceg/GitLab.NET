@@ -72,7 +72,6 @@
     <Compile Include="PaginatedResultTests.cs" />
     <Compile Include="Authenticators\PrivateTokenAuthenticatorTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="TestHelpers\EmptyOrWhiteSpace.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
