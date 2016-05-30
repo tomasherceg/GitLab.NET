@@ -67,15 +67,11 @@
     <Compile Include="Repositories\FileRepository.cs" />
     <Compile Include="Repositories\TagRepository.cs" />
     <Compile Include="RequestModels\CreateReleaseRequest.cs" />
-    <Compile Include="RequestModels\CreateFileRequest.cs" />
     <Compile Include="RequestModels\CreateTagRequest.cs" />
-    <Compile Include="RequestModels\DeleteFileRequest.cs" />
     <Compile Include="RequestModels\DeleteTagRequest.cs" />
-    <Compile Include="RequestModels\GetFileRequest.cs" />
     <Compile Include="RequestModels\GetTagRequest.cs" />
     <Compile Include="RequestModels\GetTagsRequest.cs" />
     <Compile Include="RequestModels\UpdateReleaseRequest.cs" />
-    <Compile Include="RequestModels\UpdateFileRequest.cs" />
     <Compile Include="ResponseModels\Author.cs" />
     <Compile Include="ResponseModels\Commit.cs" />
     <Compile Include="ResponseModels\CommitComment.cs" />

@@ -13,10 +13,7 @@ namespace GitLab.NET.Tests.Authenticators
         [Fact]
         public void Authenticate_ClientIsNull_ThrowsArgumentNullException()
         {
-            var sut = new PrivateTokenAuthenticator
-            {
-                PrivateToken = ValidToken
-            };
+            var sut = new PrivateTokenAuthenticator(ValidToken);
             var request = Substitute.For<IRestRequest>();
 
             Assert.Throws<ArgumentNullException>(() => sut.Authenticate(null, request));
@@ -25,7 +22,7 @@ namespace GitLab.NET.Tests.Authenticators
         [Fact]
         public void Authenticate_PrivateTokenNull_ThrowsNullReferenceException()
         {
-            var sut = new PrivateTokenAuthenticator();
+            var sut = new PrivateTokenAuthenticator(null);
             var client = Substitute.For<IRestClient>();
             var request = Substitute.For<IRestRequest>();
 
@@ -35,10 +32,7 @@ namespace GitLab.NET.Tests.Authenticators
         [Fact]
         public void Authenticate_RequestIsNull_ThrowsArgumentNullException()
         {
-            var sut = new PrivateTokenAuthenticator
-            {
-                PrivateToken = ValidToken
-            };
+            var sut = new PrivateTokenAuthenticator(ValidToken);
             var client = Substitute.For<IRestClient>();
 
             Assert.Throws<ArgumentNullException>(() => sut.Authenticate(client, null));
@@ -47,16 +41,13 @@ namespace GitLab.NET.Tests.Authenticators
         [Fact]
         public void Authenticate_ValidParameters_AddsPrivateToken()
         {
-            var sut = new PrivateTokenAuthenticator
-            {
-                PrivateToken = ValidToken
-            };
+            var sut = new PrivateTokenAuthenticator(ValidToken);
             var client = Substitute.For<IRestClient>();
             var request = Substitute.For<IRestRequest>();
 
             sut.Authenticate(client, request);
 
-            request.Received().AddParameter("PRIVATE-TOKEN", Arg.Any<string>(), ParameterType.HttpHeader);
+            request.Received().AddParameter("PRIVATE-TOKEN", ValidToken, ParameterType.HttpHeader);
         }
     }
 }
