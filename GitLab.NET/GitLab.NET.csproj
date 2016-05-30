@@ -101,7 +101,6 @@
     <Compile Include="RequestModels\DeleteProjectSnippetRequest.cs" />
     <Compile Include="RequestModels\DeleteSystemHookRequest.cs" />
     <Compile Include="RequestModels\DeleteUserRequest.cs" />
-    <Compile Include="RequestModels\GetNamespacesRequest.cs" />
     <Compile Include="RequestModels\GetRepositoryContributorsRequest.cs" />
     <Compile Include="RequestModels\GetRepositoryFileArchiveRequest.cs" />
     <Compile Include="RequestModels\GetKeyRequest.cs" />

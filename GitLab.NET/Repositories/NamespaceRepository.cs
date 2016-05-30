@@ -1,8 +1,6 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Threading.Tasks;
 using GitLab.NET.Abstractions;
-using GitLab.NET.RequestModels;
 using GitLab.NET.ResponseModels;
 
 namespace GitLab.NET.Repositories
@@ -18,22 +16,18 @@ namespace GitLab.NET.Repositories
         /// <returns> A <see cref="PaginatedResult{Namespace}" /> representing the results of the request. </returns>
         public PaginatedResult<Namespace> GetAll()
         {
-            var request = new GetNamespacesRequest();
+            var request = RequestFactory.Create("namespaces", Method.Get);
 
-            var result = RequestExecutor.Execute<List<Namespace>>(request);
-
-            return new PaginatedResult<Namespace>(result);
+            return request.ExecutePaginated<Namespace>();
         }
 
         /// <summary> Gets all namespaces that the currently authenticated user is authorized to see. </summary>
         /// <returns> A <see cref="PaginatedResult{Namespace}" /> representing the results of the request. </returns>
         public async Task<PaginatedResult<Namespace>> GetAllAsync()
         {
-            var request = new GetNamespacesRequest();
+            var request = RequestFactory.Create("namespaces", Method.Get);
 
-            var result = await RequestExecutor.ExecuteAsync<List<Namespace>>(request);
-
-            return new PaginatedResult<Namespace>(result);
+            return await request.ExecutePaginatedAsync<Namespace>();
         }
 
         /// <summary> Gets all namespaces matching the search query that the currently authenticated user is authorized to see. </summary>
@@ -44,11 +38,11 @@ namespace GitLab.NET.Repositories
             if (search == null)
                 throw new ArgumentNullException(nameof(search));
 
-            var request = new GetNamespacesRequest(search);
+            var request = RequestFactory.Create("namespaces", Method.Get);
 
-            var result = RequestExecutor.Execute<List<Namespace>>(request);
+            request.AddParameter("search", search);
 
-            return new PaginatedResult<Namespace>(result);
+            return request.ExecutePaginated<Namespace>();
         }
 
         /// <summary> Gets all namespaces matching the search query that the currently authenticated user is authorized to see. </summary>
@@ -59,11 +53,11 @@ namespace GitLab.NET.Repositories
             if (search == null)
                 throw new ArgumentNullException(nameof(search));
 
-            var request = new GetNamespacesRequest(search);
+            var request = RequestFactory.Create("namespaces", Method.Get);
 
-            var result = await RequestExecutor.ExecuteAsync<List<Namespace>>(request);
+            request.AddParameter("search", search);
 
-            return new PaginatedResult<Namespace>(result);
+            return await request.ExecutePaginatedAsync<Namespace>();
         }
     }
 }
