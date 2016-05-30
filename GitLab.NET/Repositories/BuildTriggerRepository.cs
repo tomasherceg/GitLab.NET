@@ -72,6 +72,40 @@ namespace GitLab.NET.Repositories
             return await request.ExecuteAsync<BuildTrigger>();
         }
 
+        /// <summary> Gets a build trigger by its token. </summary>
+        /// <param name="projectId"> The ID of the project. </param>
+        /// <param name="token"> The token of the desired build trigger. </param>
+        /// <returns> A <see cref="RequestResult{BuildTrigger}" /> representing the results of the request. </returns>
+        public RequestResult<BuildTrigger> Find(uint projectId, string token)
+        {
+            if (token == null)
+                throw new ArgumentNullException(nameof(token));
+
+            var request = RequestFactory.Create("projects/{projectId}/triggers/{token}", Method.Get);
+
+            request.AddUrlSegment("projectId", projectId);
+            request.AddUrlSegment("token", token);
+
+            return request.Execute<BuildTrigger>();
+        }
+
+        /// <summary> Gets a build trigger by its token. </summary>
+        /// <param name="projectId"> The ID of the project. </param>
+        /// <param name="token"> The token of the desired build trigger. </param>
+        /// <returns> A <see cref="RequestResult{BuildTrigger}" /> representing the results of the request. </returns>
+        public async Task<RequestResult<BuildTrigger>> FindAsync(uint projectId, string token)
+        {
+            if (token == null)
+                throw new ArgumentNullException(nameof(token));
+
+            var request = RequestFactory.Create("projects/{projectId}/triggers/{token}", Method.Get);
+
+            request.AddUrlSegment("projectId", projectId);
+            request.AddUrlSegment("token", token);
+
+            return await request.ExecuteAsync<BuildTrigger>();
+        }
+
         /// <summary> Gets all build triggers associated with the specified project. </summary>
         /// <param name="projectId"> The ID of the project. </param>
         /// <returns> A <see cref="PaginatedResult{BuildTrigger}" /> representing the results of the request. </returns>
@@ -94,40 +128,6 @@ namespace GitLab.NET.Repositories
             request.AddUrlSegment("projectId", projectId);
 
             return await request.ExecutePaginatedAsync<BuildTrigger>();
-        }
-
-        /// <summary> Gets a build trigger by its token. </summary>
-        /// <param name="projectId"> The ID of the project. </param>
-        /// <param name="token"> The token of the desired build trigger. </param>
-        /// <returns> A <see cref="RequestResult{BuildTrigger}" /> representing the results of the request. </returns>
-        public RequestResult<BuildTrigger> Get(uint projectId, string token)
-        {
-            if (token == null)
-                throw new ArgumentNullException(nameof(token));
-
-            var request = RequestFactory.Create("projects/{projectId}/triggers/{token}", Method.Get);
-
-            request.AddUrlSegment("projectId", projectId);
-            request.AddUrlSegment("token", token);
-
-            return request.Execute<BuildTrigger>();
-        }
-
-        /// <summary> Gets a build trigger by its token. </summary>
-        /// <param name="projectId"> The ID of the project. </param>
-        /// <param name="token"> The token of the desired build trigger. </param>
-        /// <returns> A <see cref="RequestResult{BuildTrigger}" /> representing the results of the request. </returns>
-        public async Task<RequestResult<BuildTrigger>> GetAsync(uint projectId, string token)
-        {
-            if (token == null)
-                throw new ArgumentNullException(nameof(token));
-
-            var request = RequestFactory.Create("projects/{projectId}/triggers/{token}", Method.Get);
-
-            request.AddUrlSegment("projectId", projectId);
-            request.AddUrlSegment("token", token);
-
-            return await request.ExecuteAsync<BuildTrigger>();
         }
     }
 }
