@@ -97,19 +97,16 @@
     <Compile Include="Repositories\RepositoryRepository.cs" />
     <Compile Include="RequestModels\BlockUserRequest.cs" />
     <Compile Include="RequestModels\CompareRepositoryRequest.cs" />
-    <Compile Include="RequestModels\CreateEmailRequest.cs" />
     <Compile Include="RequestModels\CreateKeyRequest.cs" />
     <Compile Include="RequestModels\CreateLabelRequest.cs" />
     <Compile Include="RequestModels\CreateProjectSnippetRequest.cs" />
     <Compile Include="RequestModels\CreateSystemHookRequest.cs" />
     <Compile Include="RequestModels\CreateUserRequest.cs" />
-    <Compile Include="RequestModels\DeleteEmailRequest.cs" />
     <Compile Include="RequestModels\DeleteKeyRequest.cs" />
     <Compile Include="RequestModels\DeleteLabelRequest.cs" />
     <Compile Include="RequestModels\DeleteProjectSnippetRequest.cs" />
     <Compile Include="RequestModels\DeleteSystemHookRequest.cs" />
     <Compile Include="RequestModels\DeleteUserRequest.cs" />
-    <Compile Include="RequestModels\GetEmailsRequest.cs" />
     <Compile Include="RequestModels\GetLabelsRequest.cs" />
     <Compile Include="RequestModels\GetNamespacesRequest.cs" />
     <Compile Include="RequestModels\GetRepositoryContributorsRequest.cs" />
@@ -126,7 +123,6 @@
     <Compile Include="RequestModels\GetRepositoryRawFileContentRequest.cs" />
     <Compile Include="RequestModels\GetRepositoryTreeRequest.cs" />
     <Compile Include="RequestModels\GetSystemHooksRequest.cs" />
-    <Compile Include="RequestModels\GetUserEmailsRequest.cs" />
     <Compile Include="RequestModels\GetUserKeysRequest.cs" />
     <Compile Include="RequestModels\RestRequestExtensions.cs" />
     <Compile Include="RequestModels\SubscribeLabelRequest.cs" />

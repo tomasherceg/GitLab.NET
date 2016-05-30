@@ -57,6 +57,12 @@ namespace GitLab.NET.Abstractions
             _request.AddParameter(name, value, ParameterType.UrlSegment);
         }
 
+        public void AddUrlSegmentIfNotNull(string name, object value)
+        {
+            if (value != null)
+                _request.AddParameter(name, value, ParameterType.UrlSegment);
+        }
+
         public RequestResult<T> Execute<T>() where T : new()
         {
             var result = _client.Execute<T>(_request);

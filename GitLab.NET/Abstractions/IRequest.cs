@@ -7,6 +7,7 @@ namespace GitLab.NET.Abstractions
         void AddParameter(string name, object value);
         void AddParameterIfNotNull(string name, object value);
         void AddUrlSegment(string name, object value);
+        void AddUrlSegmentIfNotNull(string name, object value);
         RequestResult<T> Execute<T>() where T : new();
         Task<RequestResult<T>> ExecuteAsync<T>() where T : new();
         PaginatedResult<T> ExecutePaginated<T>() where T : new();
