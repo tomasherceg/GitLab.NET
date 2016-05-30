@@ -1,8 +1,6 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Threading.Tasks;
 using GitLab.NET.Abstractions;
-using GitLab.NET.RequestModels;
 using GitLab.NET.ResponseModels;
 
 namespace GitLab.NET.Repositories
@@ -19,11 +17,11 @@ namespace GitLab.NET.Repositories
         /// <returns> A <see cref="RequestResult{User}" /> representing the results of the request. </returns>
         public RequestResult<User> Block(uint id)
         {
-            var request = new BlockUserRequest(id);
+            var request = RequestFactory.Create("users/{id}/block", Method.Put);
 
-            var result = RequestExecutor.Execute<User>(request);
+            request.AddUrlSegment("id", id);
 
-            return new RequestResult<User>(result);
+            return request.Execute<User>();
         }
 
         /// <summary> Blocks a user. </summary>
@@ -31,11 +29,11 @@ namespace GitLab.NET.Repositories
         /// <returns> A <see cref="RequestResult{User}" /> representing the results of the request. </returns>
         public async Task<RequestResult<User>> BlockAsync(uint id)
         {
-            var request = new BlockUserRequest(id);
+            var request = RequestFactory.Create("users/{id}/block", Method.Put);
 
-            var result = await RequestExecutor.ExecuteAsync<User>(request);
+            request.AddUrlSegment("id", id);
 
-            return new RequestResult<User>(result);
+            return await request.ExecuteAsync<User>();
         }
 
         /// <summary> Creates a new user. </summary>
@@ -87,12 +85,27 @@ namespace GitLab.NET.Repositories
             if (name == null)
                 throw new ArgumentNullException(nameof(name));
 
-            var request = new CreateUserRequest(email, password, username, name, skype, linkedIn, twitter, websiteUrl, projectsLimit, externUid, provider, bio, location, admin, canCreateGroup, confirm,
-                                                external);
+            var request = RequestFactory.Create("users", Method.Post);
 
-            var result = RequestExecutor.Execute<User>(request);
+            request.AddParameter("email", email);
+            request.AddParameter("password", password);
+            request.AddParameter("username", username);
+            request.AddParameter("name", name);
+            request.AddParameterIfNotNull("skype", skype);
+            request.AddParameterIfNotNull("linkedin", linkedIn);
+            request.AddParameterIfNotNull("twitter", twitter);
+            request.AddParameterIfNotNull("website_url", websiteUrl);
+            request.AddParameterIfNotNull("projects_limit", projectsLimit);
+            request.AddParameterIfNotNull("extern_uid", externUid);
+            request.AddParameterIfNotNull("provider", provider);
+            request.AddParameterIfNotNull("bio", bio);
+            request.AddParameterIfNotNull("location", location);
+            request.AddParameterIfNotNull("admin", admin);
+            request.AddParameterIfNotNull("can_create_group", canCreateGroup);
+            request.AddParameterIfNotNull("confirm", confirm);
+            request.AddParameterIfNotNull("external", external);
 
-            return new RequestResult<User>(result);
+            return request.Execute<User>();
         }
 
         /// <summary> Creates a new user. </summary>
@@ -144,12 +157,105 @@ namespace GitLab.NET.Repositories
             if (name == null)
                 throw new ArgumentNullException(nameof(name));
 
-            var request = new CreateUserRequest(email, password, username, name, skype, linkedIn, twitter, websiteUrl, projectsLimit, externUid, provider, bio, location, admin, canCreateGroup, confirm,
-                                                external);
+            var request = RequestFactory.Create("users", Method.Post);
 
-            var result = await RequestExecutor.ExecuteAsync<User>(request);
+            request.AddParameter("email", email);
+            request.AddParameter("password", password);
+            request.AddParameter("username", username);
+            request.AddParameter("name", name);
+            request.AddParameterIfNotNull("skype", skype);
+            request.AddParameterIfNotNull("linkedin", linkedIn);
+            request.AddParameterIfNotNull("twitter", twitter);
+            request.AddParameterIfNotNull("website_url", websiteUrl);
+            request.AddParameterIfNotNull("projects_limit", projectsLimit);
+            request.AddParameterIfNotNull("extern_uid", externUid);
+            request.AddParameterIfNotNull("provider", provider);
+            request.AddParameterIfNotNull("bio", bio);
+            request.AddParameterIfNotNull("location", location);
+            request.AddParameterIfNotNull("admin", admin);
+            request.AddParameterIfNotNull("can_create_group", canCreateGroup);
+            request.AddParameterIfNotNull("confirm", confirm);
+            request.AddParameterIfNotNull("external", external);
 
-            return new RequestResult<User>(result);
+            return await request.ExecuteAsync<User>();
+        }
+
+        /// <summary> Deletes a user. </summary>
+        /// <param name="id"> The user's id. </param>
+        /// <returns> A <see cref="RequestResult{User}" /> representing the results of the request. </returns>
+        public RequestResult<User> Delete(uint id)
+        {
+            var request = RequestFactory.Create("users/{id}", Method.Delete);
+
+            request.AddUrlSegment("id", id);
+
+            return request.Execute<User>();
+        }
+
+        /// <summary> Deletes a user. </summary>
+        /// <param name="id"> The user's id. </param>
+        /// <returns> A <see cref="RequestResult{User}" /> representing the results of the request. </returns>
+        public async Task<RequestResult<User>> DeleteAsync(uint id)
+        {
+            var request = RequestFactory.Create("users/{id}", Method.Delete);
+
+            request.AddUrlSegment("id", id);
+
+            return await request.ExecuteAsync<User>();
+        }
+
+        /// <summary> Finds a user by id. </summary>
+        /// <param name="id"> The user's id. </param>
+        /// <returns> A <see cref="RequestResult{User}" /> representing the results of the request. </returns>
+        public RequestResult<User> Find(uint id)
+        {
+            var request = RequestFactory.Create("users/{id}", Method.Get);
+
+            request.AddUrlSegment("id", id);
+
+            return request.Execute<User>();
+        }
+
+        /// <summary> Finds a user by id. </summary>
+        /// <param name="id"> The user's id. </param>
+        /// <returns> A <see cref="RequestResult{User}" /> representing the results of the request. </returns>
+        public async Task<RequestResult<User>> FindAsync(uint id)
+        {
+            var request = RequestFactory.Create("users/{id}", Method.Get);
+
+            request.AddUrlSegment("id", id);
+
+            return await request.ExecuteAsync<User>();
+        }
+
+        /// <summary> Finds a user by username. </summary>
+        /// <param name="username"> The user's username. </param>
+        /// <returns> A <see cref="RequestResult{User}" /> representing the results of the request. </returns>
+        public RequestResult<User> Find(string username)
+        {
+            if (username == null)
+                throw new ArgumentNullException(nameof(username));
+
+            var request = RequestFactory.Create("users", Method.Get);
+
+            request.AddParameter("username", username);
+
+            return request.Execute<User>();
+        }
+
+        /// <summary> Finds a user by username. </summary>
+        /// <param name="username"> The user's username. </param>
+        /// <returns> A <see cref="RequestResult{User}" /> representing the results of the request. </returns>
+        public async Task<RequestResult<User>> FindAsync(string username)
+        {
+            if (username == null)
+                throw new ArgumentNullException(nameof(username));
+
+            var request = RequestFactory.Create("users", Method.Get);
+
+            request.AddParameter("username", username);
+
+            return await request.ExecuteAsync<User>();
         }
 
         /// <summary> Gets all users. </summary>
@@ -164,11 +270,12 @@ namespace GitLab.NET.Repositories
             if (resultsPerPage < Config.MinResultsPerPage || resultsPerPage > Config.MaxResultsPerPage)
                 throw new ArgumentOutOfRangeException(nameof(resultsPerPage));
 
-            var request = new GetUsersRequest(page, resultsPerPage);
+            var request = RequestFactory.Create("users", Method.Get);
 
-            var result = RequestExecutor.Execute<List<User>>(request);
+            request.AddParameterIfNotNull("page", page);
+            request.AddParameterIfNotNull("per_page", resultsPerPage);
 
-            return new PaginatedResult<User>(result);
+            return request.ExecutePaginated<User>();
         }
 
         /// <summary> Gets all users. </summary>
@@ -183,87 +290,30 @@ namespace GitLab.NET.Repositories
             if (resultsPerPage < Config.MinResultsPerPage || resultsPerPage > Config.MaxResultsPerPage)
                 throw new ArgumentOutOfRangeException(nameof(resultsPerPage));
 
-            var request = new GetUsersRequest(page, resultsPerPage);
+            var request = RequestFactory.Create("users", Method.Get);
 
-            var result = await RequestExecutor.ExecuteAsync<List<User>>(request);
+            request.AddParameterIfNotNull("page", page);
+            request.AddParameterIfNotNull("per_page", resultsPerPage);
 
-            return new PaginatedResult<User>(result);
-        }
-
-        /// <summary> Gets a user by id. </summary>
-        /// <param name="id"> The user's id. </param>
-        /// <returns> A <see cref="RequestResult{User}" /> representing the results of the request. </returns>
-        public RequestResult<User> GetById(uint id)
-        {
-            var request = new GetUserRequest(id);
-
-            var result = RequestExecutor.Execute<User>(request);
-
-            return new RequestResult<User>(result);
-        }
-
-        /// <summary> Gets a user by id. </summary>
-        /// <param name="id"> The user's id. </param>
-        /// <returns> A <see cref="RequestResult{User}" /> representing the results of the request. </returns>
-        public async Task<RequestResult<User>> GetByIdAsync(uint id)
-        {
-            var request = new GetUserRequest(id);
-
-            var result = await RequestExecutor.ExecuteAsync<User>(request);
-
-            return new RequestResult<User>(result);
-        }
-
-        /// <summary> Gets a user by username. </summary>
-        /// <param name="username"> The user's username. </param>
-        /// <returns> A <see cref="RequestResult{User}" /> representing the results of the request. </returns>
-        public RequestResult<User> GetByUsername(string username)
-        {
-            if (username == null)
-                throw new ArgumentNullException(nameof(username));
-
-            var request = new GetUserRequest(username);
-
-            var result = RequestExecutor.Execute<User>(request);
-
-            return new RequestResult<User>(result);
-        }
-
-        /// <summary> Gets a user by username. </summary>
-        /// <param name="username"> The user's username. </param>
-        /// <returns> A <see cref="RequestResult{User}" /> representing the results of the request. </returns>
-        public async Task<RequestResult<User>> GetByUsernameAsync(string username)
-        {
-            if (username == null)
-                throw new ArgumentNullException(nameof(username));
-
-            var request = new GetUserRequest(username);
-
-            var result = await RequestExecutor.ExecuteAsync<User>(request);
-
-            return new RequestResult<User>(result);
+            return await request.ExecutePaginatedAsync<User>();
         }
 
         /// <summary> Gets the currently authenticated user. </summary>
         /// <returns> A <see cref="RequestResult{User}" /> representing the results of the request. </returns>
         public RequestResult<User> GetCurrent()
         {
-            var request = new GetUserRequest();
+            var request = RequestFactory.Create("user", Method.Get);
 
-            var result = RequestExecutor.Execute<User>(request);
-
-            return new RequestResult<User>(result);
+            return request.Execute<User>();
         }
 
         /// <summary> Gets the currently authenticated user. </summary>
         /// <returns> A <see cref="RequestResult{User}" /> representing the results of the request. </returns>
         public async Task<RequestResult<User>> GetCurrentAsync()
         {
-            var request = new GetUserRequest();
+            var request = RequestFactory.Create("user", Method.Get);
 
-            var result = await RequestExecutor.ExecuteAsync<User>(request);
-
-            return new RequestResult<User>(result);
+            return await request.ExecuteAsync<User>();
         }
 
         /// <summary> Searches for a user by email address or name. </summary>
@@ -282,11 +332,13 @@ namespace GitLab.NET.Repositories
             if (resultsPerPage < Config.MinResultsPerPage || resultsPerPage > Config.MaxResultsPerPage)
                 throw new ArgumentOutOfRangeException(nameof(resultsPerPage));
 
-            var request = new GetUsersRequest(searchQuery, page, resultsPerPage);
+            var request = RequestFactory.Create("users", Method.Get);
 
-            var result = RequestExecutor.Execute<List<User>>(request);
+            request.AddParameter("search", searchQuery);
+            request.AddParameterIfNotNull("page", page);
+            request.AddParameterIfNotNull("per_page", resultsPerPage);
 
-            return new PaginatedResult<User>(result);
+            return request.ExecutePaginated<User>();
         }
 
         /// <summary> Searches for a user by email address or name. </summary>
@@ -305,11 +357,13 @@ namespace GitLab.NET.Repositories
             if (resultsPerPage < Config.MinResultsPerPage || resultsPerPage > Config.MaxResultsPerPage)
                 throw new ArgumentOutOfRangeException(nameof(resultsPerPage));
 
-            var request = new GetUsersRequest(searchQuery, page, resultsPerPage);
+            var request = RequestFactory.Create("users", Method.Get);
 
-            var result = await RequestExecutor.ExecuteAsync<List<User>>(request);
+            request.AddParameter("search", searchQuery);
+            request.AddParameterIfNotNull("page", page);
+            request.AddParameterIfNotNull("per_page", resultsPerPage);
 
-            return new PaginatedResult<User>(result);
+            return await request.ExecutePaginatedAsync<User>();
         }
 
         /// <summary> Unblocks a user. </summary>
@@ -317,11 +371,11 @@ namespace GitLab.NET.Repositories
         /// <returns> A <see cref="RequestResult{User}" /> representing the results of the request. </returns>
         public RequestResult<User> Unblock(uint id)
         {
-            var request = new UnblockUserRequest(id);
+            var request = RequestFactory.Create("users/{id}/unblock", Method.Put);
 
-            var result = RequestExecutor.Execute<User>(request);
+            request.AddUrlSegment("id", id);
 
-            return new RequestResult<User>(result);
+            return request.Execute<User>();
         }
 
         /// <summary> Unblocks a user. </summary>
@@ -329,11 +383,11 @@ namespace GitLab.NET.Repositories
         /// <returns> A <see cref="RequestResult{User}" /> representing the results of the request. </returns>
         public async Task<RequestResult<User>> UnblockAsync(uint id)
         {
-            var request = new UnblockUserRequest(id);
+            var request = RequestFactory.Create("users/{id}/unblock", Method.Put);
 
-            var result = await RequestExecutor.ExecuteAsync<User>(request);
+            request.AddUrlSegment("id", id);
 
-            return new RequestResult<User>(result);
+            return await request.ExecuteAsync<User>();
         }
 
         /// <summary> Updates information for a user. </summary>
@@ -373,12 +427,27 @@ namespace GitLab.NET.Repositories
                                           bool? canCreateGroup = null,
                                           bool? external = null)
         {
-            var request = new UpdateUserRequest(id, email, password, username, name, skype, linkedIn, twitter, websiteUrl, projectsLimit, externUid, provider, bio, location, admin, canCreateGroup,
-                                                external);
+            var request = RequestFactory.Create("users/{id}", Method.Put);
 
-            var result = RequestExecutor.Execute<User>(request);
+            request.AddUrlSegment("id", id);
+            request.AddParameterIfNotNull("email", email);
+            request.AddParameterIfNotNull("password", password);
+            request.AddParameterIfNotNull("username", username);
+            request.AddParameterIfNotNull("name", name);
+            request.AddParameterIfNotNull("skype", skype);
+            request.AddParameterIfNotNull("linkedin", linkedIn);
+            request.AddParameterIfNotNull("twitter", twitter);
+            request.AddParameterIfNotNull("website_url", websiteUrl);
+            request.AddParameterIfNotNull("projects_limit", projectsLimit);
+            request.AddParameterIfNotNull("extern_uid", externUid);
+            request.AddParameterIfNotNull("provider", provider);
+            request.AddParameterIfNotNull("bio", bio);
+            request.AddParameterIfNotNull("location", location);
+            request.AddParameterIfNotNull("admin", admin);
+            request.AddParameterIfNotNull("can_create_group", canCreateGroup);
+            request.AddParameterIfNotNull("external", external);
 
-            return new RequestResult<User>(result);
+            return request.Execute<User>();
         }
 
         /// <summary> Updates information for a user. </summary>
@@ -418,12 +487,27 @@ namespace GitLab.NET.Repositories
                                                            bool? canCreateGroup = null,
                                                            bool? external = null)
         {
-            var request = new UpdateUserRequest(id, email, password, username, name, skype, linkedIn, twitter, websiteUrl, projectsLimit, externUid, provider, bio, location, admin, canCreateGroup,
-                                                external);
+            var request = RequestFactory.Create("users/{id}", Method.Put);
 
-            var result = await RequestExecutor.ExecuteAsync<User>(request);
+            request.AddUrlSegment("id", id);
+            request.AddParameterIfNotNull("email", email);
+            request.AddParameterIfNotNull("password", password);
+            request.AddParameterIfNotNull("username", username);
+            request.AddParameterIfNotNull("name", name);
+            request.AddParameterIfNotNull("skype", skype);
+            request.AddParameterIfNotNull("linkedin", linkedIn);
+            request.AddParameterIfNotNull("twitter", twitter);
+            request.AddParameterIfNotNull("website_url", websiteUrl);
+            request.AddParameterIfNotNull("projects_limit", projectsLimit);
+            request.AddParameterIfNotNull("extern_uid", externUid);
+            request.AddParameterIfNotNull("provider", provider);
+            request.AddParameterIfNotNull("bio", bio);
+            request.AddParameterIfNotNull("location", location);
+            request.AddParameterIfNotNull("admin", admin);
+            request.AddParameterIfNotNull("can_create_group", canCreateGroup);
+            request.AddParameterIfNotNull("external", external);
 
-            return new RequestResult<User>(result);
+            return await request.ExecuteAsync<User>();
         }
     }
 }

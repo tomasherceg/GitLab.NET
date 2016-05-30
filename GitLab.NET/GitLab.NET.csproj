@@ -75,7 +75,6 @@
     <Compile Include="ResponseModels\Tag.cs" />
     <Compile Include="RestHelpers\HeaderHelper.cs" />
     <Compile Include="Authenticators\IPrivateTokenAuthenticator.cs" />
-    <Compile Include="RequestModels\IRequestModel.cs" />
     <Compile Include="Repositories\KeyRepository.cs" />
     <Compile Include="Repositories\GitLabLicenseRepository.cs" />
     <Compile Include="Repositories\LabelRepository.cs" />
@@ -85,12 +84,6 @@
     <Compile Include="Repositories\RepositoryBase.cs" />
     <Compile Include="PaginatedResult.cs" />
     <Compile Include="Repositories\RepositoryRepository.cs" />
-    <Compile Include="RequestModels\BlockUserRequest.cs" />
-    <Compile Include="RequestModels\CreateUserRequest.cs" />
-    <Compile Include="RequestModels\DeleteUserRequest.cs" />
-    <Compile Include="RequestModels\RestRequestExtensions.cs" />
-    <Compile Include="RequestModels\UnblockUserRequest.cs" />
-    <Compile Include="RequestModels\UpdateUserRequest.cs" />
     <Compile Include="RequestResult.cs" />
     <Compile Include="ResponseModels\BuildTrigger.cs" />
     <Compile Include="ResponseModels\BuildVariable.cs" />
@@ -115,8 +108,6 @@
     <Compile Include="ResponseModels\VisibilityLevel.cs" />
     <Compile Include="Authenticators\PrivateTokenAuthenticator.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="RequestModels\GetUserRequest.cs" />
-    <Compile Include="RequestModels\GetUsersRequest.cs" />
     <Compile Include="Repositories\SessionRepository.cs" />
     <Compile Include="Repositories\SystemHookRepository.cs" />
     <Compile Include="Repositories\UserRepository.cs" />
