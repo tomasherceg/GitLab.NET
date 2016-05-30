@@ -109,7 +109,6 @@
     <Compile Include="RequestModels\GetRepositoryFileArchiveRequest.cs" />
     <Compile Include="RequestModels\GetKeyRequest.cs" />
     <Compile Include="RequestModels\GetKeyWithUserRequest.cs" />
-    <Compile Include="RequestModels\GetGitLabLicenseRequest.cs" />
     <Compile Include="RequestModels\GetLicenseRequest.cs" />
     <Compile Include="RequestModels\GetLicensesRequest.cs" />
     <Compile Include="RequestModels\GetProjectSnippetContentRequest.cs" />
