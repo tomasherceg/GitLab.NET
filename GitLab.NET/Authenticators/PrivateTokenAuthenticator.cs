@@ -19,15 +19,6 @@ namespace GitLab.NET.Authenticators
         /// <param name="request"> The <see cref="IRestRequest" /> to add the header to. </param>
         public void Authenticate(IRestClient client, IRestRequest request)
         {
-            if (client == null)
-                throw new ArgumentNullException(nameof(client));
-
-            if (request == null)
-                throw new ArgumentNullException(nameof(request));
-
-            if (PrivateToken == null)
-                throw new NullReferenceException("PrivateToken is null.");
-
             request.AddParameter("PRIVATE-TOKEN", PrivateToken, ParameterType.HttpHeader);
         }
     }

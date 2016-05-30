@@ -68,9 +68,8 @@
     <Compile Include="Repositories\DeployKeyRepositoryTests.cs" />
     <Compile Include="GitLabClientTests.cs" />
     <Compile Include="Repositories\EmailRepositoryTests.cs" />
-    <Compile Include="RestHelpers\HeaderHelperTests.cs" />
+    <Compile Include="RequestResultTests.cs" />
     <Compile Include="PaginatedResultTests.cs" />
-    <Compile Include="Authenticators\PrivateTokenAuthenticatorTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -85,9 +84,7 @@
   <ItemGroup>
     <Service Include="{82A7F48D-3B50-4B1E-B82E-3ADA8210C358}" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Abstractions\" />
-  </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
     <PropertyGroup>

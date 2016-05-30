@@ -73,7 +73,6 @@
     <Compile Include="ResponseModels\Release.cs" />
     <Compile Include="ResponseModels\RepositoryFile.cs" />
     <Compile Include="ResponseModels\Tag.cs" />
-    <Compile Include="RestHelpers\HeaderHelper.cs" />
     <Compile Include="Authenticators\IPrivateTokenAuthenticator.cs" />
     <Compile Include="Repositories\KeyRepository.cs" />
     <Compile Include="Repositories\GitLabLicenseRepository.cs" />

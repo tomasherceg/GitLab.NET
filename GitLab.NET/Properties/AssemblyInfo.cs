@@ -39,7 +39,3 @@ using System.Runtime.InteropServices;
 
 [assembly: AssemblyVersion("0.0.2.0")]
 [assembly: AssemblyFileVersion("0.0.2.0")]
-
-// Set internal members visible to test class
-
-[assembly: InternalsVisibleTo("GitLab.NET.Tests")]

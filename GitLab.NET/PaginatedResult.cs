@@ -1,5 +1,5 @@
 ﻿using System.Collections.Generic;
-using GitLab.NET.RestHelpers;
+using System.Linq;
 using RestSharp;
 
 namespace GitLab.NET
@@ -30,12 +30,23 @@ namespace GitLab.NET
         /// <param name="response"> The response to populate this instance with. </param>
         public PaginatedResult(IRestResponse<List<T>> response) : base(response)
         {
-            CurrentPage = response.Headers.GetAsUInt("X-Page");
-            PreviousPage = response.Headers.GetAsUInt("X-Prev-Page");
-            NextPage = response.Headers.GetAsUInt("X-Next-Page");
-            ResultsPerPage = response.Headers.GetAsUInt("X-Per-Page");
-            TotalPages = response.Headers.GetAsUInt("X-Total-Pages");
-            TotalResults = response.Headers.GetAsUInt("X-Total");
+            CurrentPage = GetHeaderAsUInt(response.Headers, "X-Page");
+            PreviousPage = GetHeaderAsUInt(response.Headers, "X-Prev-Page");
+            NextPage = GetHeaderAsUInt(response.Headers, "X-Next-Page");
+            ResultsPerPage = GetHeaderAsUInt(response.Headers, "X-Per-Page");
+            TotalPages = GetHeaderAsUInt(response.Headers, "X-Total-Pages");
+            TotalResults = GetHeaderAsUInt(response.Headers, "X-Total");
+        }
+
+        private static uint? GetHeaderAsUInt(IEnumerable<Parameter> headers, string name)
+        {
+            uint result;
+
+            var header = (string)headers.FirstOrDefault(h => h.Name == name)?.Value;
+
+            var didParse = uint.TryParse(header, out result);
+
+            return didParse ? result : (uint?)null;
         }
     }
 }
