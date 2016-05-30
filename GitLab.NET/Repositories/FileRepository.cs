@@ -10,8 +10,8 @@ namespace GitLab.NET.Repositories
     public class FileRepository : RepositoryBase
     {
         /// <summary> Creates a new <see cref="FileRepository" /> instance. </summary>
-        /// <param name="restExecutor"> An instance of <see cref="IRequestExecutor" /> to use for this repository. </param>
-        public FileRepository(IRequestExecutor restExecutor) : base(restExecutor) { }
+        /// <param name="requestFactory"> An instance of <see cref="IRequestFactory" /> to use for this repository. </param>
+        public FileRepository(IRequestFactory requestFactory) : base(requestFactory) { }
 
         /// <summary> Creates a new file. </summary>
         /// <param name="projectId"> The ID of the project. </param>

@@ -10,8 +10,8 @@ namespace GitLab.NET.Repositories
     public class SessionRepository : RepositoryBase
     {
         /// <summary> Creates a new <see cref="SessionRepository" /> instance. </summary>
-        /// <param name="restExecutor"> An instance of <see cref="IRequestExecutor" /> to use for this repository. </param>
-        public SessionRepository(IRequestExecutor restExecutor) : base(restExecutor) { }
+        /// <param name="requestFactory"> An instance of <see cref="IRequestFactory" /> to use for this repository. </param>
+        public SessionRepository(IRequestFactory requestFactory) : base(requestFactory) { }
 
         /// <summary> Synchronously retrieves a private token for a user. </summary>
         /// <param name="username"> The username or email address for the user. </param>

@@ -12,8 +12,8 @@ namespace GitLab.NET.Repositories
     public class KeyRepository : RepositoryBase
     {
         /// <summary> Creates a new <see cref="KeyRepository" /> instance. </summary>
-        /// <param name="restExecutor"> An instance of <see cref="IRequestExecutor" /> to use for this repository. </param>
-        public KeyRepository(IRequestExecutor restExecutor) : base(restExecutor) { }
+        /// <param name="requestFactory"> An instance of <see cref="IRequestFactory" /> to use for this repository. </param>
+        public KeyRepository(IRequestFactory requestFactory) : base(requestFactory) { }
 
         /// <summary> Creates a new SSH key under the currently authenticated user's account. </summary>
         /// <param name="title"> The title for the new SSH key. </param>

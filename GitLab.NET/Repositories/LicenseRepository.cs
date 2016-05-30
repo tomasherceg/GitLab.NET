@@ -13,8 +13,8 @@ namespace GitLab.NET.Repositories
     public class LicenseRepository : RepositoryBase
     {
         /// <summary> Creates a new <see cref="LicenseRepository" /> instance. </summary>
-        /// <param name="restExecutor"> An instance of <see cref="IRequestExecutor" /> to use for this repository. </param>
-        public LicenseRepository(IRequestExecutor restExecutor) : base(restExecutor) { }
+        /// <param name="requestFactory"> An instance of <see cref="IRequestFactory" /> to use for this repository. </param>
+        public LicenseRepository(IRequestFactory requestFactory) : base(requestFactory) { }
 
         /// <summary> Gets a license matching the specified key. </summary>
         /// <param name="key"> The key for the desired license. </param>

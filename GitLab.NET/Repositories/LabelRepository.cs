@@ -13,8 +13,8 @@ namespace GitLab.NET.Repositories
     public class LabelRepository : RepositoryBase
     {
         /// <summary> Creates a new <see cref="LabelRepository" /> instance. </summary>
-        /// <param name="restExecutor"> An instance of <see cref="IRequestExecutor" /> to use for this repository. </param>
-        public LabelRepository(IRequestExecutor restExecutor) : base(restExecutor) { }
+        /// <param name="requestFactory"> An instance of <see cref="IRequestFactory" /> to use for this repository. </param>
+        public LabelRepository(IRequestFactory requestFactory) : base(requestFactory) { }
 
         /// <summary> Creates a new label. </summary>
         /// <param name="projectId"> The ID of the project to attach this label to. </param>

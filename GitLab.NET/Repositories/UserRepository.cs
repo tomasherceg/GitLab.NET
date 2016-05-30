@@ -13,8 +13,8 @@ namespace GitLab.NET.Repositories
     public class UserRepository : RepositoryBase
     {
         /// <summary> Creates a new <see cref="UserRepository" /> instance. </summary>
-        /// <param name="restExecutor"> An instance of <see cref="IRequestExecutor" /> to use for this repository. </param>
-        public UserRepository(IRequestExecutor restExecutor) : base(restExecutor) { }
+        /// <param name="requestFactory"> An instance of <see cref="IRequestFactory" /> to use for this repository. </param>
+        public UserRepository(IRequestFactory requestFactory) : base(requestFactory) { }
 
         /// <summary> Blocks a user. </summary>
         /// <param name="id"> The user's ID. </param>

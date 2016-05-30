@@ -13,8 +13,8 @@ namespace GitLab.NET.Repositories
     public class RepositoryRepository : RepositoryBase
     {
         /// <summary> Creates a new <see cref="RepositoryRepository" /> instance. </summary>
-        /// <param name="restExecutor"> An instance of <see cref="IRequestExecutor" /> to use for this repository. </param>
-        public RepositoryRepository(IRequestExecutor restExecutor) : base(restExecutor) { }
+        /// <param name="requestFactory"> An instance of <see cref="IRequestFactory" /> to use for this repository. </param>
+        public RepositoryRepository(IRequestFactory requestFactory) : base(requestFactory) { }
 
         /// <summary> Compares two branches or tags. </summary>
         /// <param name="projectId"> The ID of the project. </param>

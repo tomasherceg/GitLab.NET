@@ -11,8 +11,8 @@ namespace GitLab.NET.Repositories
     public class CommitRepository : RepositoryBase
     {
         /// <summary> Creates a new <see cref="CommitRepository" /> instance. </summary>
-        /// <param name="restExecutor"> An instance of <see cref="IRequestExecutor" /> to use for this repository. </param>
-        public CommitRepository(IRequestExecutor restExecutor) : base(restExecutor) { }
+        /// <param name="requestFactory"> An instance of <see cref="IRequestFactory" /> to use for this repository. </param>
+        public CommitRepository(IRequestFactory requestFactory) : base(requestFactory) { }
 
         /// <summary> Creates a new commit comment. </summary>
         /// <param name="projectId"> The ID of the project. </param>

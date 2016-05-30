@@ -13,9 +13,8 @@ namespace GitLab.NET.Repositories
     public class TagRepository : RepositoryBase
     {
         /// <summary> Creates a new <see cref="TagRepository" /> instance. </summary>
-        /// <param name="restExecutor"> An instance of <see cref="IRequestExecutor" /> to use for this repository. </param>
-        public TagRepository(IRequestExecutor restExecutor) : base(restExecutor) { }
-
+        /// <param name="requestFactory"> An instance of <see cref="IRequestFactory" /> to use for this repository. </param>
+        public TagRepository(IRequestFactory requestFactory) : base(requestFactory) { }
         /// <summary> Creates a new tag. </summary>
         /// <param name="projectId"> The ID of the project. </param>
         /// <param name="tagName"> The name for the new tag. </param>

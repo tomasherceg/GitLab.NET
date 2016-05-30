@@ -13,8 +13,8 @@ namespace GitLab.NET.Repositories
     public class BuildVariableRepository : RepositoryBase
     {
         /// <summary> Creates a new <see cref="BuildVariableRepository" /> instance. </summary>
-        /// <param name="restExecutor"> An instance of <see cref="IRequestExecutor" /> to use for this repository. </param>
-        public BuildVariableRepository(IRequestExecutor restExecutor) : base(restExecutor) { }
+        /// <param name="requestFactory"> An instance of <see cref="IRequestFactory" /> to use for this repository. </param>
+        public BuildVariableRepository(IRequestFactory requestFactory) : base(requestFactory) { }
 
         /// <summary> Creates a new build variable. </summary>
         /// <param name="projectId"> The ID of the project. </param>

@@ -13,8 +13,8 @@ namespace GitLab.NET.Repositories
     public class NamespaceRepository : RepositoryBase
     {
         /// <summary> Creates a new <see cref="NamespaceRepository" /> instance. </summary>
-        /// <param name="restExecutor"> An instance of <see cref="IRequestExecutor" /> to use for this repository. </param>
-        public NamespaceRepository(IRequestExecutor restExecutor) : base(restExecutor) { }
+        /// <param name="requestFactory"> An instance of <see cref="IRequestFactory" /> to use for this repository. </param>
+        public NamespaceRepository(IRequestFactory requestFactory) : base(requestFactory) { }
 
         /// <summary> Gets all namespaces that the currently authenticated user is authorized to see. </summary>
         /// <returns> A <see cref="PaginatedResult{Namespace}" /> representing the results of the request. </returns>

@@ -13,8 +13,8 @@ namespace GitLab.NET.Repositories
     public class SystemHookRepository : RepositoryBase
     {
         /// <summary> Creates a new <see cref="SystemHookRepository" /> instance. </summary>
-        /// <param name="restExecutor"> An instance of <see cref="IRequestExecutor" /> to use for this repository. </param>
-        public SystemHookRepository(IRequestExecutor restExecutor) : base(restExecutor) { }
+        /// <param name="requestFactory"> An instance of <see cref="IRequestFactory" /> to use for this repository. </param>
+        public SystemHookRepository(IRequestFactory requestFactory) : base(requestFactory) { }
 
         /// <summary> Creates a new system hook. </summary>
         /// <param name="url"> The URL to use for the new system hook. </param>

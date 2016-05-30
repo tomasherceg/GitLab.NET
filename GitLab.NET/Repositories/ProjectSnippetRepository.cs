@@ -13,8 +13,8 @@ namespace GitLab.NET.Repositories
     public class ProjectSnippetRepository : RepositoryBase
     {
         /// <summary> Creates a new <see cref="ProjectSnippetRepository" /> instance. </summary>
-        /// <param name="restExecutor"> An instance of <see cref="IRequestExecutor" /> to use for this repository. </param>
-        public ProjectSnippetRepository(IRequestExecutor restExecutor) : base(restExecutor) { }
+        /// <param name="requestFactory"> An instance of <see cref="IRequestFactory" /> to use for this repository. </param>
+        public ProjectSnippetRepository(IRequestFactory requestFactory) : base(requestFactory) { }
 
         /// <summary> Creates a new project snippet associated with the provided project ID. </summary>
         /// <param name="projectId"> The ID of the project to create this snippet for. </param>
