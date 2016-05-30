@@ -15,11 +15,12 @@ namespace GitLab.NET.Repositories
         /// <param name="requestFactory"> An instance of <see cref="IRequestFactory" /> to use for this repository. </param>
         public KeyRepository(IRequestFactory requestFactory) : base(requestFactory) { }
 
-        /// <summary> Creates a new SSH key under the currently authenticated user's account. </summary>
+        /// <summary> Creates a new SSH key under the currently authenticated user's account or the specified user's account. </summary>
         /// <param name="title"> The title for the new SSH key. </param>
         /// <param name="key"> The key for the new SSH key. </param>
+        /// <param name="userId"> The user's ID. </param>
         /// <returns> A <see cref="RequestResult{SshKey}" /> representing the results of the request. </returns>
-        public RequestResult<SshKey> Create(string title, string key)
+        public RequestResult<SshKey> Create(string title, string key, uint? userId = null)
         {
             var request = new CreateKeyRequest(title, key);
 
@@ -28,11 +29,12 @@ namespace GitLab.NET.Repositories
             return new RequestResult<SshKey>(result);
         }
 
-        /// <summary> Creates a new SSH key under the currently authenticated user's account. </summary>
+        /// <summary> Creates a new SSH key under the currently authenticated user's account or the specified user's account. </summary>
         /// <param name="title"> The title for the new SSH key. </param>
         /// <param name="key"> The key for the new SSH key. </param>
+        /// <param name="userId"> The user's ID. </param>
         /// <returns> A <see cref="RequestResult{SshKey}" /> representing the results of the request. </returns>
-        public async Task<RequestResult<SshKey>> CreateAsync(string title, string key)
+        public async Task<RequestResult<SshKey>> CreateAsync(string title, string key, uint? userId = null)
         {
             var request = new CreateKeyRequest(title, key);
 
@@ -41,38 +43,11 @@ namespace GitLab.NET.Repositories
             return new RequestResult<SshKey>(result);
         }
 
-        /// <summary> Creates a new SSH key under the specified user's account. </summary>
-        /// <param name="title"> The title for the new SSH key. </param>
-        /// <param name="key"> The key for the new SSH key. </param>
-        /// <param name="userId"> The user's ID. </param>
-        /// <returns> A <see cref="RequestResult{SshKey}" /> representing the results of the request. </returns>
-        public RequestResult<SshKey> Create(string title, string key, uint userId)
-        {
-            var request = new CreateKeyRequest(title, key, userId);
-
-            var result = RequestExecutor.Execute<SshKey>(request);
-
-            return new RequestResult<SshKey>(result);
-        }
-
-        /// <summary> Creates a new SSH key under the specified user's account. </summary>
-        /// <param name="title"> The title for the new SSH key. </param>
-        /// <param name="key"> The key for the new SSH key. </param>
-        /// <param name="userId"> The user's ID. </param>
-        /// <returns> A <see cref="RequestResult{SshKey}" /> representing the results of the request. </returns>
-        public async Task<RequestResult<SshKey>> CreateAsync(string title, string key, uint userId)
-        {
-            var request = new CreateKeyRequest(title, key, userId);
-
-            var result = await RequestExecutor.ExecuteAsync<SshKey>(request);
-
-            return new RequestResult<SshKey>(result);
-        }
-
-        /// <summary> Delete's an SSH key from the currently authenticated user's account. </summary>
+        /// <summary> Delete's an SSH key from the currently authenticated user's account or the specified user's account. </summary>
         /// <param name="id"> The ID of the key to delete. </param>
+        /// <param name="userId"> The ID of the user. </param>
         /// <returns> A <see cref="RequestResult{SshKey}" /> representing the results of the request. </returns>
-        public RequestResult<SshKey> Delete(uint id)
+        public RequestResult<SshKey> Delete(uint id, uint? userId = null)
         {
             var request = new DeleteKeyRequest(id);
 
@@ -81,10 +56,11 @@ namespace GitLab.NET.Repositories
             return new RequestResult<SshKey>(result);
         }
 
-        /// <summary> Delete's an SSH key from the currently authenticated user's account. </summary>
+        /// <summary> Delete's an SSH key from the currently authenticated user's account or the specified user's account. </summary>
         /// <param name="id"> The ID of the key to delete. </param>
+        /// <param name="userId"> The ID of the user. </param>
         /// <returns> A <see cref="RequestResult{SshKey}" /> representing the results of the request. </returns>
-        public async Task<RequestResult<SshKey>> DeleteAsync(uint id)
+        public async Task<RequestResult<SshKey>> DeleteAsync(uint id, uint? userId = null)
         {
             var request = new DeleteKeyRequest(id);
 
@@ -93,36 +69,10 @@ namespace GitLab.NET.Repositories
             return new RequestResult<SshKey>(result);
         }
 
-        /// <summary> Delete's an SSH key from the specified user's account. </summary>
-        /// <param name="id"> The ID of the key to delete. </param>
-        /// <param name="userId"> The ID of the user. </param>
-        /// <returns> A <see cref="RequestResult{SshKey}" /> representing the results of the request. </returns>
-        public RequestResult<SshKey> Delete(uint id, uint userId)
-        {
-            var request = new DeleteKeyRequest(id, userId);
-
-            var result = RequestExecutor.Execute<SshKey>(request);
-
-            return new RequestResult<SshKey>(result);
-        }
-
-        /// <summary> Delete's an SSH key from the specified user's account. </summary>
-        /// <param name="id"> The ID of the key to delete. </param>
-        /// <param name="userId"> The ID of the user. </param>
-        /// <returns> A <see cref="RequestResult{SshKey}" /> representing the results of the request. </returns>
-        public async Task<RequestResult<SshKey>> DeleteAsync(uint id, uint userId)
-        {
-            var request = new DeleteKeyRequest(id, userId);
-
-            var result = await RequestExecutor.ExecuteAsync<SshKey>(request);
-
-            return new RequestResult<SshKey>(result);
-        }
-
-        /// <summary> Gets an SSH key by ID. </summary>
+        /// <summary> Finds an SSH key by ID. </summary>
         /// <param name="id"> The ID of the SSH key. </param>
         /// <returns> A <see cref="RequestResult{SshKey}" /> representing the results of the request. </returns>
-        public RequestResult<SshKey> GetById(uint id)
+        public RequestResult<SshKey> Find(uint id)
         {
             var request = new GetKeyRequest(id);
 
@@ -131,10 +81,10 @@ namespace GitLab.NET.Repositories
             return new RequestResult<SshKey>(result);
         }
 
-        /// <summary> Gets an SSH key by ID. </summary>
+        /// <summary> Finds an SSH key by ID. </summary>
         /// <param name="id"> The ID of the SSH key. </param>
         /// <returns> A <see cref="RequestResult{SshKey}" /> representing the results of the request. </returns>
-        public async Task<RequestResult<SshKey>> GetByIdAsync(uint id)
+        public async Task<RequestResult<SshKey>> FindAsync(uint id)
         {
             var request = new GetKeyRequest(id);
 
@@ -143,10 +93,10 @@ namespace GitLab.NET.Repositories
             return new RequestResult<SshKey>(result);
         }
 
-        /// <summary> Gets an SSH key and user information by ID. </summary>
+        /// <summary> Finds an SSH key and user information by ID. </summary>
         /// <param name="id"> The ID of the SSH key. </param>
         /// <returns> A <see cref="RequestResult{SshKey}" /> representing the results of the request. </returns>
-        public RequestResult<SshKey> GetByIdWithUser(uint id)
+        public RequestResult<SshKey> FindWithUser(uint id)
         {
             var request = new GetKeyWithUserRequest(id);
 
@@ -155,10 +105,10 @@ namespace GitLab.NET.Repositories
             return new RequestResult<SshKey>(result);
         }
 
-        /// <summary> Gets an SSH key and user information by ID. </summary>
+        /// <summary> Finds an SSH key and user information by ID. </summary>
         /// <param name="id"> The ID of the SSH key. </param>
         /// <returns> A <see cref="RequestResult{SshKey}" /> representing the results of the request. </returns>
-        public async Task<RequestResult<SshKey>> GetByIdWithUserAsync(uint id)
+        public async Task<RequestResult<SshKey>> FindWithUserAsync(uint id)
         {
             var request = new GetKeyWithUserRequest(id);
 
@@ -167,12 +117,13 @@ namespace GitLab.NET.Repositories
             return new RequestResult<SshKey>(result);
         }
 
-        /// <summary> Gets the currently authenticated user's SSH keys. </summary>
+        /// <summary> Gets all SSH keys for the current user or the specified user. </summary>
+        /// <param name="userId"> The ID of the user. </param>
         /// <returns>
         ///     A <see cref="RequestResult{T}" /> containing a <see cref="List{SshKey}" /> representing the results of the
         ///     request.
         /// </returns>
-        public RequestResult<List<SshKey>> GetForUser()
+        public RequestResult<List<SshKey>> GetAll(uint? userId = null)
         {
             var request = new GetUserKeysRequest();
 
@@ -181,44 +132,15 @@ namespace GitLab.NET.Repositories
             return new RequestResult<List<SshKey>>(result);
         }
 
-        /// <summary> Gets the currently authenticated user's SSH keys. </summary>
+        /// <summary> Gets all SSH keys for the current user or the specified user. </summary>
+        /// <param name="userId"> The ID of the user. </param>
         /// <returns>
         ///     A <see cref="RequestResult{T}" /> containing a <see cref="List{SshKey}" /> representing the results of the
         ///     request.
         /// </returns>
-        public async Task<RequestResult<List<SshKey>>> GetForUserAsync()
+        public async Task<RequestResult<List<SshKey>>> GetAllAsync(uint? userId = null)
         {
             var request = new GetUserKeysRequest();
-
-            var result = await RequestExecutor.ExecuteAsync<List<SshKey>>(request);
-
-            return new RequestResult<List<SshKey>>(result);
-        }
-
-        /// <summary> Gets the specified user's SSH keys. </summary>
-        /// <param name="userId"> The user's ID. </param>
-        /// <returns>
-        ///     A <see cref="RequestResult{T}" /> containing a <see cref="List{SshKey}" /> representing the results of the
-        ///     request.
-        /// </returns>
-        public RequestResult<List<SshKey>> GetForUser(uint userId)
-        {
-            var request = new GetUserKeysRequest(userId);
-
-            var result = RequestExecutor.Execute<List<SshKey>>(request);
-
-            return new RequestResult<List<SshKey>>(result);
-        }
-
-        /// <summary> Gets the specified user's SSH keys. </summary>
-        /// <param name="userId"> The user's ID. </param>
-        /// <returns>
-        ///     A <see cref="RequestResult{T}" /> containing a <see cref="List{SshKey}" /> representing the results of the
-        ///     request.
-        /// </returns>
-        public async Task<RequestResult<List<SshKey>>> GetForUserAsync(uint userId)
-        {
-            var request = new GetUserKeysRequest(userId);
 
             var result = await RequestExecutor.ExecuteAsync<List<SshKey>>(request);
 
