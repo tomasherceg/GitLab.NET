@@ -142,7 +142,6 @@
     <Compile Include="ResponseModels\VisibilityLevel.cs" />
     <Compile Include="Authenticators\PrivateTokenAuthenticator.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="RequestModels\CreateSessionRequest.cs" />
     <Compile Include="RequestModels\GetUserRequest.cs" />
     <Compile Include="RequestModels\GetUsersRequest.cs" />
     <Compile Include="Repositories\SessionRepository.cs" />

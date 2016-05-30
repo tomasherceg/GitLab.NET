@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Threading.Tasks;
 using GitLab.NET.Abstractions;
-using GitLab.NET.RequestModels;
 using GitLab.NET.ResponseModels;
 
 namespace GitLab.NET.Repositories
@@ -25,11 +24,12 @@ namespace GitLab.NET.Repositories
             if (password == null)
                 throw new ArgumentNullException(nameof(password));
 
-            var request = new CreateSessionRequest(username, password);
+            var request = RequestFactory.Create("session", Method.Post, false);
 
-            var response = RequestExecutor.Execute<User>(request, false);
+            request.AddParameter("login", username);
+            request.AddParameter("password", password);
 
-            return new RequestResult<User>(response);
+            return request.Execute<User>();
         }
 
         /// <summary> Asynchronously retrieves a private token for a user. </summary>
@@ -44,11 +44,12 @@ namespace GitLab.NET.Repositories
             if (password == null)
                 throw new ArgumentNullException(nameof(password));
 
-            var request = new CreateSessionRequest(username, password);
+            var request = RequestFactory.Create("session", Method.Post, false);
 
-            var response = await RequestExecutor.ExecuteAsync<User>(request, false);
+            request.AddParameter("login", username);
+            request.AddParameter("password", password);
 
-            return new RequestResult<User>(response);
+            return await request.ExecuteAsync<User>();
         }
     }
 }
