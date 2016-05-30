@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using GitLab.NET.Abstractions;
-using GitLab.NET.RequestModels;
 using GitLab.NET.ResponseModels;
 
 namespace GitLab.NET.Repositories
@@ -27,11 +26,13 @@ namespace GitLab.NET.Repositories
             if (to == null)
                 throw new ArgumentNullException(nameof(to));
 
-            var request = new CompareRepositoryRequest(projectId, from, to);
+            var request = RequestFactory.Create("projects/{projectId}/repository/compare", Method.Get);
 
-            var result = RequestExecutor.Execute<RepositoryComparison>(request);
+            request.AddUrlSegment("projectId", projectId);
+            request.AddParameter("from", from);
+            request.AddParameter("to", to);
 
-            return new RequestResult<RepositoryComparison>(result);
+            return request.Execute<RepositoryComparison>();
         }
 
         /// <summary> Compares two branches or tags. </summary>
@@ -47,11 +48,13 @@ namespace GitLab.NET.Repositories
             if (to == null)
                 throw new ArgumentNullException(nameof(to));
 
-            var request = new CompareRepositoryRequest(projectId, from, to);
+            var request = RequestFactory.Create("projects/{projectId}/repository/compare", Method.Get);
 
-            var result = await RequestExecutor.ExecuteAsync<RepositoryComparison>(request);
+            request.AddUrlSegment("projectId", projectId);
+            request.AddParameter("from", from);
+            request.AddParameter("to", to);
 
-            return new RequestResult<RepositoryComparison>(result);
+            return await request.ExecuteAsync<RepositoryComparison>();
         }
 
         /// <summary> Gets an archive of the repository. </summary>
@@ -60,11 +63,12 @@ namespace GitLab.NET.Repositories
         /// <returns> A <see cref="RequestResult{T}" /> representing the results of the request. </returns>
         public RequestResult<byte[]> GetArchive(uint projectId, string sha = null)
         {
-            var request = new GetRepositoryFileArchiveRequest(projectId, sha);
+            var request = RequestFactory.Create("projects/{projectId}/repository/archive", Method.Get);
 
-            var result = RequestExecutor.Execute(request);
+            request.AddUrlSegment("projectId", projectId);
+            request.AddParameterIfNotNull("sha", sha);
 
-            return new RequestResult<byte[]>(result, result.RawBytes);
+            return request.ExecuteBytes();
         }
 
         /// <summary> Gets an archive of the repository. </summary>
@@ -73,11 +77,12 @@ namespace GitLab.NET.Repositories
         /// <returns> A <see cref="RequestResult{T}" /> representing the results of the request. </returns>
         public async Task<RequestResult<byte[]>> GetArchiveAsync(uint projectId, string sha = null)
         {
-            var request = new GetRepositoryFileArchiveRequest(projectId, sha);
+            var request = RequestFactory.Create("projects/{projectId}/repository/archive", Method.Get);
 
-            var result = await RequestExecutor.ExecuteAsync(request);
+            request.AddUrlSegment("projectId", projectId);
+            request.AddParameterIfNotNull("sha", sha);
 
-            return new RequestResult<byte[]>(result, result.RawBytes);
+            return await request.ExecuteBytesAsync();
         }
 
         /// <summary> Gets the contents of a blob file. </summary>
@@ -89,11 +94,12 @@ namespace GitLab.NET.Repositories
             if (sha == null)
                 throw new ArgumentNullException(nameof(sha));
 
-            var request = new GetRepositoryRawBlobContentRequest(projectId, sha);
+            var request = RequestFactory.Create("projects/{projectId}/repository/raw_blobs/{sha}", Method.Get);
 
-            var result = RequestExecutor.Execute(request);
+            request.AddUrlSegment("projectId", projectId);
+            request.AddUrlSegment("sha", sha);
 
-            return new RequestResult<byte[]>(result, result.RawBytes);
+            return request.ExecuteBytes();
         }
 
         /// <summary> Gets the contents of a blob file. </summary>
@@ -105,11 +111,12 @@ namespace GitLab.NET.Repositories
             if (sha == null)
                 throw new ArgumentNullException(nameof(sha));
 
-            var request = new GetRepositoryRawBlobContentRequest(projectId, sha);
+            var request = RequestFactory.Create("projects/{projectId}/repository/raw_blobs/{sha}", Method.Get);
 
-            var result = await RequestExecutor.ExecuteAsync(request);
+            request.AddUrlSegment("projectId", projectId);
+            request.AddUrlSegment("sha", sha);
 
-            return new RequestResult<byte[]>(result, result.RawBytes);
+            return await request.ExecuteBytesAsync();
         }
 
         /// <summary> Gets the contributors for the repository. </summary>
@@ -120,11 +127,11 @@ namespace GitLab.NET.Repositories
         /// </returns>
         public RequestResult<List<RepositoryContributor>> GetContributors(uint projectId)
         {
-            var request = new GetRepositoryContributorsRequest(projectId);
+            var request = RequestFactory.Create("projects/{projectId}/repository/contributors", Method.Get);
 
-            var result = RequestExecutor.Execute<List<RepositoryContributor>>(request);
+            request.AddUrlSegment("projectId", projectId);
 
-            return new RequestResult<List<RepositoryContributor>>(result);
+            return request.Execute<List<RepositoryContributor>>();
         }
 
         /// <summary> Gets the contributors for the repository. </summary>
@@ -135,11 +142,11 @@ namespace GitLab.NET.Repositories
         /// </returns>
         public async Task<RequestResult<List<RepositoryContributor>>> GetContributorsAsync(uint projectId)
         {
-            var request = new GetRepositoryContributorsRequest(projectId);
+            var request = RequestFactory.Create("projects/{projectId}/repository/contributors", Method.Get);
 
-            var result = await RequestExecutor.ExecuteAsync<List<RepositoryContributor>>(request);
+            request.AddUrlSegment("projectId", projectId);
 
-            return new RequestResult<List<RepositoryContributor>>(result);
+            return await request.ExecuteAsync<List<RepositoryContributor>>();
         }
 
         /// <summary> Gets the contents of a file. </summary>
@@ -155,11 +162,13 @@ namespace GitLab.NET.Repositories
             if (filePath == null)
                 throw new ArgumentNullException(nameof(filePath));
 
-            var request = new GetRepositoryRawFileContentRequest(projectId, sha, filePath);
+            var request = RequestFactory.Create("projects/{projectId}/repository/blobs/{sha}", Method.Get);
 
-            var result = RequestExecutor.Execute(request);
+            request.AddUrlSegment("projectId", projectId);
+            request.AddUrlSegment("sha", sha);
+            request.AddParameter("filepath", filePath);
 
-            return new RequestResult<byte[]>(result, result.RawBytes);
+            return request.ExecuteBytes();
         }
 
         /// <summary> Gets the contents of a file. </summary>
@@ -175,11 +184,13 @@ namespace GitLab.NET.Repositories
             if (filePath == null)
                 throw new ArgumentNullException(nameof(filePath));
 
-            var request = new GetRepositoryRawFileContentRequest(projectId, sha, filePath);
+            var request = RequestFactory.Create("projects/{projectId}/repository/blobs/{sha}", Method.Get);
 
-            var result = await RequestExecutor.ExecuteAsync(request);
+            request.AddUrlSegment("projectId", projectId);
+            request.AddUrlSegment("sha", sha);
+            request.AddParameter("filepath", filePath);
 
-            return new RequestResult<byte[]>(result, result.RawBytes);
+            return await request.ExecuteBytesAsync();
         }
 
         /// <summary> Gets a list of repository files and directories in a project. </summary>
@@ -192,11 +203,13 @@ namespace GitLab.NET.Repositories
         /// </returns>
         public RequestResult<List<RepositoryTreeItem>> GetTree(uint projectId, string path = null, string refName = null)
         {
-            var request = new GetRepositoryTreeRequest(projectId, path, refName);
+            var request = RequestFactory.Create("projects/{projectId}/repository/tree", Method.Get);
 
-            var result = RequestExecutor.Execute<List<RepositoryTreeItem>>(request);
+            request.AddUrlSegment("projectId", projectId);
+            request.AddParameterIfNotNull("path", path);
+            request.AddParameterIfNotNull("ref_name", refName);
 
-            return new RequestResult<List<RepositoryTreeItem>>(result);
+            return request.Execute<List<RepositoryTreeItem>>();
         }
 
         /// <summary> Gets a list of repository files and directories in a project. </summary>
@@ -209,11 +222,13 @@ namespace GitLab.NET.Repositories
         /// </returns>
         public async Task<RequestResult<List<RepositoryTreeItem>>> GetTreeAsync(uint projectId, string path = null, string refName = null)
         {
-            var request = new GetRepositoryTreeRequest(projectId, path, refName);
+            var request = RequestFactory.Create("projects/{projectId}/repository/tree", Method.Get);
 
-            var result = await RequestExecutor.ExecuteAsync<List<RepositoryTreeItem>>(request);
+            request.AddUrlSegment("projectId", projectId);
+            request.AddParameterIfNotNull("path", path);
+            request.AddParameterIfNotNull("ref_name", refName);
 
-            return new RequestResult<List<RepositoryTreeItem>>(result);
+            return await request.ExecuteAsync<List<RepositoryTreeItem>>();
         }
     }
 }
