@@ -1,7 +1,7 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 using GitLab.NET.Abstractions;
-using GitLab.NET.RequestModels;
 using GitLab.NET.ResponseModels;
 
 namespace GitLab.NET.Repositories
@@ -20,11 +20,20 @@ namespace GitLab.NET.Repositories
         /// <returns> A <see cref="RequestResult{SshKey}" /> representing the results of the request. </returns>
         public RequestResult<SshKey> Create(string title, string key, uint? userId = null)
         {
-            var request = new CreateKeyRequest(title, key);
+            if (title == null)
+                throw new ArgumentNullException(nameof(title));
 
-            var result = RequestExecutor.Execute<SshKey>(request);
+            if (key == null)
+                throw new ArgumentNullException(nameof(key));
 
-            return new RequestResult<SshKey>(result);
+            var resource = userId != null ? "users/{userId}/keys" : "user/keys";
+            var request = RequestFactory.Create(resource, Method.Post);
+
+            request.AddUrlSegmentIfNotNull("userId", userId);
+            request.AddParameter("title", title);
+            request.AddParameter("key", key);
+
+            return request.Execute<SshKey>();
         }
 
         /// <summary> Creates a new SSH key under the currently authenticated user's account or the specified user's account. </summary>
@@ -34,11 +43,20 @@ namespace GitLab.NET.Repositories
         /// <returns> A <see cref="RequestResult{SshKey}" /> representing the results of the request. </returns>
         public async Task<RequestResult<SshKey>> CreateAsync(string title, string key, uint? userId = null)
         {
-            var request = new CreateKeyRequest(title, key);
+            if (title == null)
+                throw new ArgumentNullException(nameof(title));
 
-            var result = await RequestExecutor.ExecuteAsync<SshKey>(request);
+            if (key == null)
+                throw new ArgumentNullException(nameof(key));
 
-            return new RequestResult<SshKey>(result);
+            var resource = userId != null ? "users/{userId}/keys" : "user/keys";
+            var request = RequestFactory.Create(resource, Method.Post);
+
+            request.AddUrlSegmentIfNotNull("userId", userId);
+            request.AddParameter("title", title);
+            request.AddParameter("key", key);
+
+            return await request.ExecuteAsync<SshKey>();
         }
 
         /// <summary> Delete's an SSH key from the currently authenticated user's account or the specified user's account. </summary>
@@ -47,11 +65,13 @@ namespace GitLab.NET.Repositories
         /// <returns> A <see cref="RequestResult{SshKey}" /> representing the results of the request. </returns>
         public RequestResult<SshKey> Delete(uint id, uint? userId = null)
         {
-            var request = new DeleteKeyRequest(id);
+            var resource = userId != null ? "users/{userId}/keys/{id}" : "user/keys/{id}";
+            var request = RequestFactory.Create(resource, Method.Delete);
 
-            var result = RequestExecutor.Execute<SshKey>(request);
+            request.AddUrlSegmentIfNotNull("userId", userId);
+            request.AddUrlSegment("id", id);
 
-            return new RequestResult<SshKey>(result);
+            return request.Execute<SshKey>();
         }
 
         /// <summary> Delete's an SSH key from the currently authenticated user's account or the specified user's account. </summary>
@@ -60,11 +80,13 @@ namespace GitLab.NET.Repositories
         /// <returns> A <see cref="RequestResult{SshKey}" /> representing the results of the request. </returns>
         public async Task<RequestResult<SshKey>> DeleteAsync(uint id, uint? userId = null)
         {
-            var request = new DeleteKeyRequest(id);
+            var resource = userId != null ? "users/{userId}/keys/{id}" : "user/keys/{id}";
+            var request = RequestFactory.Create(resource, Method.Delete);
 
-            var result = await RequestExecutor.ExecuteAsync<SshKey>(request);
+            request.AddUrlSegmentIfNotNull("userId", userId);
+            request.AddUrlSegment("id", id);
 
-            return new RequestResult<SshKey>(result);
+            return await request.ExecuteAsync<SshKey>();
         }
 
         /// <summary> Finds an SSH key by ID. </summary>
@@ -72,11 +94,11 @@ namespace GitLab.NET.Repositories
         /// <returns> A <see cref="RequestResult{SshKey}" /> representing the results of the request. </returns>
         public RequestResult<SshKey> Find(uint id)
         {
-            var request = new GetKeyRequest(id);
+            var request = RequestFactory.Create("user/keys/{id}", Method.Get);
 
-            var result = RequestExecutor.Execute<SshKey>(request);
+            request.AddUrlSegment("id", id);
 
-            return new RequestResult<SshKey>(result);
+            return request.Execute<SshKey>();
         }
 
         /// <summary> Finds an SSH key by ID. </summary>
@@ -84,11 +106,11 @@ namespace GitLab.NET.Repositories
         /// <returns> A <see cref="RequestResult{SshKey}" /> representing the results of the request. </returns>
         public async Task<RequestResult<SshKey>> FindAsync(uint id)
         {
-            var request = new GetKeyRequest(id);
+            var request = RequestFactory.Create("user/keys/{id}", Method.Get);
 
-            var result = await RequestExecutor.ExecuteAsync<SshKey>(request);
+            request.AddUrlSegment("id", id);
 
-            return new RequestResult<SshKey>(result);
+            return await request.ExecuteAsync<SshKey>();
         }
 
         /// <summary> Finds an SSH key and user information by ID. </summary>
@@ -96,11 +118,11 @@ namespace GitLab.NET.Repositories
         /// <returns> A <see cref="RequestResult{SshKey}" /> representing the results of the request. </returns>
         public RequestResult<SshKey> FindWithUser(uint id)
         {
-            var request = new GetKeyWithUserRequest(id);
+            var request = RequestFactory.Create("keys/{id}", Method.Get);
 
-            var result = RequestExecutor.Execute<SshKey>(request);
+            request.AddUrlSegment("id", id);
 
-            return new RequestResult<SshKey>(result);
+            return request.Execute<SshKey>();
         }
 
         /// <summary> Finds an SSH key and user information by ID. </summary>
@@ -108,11 +130,11 @@ namespace GitLab.NET.Repositories
         /// <returns> A <see cref="RequestResult{SshKey}" /> representing the results of the request. </returns>
         public async Task<RequestResult<SshKey>> FindWithUserAsync(uint id)
         {
-            var request = new GetKeyWithUserRequest(id);
+            var request = RequestFactory.Create("keys/{id}", Method.Get);
 
-            var result = await RequestExecutor.ExecuteAsync<SshKey>(request);
+            request.AddUrlSegment("id", id);
 
-            return new RequestResult<SshKey>(result);
+            return await request.ExecuteAsync<SshKey>();
         }
 
         /// <summary> Gets all SSH keys for the current user or the specified user. </summary>
@@ -123,11 +145,12 @@ namespace GitLab.NET.Repositories
         /// </returns>
         public RequestResult<List<SshKey>> GetAll(uint? userId = null)
         {
-            var request = new GetUserKeysRequest();
+            var resource = userId != null ? "users/{userId}/keys" : "user/keys";
+            var request = RequestFactory.Create(resource, Method.Get);
 
-            var result = RequestExecutor.Execute<List<SshKey>>(request);
+            request.AddUrlSegmentIfNotNull("userId", userId);
 
-            return new RequestResult<List<SshKey>>(result);
+            return request.Execute<List<SshKey>>();
         }
 
         /// <summary> Gets all SSH keys for the current user or the specified user. </summary>
@@ -138,11 +161,12 @@ namespace GitLab.NET.Repositories
         /// </returns>
         public async Task<RequestResult<List<SshKey>>> GetAllAsync(uint? userId = null)
         {
-            var request = new GetUserKeysRequest();
+            var resource = userId != null ? "users/{userId}/keys" : "user/keys";
+            var request = RequestFactory.Create(resource, Method.Get);
 
-            var result = await RequestExecutor.ExecuteAsync<List<SshKey>>(request);
+            request.AddUrlSegmentIfNotNull("userId", userId);
 
-            return new RequestResult<List<SshKey>>(result);
+            return await request.ExecuteAsync<List<SshKey>>();
         }
     }
 }
