@@ -68,6 +68,7 @@
     <Compile Include="Repositories\DeployKeyRepositoryTests.cs" />
     <Compile Include="GitLabClientTests.cs" />
     <Compile Include="Repositories\EmailRepositoryTests.cs" />
+    <Compile Include="Repositories\FileRepositoryTests.cs" />
     <Compile Include="Repositories\RepositoryBaseTests.cs" />
     <Compile Include="RequestResultTests.cs" />
     <Compile Include="PaginatedResultTests.cs" />
