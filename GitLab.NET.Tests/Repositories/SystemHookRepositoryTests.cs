@@ -1,8 +1,8 @@
-﻿using NSubstitute;
-using System;
+﻿using System;
 using System.Threading.Tasks;
 using GitLab.NET.Abstractions;
 using GitLab.NET.Repositories;
+using NSubstitute;
 using Xunit;
 
 namespace GitLab.NET.Tests.Repositories

@@ -121,30 +121,22 @@ namespace GitLab.NET.Tests.Repositories
         }
 
         [Fact]
-        public async Task GetAll_ValidParameters_AddsProjectIdUrlSegment()
-        {
-            const uint expected = 0;
-            var sut = new BuildTriggerRepository(_requestFactory);
-
-            await sut.GetAll(expected);
-
-            _request.Received().AddUrlSegment("projectId", expected);
-        }
-
-        [Fact]
         public async Task GetAll_PageIsLessThanMinimum_ThrowsArgumentOutOfRangeException()
         {
             var sut = new BuildTriggerRepository(_requestFactory);
 
-            await Assert.ThrowsAsync<ArgumentOutOfRangeException>(() => sut.GetAll(0, page: uint.MinValue));
+            await Assert.ThrowsAsync<ArgumentOutOfRangeException>(() => sut.GetAll(0, uint.MinValue));
         }
 
         [Fact]
-        public async Task GetAll_ResultsPerPageIsLessThanMinimum_ThrowsArgumentOutOfRangeException()
+        public async Task GetAll_PageIsSet_AddsPageParameter()
         {
+            const uint expected = 5;
             var sut = new BuildTriggerRepository(_requestFactory);
 
-            await Assert.ThrowsAsync<ArgumentOutOfRangeException>(() => sut.GetAll(0, resultsPerPage: uint.MinValue));
+            await sut.GetAll(0, expected);
+
+            _request.Received().AddParameter("page", expected);
         }
 
         [Fact]
@@ -156,14 +148,11 @@ namespace GitLab.NET.Tests.Repositories
         }
 
         [Fact]
-        public async Task GetAll_PageIsSet_AddsPageParameter()
+        public async Task GetAll_ResultsPerPageIsLessThanMinimum_ThrowsArgumentOutOfRangeException()
         {
-            const uint expected = 5;
             var sut = new BuildTriggerRepository(_requestFactory);
 
-            await sut.GetAll(0, page: expected);
-
-            _request.Received().AddParameter("page", expected);
+            await Assert.ThrowsAsync<ArgumentOutOfRangeException>(() => sut.GetAll(0, resultsPerPage: uint.MinValue));
         }
 
         [Fact]
@@ -175,6 +164,17 @@ namespace GitLab.NET.Tests.Repositories
             await sut.GetAll(0, resultsPerPage: expected);
 
             _request.Received().AddParameter("per_page", expected);
+        }
+
+        [Fact]
+        public async Task GetAll_ValidParameters_AddsProjectIdUrlSegment()
+        {
+            const uint expected = 0;
+            var sut = new BuildTriggerRepository(_requestFactory);
+
+            await sut.GetAll(expected);
+
+            _request.Received().AddUrlSegment("projectId", expected);
         }
 
         [Fact]

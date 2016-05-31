@@ -1,8 +1,8 @@
-﻿using NSubstitute;
-using System;
+﻿using System;
 using System.Threading.Tasks;
 using GitLab.NET.Abstractions;
 using GitLab.NET.Repositories;
+using NSubstitute;
 using Xunit;
 
 namespace GitLab.NET.Tests.Repositories
@@ -20,11 +20,33 @@ namespace GitLab.NET.Tests.Repositories
         private readonly IRequestFactory _requestFactory;
 
         [Fact]
+        public async Task Find_FullNameIsSet_AddsFullNameParameter()
+        {
+            const string expected = "fullName";
+            var sut = new LicenseRepository(_requestFactory);
+
+            await sut.Find("key", fullName: expected);
+
+            _request.Received().AddParameterIfNotNull("fullname", expected);
+        }
+
+        [Fact]
         public async Task Find_KeyIsNull_ThrowsArgumentNullException()
         {
             var sut = new LicenseRepository(_requestFactory);
 
             await Assert.ThrowsAsync<ArgumentNullException>(() => sut.Find(null));
+        }
+
+        [Fact]
+        public async Task Find_ProjectIsSet_AddsProjectParameter()
+        {
+            const string expected = "project";
+            var sut = new LicenseRepository(_requestFactory);
+
+            await sut.Find("key", expected);
+
+            _request.Received().AddParameterIfNotNull("project", expected);
         }
 
         [Fact]
@@ -36,28 +58,6 @@ namespace GitLab.NET.Tests.Repositories
             await sut.Find(expected);
 
             _request.Received().AddUrlSegment("key", expected);
-        }
-
-        [Fact]
-        public async Task Find_ProjectIsSet_AddsProjectParameter()
-        {
-            const string expected = "project";
-            var sut = new LicenseRepository(_requestFactory);
-
-            await sut.Find("key", project: expected);
-
-            _request.Received().AddParameterIfNotNull("project", expected);
-        }
-
-        [Fact]
-        public async Task Find_FullNameIsSet_AddsFullNameParameter()
-        {
-            const string expected = "fullName";
-            var sut = new LicenseRepository(_requestFactory);
-
-            await sut.Find("key", fullName: expected);
-
-            _request.Received().AddParameterIfNotNull("fullname", expected);
         }
 
         [Fact]

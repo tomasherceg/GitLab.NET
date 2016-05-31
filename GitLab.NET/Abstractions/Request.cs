@@ -6,8 +6,8 @@ namespace GitLab.NET.Abstractions
 {
     internal class Request : IRequest
     {
-        private readonly IRestRequest _request;
         private readonly IRestClient _client;
+        private readonly IRestRequest _request;
 
         public Request(string resource, Method method, IRestClient client)
         {

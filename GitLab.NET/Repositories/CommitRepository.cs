@@ -172,7 +172,14 @@ namespace GitLab.NET.Repositories
         /// <param name="page"> The page number for a paginated request. </param>
         /// <param name="resultsPerPage"> The number of results to return per request. </param>
         /// <returns> </returns>
-        public async Task<PaginatedResult<CommitStatus>> GetStatus(uint projectId, string commitSha, string refName = null, string stage = null, string name = null, bool? all = null, uint page = Config.DefaultPage, uint resultsPerPage = Config.DefaultResultsPerPage)
+        public async Task<PaginatedResult<CommitStatus>> GetStatus(uint projectId,
+                                                                   string commitSha,
+                                                                   string refName = null,
+                                                                   string stage = null,
+                                                                   string name = null,
+                                                                   bool? all = null,
+                                                                   uint page = Config.DefaultPage,
+                                                                   uint resultsPerPage = Config.DefaultResultsPerPage)
         {
             if (commitSha == null)
                 throw new ArgumentNullException(nameof(commitSha));

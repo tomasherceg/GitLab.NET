@@ -1,8 +1,8 @@
-﻿using NSubstitute;
-using System;
+﻿using System;
 using System.Threading.Tasks;
 using GitLab.NET.Abstractions;
 using GitLab.NET.Repositories;
+using NSubstitute;
 using Xunit;
 
 namespace GitLab.NET.Tests.Repositories
@@ -20,19 +20,19 @@ namespace GitLab.NET.Tests.Repositories
         private readonly IRequestFactory _requestFactory;
 
         [Fact]
-        public async Task RequestSession_UsernameIsNull_ThrowsArgumentNullException()
-        {
-            var sut = new SessionRepository(_requestFactory);
-
-            await Assert.ThrowsAsync<ArgumentNullException>(() => sut.RequestSession(null, "password"));
-        }
-
-        [Fact]
         public async Task RequestSession_PasswordIsNull_ThrowsArgumentNullException()
         {
             var sut = new SessionRepository(_requestFactory);
 
             await Assert.ThrowsAsync<ArgumentNullException>(() => sut.RequestSession("username", null));
+        }
+
+        [Fact]
+        public async Task RequestSession_UsernameIsNull_ThrowsArgumentNullException()
+        {
+            var sut = new SessionRepository(_requestFactory);
+
+            await Assert.ThrowsAsync<ArgumentNullException>(() => sut.RequestSession(null, "password"));
         }
 
         [Fact]

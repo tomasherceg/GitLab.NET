@@ -321,7 +321,26 @@ namespace GitLab.NET.Tests.Repositories
         {
             var sut = new CommitRepository(_requestFactory);
 
-            await Assert.ThrowsAsync<ArgumentOutOfRangeException>(() => sut.GetComments(0, "commitSha", page: uint.MinValue));
+            await Assert.ThrowsAsync<ArgumentOutOfRangeException>(() => sut.GetComments(0, "commitSha", uint.MinValue));
+        }
+
+        [Fact]
+        public async Task GetComments_PageIsSet_AddsPageParameter()
+        {
+            const uint expected = 5;
+            var sut = new CommitRepository(_requestFactory);
+
+            await sut.GetComments(0, "commitSha", expected);
+
+            _request.Received().AddParameter("page", expected);
+        }
+
+        [Fact]
+        public async Task GetComments_ResultsPerPageIsGreaterThanMaximum_ThrowsArgumentOutOfRangeException()
+        {
+            var sut = new CommitRepository(_requestFactory);
+
+            await Assert.ThrowsAsync<ArgumentOutOfRangeException>(() => sut.GetComments(0, "commitSha", resultsPerPage: uint.MaxValue));
         }
 
         [Fact]
@@ -333,11 +352,14 @@ namespace GitLab.NET.Tests.Repositories
         }
 
         [Fact]
-        public async Task GetComments_ResultsPerPageIsGreaterThanMaximum_ThrowsArgumentOutOfRangeException()
+        public async Task GetComments_ResultsPerPageIsSet_AddsPerPageParameter()
         {
+            const uint expected = 5;
             var sut = new CommitRepository(_requestFactory);
 
-            await Assert.ThrowsAsync<ArgumentOutOfRangeException>(() => sut.GetComments(0, "commitSha", resultsPerPage: uint.MaxValue));
+            await sut.GetComments(0, "commitSha", resultsPerPage: expected);
+
+            _request.Received().AddParameter("per_page", expected);
         }
 
         [Fact]
@@ -360,28 +382,6 @@ namespace GitLab.NET.Tests.Repositories
             await sut.GetComments(expected, "commitSha");
 
             _request.Received().AddUrlSegment("projectId", expected);
-        }
-
-        [Fact]
-        public async Task GetComments_PageIsSet_AddsPageParameter()
-        {
-            const uint expected = 5;
-            var sut = new CommitRepository(_requestFactory);
-
-            await sut.GetComments(0, "commitSha", page: expected);
-
-            _request.Received().AddParameter("page", expected);
-        }
-
-        [Fact]
-        public async Task GetComments_ResultsPerPageIsSet_AddsPerPageParameter()
-        {
-            const uint expected = 5;
-            var sut = new CommitRepository(_requestFactory);
-
-            await sut.GetComments(0, "commitSha", resultsPerPage: expected);
-
-            _request.Received().AddParameter("per_page", expected);
         }
 
         [Fact]
@@ -446,52 +446,6 @@ namespace GitLab.NET.Tests.Repositories
         }
 
         [Fact]
-        public async Task GetStatus_PageIsSet_AddsPageParameter()
-        {
-            const uint expected = 5;
-            var sut = new CommitRepository(_requestFactory);
-
-            await sut.GetStatus(0, "commitSha", page: expected);
-
-            _request.Received().AddParameter("page", expected);
-        }
-
-        [Fact]
-        public async Task GetStatus_ResultsPerPageIsSet_AddsPerPageParameter()
-        {
-            const uint expected = 5;
-            var sut = new CommitRepository(_requestFactory);
-
-            await sut.GetStatus(0, "commitSha", resultsPerPage: expected);
-
-            _request.Received().AddParameter("per_page", expected);
-        }
-
-        [Fact]
-        public async Task GetStatus_PageIsLessThanMinimum_ThrowsArgumentOutOfRangeException()
-        {
-            var sut = new CommitRepository(_requestFactory);
-
-            await Assert.ThrowsAsync<ArgumentOutOfRangeException>(() => sut.GetStatus(0, "commitSha", page: uint.MinValue));
-        }
-
-        [Fact]
-        public async Task GetStatus_ResultsPerPageIsLessThanMinimum_ThrowsArgumentOutOfRangeException()
-        {
-            var sut = new CommitRepository(_requestFactory);
-
-            await Assert.ThrowsAsync<ArgumentOutOfRangeException>(() => sut.GetStatus(0, "commitSha", resultsPerPage: uint.MinValue));
-        }
-
-        [Fact]
-        public async Task GetStatus_ResultsPerPageIsGreaterThanMaximum_ThrowsArgumentOutOfRangeException()
-        {
-            var sut = new CommitRepository(_requestFactory);
-
-            await Assert.ThrowsAsync<ArgumentOutOfRangeException>(() => sut.GetStatus(0, "commitSha", resultsPerPage: uint.MaxValue));
-        }
-
-        [Fact]
         public async Task GetStatus_CommitShaIsNull_ThrowsArgumentNullException()
         {
             var sut = new CommitRepository(_requestFactory);
@@ -511,6 +465,25 @@ namespace GitLab.NET.Tests.Repositories
         }
 
         [Fact]
+        public async Task GetStatus_PageIsLessThanMinimum_ThrowsArgumentOutOfRangeException()
+        {
+            var sut = new CommitRepository(_requestFactory);
+
+            await Assert.ThrowsAsync<ArgumentOutOfRangeException>(() => sut.GetStatus(0, "commitSha", page: uint.MinValue));
+        }
+
+        [Fact]
+        public async Task GetStatus_PageIsSet_AddsPageParameter()
+        {
+            const uint expected = 5;
+            var sut = new CommitRepository(_requestFactory);
+
+            await sut.GetStatus(0, "commitSha", page: expected);
+
+            _request.Received().AddParameter("page", expected);
+        }
+
+        [Fact]
         public async Task GetStatus_RefNameIsSet_AddsRefNameParameter()
         {
             const string expected = "refName";
@@ -519,6 +492,33 @@ namespace GitLab.NET.Tests.Repositories
             await sut.GetStatus(0, "commitSha", expected);
 
             _request.Received().AddParameterIfNotNull("ref_name", expected);
+        }
+
+        [Fact]
+        public async Task GetStatus_ResultsPerPageIsGreaterThanMaximum_ThrowsArgumentOutOfRangeException()
+        {
+            var sut = new CommitRepository(_requestFactory);
+
+            await Assert.ThrowsAsync<ArgumentOutOfRangeException>(() => sut.GetStatus(0, "commitSha", resultsPerPage: uint.MaxValue));
+        }
+
+        [Fact]
+        public async Task GetStatus_ResultsPerPageIsLessThanMinimum_ThrowsArgumentOutOfRangeException()
+        {
+            var sut = new CommitRepository(_requestFactory);
+
+            await Assert.ThrowsAsync<ArgumentOutOfRangeException>(() => sut.GetStatus(0, "commitSha", resultsPerPage: uint.MinValue));
+        }
+
+        [Fact]
+        public async Task GetStatus_ResultsPerPageIsSet_AddsPerPageParameter()
+        {
+            const uint expected = 5;
+            var sut = new CommitRepository(_requestFactory);
+
+            await sut.GetStatus(0, "commitSha", resultsPerPage: expected);
+
+            _request.Received().AddParameter("per_page", expected);
         }
 
         [Fact]

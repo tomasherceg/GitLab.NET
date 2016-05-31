@@ -58,7 +58,10 @@ namespace GitLab.NET.Repositories
             return await request.ExecuteAsync<EmailAddress>();
         }
 
-        /// <summary> Gets the email addresses attached to the currently authenticated user's account or the specified user's account. </summary>
+        /// <summary>
+        ///     Gets the email addresses attached to the currently authenticated user's account or the specified user's
+        ///     account.
+        /// </summary>
         /// <param name="userId"> The user's ID. </param>
         /// <returns>
         ///     A <see cref="RequestResult{T}" /> containing a <see cref="List{EmailAddress}" /> representing the results of

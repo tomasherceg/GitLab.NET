@@ -10,7 +10,7 @@ namespace GitLab.NET.Repositories
         protected readonly IRequestFactory RequestFactory;
 
         /// <summary> Base constructor for a <see cref="RepositoryBase" /> class. </summary>
-        /// <param name="requestFactory">An instance of <see cref="IRequestFactory" /> to use for this repository.</param>
+        /// <param name="requestFactory"> An instance of <see cref="IRequestFactory" /> to use for this repository. </param>
         protected RepositoryBase(IRequestFactory requestFactory)
         {
             if (requestFactory == null)

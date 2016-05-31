@@ -1,9 +1,9 @@
-﻿using NSubstitute;
-using System;
+﻿using System;
 using System.Threading.Tasks;
 using GitLab.NET.Abstractions;
 using GitLab.NET.Repositories;
 using GitLab.NET.ResponseModels;
+using NSubstitute;
 using Xunit;
 
 namespace GitLab.NET.Tests.Repositories
@@ -21,11 +21,11 @@ namespace GitLab.NET.Tests.Repositories
         private readonly IRequestFactory _requestFactory;
 
         [Fact]
-        public async Task Create_TitleIsNull_ThrowArgumentNullException()
+        public async Task Create_CodeIsNull_ThrowsArgumentNullException()
         {
             var sut = new ProjectSnippetRepository(_requestFactory);
 
-            await Assert.ThrowsAsync<ArgumentNullException>(() => sut.Create(0, null, "fileName", "code", VisibilityLevel.Public));
+            await Assert.ThrowsAsync<ArgumentNullException>(() => sut.Create(0, "title", "fileName", null, VisibilityLevel.Public));
         }
 
         [Fact]
@@ -37,11 +37,33 @@ namespace GitLab.NET.Tests.Repositories
         }
 
         [Fact]
-        public async Task Create_CodeIsNull_ThrowsArgumentNullException()
+        public async Task Create_TitleIsNull_ThrowArgumentNullException()
         {
             var sut = new ProjectSnippetRepository(_requestFactory);
 
-            await Assert.ThrowsAsync<ArgumentNullException>(() => sut.Create(0, "title", "fileName", null, VisibilityLevel.Public));
+            await Assert.ThrowsAsync<ArgumentNullException>(() => sut.Create(0, null, "fileName", "code", VisibilityLevel.Public));
+        }
+
+        [Fact]
+        public async Task Create_ValidParameters_AddsCodeParameter()
+        {
+            const string expected = "code";
+            var sut = new ProjectSnippetRepository(_requestFactory);
+
+            await sut.Create(0, "title", "fileName", expected, VisibilityLevel.Public);
+
+            _request.Received().AddParameter("code", expected);
+        }
+
+        [Fact]
+        public async Task Create_ValidParameters_AddsFileNameParameter()
+        {
+            const string expected = "fileName";
+            var sut = new ProjectSnippetRepository(_requestFactory);
+
+            await sut.Create(0, "title", expected, "code", VisibilityLevel.Public);
+
+            _request.Received().AddParameter("file_name", expected);
         }
 
         [Fact]
@@ -64,28 +86,6 @@ namespace GitLab.NET.Tests.Repositories
             await sut.Create(0, expected, "fileName", "code", VisibilityLevel.Public);
 
             _request.Received().AddParameter("title", expected);
-        }
-
-        [Fact]
-        public async Task Create_ValidParameters_AddsFileNameParameter()
-        {
-            const string expected = "fileName";
-            var sut = new ProjectSnippetRepository(_requestFactory);
-
-            await sut.Create(0, "title", expected, "code", VisibilityLevel.Public);
-
-            _request.Received().AddParameter("file_name", expected);
-        }
-
-        [Fact]
-        public async Task Create_ValidParameters_AddsCodeParameter()
-        {
-            const string expected = "code";
-            var sut = new ProjectSnippetRepository(_requestFactory);
-
-            await sut.Create(0, "title", "fileName", expected, VisibilityLevel.Public);
-
-            _request.Received().AddParameter("code", expected);
         }
 
         [Fact]
@@ -178,15 +178,18 @@ namespace GitLab.NET.Tests.Repositories
         {
             var sut = new ProjectSnippetRepository(_requestFactory);
 
-            await Assert.ThrowsAsync<ArgumentOutOfRangeException>(() => sut.GetAll(0, page: uint.MinValue));
+            await Assert.ThrowsAsync<ArgumentOutOfRangeException>(() => sut.GetAll(0, uint.MinValue));
         }
 
         [Fact]
-        public async Task GetAll_ResultsPerPageIsLessThanMinimum_ThrowsArgumentOutOfRangeException()
+        public async Task GetAll_PageIsSet_AddsPageParameter()
         {
+            const uint expected = 5;
             var sut = new ProjectSnippetRepository(_requestFactory);
 
-            await Assert.ThrowsAsync<ArgumentOutOfRangeException>(() => sut.GetAll(0, resultsPerPage: uint.MinValue));
+            await sut.GetAll(0, expected);
+
+            _request.Received().AddParameter("page", expected);
         }
 
         [Fact]
@@ -198,25 +201,11 @@ namespace GitLab.NET.Tests.Repositories
         }
 
         [Fact]
-        public async Task GetAll_ValidParameters_AddsProjectIdUrlSegment()
+        public async Task GetAll_ResultsPerPageIsLessThanMinimum_ThrowsArgumentOutOfRangeException()
         {
-            const uint expected = 0;
             var sut = new ProjectSnippetRepository(_requestFactory);
 
-            await sut.GetAll(expected);
-
-            _request.Received().AddUrlSegment("projectId", expected);
-        }
-
-        [Fact]
-        public async Task GetAll_PageIsSet_AddsPageParameter()
-        {
-            const uint expected = 5;
-            var sut = new ProjectSnippetRepository(_requestFactory);
-
-            await sut.GetAll(0, page: expected);
-
-            _request.Received().AddParameter("page", expected);
+            await Assert.ThrowsAsync<ArgumentOutOfRangeException>(() => sut.GetAll(0, resultsPerPage: uint.MinValue));
         }
 
         [Fact]
@@ -228,6 +217,17 @@ namespace GitLab.NET.Tests.Repositories
             await sut.GetAll(0, resultsPerPage: expected);
 
             _request.Received().AddParameter("per_page", expected);
+        }
+
+        [Fact]
+        public async Task GetAll_ValidParameters_AddsProjectIdUrlSegment()
+        {
+            const uint expected = 0;
+            var sut = new ProjectSnippetRepository(_requestFactory);
+
+            await sut.GetAll(expected);
+
+            _request.Received().AddUrlSegment("projectId", expected);
         }
 
         [Fact]
@@ -273,6 +273,39 @@ namespace GitLab.NET.Tests.Repositories
         }
 
         [Fact]
+        public async Task Update_CodeIsSet_AddsCodeParameter()
+        {
+            const string expected = "code";
+            var sut = new ProjectSnippetRepository(_requestFactory);
+
+            await sut.Update(0, 0, code: expected);
+
+            _request.Received().AddParameterIfNotNull("code", expected);
+        }
+
+        [Fact]
+        public async Task Update_FileNameIsSet_AddsFileNameParameter()
+        {
+            const string expected = "fileName";
+            var sut = new ProjectSnippetRepository(_requestFactory);
+
+            await sut.Update(0, 0, fileName: expected);
+
+            _request.Received().AddParameterIfNotNull("file_name", expected);
+        }
+
+        [Fact]
+        public async Task Update_TitleIsSet_AddsTitleParameter()
+        {
+            const string expected = "title";
+            var sut = new ProjectSnippetRepository(_requestFactory);
+
+            await sut.Update(0, 0, expected);
+
+            _request.Received().AddParameterIfNotNull("title", expected);
+        }
+
+        [Fact]
         public async Task Update_ValidParameters_AddsIdUrlSegment()
         {
             const uint expected = 0;
@@ -295,36 +328,13 @@ namespace GitLab.NET.Tests.Repositories
         }
 
         [Fact]
-        public async Task Update_TitleIsSet_AddsTitleParameter()
+        public async Task Update_ValidParameters_SetsCorrectResourceAndMethod()
         {
-            const string expected = "title";
             var sut = new ProjectSnippetRepository(_requestFactory);
 
-            await sut.Update(0, 0, title: expected);
+            await sut.Update(0, 0);
 
-            _request.Received().AddParameterIfNotNull("title", expected);
-        }
-
-        [Fact]
-        public async Task Update_FileNameIsSet_AddsFileNameParameter()
-        {
-            const string expected = "fileName";
-            var sut = new ProjectSnippetRepository(_requestFactory);
-
-            await sut.Update(0, 0, fileName: expected);
-
-            _request.Received().AddParameterIfNotNull("file_name", expected);
-        }
-
-        [Fact]
-        public async Task Update_CodeIsSet_AddsCodeParameter()
-        {
-            const string expected = "code";
-            var sut = new ProjectSnippetRepository(_requestFactory);
-
-            await sut.Update(0, 0, code: expected);
-
-            _request.Received().AddParameterIfNotNull("code", expected);
+            _requestFactory.Received().Create("projects/{projectId}/snippets/{id}", Method.Put);
         }
 
         [Fact]
@@ -336,16 +346,6 @@ namespace GitLab.NET.Tests.Repositories
             await sut.Update(0, 0, visibilityLevel: expected);
 
             _request.Received().AddParameterIfNotNull("visibility_level", expected);
-        }
-
-        [Fact]
-        public async Task Update_ValidParameters_SetsCorrectResourceAndMethod()
-        {
-            var sut = new ProjectSnippetRepository(_requestFactory);
-
-            await sut.Update(0, 0);
-
-            _requestFactory.Received().Create("projects/{projectId}/snippets/{id}", Method.Put);
         }
     }
 }

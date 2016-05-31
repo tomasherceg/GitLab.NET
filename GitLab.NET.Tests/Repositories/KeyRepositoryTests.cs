@@ -1,8 +1,8 @@
-﻿using NSubstitute;
-using System;
+﻿using System;
 using System.Threading.Tasks;
 using GitLab.NET.Abstractions;
 using GitLab.NET.Repositories;
+using NSubstitute;
 using Xunit;
 
 namespace GitLab.NET.Tests.Repositories
@@ -20,14 +20,6 @@ namespace GitLab.NET.Tests.Repositories
         private readonly IRequestFactory _requestFactory;
 
         [Fact]
-        public async Task Create_TitleIsNull_ThrowsArgumentNullException()
-        {
-            var sut = new KeyRepository(_requestFactory);
-
-            await Assert.ThrowsAsync<ArgumentNullException>(() => sut.Create(null, "key"));
-        }
-
-        [Fact]
         public async Task Create_KeyIsNull_ThrowsArgumentNullException()
         {
             var sut = new KeyRepository(_requestFactory);
@@ -36,25 +28,21 @@ namespace GitLab.NET.Tests.Repositories
         }
 
         [Fact]
-        public async Task Create_ValidParameters_AddsTitleParameter()
+        public async Task Create_TitleIsNull_ThrowsArgumentNullException()
         {
-            const string expected = "title";
             var sut = new KeyRepository(_requestFactory);
 
-            await sut.Create(expected, "key");
-
-            _request.Received().AddParameter("title", expected);
+            await Assert.ThrowsAsync<ArgumentNullException>(() => sut.Create(null, "key"));
         }
 
         [Fact]
-        public async Task Create_ValidParameters_AddsKeyParameter()
+        public async Task Create_UserIdIsNotSet_SetsCorrectResourceAndMethod()
         {
-            const string expected = "key";
             var sut = new KeyRepository(_requestFactory);
 
-            await sut.Create("title", expected);
+            await sut.Create("title", "key");
 
-            _request.Received().AddParameter("key", expected);
+            _requestFactory.Received().Create("user/keys", Method.Post);
         }
 
         [Fact]
@@ -79,24 +67,35 @@ namespace GitLab.NET.Tests.Repositories
         }
 
         [Fact]
-        public async Task Create_UserIdIsNotSet_SetsCorrectResourceAndMethod()
+        public async Task Create_ValidParameters_AddsKeyParameter()
         {
+            const string expected = "key";
             var sut = new KeyRepository(_requestFactory);
 
-            await sut.Create("title", "key");
+            await sut.Create("title", expected);
 
-            _requestFactory.Received().Create("user/keys", Method.Post);
+            _request.Received().AddParameter("key", expected);
         }
 
         [Fact]
-        public async Task Delete_ValidParameters_AddsIdUrlSegment()
+        public async Task Create_ValidParameters_AddsTitleParameter()
         {
-            const uint expected = 0;
+            const string expected = "title";
             var sut = new KeyRepository(_requestFactory);
 
-            await sut.Delete(expected);
+            await sut.Create(expected, "key");
 
-            _request.Received().AddUrlSegment("id", expected);
+            _request.Received().AddParameter("title", expected);
+        }
+
+        [Fact]
+        public async Task Delete_UserIdIsNotSet_SetsCorrectResourceAndMethod()
+        {
+            var sut = new KeyRepository(_requestFactory);
+
+            await sut.Delete(0);
+
+            _requestFactory.Received().Create("user/keys/{id}", Method.Delete);
         }
 
         [Fact]
@@ -121,13 +120,14 @@ namespace GitLab.NET.Tests.Repositories
         }
 
         [Fact]
-        public async Task Delete_UserIdIsNotSet_SetsCorrectResourceAndMethod()
+        public async Task Delete_ValidParameters_AddsIdUrlSegment()
         {
+            const uint expected = 0;
             var sut = new KeyRepository(_requestFactory);
 
-            await sut.Delete(0);
+            await sut.Delete(expected);
 
-            _requestFactory.Received().Create("user/keys/{id}", Method.Delete);
+            _request.Received().AddUrlSegment("id", expected);
         }
 
         [Fact]
@@ -173,6 +173,16 @@ namespace GitLab.NET.Tests.Repositories
         }
 
         [Fact]
+        public async Task GetAll_UserIdIsNotSet_SetsCorrectResourceAndMethod()
+        {
+            var sut = new KeyRepository(_requestFactory);
+
+            await sut.GetAll();
+
+            _requestFactory.Received().Create("user/keys", Method.Get);
+        }
+
+        [Fact]
         public async Task GetAll_UserIdIsSet_AddsUserIdUrlSegment()
         {
             const uint expected = 0;
@@ -191,16 +201,6 @@ namespace GitLab.NET.Tests.Repositories
             await sut.GetAll(0);
 
             _requestFactory.Received().Create("users/{userId}/keys", Method.Get);
-        }
-
-        [Fact]
-        public async Task GetAll_UserIdIsNotSet_SetsCorrectResourceAndMethod()
-        {
-            var sut = new KeyRepository(_requestFactory);
-
-            await sut.GetAll();
-
-            _requestFactory.Received().Create("user/keys", Method.Get);
         }
     }
 }

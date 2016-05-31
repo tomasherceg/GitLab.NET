@@ -1,8 +1,8 @@
-﻿using NSubstitute;
-using System;
+﻿using System;
 using System.Threading.Tasks;
 using GitLab.NET.Abstractions;
 using GitLab.NET.Repositories;
+using NSubstitute;
 using Xunit;
 
 namespace GitLab.NET.Tests.Repositories
@@ -20,11 +20,14 @@ namespace GitLab.NET.Tests.Repositories
         private readonly IRequestFactory _requestFactory;
 
         [Fact]
-        public async Task Create_TagNameIsNull_ThrowsArgumentNullException()
+        public async Task Create_MessageIsSet_AddsMessageParameter()
         {
+            const string expected = "message";
             var sut = new TagRepository(_requestFactory);
 
-            await Assert.ThrowsAsync<ArgumentNullException>(() => sut.Create(0, null, "refName"));
+            await sut.Create(0, "tagName", "refName", expected);
+
+            _request.Received().AddParameterIfNotNull("message", expected);
         }
 
         [Fact]
@@ -33,50 +36,6 @@ namespace GitLab.NET.Tests.Repositories
             var sut = new TagRepository(_requestFactory);
 
             await Assert.ThrowsAsync<ArgumentNullException>(() => sut.Create(0, "tagName", null));
-        }
-
-        [Fact]
-        public async Task Create_ValidParameters_AddsProjectIdUrlSegment()
-        {
-            const uint expected = 0;
-            var sut = new TagRepository(_requestFactory);
-
-            await sut.Create(expected, "tagName", "refName");
-
-            _request.Received().AddUrlSegment("projectId", expected);
-        }
-
-        [Fact]
-        public async Task Create_ValidParameters_AddsTagNameParameter()
-        {
-            const string expected = "tagName";
-            var sut = new TagRepository(_requestFactory);
-
-            await sut.Create(0, expected, "refName");
-
-            _request.Received().AddParameter("tag_name", expected);
-        }
-
-        [Fact]
-        public async Task Create_ValidParameters_AddsRefParameter()
-        {
-            const string expected = "refName";
-            var sut = new TagRepository(_requestFactory);
-
-            await sut.Create(0, "tagName", expected);
-
-            _request.Received().AddParameter("ref", expected);
-        }
-
-        [Fact]
-        public async Task Create_MessageIsSet_AddsMessageParameter()
-        {
-            const string expected = "message";
-            var sut = new TagRepository(_requestFactory);
-
-            await sut.Create(0, "tagName", "refName", message: expected);
-
-            _request.Received().AddParameterIfNotNull("message", expected);
         }
 
         [Fact]
@@ -91,6 +50,47 @@ namespace GitLab.NET.Tests.Repositories
         }
 
         [Fact]
+        public async Task Create_TagNameIsNull_ThrowsArgumentNullException()
+        {
+            var sut = new TagRepository(_requestFactory);
+
+            await Assert.ThrowsAsync<ArgumentNullException>(() => sut.Create(0, null, "refName"));
+        }
+
+        [Fact]
+        public async Task Create_ValidParameters_AddsProjectIdUrlSegment()
+        {
+            const uint expected = 0;
+            var sut = new TagRepository(_requestFactory);
+
+            await sut.Create(expected, "tagName", "refName");
+
+            _request.Received().AddUrlSegment("projectId", expected);
+        }
+
+        [Fact]
+        public async Task Create_ValidParameters_AddsRefParameter()
+        {
+            const string expected = "refName";
+            var sut = new TagRepository(_requestFactory);
+
+            await sut.Create(0, "tagName", expected);
+
+            _request.Received().AddParameter("ref", expected);
+        }
+
+        [Fact]
+        public async Task Create_ValidParameters_AddsTagNameParameter()
+        {
+            const string expected = "tagName";
+            var sut = new TagRepository(_requestFactory);
+
+            await sut.Create(0, expected, "refName");
+
+            _request.Received().AddParameter("tag_name", expected);
+        }
+
+        [Fact]
         public async Task Create_ValidParameters_SetsCorrectResourceAndMethod()
         {
             var sut = new TagRepository(_requestFactory);
@@ -98,6 +98,14 @@ namespace GitLab.NET.Tests.Repositories
             await sut.Create(0, "tagName", "refName");
 
             _requestFactory.Received().Create("projects/{projectId}/repository/tags", Method.Post);
+        }
+
+        [Fact]
+        public async Task CreateRelease_DescriptionIsNull_ThrowsArgumentNullException()
+        {
+            var sut = new TagRepository(_requestFactory);
+
+            await Assert.ThrowsAsync<ArgumentNullException>(() => sut.CreateRelease(0, "tagName", null));
         }
 
         [Fact]
@@ -109,11 +117,14 @@ namespace GitLab.NET.Tests.Repositories
         }
 
         [Fact]
-        public async Task CreateRelease_DescriptionIsNull_ThrowsArgumentNullException()
+        public async Task CreateRelease_ValidParameters_AddsDescriptionParameter()
         {
+            const string expected = "description";
             var sut = new TagRepository(_requestFactory);
 
-            await Assert.ThrowsAsync<ArgumentNullException>(() => sut.CreateRelease(0, "tagName", null));
+            await sut.CreateRelease(0, "tagName", expected);
+
+            _request.Received().AddParameter("description", expected);
         }
 
         [Fact]
@@ -136,17 +147,6 @@ namespace GitLab.NET.Tests.Repositories
             await sut.CreateRelease(0, expected, "description");
 
             _request.Received().AddUrlSegment("tagName", expected);
-        }
-
-        [Fact]
-        public async Task CreateRelease_ValidParameters_AddsDescriptionParameter()
-        {
-            const string expected = "description";
-            var sut = new TagRepository(_requestFactory);
-
-            await sut.CreateRelease(0, "tagName", expected);
-
-            _request.Received().AddParameter("description", expected);
         }
 
         [Fact]
@@ -261,6 +261,14 @@ namespace GitLab.NET.Tests.Repositories
         }
 
         [Fact]
+        public async Task UpdateRelease_DescriptionIsNull_ThrowsArgumentNullException()
+        {
+            var sut = new TagRepository(_requestFactory);
+
+            await Assert.ThrowsAsync<ArgumentNullException>(() => sut.UpdateRelease(0, "tagName", null));
+        }
+
+        [Fact]
         public async Task UpdateRelease_TagNameIsNull_ThrowsArgumentNullException()
         {
             var sut = new TagRepository(_requestFactory);
@@ -269,11 +277,14 @@ namespace GitLab.NET.Tests.Repositories
         }
 
         [Fact]
-        public async Task UpdateRelease_DescriptionIsNull_ThrowsArgumentNullException()
+        public async Task UpdateRelease_ValidParameters_AddsDescriptionParameter()
         {
+            const string expected = "description";
             var sut = new TagRepository(_requestFactory);
 
-            await Assert.ThrowsAsync<ArgumentNullException>(() => sut.UpdateRelease(0, "tagName", null));
+            await sut.UpdateRelease(0, "tagName", expected);
+
+            _request.Received().AddParameter("description", expected);
         }
 
         [Fact]
@@ -296,17 +307,6 @@ namespace GitLab.NET.Tests.Repositories
             await sut.UpdateRelease(0, expected, "description");
 
             _request.Received().AddUrlSegment("tagName", expected);
-        }
-
-        [Fact]
-        public async Task UpdateRelease_ValidParameters_AddsDescriptionParameter()
-        {
-            const string expected = "description";
-            var sut = new TagRepository(_requestFactory);
-
-            await sut.UpdateRelease(0, "tagName", expected);
-
-            _request.Received().AddParameter("description", expected);
         }
 
         [Fact]
