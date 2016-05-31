@@ -13,16 +13,7 @@ namespace GitLab.NET.Repositories
 
         /// <summary> Gets information about the license for the server's GitLab installation. </summary>
         /// <returns> A <see cref="RequestResult{GitLabLicense}" /> representing the results of the request. </returns>
-        public RequestResult<GitLabLicense> Get()
-        {
-            var request = RequestFactory.Create("license", Method.Get);
-
-            return request.Execute<GitLabLicense>();
-        }
-
-        /// <summary> Gets information about the license for the server's GitLab installation. </summary>
-        /// <returns> A <see cref="RequestResult{GitLabLicense}" /> representing the results of the request. </returns>
-        public async Task<RequestResult<GitLabLicense>> GetAsync()
+        public async Task<RequestResult<GitLabLicense>> Get()
         {
             var request = RequestFactory.Create("license", Method.Get);
 

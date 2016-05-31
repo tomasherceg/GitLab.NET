@@ -1,6 +1,7 @@
 ﻿// ReSharper disable MemberCanBePrivate.Global
 // ReSharper disable UnusedAutoPropertyAccessor.Global
 
+using System;
 using System.Net;
 using RestSharp;
 
@@ -14,14 +15,17 @@ namespace GitLab.NET
         public HttpStatusCode StatusCode { get; }
 
         /// <summary> The results from the query. </summary>
-        public T Results { get; }
+        public T Data { get; }
 
         /// <summary> Creates a new <see cref="RequestResult{T}" /> instance. </summary>
         /// <param name="response"> The response to populate this instance with. </param>
         public RequestResult(IRestResponse<T> response)
         {
+            if (response == null)
+                throw new ArgumentNullException(nameof(response));
+
             StatusCode = response.StatusCode;
-            Results = response.Data;
+            Data = response.Data;
         }
 
         /// <summary> Creates a new <see cref="RequestResult{T}" /> instance. </summary>
@@ -29,8 +33,11 @@ namespace GitLab.NET
         /// <param name="data"> The data for this instance. </param>
         public RequestResult(IRestResponse response, T data)
         {
+            if (response == null)
+                throw new ArgumentNullException(nameof(response));
+
             StatusCode = response.StatusCode;
-            Results = data;
+            Data = data;
         }
     }
 }

@@ -18,29 +18,7 @@ namespace GitLab.NET.Repositories
         /// <param name="title"> The title of the key. </param>
         /// <param name="key"> The key. </param>
         /// <returns> A <see cref="RequestResult{DeployKey}" /> containing the results of this request. </returns>
-        public RequestResult<DeployKey> Create(uint projectId, string title, string key)
-        {
-            if (title == null)
-                throw new ArgumentNullException(nameof(title));
-
-            if (key == null)
-                throw new ArgumentNullException(nameof(key));
-
-            var request = RequestFactory.Create("projects/{projectId}/keys", Method.Post);
-
-            request.AddUrlSegment("projectId", projectId);
-            request.AddParameter("title", title);
-            request.AddParameter("key", key);
-
-            return request.Execute<DeployKey>();
-        }
-
-        /// <summary> Creates a new deploy key. </summary>
-        /// <param name="projectId"> The ID of the project to associate this key with. </param>
-        /// <param name="title"> The title of the key. </param>
-        /// <param name="key"> The key. </param>
-        /// <returns> A <see cref="RequestResult{DeployKey}" /> containing the results of this request. </returns>
-        public async Task<RequestResult<DeployKey>> CreateAsync(uint projectId, string title, string key)
+        public async Task<RequestResult<DeployKey>> Create(uint projectId, string title, string key)
         {
             if (title == null)
                 throw new ArgumentNullException(nameof(title));
@@ -61,21 +39,7 @@ namespace GitLab.NET.Repositories
         /// <param name="projectId"> The ID of the project. </param>
         /// <param name="keyId"> The ID of the key to delete. </param>
         /// <returns> A <see cref="RequestResult{DeployKey}" /> containing the results of this request. </returns>
-        public RequestResult<DeployKey> Delete(uint projectId, uint keyId)
-        {
-            var request = RequestFactory.Create("projects/{projectId}/keys/{keyId}", Method.Delete);
-
-            request.AddUrlSegment("projectId", projectId);
-            request.AddUrlSegment("keyId", keyId);
-
-            return request.Execute<DeployKey>();
-        }
-
-        /// <summary> Deletes a deploy key. </summary>
-        /// <param name="projectId"> The ID of the project. </param>
-        /// <param name="keyId"> The ID of the key to delete. </param>
-        /// <returns> A <see cref="RequestResult{DeployKey}" /> containing the results of this request. </returns>
-        public async Task<RequestResult<DeployKey>> DeleteAsync(uint projectId, uint keyId)
+        public async Task<RequestResult<DeployKey>> Delete(uint projectId, uint keyId)
         {
             var request = RequestFactory.Create("projects/{projectId}/keys/{keyId}", Method.Delete);
 
@@ -89,21 +53,7 @@ namespace GitLab.NET.Repositories
         /// <param name="projectId"> The ID of the project. </param>
         /// <param name="keyId"> The ID of the desired key. </param>
         /// <returns> A <see cref="RequestResult{DeployKey}" /> containing the results of this request. </returns>
-        public RequestResult<DeployKey> Find(uint projectId, uint keyId)
-        {
-            var request = RequestFactory.Create("projects/{projectId}/keys/{keyId}", Method.Get);
-
-            request.AddUrlSegment("projectId", projectId);
-            request.AddUrlSegment("keyId", keyId);
-
-            return request.Execute<DeployKey>();
-        }
-
-        /// <summary> Gets a deploy key. </summary>
-        /// <param name="projectId"> The ID of the project. </param>
-        /// <param name="keyId"> The ID of the desired key. </param>
-        /// <returns> A <see cref="RequestResult{DeployKey}" /> containing the results of this request. </returns>
-        public async Task<RequestResult<DeployKey>> FindAsync(uint projectId, uint keyId)
+        public async Task<RequestResult<DeployKey>> Find(uint projectId, uint keyId)
         {
             var request = RequestFactory.Create("projects/{projectId}/keys/{keyId}", Method.Get);
 
@@ -119,22 +69,7 @@ namespace GitLab.NET.Repositories
         ///     A <see cref="RequestResult{T}" /> containing a <see cref="List{DeployKey}" /> representing the results of the
         ///     request.
         /// </returns>
-        public RequestResult<List<DeployKey>> GetAll(uint projectId)
-        {
-            var request = RequestFactory.Create("projects/{projectId}/keys", Method.Get);
-
-            request.AddUrlSegment("projectId", projectId);
-
-            return request.Execute<List<DeployKey>>();
-        }
-
-        /// <summary> Gets all deploy keys associated with the specified project. </summary>
-        /// <param name="projectId"> The ID of the project. </param>
-        /// <returns>
-        ///     A <see cref="RequestResult{T}" /> containing a <see cref="List{DeployKey}" /> representing the results of the
-        ///     request.
-        /// </returns>
-        public async Task<RequestResult<List<DeployKey>>> GetAllAsync(uint projectId)
+        public async Task<RequestResult<List<DeployKey>>> GetAll(uint projectId)
         {
             var request = RequestFactory.Create("projects/{projectId}/keys", Method.Get);
 

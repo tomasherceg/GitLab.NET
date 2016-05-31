@@ -13,49 +13,52 @@ namespace GitLab.NET.Repositories
         public NamespaceRepository(IRequestFactory requestFactory) : base(requestFactory) { }
 
         /// <summary> Gets all namespaces that the currently authenticated user is authorized to see. </summary>
+        /// <param name="page"> The page number for a paginated request. </param>
+        /// <param name="resultsPerPage"> The number of results to return per request. </param>
         /// <returns> A <see cref="PaginatedResult{Namespace}" /> representing the results of the request. </returns>
-        public PaginatedResult<Namespace> GetAll()
+        public async Task<PaginatedResult<Namespace>> GetAll(uint page = Config.DefaultPage, uint resultsPerPage = Config.DefaultResultsPerPage)
         {
+            if (page < Config.DefaultPage)
+                throw new ArgumentOutOfRangeException(nameof(page), page, "The parameter 'page' must be greater than " + Config.DefaultPage + ".");
+
+            if (resultsPerPage < Config.MinResultsPerPage)
+                throw new ArgumentOutOfRangeException(nameof(resultsPerPage), resultsPerPage, "The parameter 'resultsPerPage' must be greater than " + Config.MinResultsPerPage + ".");
+
+            if (resultsPerPage > Config.MaxResultsPerPage)
+                throw new ArgumentOutOfRangeException(nameof(resultsPerPage), resultsPerPage, "The parameter 'resultsPerPage' must be less than " + Config.MaxResultsPerPage + ".");
+
             var request = RequestFactory.Create("namespaces", Method.Get);
 
-            return request.ExecutePaginated<Namespace>();
-        }
-
-        /// <summary> Gets all namespaces that the currently authenticated user is authorized to see. </summary>
-        /// <returns> A <see cref="PaginatedResult{Namespace}" /> representing the results of the request. </returns>
-        public async Task<PaginatedResult<Namespace>> GetAllAsync()
-        {
-            var request = RequestFactory.Create("namespaces", Method.Get);
+            request.AddParameter("page", page);
+            request.AddParameter("per_page", resultsPerPage);
 
             return await request.ExecutePaginatedAsync<Namespace>();
         }
 
         /// <summary> Gets all namespaces matching the search query that the currently authenticated user is authorized to see. </summary>
         /// <param name="search"> The search term. </param>
+        /// <param name="page"> The page number for a paginated request. </param>
+        /// <param name="resultsPerPage"> The number of results to return per request. </param>
         /// <returns> A <see cref="PaginatedResult{Namespace}" /> representing the results of the request. </returns>
-        public PaginatedResult<Namespace> Search(string search)
+        public async Task<PaginatedResult<Namespace>> Search(string search, uint page = Config.DefaultPage, uint resultsPerPage = Config.DefaultResultsPerPage)
         {
             if (search == null)
                 throw new ArgumentNullException(nameof(search));
 
-            var request = RequestFactory.Create("namespaces", Method.Get);
+            if (page < Config.DefaultPage)
+                throw new ArgumentOutOfRangeException(nameof(page), page, "The parameter 'page' must be greater than " + Config.DefaultPage + ".");
 
-            request.AddParameter("search", search);
+            if (resultsPerPage < Config.MinResultsPerPage)
+                throw new ArgumentOutOfRangeException(nameof(resultsPerPage), resultsPerPage, "The parameter 'resultsPerPage' must be greater than " + Config.MinResultsPerPage + ".");
 
-            return request.ExecutePaginated<Namespace>();
-        }
-
-        /// <summary> Gets all namespaces matching the search query that the currently authenticated user is authorized to see. </summary>
-        /// <param name="search"> The search term. </param>
-        /// <returns> A <see cref="PaginatedResult{Namespace}" /> representing the results of the request. </returns>
-        public async Task<PaginatedResult<Namespace>> SearchAsync(string search)
-        {
-            if (search == null)
-                throw new ArgumentNullException(nameof(search));
+            if (resultsPerPage > Config.MaxResultsPerPage)
+                throw new ArgumentOutOfRangeException(nameof(resultsPerPage), resultsPerPage, "The parameter 'resultsPerPage' must be less than " + Config.MaxResultsPerPage + ".");
 
             var request = RequestFactory.Create("namespaces", Method.Get);
 
             request.AddParameter("search", search);
+            request.AddParameter("page", page);
+            request.AddParameter("per_page", resultsPerPage);
 
             return await request.ExecutePaginatedAsync<Namespace>();
         }

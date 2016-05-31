@@ -16,22 +16,7 @@ namespace GitLab.NET.Repositories
         /// <summary> Creates a new system hook. </summary>
         /// <param name="url"> The URL to use for the new system hook. </param>
         /// <returns> A <see cref="RequestResult{SystemHook}" /> representing the results of the request. </returns>
-        public RequestResult<SystemHook> Create(string url)
-        {
-            if (url == null)
-                throw new ArgumentNullException(nameof(url));
-
-            var request = RequestFactory.Create("hooks", Method.Post);
-
-            request.AddParameter("url", url);
-
-            return request.Execute<SystemHook>();
-        }
-
-        /// <summary> Creates a new system hook. </summary>
-        /// <param name="url"> The URL to use for the new system hook. </param>
-        /// <returns> A <see cref="RequestResult{SystemHook}" /> representing the results of the request. </returns>
-        public async Task<RequestResult<SystemHook>> CreateAsync(string url)
+        public async Task<RequestResult<SystemHook>> Create(string url)
         {
             if (url == null)
                 throw new ArgumentNullException(nameof(url));
@@ -46,19 +31,7 @@ namespace GitLab.NET.Repositories
         /// <summary> Deletes a system hook. </summary>
         /// <param name="hookId"> The ID of the system hook to delete. </param>
         /// <returns> A <see cref="RequestResult{SystemHook}" /> representing the results of the request. </returns>
-        public RequestResult<SystemHook> Delete(uint hookId)
-        {
-            var request = RequestFactory.Create("hooks/{hookId}", Method.Delete);
-
-            request.AddUrlSegment("hookId", hookId);
-
-            return request.Execute<SystemHook>();
-        }
-
-        /// <summary> Deletes a system hook. </summary>
-        /// <param name="hookId"> The ID of the system hook to delete. </param>
-        /// <returns> A <see cref="RequestResult{SystemHook}" /> representing the results of the request. </returns>
-        public async Task<RequestResult<SystemHook>> DeleteAsync(uint hookId)
+        public async Task<RequestResult<SystemHook>> Delete(uint hookId)
         {
             var request = RequestFactory.Create("hooks/{hookId}", Method.Delete);
 
@@ -72,19 +45,7 @@ namespace GitLab.NET.Repositories
         ///     A <see cref="RequestResult{T}" /> containing a <see cref="List{SystemHoook}" /> representing the results of
         ///     the request.
         /// </returns>
-        public RequestResult<List<SystemHook>> GetAll()
-        {
-            var request = RequestFactory.Create("hooks", Method.Get);
-
-            return request.Execute<List<SystemHook>>();
-        }
-
-        /// <summary> Gets all system hooks. </summary>
-        /// <returns>
-        ///     A <see cref="RequestResult{T}" /> containing a <see cref="List{SystemHoook}" /> representing the results of
-        ///     the request.
-        /// </returns>
-        public async Task<RequestResult<List<SystemHook>>> GetAllAsync()
+        public async Task<RequestResult<List<SystemHook>>> GetAll()
         {
             var request = RequestFactory.Create("hooks", Method.Get);
 
@@ -94,19 +55,7 @@ namespace GitLab.NET.Repositories
         /// <summary> Tests a system hook. </summary>
         /// <param name="hookId"> The ID of the system hook to test. </param>
         /// <returns> A <see cref="RequestResult{SystemHookEvent}" /> representing the results of the request. </returns>
-        public RequestResult<SystemHookEvent> Test(uint hookId)
-        {
-            var request = RequestFactory.Create("hooks/{hookId}", Method.Get);
-
-            request.AddUrlSegment("hookId", hookId);
-
-            return request.Execute<SystemHookEvent>();
-        }
-
-        /// <summary> Tests a system hook. </summary>
-        /// <param name="hookId"> The ID of the system hook to test. </param>
-        /// <returns> A <see cref="RequestResult{SystemHookEvent}" /> representing the results of the request. </returns>
-        public async Task<RequestResult<SystemHookEvent>> TestAsync(uint hookId)
+        public async Task<RequestResult<SystemHookEvent>> Test(uint hookId)
         {
             var request = RequestFactory.Create("hooks/{hookId}", Method.Get);
 
