@@ -174,6 +174,30 @@ namespace GitLab.NET.Tests.Repositories
         }
 
         [Fact]
+        public async Task GetAll_PageIsLessThanMinimum_ThrowsArgumentOutOfRangeException()
+        {
+            var sut = new ProjectSnippetRepository(_requestFactory);
+
+            await Assert.ThrowsAsync<ArgumentOutOfRangeException>(() => sut.GetAll(0, page: uint.MinValue));
+        }
+
+        [Fact]
+        public async Task GetAll_ResultsPerPageIsLessThanMinimum_ThrowsArgumentOutOfRangeException()
+        {
+            var sut = new ProjectSnippetRepository(_requestFactory);
+
+            await Assert.ThrowsAsync<ArgumentOutOfRangeException>(() => sut.GetAll(0, resultsPerPage: uint.MinValue));
+        }
+
+        [Fact]
+        public async Task GetAll_ResultsPerPageIsGreaterThanMaximum_ThrowsArgumentOutOfRangeException()
+        {
+            var sut = new ProjectSnippetRepository(_requestFactory);
+
+            await Assert.ThrowsAsync<ArgumentOutOfRangeException>(() => sut.GetAll(0, resultsPerPage: uint.MaxValue));
+        }
+
+        [Fact]
         public async Task GetAll_ValidParameters_AddsProjectIdUrlSegment()
         {
             const uint expected = 0;
@@ -182,6 +206,28 @@ namespace GitLab.NET.Tests.Repositories
             await sut.GetAll(expected);
 
             _request.Received().AddUrlSegment("projectId", expected);
+        }
+
+        [Fact]
+        public async Task GetAll_PageIsSet_AddsPageParameter()
+        {
+            const uint expected = 5;
+            var sut = new ProjectSnippetRepository(_requestFactory);
+
+            await sut.GetAll(0, page: expected);
+
+            _request.Received().AddParameter("page", expected);
+        }
+
+        [Fact]
+        public async Task GetAll_ResultsPerPageIsSet_AddsPerPageParameter()
+        {
+            const uint expected = 5;
+            var sut = new ProjectSnippetRepository(_requestFactory);
+
+            await sut.GetAll(0, resultsPerPage: expected);
+
+            _request.Received().AddParameter("per_page", expected);
         }
 
         [Fact]

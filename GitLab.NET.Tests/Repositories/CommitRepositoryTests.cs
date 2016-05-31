@@ -317,6 +317,30 @@ namespace GitLab.NET.Tests.Repositories
         }
 
         [Fact]
+        public async Task GetComments_PageIsLessThanMinimum_ThrowsArgumentOutOfRangeException()
+        {
+            var sut = new CommitRepository(_requestFactory);
+
+            await Assert.ThrowsAsync<ArgumentOutOfRangeException>(() => sut.GetComments(0, "commitSha", page: uint.MinValue));
+        }
+
+        [Fact]
+        public async Task GetComments_ResultsPerPageIsLessThanMinimum_ThrowsArgumentOutOfRangeException()
+        {
+            var sut = new CommitRepository(_requestFactory);
+
+            await Assert.ThrowsAsync<ArgumentOutOfRangeException>(() => sut.GetComments(0, "commitSha", resultsPerPage: uint.MinValue));
+        }
+
+        [Fact]
+        public async Task GetComments_ResultsPerPageIsGreaterThanMaximum_ThrowsArgumentOutOfRangeException()
+        {
+            var sut = new CommitRepository(_requestFactory);
+
+            await Assert.ThrowsAsync<ArgumentOutOfRangeException>(() => sut.GetComments(0, "commitSha", resultsPerPage: uint.MaxValue));
+        }
+
+        [Fact]
         public async Task GetComments_ValidParameters_AddsCommitShaUrlSegment()
         {
             const string expected = "commitSha";
@@ -336,6 +360,28 @@ namespace GitLab.NET.Tests.Repositories
             await sut.GetComments(expected, "commitSha");
 
             _request.Received().AddUrlSegment("projectId", expected);
+        }
+
+        [Fact]
+        public async Task GetComments_PageIsSet_AddsPageParameter()
+        {
+            const uint expected = 5;
+            var sut = new CommitRepository(_requestFactory);
+
+            await sut.GetComments(0, "commitSha", page: expected);
+
+            _request.Received().AddParameter("page", expected);
+        }
+
+        [Fact]
+        public async Task GetComments_ResultsPerPageIsSet_AddsPerPageParameter()
+        {
+            const uint expected = 5;
+            var sut = new CommitRepository(_requestFactory);
+
+            await sut.GetComments(0, "commitSha", resultsPerPage: expected);
+
+            _request.Received().AddParameter("per_page", expected);
         }
 
         [Fact]
@@ -397,6 +443,52 @@ namespace GitLab.NET.Tests.Repositories
             await sut.GetStatus(0, "commitSha", all: expected);
 
             _request.Received().AddParameterIfNotNull("all", expected);
+        }
+
+        [Fact]
+        public async Task GetStatus_PageIsSet_AddsPageParameter()
+        {
+            const uint expected = 5;
+            var sut = new CommitRepository(_requestFactory);
+
+            await sut.GetStatus(0, "commitSha", page: expected);
+
+            _request.Received().AddParameter("page", expected);
+        }
+
+        [Fact]
+        public async Task GetStatus_ResultsPerPageIsSet_AddsPerPageParameter()
+        {
+            const uint expected = 5;
+            var sut = new CommitRepository(_requestFactory);
+
+            await sut.GetStatus(0, "commitSha", resultsPerPage: expected);
+
+            _request.Received().AddParameter("per_page", expected);
+        }
+
+        [Fact]
+        public async Task GetStatus_PageIsLessThanMinimum_ThrowsArgumentOutOfRangeException()
+        {
+            var sut = new CommitRepository(_requestFactory);
+
+            await Assert.ThrowsAsync<ArgumentOutOfRangeException>(() => sut.GetStatus(0, "commitSha", page: uint.MinValue));
+        }
+
+        [Fact]
+        public async Task GetStatus_ResultsPerPageIsLessThanMinimum_ThrowsArgumentOutOfRangeException()
+        {
+            var sut = new CommitRepository(_requestFactory);
+
+            await Assert.ThrowsAsync<ArgumentOutOfRangeException>(() => sut.GetStatus(0, "commitSha", resultsPerPage: uint.MinValue));
+        }
+
+        [Fact]
+        public async Task GetStatus_ResultsPerPageIsGreaterThanMaximum_ThrowsArgumentOutOfRangeException()
+        {
+            var sut = new CommitRepository(_requestFactory);
+
+            await Assert.ThrowsAsync<ArgumentOutOfRangeException>(() => sut.GetStatus(0, "commitSha", resultsPerPage: uint.MaxValue));
         }
 
         [Fact]

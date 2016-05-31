@@ -372,7 +372,7 @@ namespace GitLab.NET.Tests.Repositories
 
             await sut.GetAll(page: expected);
 
-            _request.Received().AddParameterIfNotNull("page", expected);
+            _request.Received().AddParameter("page", expected);
         }
 
         [Fact]
@@ -383,7 +383,7 @@ namespace GitLab.NET.Tests.Repositories
 
             await sut.GetAll(resultsPerPage: expected);
 
-            _request.Received().AddParameterIfNotNull("per_page", expected);
+            _request.Received().AddParameter("per_page", expected);
         }
 
         [Fact]
@@ -457,7 +457,7 @@ namespace GitLab.NET.Tests.Repositories
 
             await sut.Search("search", page: expected);
 
-            _request.Received().AddParameterIfNotNull("page", expected);
+            _request.Received().AddParameter("page", expected);
         }
 
         [Fact]
@@ -468,7 +468,7 @@ namespace GitLab.NET.Tests.Repositories
 
             await sut.Search("search", resultsPerPage: expected);
 
-            _request.Received().AddParameterIfNotNull("per_page", expected);
+            _request.Received().AddParameter("per_page", expected);
         }
 
         [Fact]

@@ -44,22 +44,22 @@ namespace GitLab.NET.Repositories
         /// <param name="external"> Whether or not the user's account should be flagged as external. </param>
         /// <returns> A <see cref="RequestResult{User}" /> representing the results of the request. </returns>
         public async Task<RequestResult<User>> Create(string email,
-                                                           string password,
-                                                           string username,
-                                                           string name,
-                                                           string skype = null,
-                                                           string linkedIn = null,
-                                                           string twitter = null,
-                                                           string websiteUrl = null,
-                                                           uint? projectsLimit = null,
-                                                           string externUid = null,
-                                                           string provider = null,
-                                                           string bio = null,
-                                                           string location = null,
-                                                           bool? admin = null,
-                                                           bool? canCreateGroup = null,
-                                                           bool? confirm = null,
-                                                           bool? external = null)
+                                                      string password,
+                                                      string username,
+                                                      string name,
+                                                      string skype = null,
+                                                      string linkedIn = null,
+                                                      string twitter = null,
+                                                      string websiteUrl = null,
+                                                      uint? projectsLimit = null,
+                                                      string externUid = null,
+                                                      string provider = null,
+                                                      string bio = null,
+                                                      string location = null,
+                                                      bool? admin = null,
+                                                      bool? canCreateGroup = null,
+                                                      bool? confirm = null,
+                                                      bool? external = null)
         {
             if (email == null)
                 throw new ArgumentNullException(nameof(email));
@@ -152,8 +152,8 @@ namespace GitLab.NET.Repositories
 
             var request = RequestFactory.Create("users", Method.Get);
 
-            request.AddParameterIfNotNull("page", page);
-            request.AddParameterIfNotNull("per_page", resultsPerPage);
+            request.AddParameter("page", page);
+            request.AddParameter("per_page", resultsPerPage);
 
             return await request.ExecutePaginatedAsync<User>();
         }
@@ -189,8 +189,8 @@ namespace GitLab.NET.Repositories
             var request = RequestFactory.Create("users", Method.Get);
 
             request.AddParameter("search", searchQuery);
-            request.AddParameterIfNotNull("page", page);
-            request.AddParameterIfNotNull("per_page", resultsPerPage);
+            request.AddParameter("page", page);
+            request.AddParameter("per_page", resultsPerPage);
 
             return await request.ExecutePaginatedAsync<User>();
         }
@@ -227,22 +227,22 @@ namespace GitLab.NET.Repositories
         /// <param name="external"> Whether or not the user's account should be flagged as external. </param>
         /// <returns> A <see cref="RequestResult{User}" /> representing the results of the request. </returns>
         public async Task<RequestResult<User>> Update(uint id,
-                                                           string email = null,
-                                                           string password = null,
-                                                           string username = null,
-                                                           string name = null,
-                                                           string skype = null,
-                                                           string linkedIn = null,
-                                                           string twitter = null,
-                                                           string websiteUrl = null,
-                                                           uint? projectsLimit = null,
-                                                           string externUid = null,
-                                                           string provider = null,
-                                                           string bio = null,
-                                                           string location = null,
-                                                           bool? admin = null,
-                                                           bool? canCreateGroup = null,
-                                                           bool? external = null)
+                                                      string email = null,
+                                                      string password = null,
+                                                      string username = null,
+                                                      string name = null,
+                                                      string skype = null,
+                                                      string linkedIn = null,
+                                                      string twitter = null,
+                                                      string websiteUrl = null,
+                                                      uint? projectsLimit = null,
+                                                      string externUid = null,
+                                                      string provider = null,
+                                                      string bio = null,
+                                                      string location = null,
+                                                      bool? admin = null,
+                                                      bool? canCreateGroup = null,
+                                                      bool? external = null)
         {
             var request = RequestFactory.Create("users/{id}", Method.Put);
 

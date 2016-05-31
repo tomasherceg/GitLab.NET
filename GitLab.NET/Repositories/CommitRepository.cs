@@ -118,16 +118,29 @@ namespace GitLab.NET.Repositories
         /// <summary> Gets the comments for a commit. </summary>
         /// <param name="projectId"> The ID of the project. </param>
         /// <param name="commitSha"> The commit sha or branch or tag name. </param>
+        /// <param name="page"> The page number for a paginated request. </param>
+        /// <param name="resultsPerPage"> The number of results to return per request. </param>
         /// <returns> A <see cref="PaginatedResult{CommitComment}" /> representing the results of the request. </returns>
-        public async Task<PaginatedResult<CommitComment>> GetComments(uint projectId, string commitSha)
+        public async Task<PaginatedResult<CommitComment>> GetComments(uint projectId, string commitSha, uint page = Config.DefaultPage, uint resultsPerPage = Config.DefaultResultsPerPage)
         {
             if (commitSha == null)
                 throw new ArgumentNullException(nameof(commitSha));
+
+            if (page < Config.DefaultPage)
+                throw new ArgumentOutOfRangeException(nameof(page), page, "The parameter 'page' must be greater than " + Config.DefaultPage + ".");
+
+            if (resultsPerPage < Config.MinResultsPerPage)
+                throw new ArgumentOutOfRangeException(nameof(resultsPerPage), resultsPerPage, "The parameter 'resultsPerPage' must be greater than " + Config.MinResultsPerPage + ".");
+
+            if (resultsPerPage > Config.MaxResultsPerPage)
+                throw new ArgumentOutOfRangeException(nameof(resultsPerPage), resultsPerPage, "The parameter 'resultsPerPage' must be less than " + Config.MaxResultsPerPage + ".");
 
             var request = RequestFactory.Create("projects/{projectId}/repository/commits/{commitSha}/comments", Method.Get);
 
             request.AddUrlSegment("projectId", projectId);
             request.AddUrlSegment("commitSha", commitSha);
+            request.AddParameter("page", page);
+            request.AddParameter("per_page", resultsPerPage);
 
             return await request.ExecutePaginatedAsync<CommitComment>();
         }
@@ -156,16 +169,29 @@ namespace GitLab.NET.Repositories
         /// <param name="stage"> </param>
         /// <param name="name"> </param>
         /// <param name="all"> </param>
+        /// <param name="page"> The page number for a paginated request. </param>
+        /// <param name="resultsPerPage"> The number of results to return per request. </param>
         /// <returns> </returns>
-        public async Task<PaginatedResult<CommitStatus>> GetStatus(uint projectId, string commitSha, string refName = null, string stage = null, string name = null, bool? all = null)
+        public async Task<PaginatedResult<CommitStatus>> GetStatus(uint projectId, string commitSha, string refName = null, string stage = null, string name = null, bool? all = null, uint page = Config.DefaultPage, uint resultsPerPage = Config.DefaultResultsPerPage)
         {
             if (commitSha == null)
                 throw new ArgumentNullException(nameof(commitSha));
+
+            if (page < Config.DefaultPage)
+                throw new ArgumentOutOfRangeException(nameof(page), page, "The parameter 'page' must be greater than " + Config.DefaultPage + ".");
+
+            if (resultsPerPage < Config.MinResultsPerPage)
+                throw new ArgumentOutOfRangeException(nameof(resultsPerPage), resultsPerPage, "The parameter 'resultsPerPage' must be greater than " + Config.MinResultsPerPage + ".");
+
+            if (resultsPerPage > Config.MaxResultsPerPage)
+                throw new ArgumentOutOfRangeException(nameof(resultsPerPage), resultsPerPage, "The parameter 'resultsPerPage' must be less than " + Config.MaxResultsPerPage + ".");
 
             var request = RequestFactory.Create("projects/{projectId}/repository/commits/{commitSha}/statuses", Method.Get);
 
             request.AddUrlSegment("projectId", projectId);
             request.AddUrlSegment("commitSha", commitSha);
+            request.AddParameter("page", page);
+            request.AddParameter("per_page", resultsPerPage);
             request.AddParameterIfNotNull("ref_name", refName);
             request.AddParameterIfNotNull("stage", stage);
             request.AddParameterIfNotNull("name", name);

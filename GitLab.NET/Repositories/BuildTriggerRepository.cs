@@ -60,12 +60,25 @@ namespace GitLab.NET.Repositories
 
         /// <summary> Gets all build triggers associated with the specified project. </summary>
         /// <param name="projectId"> The ID of the project. </param>
+        /// <param name="page"> The page number for a paginated request. </param>
+        /// <param name="resultsPerPage"> The number of results to return per request. </param>
         /// <returns> A <see cref="PaginatedResult{BuildTrigger}" /> representing the results of the request. </returns>
-        public async Task<PaginatedResult<BuildTrigger>> GetAll(uint projectId)
+        public async Task<PaginatedResult<BuildTrigger>> GetAll(uint projectId, uint page = Config.DefaultPage, uint resultsPerPage = Config.DefaultResultsPerPage)
         {
+            if (page < Config.DefaultPage)
+                throw new ArgumentOutOfRangeException(nameof(page), page, "The parameter 'page' must be greater than " + Config.DefaultPage + ".");
+
+            if (resultsPerPage < Config.MinResultsPerPage)
+                throw new ArgumentOutOfRangeException(nameof(resultsPerPage), resultsPerPage, "The parameter 'resultsPerPage' must be greater than " + Config.MinResultsPerPage + ".");
+
+            if (resultsPerPage > Config.MaxResultsPerPage)
+                throw new ArgumentOutOfRangeException(nameof(resultsPerPage), resultsPerPage, "The parameter 'resultsPerPage' must be less than " + Config.MaxResultsPerPage + ".");
+
             var request = RequestFactory.Create("projects/{projectId}/triggers", Method.Get);
 
             request.AddUrlSegment("projectId", projectId);
+            request.AddParameter("page", page);
+            request.AddParameter("per_page", resultsPerPage);
 
             return await request.ExecutePaginatedAsync<BuildTrigger>();
         }

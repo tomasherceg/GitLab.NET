@@ -20,6 +20,30 @@ namespace GitLab.NET.Tests.Repositories
         private readonly IRequestFactory _requestFactory;
 
         [Fact]
+        public async Task GetAll_PageIsLessThanMinimum_ThrowsArgumentOutOfRangeException()
+        {
+            var sut = new NamespaceRepository(_requestFactory);
+
+            await Assert.ThrowsAsync<ArgumentOutOfRangeException>(() => sut.GetAll(page: uint.MinValue));
+        }
+
+        [Fact]
+        public async Task GetAll_ResultsPerPageIsLessThanMinimum_ThrowsArgumentOutOfRangeException()
+        {
+            var sut = new NamespaceRepository(_requestFactory);
+
+            await Assert.ThrowsAsync<ArgumentOutOfRangeException>(() => sut.GetAll(resultsPerPage: uint.MinValue));
+        }
+
+        [Fact]
+        public async Task GetAll_ResultsPerPageIsGreaterThanMaximum_ThrowsArgumentOutOfRangeException()
+        {
+            var sut = new NamespaceRepository(_requestFactory);
+
+            await Assert.ThrowsAsync<ArgumentOutOfRangeException>(() => sut.GetAll(resultsPerPage: uint.MaxValue));
+        }
+
+        [Fact]
         public async Task GetAll_ValidParameters_SetsCorrectResourceAndMethod()
         {
             var sut = new NamespaceRepository(_requestFactory);
@@ -27,6 +51,28 @@ namespace GitLab.NET.Tests.Repositories
             await sut.GetAll();
 
             _requestFactory.Received().Create("namespaces", Method.Get);
+        }
+
+        [Fact]
+        public async Task GetAll_PageIsSet_AddsPageParameter()
+        {
+            const uint expected = 5;
+            var sut = new NamespaceRepository(_requestFactory);
+
+            await sut.GetAll(page: expected);
+
+            _request.Received().AddParameter("page", expected);
+        }
+
+        [Fact]
+        public async Task GetAll_ResultsPerPageIsSet_AddsPerPageParameter()
+        {
+            const uint expected = 5;
+            var sut = new NamespaceRepository(_requestFactory);
+
+            await sut.GetAll(resultsPerPage: expected);
+
+            _request.Received().AddParameter("per_page", expected);
         }
 
         [Fact]
@@ -38,6 +84,30 @@ namespace GitLab.NET.Tests.Repositories
         }
 
         [Fact]
+        public async Task Search_PageIsLessThanMinimum_ThrowsArgumentOutOfRangeException()
+        {
+            var sut = new NamespaceRepository(_requestFactory);
+
+            await Assert.ThrowsAsync<ArgumentOutOfRangeException>(() => sut.Search("search", page: uint.MinValue));
+        }
+
+        [Fact]
+        public async Task Search_ResultsPerPageIsLessThanMinimum_ThrowsArgumentOutOfRangeException()
+        {
+            var sut = new NamespaceRepository(_requestFactory);
+
+            await Assert.ThrowsAsync<ArgumentOutOfRangeException>(() => sut.Search("search", resultsPerPage: uint.MinValue));
+        }
+
+        [Fact]
+        public async Task Search_ResultsPerPageIsGreaterThanMaximum_ThrowsArgumentOutOfRangeException()
+        {
+            var sut = new NamespaceRepository(_requestFactory);
+
+            await Assert.ThrowsAsync<ArgumentOutOfRangeException>(() => sut.Search("search", resultsPerPage: uint.MaxValue));
+        }
+
+        [Fact]
         public async Task Search_ValidParameters_AddsSearchParameter()
         {
             const string expected = "search";
@@ -46,6 +116,28 @@ namespace GitLab.NET.Tests.Repositories
             await sut.Search(expected);
 
             _request.Received().AddParameter("search", expected);
+        }
+
+        [Fact]
+        public async Task Search_PageIsSet_AddsPageParameter()
+        {
+            const uint expected = 5;
+            var sut = new NamespaceRepository(_requestFactory);
+
+            await sut.Search("search", page: expected);
+
+            _request.Received().AddParameter("page", expected);
+        }
+
+        [Fact]
+        public async Task Search_ResultsPerPageIsSet_AddsPerPageParameter()
+        {
+            const uint expected = 5;
+            var sut = new NamespaceRepository(_requestFactory);
+
+            await sut.Search("search", resultsPerPage: expected);
+
+            _request.Received().AddParameter("per_page", expected);
         }
 
         [Fact]
