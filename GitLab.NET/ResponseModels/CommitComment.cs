@@ -23,6 +23,6 @@ namespace GitLab.NET.ResponseModels
         public DateTime CreatedAt { get; set; }
 
         /// <summary> The author of the comment. </summary>
-        public Author Author { get; set; }
+        public UserPreview Author { get; set; }
     }
 }

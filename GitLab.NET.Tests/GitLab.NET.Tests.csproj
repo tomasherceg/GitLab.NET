@@ -73,6 +73,7 @@
     <Compile Include="Repositories\KeyRepositoryTests.cs" />
     <Compile Include="Repositories\LabelRepositoryTests.cs" />
     <Compile Include="Repositories\LicenseRepositoryTests.cs" />
+    <Compile Include="Repositories\MilestoneRepositoryTests.cs" />
     <Compile Include="Repositories\NamespaceRepositoryTests.cs" />
     <Compile Include="Repositories\ProjectSnippetRepositoryTests.cs" />
     <Compile Include="Repositories\RepositoryBaseTests.cs" />

@@ -55,6 +55,11 @@ namespace GitLab.NET
         /// <summary> Provides a wrapper around the GitLab license template API. </summary>
         public LicenseRepository Licenses { get; }
 
+        /// <summary>
+        /// Provides a wrapper around the GitLab milestones API.
+        /// </summary>
+        public MilestoneRepository Milestones { get; }
+
         /// <summary> Provides a wrapper around the GitLab namespace API. </summary>
         public NamespaceRepository Namespaces { get; }
 
@@ -99,6 +104,7 @@ namespace GitLab.NET
             Keys = new KeyRepository(requestFactory);
             Labels = new LabelRepository(requestFactory);
             Licenses = new LicenseRepository(requestFactory);
+            Milestones = new MilestoneRepository(requestFactory);
             Namespaces = new NamespaceRepository(requestFactory);
             ProjectSnippets = new ProjectSnippetRepository(requestFactory);
             Repositories = new RepositoryRepository(requestFactory);

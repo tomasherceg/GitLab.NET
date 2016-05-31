@@ -41,6 +41,6 @@ namespace GitLab.NET.ResponseModels
         public DateTime? FinishedAt { get; set; }
 
         /// <summary> The author of the build. </summary>
-        public Author Author { get; set; }
+        public UserPreview Author { get; set; }
     }
 }
