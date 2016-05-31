@@ -76,6 +76,7 @@
     <Compile Include="Repositories\NamespaceRepositoryTests.cs" />
     <Compile Include="Repositories\RepositoryBaseTests.cs" />
     <Compile Include="Repositories\SessionRepositoryTests.cs" />
+    <Compile Include="Repositories\UserRepositoryTests.cs" />
     <Compile Include="RequestResultTests.cs" />
     <Compile Include="PaginatedResultTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

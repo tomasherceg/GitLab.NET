@@ -141,12 +141,6 @@ namespace GitLab.NET.Repositories
         /// <returns> A <see cref="PaginatedResult{User}" /> representing the results of the request. </returns>
         public async Task<PaginatedResult<User>> GetAll(uint page = Config.DefaultPage, uint resultsPerPage = Config.DefaultResultsPerPage)
         {
-            if (page < Config.DefaultPage)
-                throw new ArgumentOutOfRangeException(nameof(page));
-
-            if (resultsPerPage < Config.MinResultsPerPage || resultsPerPage > Config.MaxResultsPerPage)
-                throw new ArgumentOutOfRangeException(nameof(resultsPerPage));
-
             var request = RequestFactory.Create("users", Method.Get);
 
             request.AddParameterIfNotNull("page", page);
@@ -173,12 +167,6 @@ namespace GitLab.NET.Repositories
         {
             if (searchQuery == null)
                 throw new ArgumentNullException(nameof(searchQuery));
-
-            if (page < Config.DefaultPage)
-                throw new ArgumentOutOfRangeException(nameof(page));
-
-            if (resultsPerPage < Config.MinResultsPerPage || resultsPerPage > Config.MaxResultsPerPage)
-                throw new ArgumentOutOfRangeException(nameof(resultsPerPage));
 
             var request = RequestFactory.Create("users", Method.Get);
 
