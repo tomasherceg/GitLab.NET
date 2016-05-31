@@ -341,9 +341,33 @@ namespace GitLab.NET.Tests.Repositories
         }
 
         [Fact]
+        public async Task GetAll_PageIsLessThanMinimum_ThrowsArgumentOutOfRangeException()
+        {
+            var sut = new UserRepository(_requestFactory);
+
+            await Assert.ThrowsAsync<ArgumentOutOfRangeException>(() => sut.GetAll(page: uint.MinValue));
+        }
+
+        [Fact]
+        public async Task GetAll_ResultsPerPageIsLessThanMinimum_ThrowsArgumentOutOfRangeException()
+        {
+            var sut = new UserRepository(_requestFactory);
+
+            await Assert.ThrowsAsync<ArgumentOutOfRangeException>(() => sut.GetAll(resultsPerPage: uint.MinValue));
+        }
+
+        [Fact]
+        public async Task GetAll_ResultsPerPageIsGreaterThanMaximum_ThrowsArgumentOutOfRangeException()
+        {
+            var sut = new UserRepository(_requestFactory);
+
+            await Assert.ThrowsAsync<ArgumentOutOfRangeException>(() => sut.GetAll(resultsPerPage: uint.MaxValue));
+        }
+
+        [Fact]
         public async Task GetAll_PageIsSet_AddsPageParameter()
         {
-            const uint expected = 0;
+            const uint expected = 5;
             var sut = new UserRepository(_requestFactory);
 
             await sut.GetAll(page: expected);
@@ -354,7 +378,7 @@ namespace GitLab.NET.Tests.Repositories
         [Fact]
         public async Task GetAll_ResultsPerPageIsSet_AddsPerPageParameter()
         {
-            const uint expected = 0;
+            const uint expected = 5;
             var sut = new UserRepository(_requestFactory);
 
             await sut.GetAll(resultsPerPage: expected);
@@ -391,6 +415,30 @@ namespace GitLab.NET.Tests.Repositories
         }
 
         [Fact]
+        public async Task Search_PageIsLessThanMinimum_ThrowsArgumentOutOfRangeException()
+        {
+            var sut = new UserRepository(_requestFactory);
+
+            await Assert.ThrowsAsync<ArgumentOutOfRangeException>(() => sut.Search("search", page: uint.MinValue));
+        }
+
+        [Fact]
+        public async Task Search_ResultsPerPageIsLessThanMinimum_ThrowsArgumentOutOfRangeException()
+        {
+            var sut = new UserRepository(_requestFactory);
+
+            await Assert.ThrowsAsync<ArgumentOutOfRangeException>(() => sut.Search("search", resultsPerPage: uint.MinValue));
+        }
+
+        [Fact]
+        public async Task Search_ResultsPerPageIsGreaterThanMaximum_ThrowsArgumentOutOfRangeException()
+        {
+            var sut = new UserRepository(_requestFactory);
+
+            await Assert.ThrowsAsync<ArgumentOutOfRangeException>(() => sut.Search("search", resultsPerPage: uint.MaxValue));
+        }
+
+        [Fact]
         public async Task Search_ValidParameters_AddsSearchParameter()
         {
             const string expected = "search";
@@ -404,7 +452,7 @@ namespace GitLab.NET.Tests.Repositories
         [Fact]
         public async Task Search_PageIsSet_AddsPageParameter()
         {
-            const uint expected = 0;
+            const uint expected = 5;
             var sut = new UserRepository(_requestFactory);
 
             await sut.Search("search", page: expected);
@@ -415,7 +463,7 @@ namespace GitLab.NET.Tests.Repositories
         [Fact]
         public async Task Search_ResultsPerPageIsSet_AddsPerPageParameter()
         {
-            const uint expected = 0;
+            const uint expected = 5;
             var sut = new UserRepository(_requestFactory);
 
             await sut.Search("search", resultsPerPage: expected);

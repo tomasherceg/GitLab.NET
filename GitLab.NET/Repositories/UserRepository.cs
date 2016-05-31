@@ -141,6 +141,15 @@ namespace GitLab.NET.Repositories
         /// <returns> A <see cref="PaginatedResult{User}" /> representing the results of the request. </returns>
         public async Task<PaginatedResult<User>> GetAll(uint page = Config.DefaultPage, uint resultsPerPage = Config.DefaultResultsPerPage)
         {
+            if (page < Config.DefaultPage)
+                throw new ArgumentOutOfRangeException(nameof(page), page, "The parameter 'page' must be greater than " + Config.DefaultPage + ".");
+
+            if (resultsPerPage < Config.MinResultsPerPage)
+                throw new ArgumentOutOfRangeException(nameof(resultsPerPage), resultsPerPage, "The parameter 'resultsPerPage' must be greater than " + Config.MinResultsPerPage + ".");
+
+            if (resultsPerPage > Config.MaxResultsPerPage)
+                throw new ArgumentOutOfRangeException(nameof(resultsPerPage), resultsPerPage, "The parameter 'resultsPerPage' must be less than " + Config.MaxResultsPerPage + ".");
+
             var request = RequestFactory.Create("users", Method.Get);
 
             request.AddParameterIfNotNull("page", page);
@@ -167,6 +176,15 @@ namespace GitLab.NET.Repositories
         {
             if (searchQuery == null)
                 throw new ArgumentNullException(nameof(searchQuery));
+
+            if (page < Config.DefaultPage)
+                throw new ArgumentOutOfRangeException(nameof(page), page, "The parameter 'page' must be greater than " + Config.DefaultPage + ".");
+
+            if (resultsPerPage < Config.MinResultsPerPage)
+                throw new ArgumentOutOfRangeException(nameof(resultsPerPage), resultsPerPage, "The parameter 'resultsPerPage' must be greater than " + Config.MinResultsPerPage + ".");
+
+            if (resultsPerPage > Config.MaxResultsPerPage)
+                throw new ArgumentOutOfRangeException(nameof(resultsPerPage), resultsPerPage, "The parameter 'resultsPerPage' must be less than " + Config.MaxResultsPerPage + ".");
 
             var request = RequestFactory.Create("users", Method.Get);
 
