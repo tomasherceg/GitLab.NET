@@ -63,22 +63,10 @@ namespace GitLab.NET.Abstractions
                 _request.AddParameter(name, value, ParameterType.UrlSegment);
         }
 
-        public RequestResult<T> Execute<T>() where T : new()
-        {
-            var result = _client.Execute<T>(_request);
-            return new RequestResult<T>(result);
-        }
-
         public async Task<RequestResult<T>> ExecuteAsync<T>() where T : new()
         {
             var result = await _client.ExecuteTaskAsync<T>(_request);
             return new RequestResult<T>(result);
-        }
-
-        public RequestResult<byte[]> ExecuteBytes()
-        {
-            var result = _client.Execute(_request);
-            return new RequestResult<byte[]>(result, result.RawBytes);
         }
 
         public async Task<RequestResult<byte[]>> ExecuteBytesAsync()
@@ -87,22 +75,10 @@ namespace GitLab.NET.Abstractions
             return new RequestResult<byte[]>(result, result.RawBytes);
         }
 
-        public RequestResult<string> ExecuteContent()
-        {
-            var result = _client.Execute(_request);
-            return new RequestResult<string>(result, result.Content);
-        }
-
         public async Task<RequestResult<string>> ExecuteContentAsync()
         {
             var result = await _client.ExecuteTaskAsync(_request);
             return new RequestResult<string>(result, result.Content);
-        }
-
-        public PaginatedResult<T> ExecutePaginated<T>() where T : new()
-        {
-            var result = _client.Execute<List<T>>(_request);
-            return new PaginatedResult<T>(result);
         }
 
         public async Task<PaginatedResult<T>> ExecutePaginatedAsync<T>() where T : new()
