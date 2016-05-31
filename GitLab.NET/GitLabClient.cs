@@ -46,6 +46,9 @@ namespace GitLab.NET
         /// <summary> Provides a wrapper around the GitLab license API. </summary>
         public GitLabLicenseRepository GitLabLicense { get; }
 
+        /// <summary> Provides a wrapper around the GitLab settings API. </summary>
+        public GitLabSettingsRepository GitLabSettings { get; }
+
         /// <summary> Provides a wrapper around the GitLab keys API. </summary>
         public KeyRepository Keys { get; }
 
@@ -55,9 +58,7 @@ namespace GitLab.NET
         /// <summary> Provides a wrapper around the GitLab license template API. </summary>
         public LicenseRepository Licenses { get; }
 
-        /// <summary>
-        /// Provides a wrapper around the GitLab milestones API.
-        /// </summary>
+        /// <summary> Provides a wrapper around the GitLab milestones API. </summary>
         public MilestoneRepository Milestones { get; }
 
         /// <summary> Provides a wrapper around the GitLab namespace API. </summary>
@@ -101,6 +102,7 @@ namespace GitLab.NET
             Emails = new EmailRepository(requestFactory);
             Files = new FileRepository(requestFactory);
             GitLabLicense = new GitLabLicenseRepository(requestFactory);
+            GitLabSettings = new GitLabSettingsRepository(requestFactory);
             Keys = new KeyRepository(requestFactory);
             Labels = new LabelRepository(requestFactory);
             Licenses = new LicenseRepository(requestFactory);

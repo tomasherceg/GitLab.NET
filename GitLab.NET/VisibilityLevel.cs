@@ -1,6 +1,6 @@
 ﻿// ReSharper disable UnusedMember.Global
 
-namespace GitLab.NET.ResponseModels
+namespace GitLab.NET
 {
     /// <summary> Visibility level for an object. </summary>
     public enum VisibilityLevel
