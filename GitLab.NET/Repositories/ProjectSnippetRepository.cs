@@ -96,18 +96,15 @@ namespace GitLab.NET.Repositories
         }
 
         /// <summary> Updates a project snippet associated with the provided project ID. </summary>
-        /// <param name="projectId"> The ID of the project the snippet is attached to. </param>
         /// <param name="id"> The ID of the snippet to update. </param>
+        /// <param name="projectId"> The ID of the project the snippet is attached to. </param>
         /// <param name="title"> The snippet's title. </param>
         /// <param name="fileName"> The snippet's file name. </param>
         /// <param name="code"> The code for this snippet. </param>
         /// <param name="visibilityLevel"> The visibility level for this snippet. </param>
         /// <returns> A <see cref="RequestResult{ProjectSnippet}" /> representing the results of the request. </returns>
-        public async Task<RequestResult<ProjectSnippet>> Update(uint projectId, uint id, string title = null, string fileName = null, string code = null, VisibilityLevel? visibilityLevel = null)
+        public async Task<RequestResult<ProjectSnippet>> Update(uint id, uint projectId, string title = null, string fileName = null, string code = null, VisibilityLevel? visibilityLevel = null)
         {
-            if (title == null && fileName == null && code == null && visibilityLevel == null)
-                throw new NullReferenceException("You must pass at least one parameter to update.");
-
             var request = RequestFactory.Create("projects/{projectId}/snippets/{id}", Method.Put);
 
             request.AddUrlSegment("projectId", projectId);
