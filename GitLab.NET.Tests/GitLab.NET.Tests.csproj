@@ -70,6 +70,7 @@
     <Compile Include="Repositories\EmailRepositoryTests.cs" />
     <Compile Include="Repositories\FileRepositoryTests.cs" />
     <Compile Include="Repositories\GitLabLicenseRepositoryTests.cs" />
+    <Compile Include="Repositories\GitLabSettingsRepositoryTests.cs" />
     <Compile Include="Repositories\KeyRepositoryTests.cs" />
     <Compile Include="Repositories\LabelRepositoryTests.cs" />
     <Compile Include="Repositories\LicenseRepositoryTests.cs" />
