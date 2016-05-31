@@ -65,11 +65,14 @@
     <Compile Include="GitLabClient.cs" />
     <Compile Include="Config.cs" />
     <Compile Include="Repositories\FileRepository.cs" />
+    <Compile Include="Repositories\MilestoneRepository.cs" />
     <Compile Include="Repositories\TagRepository.cs" />
-    <Compile Include="ResponseModels\Author.cs" />
+    <Compile Include="ResponseModels\UserPreview.cs" />
     <Compile Include="ResponseModels\Commit.cs" />
     <Compile Include="ResponseModels\CommitComment.cs" />
     <Compile Include="ResponseModels\CommitStatus.cs" />
+    <Compile Include="ResponseModels\Issue.cs" />
+    <Compile Include="ResponseModels\Milestone.cs" />
     <Compile Include="ResponseModels\Release.cs" />
     <Compile Include="ResponseModels\RepositoryFile.cs" />
     <Compile Include="ResponseModels\Tag.cs" />

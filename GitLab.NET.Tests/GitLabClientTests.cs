@@ -94,6 +94,14 @@ namespace GitLab.NET.Tests
         }
 
         [Fact]
+        public void Constructor_ValidParameters_SetsMilestones()
+        {
+            var sut = new GitLabClient(ValidHostUri);
+
+            Assert.NotNull(sut.Milestones);
+        }
+
+        [Fact]
         public void Constructor_ValidParameters_SetsNamespaces()
         {
             var sut = new GitLabClient(ValidHostUri);
