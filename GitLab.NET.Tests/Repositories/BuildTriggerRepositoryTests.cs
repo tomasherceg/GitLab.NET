@@ -21,43 +21,22 @@ namespace GitLab.NET.Tests.Repositories
 
         #region Create
         [Fact]
-        public void Create_ValidParameters_AddsProjectIdUrlSegment()
+        public async Task Create_ValidParameters_AddsProjectIdUrlSegment()
         {
             const uint expected = 0;
             var sut = new BuildTriggerRepository(_requestFactory);
 
-            sut.Create(expected);
+            await sut.Create(expected);
 
             _request.Received().AddUrlSegment("projectId", expected);
         }
 
         [Fact]
-        public void Create_ValidParameters_SetsCorrectResourceAndMethod()
+        public async Task Create_ValidParameters_SetsCorrectResourceAndMethod()
         {
             var sut = new BuildTriggerRepository(_requestFactory);
 
-            sut.Create(0);
-
-            _requestFactory.Received().Create("projects/{projectId}/triggers", Method.Post);
-        }
-
-        [Fact]
-        public async Task CreateAsync_ValidParameters_AddsProjectIdUrlSegment()
-        {
-            const uint expected = 0;
-            var sut = new BuildTriggerRepository(_requestFactory);
-
-            await sut.CreateAsync(expected);
-
-            _request.Received().AddUrlSegment("projectId", expected);
-        }
-
-        [Fact]
-        public async Task CreateAsync_ValidParameters_SetsCorrectResourceAndMethod()
-        {
-            var sut = new BuildTriggerRepository(_requestFactory);
-
-            await sut.CreateAsync(0);
+            await sut.Create(0);
 
             _requestFactory.Received().Create("projects/{projectId}/triggers", Method.Post);
         }
@@ -65,81 +44,41 @@ namespace GitLab.NET.Tests.Repositories
 
         #region Delete
         [Fact]
-        public void Delete_TokenIsNull_ThrowsArgumentNullException()
+        public async Task Delete_TokenIsNull_ThrowsArgumentNullException()
         {
             var sut = new BuildTriggerRepository(_requestFactory);
 
-            Assert.Throws<ArgumentNullException>(() => sut.Delete(0, null));
+            await Assert.ThrowsAsync<ArgumentNullException>(() => sut.Delete(0, null));
         }
 
         [Fact]
-        public void Delete_ValidParameters_AddsProjectIdUrlSegment()
+        public async Task Delete_ValidParameters_AddsProjectIdUrlSegment()
         {
             const uint expected = 0;
             var sut = new BuildTriggerRepository(_requestFactory);
 
-            sut.Delete(expected, "token");
+            await sut.Delete(expected, "token");
 
             _request.Received().AddUrlSegment("projectId", expected);
         }
 
         [Fact]
-        public void Delete_ValidParameters_AddsTokenUrlSegment()
+        public async Task Delete_ValidParameters_AddsTokenUrlSegment()
         {
             const string expected = "token";
             var sut = new BuildTriggerRepository(_requestFactory);
 
-            sut.Delete(0, expected);
+            await sut.Delete(0, expected);
 
             _request.Received().AddUrlSegment("token", expected);
         }
 
         [Fact]
-        public void Delete_ValidParameters_SetsCorrectResourceAndMethod()
+        public async Task Delete_ValidParameters_SetsCorrectResourceAndMethod()
         {
             var sut = new BuildTriggerRepository(_requestFactory);
 
-            sut.Delete(0, "token");
-
-            _requestFactory.Received().Create("projects/{projectId}/triggers/{token}", Method.Delete);
-        }
-
-        [Fact]
-        public async Task DeleteAsync_TokenIsNull_ThrowsArgumentNullException()
-        {
-            var sut = new BuildTriggerRepository(_requestFactory);
-
-            await Assert.ThrowsAsync<ArgumentNullException>(() => sut.DeleteAsync(0, null));
-        }
-
-        [Fact]
-        public async Task DeleteAsync_ValidParameters_AddsProjectIdUrlSegment()
-        {
-            const uint expected = 0;
-            var sut = new BuildTriggerRepository(_requestFactory);
-
-            await sut.DeleteAsync(expected, "token");
-
-            _request.Received().AddUrlSegment("projectId", expected);
-        }
-
-        [Fact]
-        public async Task DeleteAsync_ValidParameters_AddsTokenUrlSegment()
-        {
-            const string expected = "token";
-            var sut = new BuildTriggerRepository(_requestFactory);
-
-            await sut.DeleteAsync(0, expected);
-
-            _request.Received().AddUrlSegment("token", expected);
-        }
-
-        [Fact]
-        public async Task DeleteAsync_ValidParameters_SetsCorrectResourceAndMethod()
-        {
-            var sut = new BuildTriggerRepository(_requestFactory);
-
-            await sut.DeleteAsync(0, "token");
+            await sut.Delete(0, "token");
 
             _requestFactory.Received().Create("projects/{projectId}/triggers/{token}", Method.Delete);
         }
@@ -147,81 +86,41 @@ namespace GitLab.NET.Tests.Repositories
 
         #region Find
         [Fact]
-        public void Find_TokenIsNull_ThrowsArgumentNullException()
+        public async Task Find_TokenIsNull_ThrowsArgumentNullException()
         {
             var sut = new BuildTriggerRepository(_requestFactory);
 
-            Assert.Throws<ArgumentNullException>(() => sut.Find(0, null));
+            await Assert.ThrowsAsync<ArgumentNullException>(() => sut.Find(0, null));
         }
 
         [Fact]
-        public void Find_ValidParameters_AddsProjectIdUrlSegment()
+        public async Task Find_ValidParameters_AddsProjectIdUrlSegment()
         {
             const uint expected = 0;
             var sut = new BuildTriggerRepository(_requestFactory);
 
-            sut.Find(expected, "token");
+            await sut.Find(expected, "token");
 
             _request.Received().AddUrlSegment("projectId", expected);
         }
 
         [Fact]
-        public void Find_ValidParameters_AddsTokenUrlSegment()
+        public async Task Find_ValidParameters_AddsTokenUrlSegment()
         {
             const string expected = "token";
             var sut = new BuildTriggerRepository(_requestFactory);
 
-            sut.Find(0, expected);
+            await sut.Find(0, expected);
 
             _request.Received().AddUrlSegment("token", expected);
         }
 
         [Fact]
-        public void Find_ValidParameters_SetsCorrectResourceAndMethod()
+        public async Task Find_ValidParameters_SetsCorrectResourceAndMethod()
         {
             var sut = new BuildTriggerRepository(_requestFactory);
 
-            sut.Find(0, "token");
-
-            _requestFactory.Received().Create("projects/{projectId}/triggers/{token}", Method.Get);
-        }
-
-        [Fact]
-        public async Task FindAsync_TokenIsNull_ThrowsArgumentNullException()
-        {
-            var sut = new BuildTriggerRepository(_requestFactory);
-
-            await Assert.ThrowsAsync<ArgumentNullException>(() => sut.FindAsync(0, null));
-        }
-
-        [Fact]
-        public async Task FindAsync_ValidParameters_AddsProjectIdUrlSegment()
-        {
-            const uint expected = 0;
-            var sut = new BuildTriggerRepository(_requestFactory);
-
-            await sut.FindAsync(expected, "token");
-
-            _request.Received().AddUrlSegment("projectId", expected);
-        }
-
-        [Fact]
-        public async Task FindAsync_ValidParameters_AddsTokenUrlSegment()
-        {
-            const string expected = "token";
-            var sut = new BuildTriggerRepository(_requestFactory);
-
-            await sut.FindAsync(0, expected);
-
-            _request.Received().AddUrlSegment("token", expected);
-        }
-
-        [Fact]
-        public async Task FindAsync_ValidParameters_SetsCorrectResourceAndMethod()
-        {
-            var sut = new BuildTriggerRepository(_requestFactory);
-
-            await sut.FindAsync(0, "token");
+            await sut.Find(0, "token");
 
             _requestFactory.Received().Create("projects/{projectId}/triggers/{token}", Method.Get);
         }
@@ -229,43 +128,22 @@ namespace GitLab.NET.Tests.Repositories
 
         #region GetAll
         [Fact]
-        public void GetAll_ValidParameters_AddsProjectIdUrlSegment()
+        public async Task GetAll_ValidParameters_AddsProjectIdUrlSegment()
         {
             const uint expected = 0;
             var sut = new BuildTriggerRepository(_requestFactory);
 
-            sut.GetAll(expected);
+            await sut.GetAll(expected);
 
             _request.Received().AddUrlSegment("projectId", expected);
         }
 
         [Fact]
-        public void GetAll_ValidParameters_SetsCorrectResourceAndMethod()
+        public async Task GetAll_ValidParameters_SetsCorrectResourceAndMethod()
         {
             var sut = new BuildTriggerRepository(_requestFactory);
 
-            sut.GetAll(0);
-
-            _requestFactory.Received().Create("projects/{projectId}/triggers", Method.Get);
-        }
-
-        [Fact]
-        public async Task GetAllAsync_ValidParameters_AddsProjectIdUrlSegment()
-        {
-            const uint expected = 0;
-            var sut = new BuildTriggerRepository(_requestFactory);
-
-            await sut.GetAllAsync(expected);
-
-            _request.Received().AddUrlSegment("projectId", expected);
-        }
-
-        [Fact]
-        public async Task GetAllAsync_ValidParameters_SetsCorrectResourceAndMethod()
-        {
-            var sut = new BuildTriggerRepository(_requestFactory);
-
-            await sut.GetAllAsync(0);
+            await sut.GetAll(0);
 
             _requestFactory.Received().Create("projects/{projectId}/triggers", Method.Get);
         }

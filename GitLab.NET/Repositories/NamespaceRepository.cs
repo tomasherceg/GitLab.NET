@@ -14,16 +14,7 @@ namespace GitLab.NET.Repositories
 
         /// <summary> Gets all namespaces that the currently authenticated user is authorized to see. </summary>
         /// <returns> A <see cref="PaginatedResult{Namespace}" /> representing the results of the request. </returns>
-        public PaginatedResult<Namespace> GetAll()
-        {
-            var request = RequestFactory.Create("namespaces", Method.Get);
-
-            return request.ExecutePaginated<Namespace>();
-        }
-
-        /// <summary> Gets all namespaces that the currently authenticated user is authorized to see. </summary>
-        /// <returns> A <see cref="PaginatedResult{Namespace}" /> representing the results of the request. </returns>
-        public async Task<PaginatedResult<Namespace>> GetAllAsync()
+        public async Task<PaginatedResult<Namespace>> GetAll()
         {
             var request = RequestFactory.Create("namespaces", Method.Get);
 
@@ -33,22 +24,7 @@ namespace GitLab.NET.Repositories
         /// <summary> Gets all namespaces matching the search query that the currently authenticated user is authorized to see. </summary>
         /// <param name="search"> The search term. </param>
         /// <returns> A <see cref="PaginatedResult{Namespace}" /> representing the results of the request. </returns>
-        public PaginatedResult<Namespace> Search(string search)
-        {
-            if (search == null)
-                throw new ArgumentNullException(nameof(search));
-
-            var request = RequestFactory.Create("namespaces", Method.Get);
-
-            request.AddParameter("search", search);
-
-            return request.ExecutePaginated<Namespace>();
-        }
-
-        /// <summary> Gets all namespaces matching the search query that the currently authenticated user is authorized to see. </summary>
-        /// <param name="search"> The search term. </param>
-        /// <returns> A <see cref="PaginatedResult{Namespace}" /> representing the results of the request. </returns>
-        public async Task<PaginatedResult<Namespace>> SearchAsync(string search)
+        public async Task<PaginatedResult<Namespace>> Search(string search)
         {
             if (search == null)
                 throw new ArgumentNullException(nameof(search));
