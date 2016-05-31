@@ -1,5 +1,4 @@
-﻿using NSubstitute;
-using System;
+﻿using System;
 using System.Net;
 using RestSharp;
 using Xunit;
@@ -9,29 +8,20 @@ namespace GitLab.NET.Tests
     public class RequestResultTests
     {
         [Fact]
-        public void ConstructorWithType_ResponseIsNull_ThrowsArgumentNullException()
-        {
-            Assert.Throws<ArgumentNullException>(() => new RequestResult<object>(null));
-        }
-
-        [Fact]
         public void ConstructorWithoutType_ResponseIsNull_ThrowsArgumentNullException()
         {
             Assert.Throws<ArgumentNullException>(() => new RequestResult<object>(null, new object()));
         }
 
         [Fact]
-        public void ConstructorWithType_SetsStatusCode()
+        public void ConstructorWithoutType_SetsData()
         {
-            const HttpStatusCode expected = HttpStatusCode.OK;
-            var response = new RestResponse<object>
-            {
-                StatusCode = expected
-            };
+            var expected = new object();
+            var response = new RestResponse<object>();
 
-            var result = new RequestResult<object>(response);
+            var result = new RequestResult<object>(response, expected);
 
-            Assert.Equal(expected, result.StatusCode);
+            Assert.Equal(expected, result.Data);
         }
 
         [Fact]
@@ -49,10 +39,16 @@ namespace GitLab.NET.Tests
         }
 
         [Fact]
+        public void ConstructorWithType_ResponseIsNull_ThrowsArgumentNullException()
+        {
+            Assert.Throws<ArgumentNullException>(() => new RequestResult<object>(null));
+        }
+
+        [Fact]
         public void ConstructorWithType_SetsData()
         {
             var expected = new object();
-            var response = new RestResponse<object>()
+            var response = new RestResponse<object>
             {
                 Data = expected
             };
@@ -63,14 +59,17 @@ namespace GitLab.NET.Tests
         }
 
         [Fact]
-        public void ConstructorWithoutType_SetsData()
+        public void ConstructorWithType_SetsStatusCode()
         {
-            var expected = new object();
-            var response = new RestResponse<object>();
+            const HttpStatusCode expected = HttpStatusCode.OK;
+            var response = new RestResponse<object>
+            {
+                StatusCode = expected
+            };
 
-            var result = new RequestResult<object>(response, expected);
+            var result = new RequestResult<object>(response);
 
-            Assert.Equal(expected, result.Data);
+            Assert.Equal(expected, result.StatusCode);
         }
     }
 }

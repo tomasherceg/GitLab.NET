@@ -1,18 +1,17 @@
-﻿using System;
-using RestSharp;
+﻿using RestSharp;
 
 namespace GitLab.NET.Authenticators
 {
     /// <summary> A GitLab private token authenticator. </summary>
     internal class PrivateTokenAuthenticator : IPrivateTokenAuthenticator
     {
-        /// <summary> The user's private token. </summary>
-        public string PrivateToken { get; set; }
-
         public PrivateTokenAuthenticator(string privateToken)
         {
             PrivateToken = privateToken;
         }
+
+        /// <summary> The user's private token. </summary>
+        public string PrivateToken { get; set; }
 
         /// <summary> Adds the provided private token to the request as a header. </summary>
         /// <param name="client"> The <see cref="IRestClient" />. </param>
