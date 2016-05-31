@@ -9,9 +9,6 @@ namespace GitLab.NET.Tests.Repositories
 {
     public class BuildTriggerRepositoryTests
     {
-        private readonly IRequest _request;
-        private readonly IRequestFactory _requestFactory;
-
         public BuildTriggerRepositoryTests()
         {
             _request = Substitute.For<IRequest>();
@@ -19,7 +16,9 @@ namespace GitLab.NET.Tests.Repositories
             _requestFactory.Create(Arg.Any<string>(), Arg.Any<Method>(), Arg.Any<bool>()).Returns(_request);
         }
 
-        #region Create
+        private readonly IRequest _request;
+        private readonly IRequestFactory _requestFactory;
+
         [Fact]
         public async Task Create_ValidParameters_AddsProjectIdUrlSegment()
         {
@@ -40,9 +39,7 @@ namespace GitLab.NET.Tests.Repositories
 
             _requestFactory.Received().Create("projects/{projectId}/triggers", Method.Post);
         }
-        #endregion
 
-        #region Delete
         [Fact]
         public async Task Delete_TokenIsNull_ThrowsArgumentNullException()
         {
@@ -82,9 +79,7 @@ namespace GitLab.NET.Tests.Repositories
 
             _requestFactory.Received().Create("projects/{projectId}/triggers/{token}", Method.Delete);
         }
-        #endregion
 
-        #region Find
         [Fact]
         public async Task Find_TokenIsNull_ThrowsArgumentNullException()
         {
@@ -124,9 +119,7 @@ namespace GitLab.NET.Tests.Repositories
 
             _requestFactory.Received().Create("projects/{projectId}/triggers/{token}", Method.Get);
         }
-        #endregion
 
-        #region GetAll
         [Fact]
         public async Task GetAll_ValidParameters_AddsProjectIdUrlSegment()
         {
@@ -147,6 +140,5 @@ namespace GitLab.NET.Tests.Repositories
 
             _requestFactory.Received().Create("projects/{projectId}/triggers", Method.Get);
         }
-        #endregion
     }
 }

@@ -9,9 +9,6 @@ namespace GitLab.NET.Tests.Repositories
 {
     public class DeployKeyRepositoryTests
     {
-        private readonly IRequest _request;
-        private readonly IRequestFactory _requestFactory;
-
         public DeployKeyRepositoryTests()
         {
             _request = Substitute.For<IRequest>();
@@ -19,7 +16,17 @@ namespace GitLab.NET.Tests.Repositories
             _requestFactory.Create(Arg.Any<string>(), Arg.Any<Method>(), Arg.Any<bool>()).Returns(_request);
         }
 
-        #region Create
+        private readonly IRequest _request;
+        private readonly IRequestFactory _requestFactory;
+
+        [Fact]
+        public async Task Create_KeyIsNull_ThrowsArgumentNullException()
+        {
+            var sut = new DeployKeyRepository(_requestFactory);
+
+            await Assert.ThrowsAsync<ArgumentNullException>(() => sut.Create(0, "title", null));
+        }
+
         [Fact]
         public async Task Create_TitleIsNull_ThrowsArgumentNullException()
         {
@@ -29,11 +36,14 @@ namespace GitLab.NET.Tests.Repositories
         }
 
         [Fact]
-        public async Task Create_KeyIsNull_ThrowsArgumentNullException()
+        public async Task Create_ValidParameters_AddsKeyParameter()
         {
+            const string expected = "key";
             var sut = new DeployKeyRepository(_requestFactory);
 
-            await Assert.ThrowsAsync<ArgumentNullException>(() => sut.Create(0, "title", null));
+            await sut.Create(0, "title", expected);
+
+            _request.Received().AddParameter("key", expected);
         }
 
         [Fact]
@@ -59,17 +69,6 @@ namespace GitLab.NET.Tests.Repositories
         }
 
         [Fact]
-        public async Task Create_ValidParameters_AddsKeyParameter()
-        {
-            const string expected = "key";
-            var sut = new DeployKeyRepository(_requestFactory);
-
-            await sut.Create(0, "title", expected);
-
-            _request.Received().AddParameter("key", expected);
-        }
-
-        [Fact]
         public async Task Create_ValidParameters_SetsCorrectResourceAndMethod()
         {
             var sut = new DeployKeyRepository(_requestFactory);
@@ -77,19 +76,6 @@ namespace GitLab.NET.Tests.Repositories
             await sut.Create(0, "title", "key");
 
             _requestFactory.Received().Create("projects/{projectId}/keys", Method.Post);
-        }
-        #endregion
-
-        #region Delete
-        [Fact]
-        public async Task Delete_ValidParameters_AddsProjectIdUrlSegment()
-        {
-            const uint expected = 0;
-            var sut = new DeployKeyRepository(_requestFactory);
-
-            await sut.Delete(expected, 0);
-
-            _request.Received().AddUrlSegment("projectId", expected);
         }
 
         [Fact]
@@ -104,6 +90,17 @@ namespace GitLab.NET.Tests.Repositories
         }
 
         [Fact]
+        public async Task Delete_ValidParameters_AddsProjectIdUrlSegment()
+        {
+            const uint expected = 0;
+            var sut = new DeployKeyRepository(_requestFactory);
+
+            await sut.Delete(expected, 0);
+
+            _request.Received().AddUrlSegment("projectId", expected);
+        }
+
+        [Fact]
         public async Task Delete_ValidParameters_SetsCorrectResourceAndMethod()
         {
             var sut = new DeployKeyRepository(_requestFactory);
@@ -111,19 +108,6 @@ namespace GitLab.NET.Tests.Repositories
             await sut.Delete(0, 0);
 
             _requestFactory.Received().Create("projects/{projectId}/keys/{keyId}", Method.Delete);
-        }
-        #endregion
-
-        #region Find
-        [Fact]
-        public async Task Find_ValidParameters_AddsProjectIdUrlSegment()
-        {
-            const uint expected = 0;
-            var sut = new DeployKeyRepository(_requestFactory);
-
-            await sut.Find(expected, 0);
-
-            _request.Received().AddUrlSegment("projectId", expected);
         }
 
         [Fact]
@@ -138,6 +122,17 @@ namespace GitLab.NET.Tests.Repositories
         }
 
         [Fact]
+        public async Task Find_ValidParameters_AddsProjectIdUrlSegment()
+        {
+            const uint expected = 0;
+            var sut = new DeployKeyRepository(_requestFactory);
+
+            await sut.Find(expected, 0);
+
+            _request.Received().AddUrlSegment("projectId", expected);
+        }
+
+        [Fact]
         public async Task Find_ValidParameters_SetsCorrectResourceAndMethod()
         {
             var sut = new DeployKeyRepository(_requestFactory);
@@ -146,9 +141,7 @@ namespace GitLab.NET.Tests.Repositories
 
             _requestFactory.Received().Create("projects/{projectId}/keys/{keyId}", Method.Get);
         }
-        #endregion
 
-        #region GetAll
         [Fact]
         public async Task GetAll_ValidParameters_AddsProjectIdUrlSegment()
         {
@@ -169,6 +162,5 @@ namespace GitLab.NET.Tests.Repositories
 
             _requestFactory.Received().Create("projects/{projectId}/keys", Method.Get);
         }
-        #endregion
     }
 }

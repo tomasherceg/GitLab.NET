@@ -1,17 +1,14 @@
-﻿using NSubstitute;
-using System;
+﻿using System;
 using System.Threading.Tasks;
 using GitLab.NET.Abstractions;
 using GitLab.NET.Repositories;
+using NSubstitute;
 using Xunit;
 
 namespace GitLab.NET.Tests.Repositories
 {
     public class CommitRepositoryTests
     {
-        private readonly IRequest _request;
-        private readonly IRequestFactory _requestFactory;
-
         public CommitRepositoryTests()
         {
             _request = Substitute.For<IRequest>();
@@ -19,65 +16,15 @@ namespace GitLab.NET.Tests.Repositories
             _requestFactory.Create(Arg.Any<string>(), Arg.Any<Method>(), Arg.Any<bool>()).Returns(_request);
         }
 
-        #region CreateComment
+        private readonly IRequest _request;
+        private readonly IRequestFactory _requestFactory;
+
         [Fact]
         public async Task CreateComment_CommitShaIsNull_ThrowsArgumentNullException()
         {
             var sut = new CommitRepository(_requestFactory);
 
             await Assert.ThrowsAsync<ArgumentNullException>(() => sut.CreateComment(0, null, "note"));
-        }
-
-        [Fact]
-        public async Task CreateComment_NoteIsNull_ThrowsArgumentNullException()
-        {
-            var sut = new CommitRepository(_requestFactory);
-
-            await Assert.ThrowsAsync<ArgumentNullException>(() => sut.CreateComment(0, "commitSha", null));
-        }
-
-        [Fact]
-        public async Task CreateComment_ValidParameters_AddsProjectIdUrlSegment()
-        {
-            const uint expected = 0;
-            var sut = new CommitRepository(_requestFactory);
-
-            await sut.CreateComment(expected, "commitSha", "note");
-
-            _request.Received().AddUrlSegment("projectId", expected);
-        }
-
-        [Fact]
-        public async Task CreateComment_ValidParameters_AddsCommitShaUrlSegment()
-        {
-            const string expected = "commitSha";
-            var sut = new CommitRepository(_requestFactory);
-
-            await sut.CreateComment(0, expected, "note");
-
-            _request.Received().AddUrlSegment("commitSha", expected);
-        }
-
-        [Fact]
-        public async Task CreateCommit_ValidParameters_AddsNoteParameter()
-        {
-            const string expected = "note";
-            var sut = new CommitRepository(_requestFactory);
-
-            await sut.CreateComment(0, "commitSha", expected);
-
-            _request.Received().AddParameter("note", expected);
-        }
-
-        [Fact]
-        public async Task CreateComment_PathIsSet_AddsPathParameter()
-        {
-            const string expected = "path";
-            var sut = new CommitRepository(_requestFactory);
-
-            await sut.CreateComment(0, "commitSha", "note", path: expected);
-
-            _request.Received().AddParameterIfNotNull("path", expected);
         }
 
         [Fact]
@@ -103,6 +50,47 @@ namespace GitLab.NET.Tests.Repositories
         }
 
         [Fact]
+        public async Task CreateComment_NoteIsNull_ThrowsArgumentNullException()
+        {
+            var sut = new CommitRepository(_requestFactory);
+
+            await Assert.ThrowsAsync<ArgumentNullException>(() => sut.CreateComment(0, "commitSha", null));
+        }
+
+        [Fact]
+        public async Task CreateComment_PathIsSet_AddsPathParameter()
+        {
+            const string expected = "path";
+            var sut = new CommitRepository(_requestFactory);
+
+            await sut.CreateComment(0, "commitSha", "note", expected);
+
+            _request.Received().AddParameterIfNotNull("path", expected);
+        }
+
+        [Fact]
+        public async Task CreateComment_ValidParameters_AddsCommitShaUrlSegment()
+        {
+            const string expected = "commitSha";
+            var sut = new CommitRepository(_requestFactory);
+
+            await sut.CreateComment(0, expected, "note");
+
+            _request.Received().AddUrlSegment("commitSha", expected);
+        }
+
+        [Fact]
+        public async Task CreateComment_ValidParameters_AddsProjectIdUrlSegment()
+        {
+            const uint expected = 0;
+            var sut = new CommitRepository(_requestFactory);
+
+            await sut.CreateComment(expected, "commitSha", "note");
+
+            _request.Received().AddUrlSegment("projectId", expected);
+        }
+
+        [Fact]
         public async Task CreateComment_ValidParameters_SetsCorrectResourceAndMethod()
         {
             var sut = new CommitRepository(_requestFactory);
@@ -111,89 +99,24 @@ namespace GitLab.NET.Tests.Repositories
 
             _requestFactory.Received().Create("projects/{projectId}/repository/commits/{commitSha}/comments", Method.Post);
         }
-        #endregion
 
-        #region CreateStatus
+        [Fact]
+        public async Task CreateCommit_ValidParameters_AddsNoteParameter()
+        {
+            const string expected = "note";
+            var sut = new CommitRepository(_requestFactory);
+
+            await sut.CreateComment(0, "commitSha", expected);
+
+            _request.Received().AddParameter("note", expected);
+        }
+
         [Fact]
         public async Task CreateStatus_CommitShaIsNull_ThrowsArgumentNullException()
         {
             var sut = new CommitRepository(_requestFactory);
 
             await Assert.ThrowsAsync<ArgumentNullException>(() => sut.CreateStatus(0, null, "state"));
-        }
-
-        [Fact]
-        public async Task CreateStatus_StateIsNull_ThrowsArgumentNullException()
-        {
-            var sut = new CommitRepository(_requestFactory);
-
-            await Assert.ThrowsAsync<ArgumentNullException>(() => sut.CreateStatus(0, "commitSha", null));
-        }
-
-        [Fact]
-        public async Task CreateStatus_ValidParameters_AddsProjectIdUrlSegment()
-        {
-            const uint expected = 0;
-            var sut = new CommitRepository(_requestFactory);
-
-            await sut.CreateStatus(expected, "commitSha", "state");
-
-            _request.Received().AddUrlSegment("projectId", expected);
-        }
-
-        [Fact]
-        public async Task CreateStatus_ValidParameters_AddsCommitShaUrlSegment()
-        {
-            const string expected = "commitSha";
-            var sut = new CommitRepository(_requestFactory);
-
-            await sut.CreateStatus(0, expected, "state");
-
-            _request.Received().AddUrlSegment("commitSha", expected);
-        }
-
-        [Fact]
-        public async Task CreateStatus_ValidParameters_AddsStateParameter()
-        {
-            const string expected = "state";
-            var sut = new CommitRepository(_requestFactory);
-
-            await sut.CreateStatus(0, "commitSha", expected);
-
-            _request.Received().AddParameter("state", expected);
-        }
-        
-        [Fact]
-        public async Task CreateStatus_RefNameIsSet_AddsRefNameParameter()
-        {
-            const string expected = "refName";
-            var sut = new CommitRepository(_requestFactory);
-
-            await sut.CreateStatus(0, "commitSha", "state", refName: expected);
-
-            _request.Received().AddParameterIfNotNull("ref", expected);
-        }
-
-        [Fact]
-        public async Task CreateStatus_NameIsSet_AddsNameParameter()
-        {
-            const string expected = "name";
-            var sut = new CommitRepository(_requestFactory);
-
-            await sut.CreateStatus(0, "commitSha", "state", name: expected);
-
-            _request.Received().AddParameterIfNotNull("name", expected);
-        }
-
-        [Fact]
-        public async Task CreateStatus_TargetUrlIsSet_AddsTargetUrlParameter()
-        {
-            const string expected = "targetUrl";
-            var sut = new CommitRepository(_requestFactory);
-
-            await sut.CreateStatus(0, "commitSha", "state", targetUrl: expected);
-
-            _request.Received().AddParameterIfNotNull("target_url", expected);
         }
 
         [Fact]
@@ -208,6 +131,80 @@ namespace GitLab.NET.Tests.Repositories
         }
 
         [Fact]
+        public async Task CreateStatus_NameIsSet_AddsNameParameter()
+        {
+            const string expected = "name";
+            var sut = new CommitRepository(_requestFactory);
+
+            await sut.CreateStatus(0, "commitSha", "state", name: expected);
+
+            _request.Received().AddParameterIfNotNull("name", expected);
+        }
+
+        [Fact]
+        public async Task CreateStatus_RefNameIsSet_AddsRefNameParameter()
+        {
+            const string expected = "refName";
+            var sut = new CommitRepository(_requestFactory);
+
+            await sut.CreateStatus(0, "commitSha", "state", expected);
+
+            _request.Received().AddParameterIfNotNull("ref", expected);
+        }
+
+        [Fact]
+        public async Task CreateStatus_StateIsNull_ThrowsArgumentNullException()
+        {
+            var sut = new CommitRepository(_requestFactory);
+
+            await Assert.ThrowsAsync<ArgumentNullException>(() => sut.CreateStatus(0, "commitSha", null));
+        }
+
+        [Fact]
+        public async Task CreateStatus_TargetUrlIsSet_AddsTargetUrlParameter()
+        {
+            const string expected = "targetUrl";
+            var sut = new CommitRepository(_requestFactory);
+
+            await sut.CreateStatus(0, "commitSha", "state", targetUrl: expected);
+
+            _request.Received().AddParameterIfNotNull("target_url", expected);
+        }
+
+        [Fact]
+        public async Task CreateStatus_ValidParameters_AddsCommitShaUrlSegment()
+        {
+            const string expected = "commitSha";
+            var sut = new CommitRepository(_requestFactory);
+
+            await sut.CreateStatus(0, expected, "state");
+
+            _request.Received().AddUrlSegment("commitSha", expected);
+        }
+
+        [Fact]
+        public async Task CreateStatus_ValidParameters_AddsProjectIdUrlSegment()
+        {
+            const uint expected = 0;
+            var sut = new CommitRepository(_requestFactory);
+
+            await sut.CreateStatus(expected, "commitSha", "state");
+
+            _request.Received().AddUrlSegment("projectId", expected);
+        }
+
+        [Fact]
+        public async Task CreateStatus_ValidParameters_AddsStateParameter()
+        {
+            const string expected = "state";
+            var sut = new CommitRepository(_requestFactory);
+
+            await sut.CreateStatus(0, "commitSha", expected);
+
+            _request.Received().AddParameter("state", expected);
+        }
+
+        [Fact]
         public async Task CreateStatus_ValidParameters_SetsCorrectResourceAndMethod()
         {
             var sut = new CommitRepository(_requestFactory);
@@ -216,26 +213,13 @@ namespace GitLab.NET.Tests.Repositories
 
             _requestFactory.Received().Create("projects/{projectId}/statuses/{commitSha}", Method.Post);
         }
-        #endregion
 
-        #region Find
         [Fact]
         public async Task Find_CommitShaIsNull_ThrowsArgumentNullException()
         {
             var sut = new CommitRepository(_requestFactory);
 
             await Assert.ThrowsAsync<ArgumentNullException>(() => sut.Find(0, null));
-        }
-
-        [Fact]
-        public async Task Find_ValidParameters_AddsProjectIdUrlSegment()
-        {
-            const uint expected = 0;
-            var sut = new CommitRepository(_requestFactory);
-
-            await sut.Find(expected, "commitSha");
-
-            _request.Received().AddUrlSegment("projectId", expected);
         }
 
         [Fact]
@@ -250,6 +234,17 @@ namespace GitLab.NET.Tests.Repositories
         }
 
         [Fact]
+        public async Task Find_ValidParameters_AddsProjectIdUrlSegment()
+        {
+            const uint expected = 0;
+            var sut = new CommitRepository(_requestFactory);
+
+            await sut.Find(expected, "commitSha");
+
+            _request.Received().AddUrlSegment("projectId", expected);
+        }
+
+        [Fact]
         public async Task Find_ValidParameters_SetsCorrectResourceAndMethod()
         {
             var sut = new CommitRepository(_requestFactory);
@@ -258,19 +253,6 @@ namespace GitLab.NET.Tests.Repositories
 
             _requestFactory.Received().Create("projects/{projectId}/repository/commits/{commitSha}", Method.Get);
         }
-        #endregion
-
-        #region GetAll
-        [Fact]
-        public async Task GetAll_ValidParameters_AddsProjectIdUrlSegment()
-        {
-            const uint expected = 0;
-            var sut = new CommitRepository(_requestFactory);
-
-            await sut.GetAll(expected);
-
-            _request.Received().AddUrlSegment("projectId", expected);
-        }
 
         [Fact]
         public async Task GetAll_RefNameIsSet_AddsRefNameParameter()
@@ -278,7 +260,7 @@ namespace GitLab.NET.Tests.Repositories
             const string expected = "refName";
             var sut = new CommitRepository(_requestFactory);
 
-            await sut.GetAll(0, refName: expected);
+            await sut.GetAll(0, expected);
 
             _request.Received().AddParameterIfNotNull("ref_name", expected);
         }
@@ -306,6 +288,17 @@ namespace GitLab.NET.Tests.Repositories
         }
 
         [Fact]
+        public async Task GetAll_ValidParameters_AddsProjectIdUrlSegment()
+        {
+            const uint expected = 0;
+            var sut = new CommitRepository(_requestFactory);
+
+            await sut.GetAll(expected);
+
+            _request.Received().AddUrlSegment("projectId", expected);
+        }
+
+        [Fact]
         public async Task GetAll_ValidParameters_SetsCorrectResourceAndMethod()
         {
             var sut = new CommitRepository(_requestFactory);
@@ -314,26 +307,13 @@ namespace GitLab.NET.Tests.Repositories
 
             _requestFactory.Received().Create("projects/{projectId}/repository/commits", Method.Get);
         }
-        #endregion
 
-        #region GetComments
         [Fact]
         public async Task GetComments_CommitShaIsNull_ThrowsArgumentNullException()
         {
             var sut = new CommitRepository(_requestFactory);
 
             await Assert.ThrowsAsync<ArgumentNullException>(() => sut.GetComments(0, null));
-        }
-
-        [Fact]
-        public async Task GetComments_ValidParameters_AddsProjectIdUrlSegment()
-        {
-            const uint expected = 0;
-            var sut = new CommitRepository(_requestFactory);
-
-            await sut.GetComments(expected, "commitSha");
-
-            _request.Received().AddUrlSegment("projectId", expected);
         }
 
         [Fact]
@@ -348,6 +328,17 @@ namespace GitLab.NET.Tests.Repositories
         }
 
         [Fact]
+        public async Task GetComments_ValidParameters_AddsProjectIdUrlSegment()
+        {
+            const uint expected = 0;
+            var sut = new CommitRepository(_requestFactory);
+
+            await sut.GetComments(expected, "commitSha");
+
+            _request.Received().AddUrlSegment("projectId", expected);
+        }
+
+        [Fact]
         public async Task GetComments_ValidParameters_SetsCorrectResourceAndMethod()
         {
             var sut = new CommitRepository(_requestFactory);
@@ -356,26 +347,13 @@ namespace GitLab.NET.Tests.Repositories
 
             _requestFactory.Received().Create("projects/{projectId}/repository/commits/{commitSha}/comments", Method.Get);
         }
-        #endregion
 
-        #region GetDiff
         [Fact]
         public async Task GetDiff_CommitShaIsNull_ThrowsArgumentNullException()
         {
             var sut = new CommitRepository(_requestFactory);
 
             await Assert.ThrowsAsync<ArgumentNullException>(() => sut.GetDiff(0, null));
-        }
-
-        [Fact]
-        public async Task GetDiff_ValidParameters_AddsProjectIdUrlSegment()
-        {
-            const uint expected = 0;
-            var sut = new CommitRepository(_requestFactory);
-
-            await sut.GetDiff(expected, "commitSha");
-
-            _request.Received().AddUrlSegment("projectId", expected);
         }
 
         [Fact]
@@ -390,6 +368,17 @@ namespace GitLab.NET.Tests.Repositories
         }
 
         [Fact]
+        public async Task GetDiff_ValidParameters_AddsProjectIdUrlSegment()
+        {
+            const uint expected = 0;
+            var sut = new CommitRepository(_requestFactory);
+
+            await sut.GetDiff(expected, "commitSha");
+
+            _request.Received().AddUrlSegment("projectId", expected);
+        }
+
+        [Fact]
         public async Task GetDiff_ValidParameters_SetsCorrectResourceAndMethod()
         {
             var sut = new CommitRepository(_requestFactory);
@@ -398,9 +387,18 @@ namespace GitLab.NET.Tests.Repositories
 
             _requestFactory.Received().Create("projects/{projectId}/repository/commits/{commitSha}/diff", Method.Get);
         }
-        #endregion
 
-        #region GetStatus
+        [Fact]
+        public async Task GetStatus_AllIsSet_AddsAllParameter()
+        {
+            const bool expected = true;
+            var sut = new CommitRepository(_requestFactory);
+
+            await sut.GetStatus(0, "commitSha", all: expected);
+
+            _request.Received().AddParameterIfNotNull("all", expected);
+        }
+
         [Fact]
         public async Task GetStatus_CommitShaIsNull_ThrowsArgumentNullException()
         {
@@ -410,25 +408,14 @@ namespace GitLab.NET.Tests.Repositories
         }
 
         [Fact]
-        public async Task GetStatus_ValidParameters_AddsProjectIdUrlSegment()
+        public async Task GetStatus_NameIsSet_AddsNameParameter()
         {
-            const uint expected = 0;
+            const string expected = "name";
             var sut = new CommitRepository(_requestFactory);
 
-            await sut.GetStatus(expected, "commitSha");
+            await sut.GetStatus(0, "commitSha", name: expected);
 
-            _request.Received().AddUrlSegment("projectId", expected);
-        }
-
-        [Fact]
-        public async Task GetStatus_ValidParameters_AddsCommitShaUrlSegment()
-        {
-            const string expected = "commitSha";
-            var sut = new CommitRepository(_requestFactory);
-
-            await sut.GetStatus(0, expected);
-
-            _request.Received().AddUrlSegment("commitSha", expected);
+            _request.Received().AddParameterIfNotNull("name", expected);
         }
 
         [Fact]
@@ -437,7 +424,7 @@ namespace GitLab.NET.Tests.Repositories
             const string expected = "refName";
             var sut = new CommitRepository(_requestFactory);
 
-            await sut.GetStatus(0, "commitSha", refName: expected);
+            await sut.GetStatus(0, "commitSha", expected);
 
             _request.Received().AddParameterIfNotNull("ref_name", expected);
         }
@@ -454,25 +441,25 @@ namespace GitLab.NET.Tests.Repositories
         }
 
         [Fact]
-        public async Task GetStatus_NameIsSet_AddsNameParameter()
+        public async Task GetStatus_ValidParameters_AddsCommitShaUrlSegment()
         {
-            const string expected = "name";
+            const string expected = "commitSha";
             var sut = new CommitRepository(_requestFactory);
 
-            await sut.GetStatus(0, "commitSha", name: expected);
+            await sut.GetStatus(0, expected);
 
-            _request.Received().AddParameterIfNotNull("name", expected);
+            _request.Received().AddUrlSegment("commitSha", expected);
         }
 
         [Fact]
-        public async Task GetStatus_AllIsSet_AddsAllParameter()
+        public async Task GetStatus_ValidParameters_AddsProjectIdUrlSegment()
         {
-            const bool expected = true;
+            const uint expected = 0;
             var sut = new CommitRepository(_requestFactory);
 
-            await sut.GetStatus(0, "commitSha", all: expected);
+            await sut.GetStatus(expected, "commitSha");
 
-            _request.Received().AddParameterIfNotNull("all", expected);
+            _request.Received().AddUrlSegment("projectId", expected);
         }
 
         [Fact]
@@ -484,89 +471,13 @@ namespace GitLab.NET.Tests.Repositories
 
             _requestFactory.Received().Create("projects/{projectId}/repository/commits/{commitSha}/statuses", Method.Get);
         }
-        #endregion
 
-        #region UpdateStatus
         [Fact]
         public async Task UpdateStatus_CommitShaIsNull_ThrowsArgumentNullException()
         {
             var sut = new CommitRepository(_requestFactory);
 
             await Assert.ThrowsAsync<ArgumentNullException>(() => sut.UpdateStatus(0, null, "state"));
-        }
-
-        [Fact]
-        public async Task UpdateStatus_StateIsNull_ThrowsArgumentNullException()
-        {
-            var sut = new CommitRepository(_requestFactory);
-
-            await Assert.ThrowsAsync<ArgumentNullException>(() => sut.UpdateStatus(0, "commitSha", null));
-        }
-
-        [Fact]
-        public async Task UpdateStatus_ValidParameters_AddsProjectIdUrlSegment()
-        {
-            const uint expected = 0;
-            var sut = new CommitRepository(_requestFactory);
-
-            await sut.UpdateStatus(expected, "commitSha", "state");
-
-            _request.Received().AddUrlSegment("projectId", expected);
-        }
-
-        [Fact]
-        public async Task UpdateStatus_ValidParameters_AddsCommitShaUrlSegment()
-        {
-            const string expected = "commitSha";
-            var sut = new CommitRepository(_requestFactory);
-
-            await sut.UpdateStatus(0, expected, "state");
-
-            _request.Received().AddUrlSegment("commitSha", expected);
-        }
-
-        [Fact]
-        public async Task UpdateStatus_ValidParameters_AddsStateParameter()
-        {
-            const string expected = "state";
-            var sut = new CommitRepository(_requestFactory);
-
-            await sut.UpdateStatus(0, "commitSha", expected);
-
-            _request.Received().AddParameter("state", expected);
-        }
-
-        [Fact]
-        public async Task UpdateStatus_RefNameIsSet_AddsRefNameParameter()
-        {
-            const string expected = "refName";
-            var sut = new CommitRepository(_requestFactory);
-
-            await sut.UpdateStatus(0, "commitSha", "state", refName: expected);
-
-            _request.Received().AddParameterIfNotNull("ref", expected);
-        }
-
-        [Fact]
-        public async Task UpdateStatus_NameIsSet_AddsNameParameter()
-        {
-            const string expected = "name";
-            var sut = new CommitRepository(_requestFactory);
-
-            await sut.UpdateStatus(0, "commitSha", "state", name: expected);
-
-            _request.Received().AddParameterIfNotNull("name", expected);
-        }
-
-        [Fact]
-        public async Task UpdateStatus_TargetUrlIsSet_AddsTargetUrlParameter()
-        {
-            const string expected = "targetUrl";
-            var sut = new CommitRepository(_requestFactory);
-
-            await sut.UpdateStatus(0, "commitSha", "state", targetUrl: expected);
-
-            _request.Received().AddParameterIfNotNull("target_url", expected);
         }
 
         [Fact]
@@ -581,6 +492,80 @@ namespace GitLab.NET.Tests.Repositories
         }
 
         [Fact]
+        public async Task UpdateStatus_NameIsSet_AddsNameParameter()
+        {
+            const string expected = "name";
+            var sut = new CommitRepository(_requestFactory);
+
+            await sut.UpdateStatus(0, "commitSha", "state", name: expected);
+
+            _request.Received().AddParameterIfNotNull("name", expected);
+        }
+
+        [Fact]
+        public async Task UpdateStatus_RefNameIsSet_AddsRefNameParameter()
+        {
+            const string expected = "refName";
+            var sut = new CommitRepository(_requestFactory);
+
+            await sut.UpdateStatus(0, "commitSha", "state", expected);
+
+            _request.Received().AddParameterIfNotNull("ref", expected);
+        }
+
+        [Fact]
+        public async Task UpdateStatus_StateIsNull_ThrowsArgumentNullException()
+        {
+            var sut = new CommitRepository(_requestFactory);
+
+            await Assert.ThrowsAsync<ArgumentNullException>(() => sut.UpdateStatus(0, "commitSha", null));
+        }
+
+        [Fact]
+        public async Task UpdateStatus_TargetUrlIsSet_AddsTargetUrlParameter()
+        {
+            const string expected = "targetUrl";
+            var sut = new CommitRepository(_requestFactory);
+
+            await sut.UpdateStatus(0, "commitSha", "state", targetUrl: expected);
+
+            _request.Received().AddParameterIfNotNull("target_url", expected);
+        }
+
+        [Fact]
+        public async Task UpdateStatus_ValidParameters_AddsCommitShaUrlSegment()
+        {
+            const string expected = "commitSha";
+            var sut = new CommitRepository(_requestFactory);
+
+            await sut.UpdateStatus(0, expected, "state");
+
+            _request.Received().AddUrlSegment("commitSha", expected);
+        }
+
+        [Fact]
+        public async Task UpdateStatus_ValidParameters_AddsProjectIdUrlSegment()
+        {
+            const uint expected = 0;
+            var sut = new CommitRepository(_requestFactory);
+
+            await sut.UpdateStatus(expected, "commitSha", "state");
+
+            _request.Received().AddUrlSegment("projectId", expected);
+        }
+
+        [Fact]
+        public async Task UpdateStatus_ValidParameters_AddsStateParameter()
+        {
+            const string expected = "state";
+            var sut = new CommitRepository(_requestFactory);
+
+            await sut.UpdateStatus(0, "commitSha", expected);
+
+            _request.Received().AddParameter("state", expected);
+        }
+
+        [Fact]
         public async Task UpdateStatus_ValidParameters_SetsCorrectResourceAndMethod()
         {
             var sut = new CommitRepository(_requestFactory);
@@ -589,6 +574,5 @@ namespace GitLab.NET.Tests.Repositories
 
             _requestFactory.Received().Create("projects/{projectId}/statuses/{commitSha}", Method.Post);
         }
-        #endregion
     }
 }

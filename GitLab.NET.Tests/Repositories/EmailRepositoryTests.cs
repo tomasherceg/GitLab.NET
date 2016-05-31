@@ -1,17 +1,14 @@
-﻿using NSubstitute;
-using System;
+﻿using System;
 using System.Threading.Tasks;
 using GitLab.NET.Abstractions;
 using GitLab.NET.Repositories;
+using NSubstitute;
 using Xunit;
 
 namespace GitLab.NET.Tests.Repositories
 {
     public class EmailRepositoryTests
     {
-        private readonly IRequest _request;
-        private readonly IRequestFactory _requestFactory;
-
         public EmailRepositoryTests()
         {
             _request = Substitute.For<IRequest>();
@@ -19,7 +16,9 @@ namespace GitLab.NET.Tests.Repositories
             _requestFactory.Create(Arg.Any<string>(), Arg.Any<Method>(), Arg.Any<bool>()).Returns(_request);
         }
 
-        #region Create
+        private readonly IRequest _request;
+        private readonly IRequestFactory _requestFactory;
+
         [Fact]
         public async Task Create_EmailIsNull_ThrowsArgumentNullException()
         {
@@ -29,14 +28,13 @@ namespace GitLab.NET.Tests.Repositories
         }
 
         [Fact]
-        public async Task Create_ValidParameters_AddsEmailParameter()
+        public async Task Create_UserIdIsNotSet_SetsCorrectResourceAndMethod()
         {
-            const string expected = "email";
             var sut = new EmailRepository(_requestFactory);
 
-            await sut.Create(expected);
+            await sut.Create("email");
 
-            _request.Received().AddParameter("email", expected);
+            _requestFactory.Received().Create("user/emails", Method.Post);
         }
 
         [Fact]
@@ -62,26 +60,24 @@ namespace GitLab.NET.Tests.Repositories
         }
 
         [Fact]
-        public async Task Create_UserIdIsNotSet_SetsCorrectResourceAndMethod()
+        public async Task Create_ValidParameters_AddsEmailParameter()
         {
+            const string expected = "email";
             var sut = new EmailRepository(_requestFactory);
 
-            await sut.Create("email");
+            await sut.Create(expected);
 
-            _requestFactory.Received().Create("user/emails", Method.Post);
+            _request.Received().AddParameter("email", expected);
         }
-        #endregion
 
-        #region Delete
         [Fact]
-        public async Task Delete_ValidParameters_AddsIdUrlSegment()
+        public async Task Delete_UserIdIsNotSet_SetsCorrectResourceAndMethod()
         {
-            const uint expected = 0;
             var sut = new EmailRepository(_requestFactory);
 
-            await sut.Delete(expected);
+            await sut.Delete(0);
 
-            _request.Received().AddUrlSegment("id", expected);
+            _requestFactory.Received().Create("user/emails/{id}", Method.Delete);
         }
 
         [Fact]
@@ -106,17 +102,16 @@ namespace GitLab.NET.Tests.Repositories
         }
 
         [Fact]
-        public async Task Delete_UserIdIsNotSet_SetsCorrectResourceAndMethod()
+        public async Task Delete_ValidParameters_AddsIdUrlSegment()
         {
+            const uint expected = 0;
             var sut = new EmailRepository(_requestFactory);
 
-            await sut.Delete(0);
+            await sut.Delete(expected);
 
-            _requestFactory.Received().Create("user/emails/{id}", Method.Delete);
+            _request.Received().AddUrlSegment("id", expected);
         }
-        #endregion
 
-        #region Find
         [Fact]
         public async Task Find_ValidParameters_AddsIdUrlSegment()
         {
@@ -137,9 +132,17 @@ namespace GitLab.NET.Tests.Repositories
 
             _requestFactory.Received().Create("user/emails/{id}", Method.Get);
         }
-        #endregion
 
-        #region GetForUser
+        [Fact]
+        public async Task GetForUser_UserIdIsNotSet_SetsCorrectResourceAndMethod()
+        {
+            var sut = new EmailRepository(_requestFactory);
+
+            await sut.GetForUser();
+
+            _requestFactory.Received().Create("user/emails", Method.Get);
+        }
+
         [Fact]
         public async Task GetForUser_UserIdIsSet_AddsUserIdUrlSegment()
         {
@@ -160,16 +163,5 @@ namespace GitLab.NET.Tests.Repositories
 
             _requestFactory.Received().Create("users/{userId}/emails", Method.Get);
         }
-
-        [Fact]
-        public async Task GetForUser_UserIdIsNotSet_SetsCorrectResourceAndMethod()
-        {
-            var sut = new EmailRepository(_requestFactory);
-
-            await sut.GetForUser();
-
-            _requestFactory.Received().Create("user/emails", Method.Get);
-        }
-        #endregion
     }
 }
