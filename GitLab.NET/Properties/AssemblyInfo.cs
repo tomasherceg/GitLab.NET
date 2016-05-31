@@ -9,7 +9,7 @@ using System.Runtime.InteropServices;
 [assembly:
     AssemblyDescription("GitLab.NET is a wrapper around GitLab's API that works with your .NET projects. This library is currently in Alpha phase, and as such it may not work correctly (or at all).")]
 [assembly: AssemblyConfiguration("")]
-[assembly: AssemblyCompany("Anthony Stivers, Ryan Marshall")]
+[assembly: AssemblyCompany("Anthony Stivers")]
 [assembly: AssemblyProduct("GitLab.NET")]
 [assembly: AssemblyCopyright("Copyright Anthony Stivers ©  2016")]
 [assembly: AssemblyTrademark("")]
@@ -36,5 +36,5 @@ using System.Runtime.InteropServices;
 // by using the '*' as shown below:
 // [assembly: AssemblyVersion("1.0.*")]
 
-[assembly: AssemblyVersion("0.0.2.0")]
-[assembly: AssemblyFileVersion("0.0.2.0")]
+[assembly: AssemblyVersion("0.0.3.0")]
+[assembly: AssemblyFileVersion("0.0.3.0")]

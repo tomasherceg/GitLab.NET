@@ -2,10 +2,10 @@
 <package >
   <metadata>
     <id>GitLab.NET</id>
-    <version>0.0.2</version>
+    <version>0.0.3</version>
     <title>GitLab.NET</title>
-    <authors>Anthony Stivers, Ryan Marshall</authors>
-    <owners>Anthony Stivers, Ryan Marshall</owners>
+    <authors>Anthony Stivers</authors>
+    <owners>Anthony Stivers</owners>
     <licenseUrl>https://opensource.org/licenses/MIT</licenseUrl>
     <projectUrl>https://gitlab.com/tstivers/GitLabAPI</projectUrl>
     <iconUrl>https://nuget.org/Content/Images/packageDefaultIcon-50x50.png</iconUrl>
