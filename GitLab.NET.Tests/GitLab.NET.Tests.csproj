@@ -79,6 +79,7 @@
     <Compile Include="Repositories\ProjectSnippetRepositoryTests.cs" />
     <Compile Include="Repositories\RepositoryBaseTests.cs" />
     <Compile Include="Repositories\RepositoryRepositoryTests.cs" />
+    <Compile Include="Repositories\RunnerRepositoryTests.cs" />
     <Compile Include="Repositories\SessionRepositoryTests.cs" />
     <Compile Include="Repositories\SystemHookRepositoryTests.cs" />
     <Compile Include="Repositories\TagRepositoryTests.cs" />

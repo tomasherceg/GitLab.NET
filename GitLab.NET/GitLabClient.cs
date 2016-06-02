@@ -55,20 +55,23 @@ namespace GitLab.NET
         /// <summary> Provides a wrapper around the GitLab labels API. </summary>
         public LabelRepository Labels { get; }
 
-        /// <summary> Provides a wrapper around the GitLab license template API. </summary>
+        /// <summary> Provides a wrapper around the GitLab license templates API. </summary>
         public LicenseRepository Licenses { get; }
 
         /// <summary> Provides a wrapper around the GitLab milestones API. </summary>
         public MilestoneRepository Milestones { get; }
 
-        /// <summary> Provides a wrapper around the GitLab namespace API. </summary>
+        /// <summary> Provides a wrapper around the GitLab namespaces API. </summary>
         public NamespaceRepository Namespaces { get; }
 
         /// <summary> Provides a wrapper around the GitLab project snippets API. </summary>
         public ProjectSnippetRepository ProjectSnippets { get; }
 
-        /// <summary> Provides a wrapper around the GitLab repository API. </summary>
+        /// <summary> Provides a wrapper around the GitLab repositories API. </summary>
         public RepositoryRepository Repositories { get; }
+
+        /// <summary> Provides a wrapper around the GitLab runners API. </summary>
+        public RunnerRepository Runners { get; }
 
         /// <summary> Provides a wrapper around the GitLab sessions API. </summary>
         public SessionRepository Session { get; }
@@ -110,6 +113,7 @@ namespace GitLab.NET
             Namespaces = new NamespaceRepository(requestFactory);
             ProjectSnippets = new ProjectSnippetRepository(requestFactory);
             Repositories = new RepositoryRepository(requestFactory);
+            Runners = new RunnerRepository(requestFactory);
             Session = new SessionRepository(requestFactory);
             SystemHooks = new SystemHookRepository(requestFactory);
             Tags = new TagRepository(requestFactory);
