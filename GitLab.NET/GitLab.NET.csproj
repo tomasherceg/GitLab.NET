@@ -68,8 +68,11 @@
     <Compile Include="Repositories\FileRepository.cs" />
     <Compile Include="Repositories\GitLabSettingsRepository.cs" />
     <Compile Include="Repositories\MilestoneRepository.cs" />
+    <Compile Include="Repositories\RunnerRepository.cs" />
     <Compile Include="Repositories\TagRepository.cs" />
     <Compile Include="ResponseModels\GitLabSettings.cs" />
+    <Compile Include="ResponseModels\Project.cs" />
+    <Compile Include="ResponseModels\Runner.cs" />
     <Compile Include="ResponseModels\UserPreview.cs" />
     <Compile Include="ResponseModels\Commit.cs" />
     <Compile Include="ResponseModels\CommitComment.cs" />
