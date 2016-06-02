@@ -25,6 +25,9 @@ namespace GitLab.NET
             }
         }
 
+        /// <summary> Provides a wrapper around the GitLab builds API. </summary>
+        public BuildRepository Builds { get; }
+
         /// <summary> Provides a wrapper around the GitLab build triggers API. </summary>
         public BuildTriggerRepository BuildTriggers { get; }
 
@@ -98,6 +101,7 @@ namespace GitLab.NET
             var clientFactory = new ClientFactory(baseUri, _authenticator);
             var requestFactory = new RequestFactory(clientFactory);
 
+            Builds = new BuildRepository(requestFactory);
             BuildTriggers = new BuildTriggerRepository(requestFactory);
             BuildVariables = new BuildVariableRepository(requestFactory);
             Commits = new CommitRepository(requestFactory);
