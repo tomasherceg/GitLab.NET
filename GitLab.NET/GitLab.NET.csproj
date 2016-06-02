@@ -58,6 +58,7 @@
     <Compile Include="Abstractions\Request.cs" />
     <Compile Include="Abstractions\RequestFactory.cs" />
     <Compile Include="AccessLevel.cs" />
+    <Compile Include="Repositories\BuildRepository.cs" />
     <Compile Include="Repositories\BuildTriggerRepository.cs" />
     <Compile Include="Repositories\BuildVariableRepository.cs" />
     <Compile Include="Repositories\CommitRepository.cs" />
@@ -70,6 +71,8 @@
     <Compile Include="Repositories\MilestoneRepository.cs" />
     <Compile Include="Repositories\RunnerRepository.cs" />
     <Compile Include="Repositories\TagRepository.cs" />
+    <Compile Include="ResponseModels\Build.cs" />
+    <Compile Include="ResponseModels\BuildArtifact.cs" />
     <Compile Include="ResponseModels\GitLabSettings.cs" />
     <Compile Include="ResponseModels\Project.cs" />
     <Compile Include="ResponseModels\Runner.cs" />
