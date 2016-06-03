@@ -47,6 +47,7 @@
     </Reference>
     <Reference Include="System" />
     <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.ComponentModel.DataAnnotations" />
     <Reference Include="System.Web.Extensions" />
   </ItemGroup>
   <ItemGroup>
@@ -59,6 +60,8 @@
     <Compile Include="Abstractions\RequestFactory.cs" />
     <Compile Include="AccessLevel.cs" />
     <Compile Include="BuildStatus.cs" />
+    <Compile Include="IssueOrderBy.cs" />
+    <Compile Include="IssueState.cs" />
     <Compile Include="LineType.cs" />
     <Compile Include="Repositories\BranchRepository.cs" />
     <Compile Include="Repositories\BuildRepository.cs" />
@@ -121,6 +124,8 @@
     <Compile Include="ResponseModels\SystemHook.cs" />
     <Compile Include="ResponseModels\SystemHookEvent.cs" />
     <Compile Include="ResponseModels\User.cs" />
+    <Compile Include="SortOrder.cs" />
+    <Compile Include="StateEvent.cs" />
     <Compile Include="VisibilityLevel.cs" />
     <Compile Include="Authenticators\PrivateTokenAuthenticator.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
