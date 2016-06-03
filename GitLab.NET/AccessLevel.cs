@@ -1,4 +1,6 @@
-﻿namespace GitLab.NET
+﻿// ReSharper disable UnusedMember.Global
+
+namespace GitLab.NET
 {
     /// <summary> Group access level. </summary>
     public enum AccessLevel

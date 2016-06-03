@@ -69,6 +69,7 @@
     <Compile Include="Config.cs" />
     <Compile Include="Repositories\FileRepository.cs" />
     <Compile Include="Repositories\GitLabSettingsRepository.cs" />
+    <Compile Include="Repositories\IssueRepository.cs" />
     <Compile Include="Repositories\MilestoneRepository.cs" />
     <Compile Include="Repositories\RunnerRepository.cs" />
     <Compile Include="Repositories\TagRepository.cs" />
