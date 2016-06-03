@@ -13,9 +13,7 @@ publish:
         - /^release-.*$/
     artifacts:
         paths:
-            - GitLab.NET/bin/Release/GitLab.dll
-            - GitLab.NET/bin/Release/GitLab.mdb
-            - GitLab.NET/bin/Release/GitLab.xml
+            - GitLab.NET/bin/Release/GitLab.NET.*
             - GitLab.NET.*.nupkg
     script:
         - xbuild "GitLab.NET.sln" /p:Configuration=Release
