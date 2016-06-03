@@ -6,8 +6,8 @@
     <title>GitLab.NET</title>
     <authors>Anthony Stivers</authors>
     <owners>Anthony Stivers</owners>
-    <licenseUrl>https://opensource.org/licenses/MIT</licenseUrl>
-    <projectUrl>https://gitlab.com/tstivers/GitLabAPI</projectUrl>
+    <licenseUrl>https://gitlab.com/tstivers/GitLab.NET/blob/master/LICENSE.md</licenseUrl>
+    <projectUrl>https://gitlab.com/tstivers/GitLab.NET</projectUrl>
     <iconUrl>https://nuget.org/Content/Images/packageDefaultIcon-50x50.png</iconUrl>
     <requireLicenseAcceptance>false</requireLicenseAcceptance>
     <summary>
