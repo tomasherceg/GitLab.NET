@@ -53,7 +53,7 @@ namespace GitLab.NET.Repositories
         /// <param name="page"> The page number for a paginated request. </param>
         /// <param name="resultsPerPage"> The number of results to return per request. </param>
         /// <returns> A <see cref="PaginatedResult{Milestone}" /> representing the results of the request. </returns>
-        public async Task<PaginatedResult<Milestone>> GetAll(uint projectId, string state = null, uint page = Config.DefaultPage, uint resultsPerPage = Config.DefaultResultsPerPage)
+        public async Task<PaginatedResult<Milestone>> GetAll(uint projectId, MilestoneState? state = null, uint page = Config.DefaultPage, uint resultsPerPage = Config.DefaultResultsPerPage)
         {
             if (page < Config.DefaultPage)
                 throw new ArgumentOutOfRangeException(nameof(page), page, "The parameter 'page' must be greater than " + Config.DefaultPage + ".");
@@ -64,10 +64,12 @@ namespace GitLab.NET.Repositories
             if (resultsPerPage > Config.MaxResultsPerPage)
                 throw new ArgumentOutOfRangeException(nameof(resultsPerPage), resultsPerPage, "The parameter 'resultsPerPage' must be less than " + Config.MaxResultsPerPage + ".");
 
+            var stateValue = state != null ? Enum.GetName(typeof(MilestoneState), state)?.ToLower() : null;
+
             var request = RequestFactory.Create("projects/{projectId}/milestones", Method.Get);
 
             request.AddUrlSegment("projectId", projectId);
-            request.AddParameterIfNotNull("state", state);
+            request.AddParameterIfNotNull("state", stateValue);
             request.AddParameter("page", page);
             request.AddParameter("per_page", resultsPerPage);
 
@@ -109,8 +111,10 @@ namespace GitLab.NET.Repositories
         /// <param name="dueDate"> The new due date for the milestone. </param>
         /// <param name="state"> The new state for the milestone (close/activate). </param>
         /// <returns> A <see cref="RequestResult{Milestone}" /> representing the results of the request. </returns>
-        public async Task<RequestResult<Milestone>> Update(uint projectId, uint milestoneId, string title = null, string description = null, DateTime? dueDate = null, string state = null)
+        public async Task<RequestResult<Milestone>> Update(uint projectId, uint milestoneId, string title = null, string description = null, DateTime? dueDate = null, MilestoneStateEvent? state = null)
         {
+            var stateValue = state != null ? Enum.GetName(typeof(MilestoneStateEvent), state)?.ToLower() : null;
+
             var request = RequestFactory.Create("projects/{projectId}/milestones/{milestoneId}", Method.Put);
 
             request.AddUrlSegment("projectId", projectId);
@@ -118,7 +122,7 @@ namespace GitLab.NET.Repositories
             request.AddParameterIfNotNull("title", title);
             request.AddParameterIfNotNull("description", description);
             request.AddParameterIfNotNull("due_date", dueDate);
-            request.AddParameterIfNotNull("state_event", state);
+            request.AddParameterIfNotNull("state_event", stateValue);
 
             return await request.ExecuteAsync<Milestone>();
         }

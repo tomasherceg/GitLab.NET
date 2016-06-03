@@ -3,7 +3,7 @@
 namespace GitLab.NET
 {
     /// <summary> Contains the possible state events. </summary>
-    public enum StateEvent
+    public enum IssueStateEvent
     {
         /// <summary> Closes the item. </summary>
         Close,

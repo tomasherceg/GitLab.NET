@@ -63,6 +63,8 @@
     <Compile Include="IssueOrderBy.cs" />
     <Compile Include="IssueState.cs" />
     <Compile Include="LineType.cs" />
+    <Compile Include="MilestoneState.cs" />
+    <Compile Include="MilestoneStateEvent.cs" />
     <Compile Include="Repositories\BranchRepository.cs" />
     <Compile Include="Repositories\BuildRepository.cs" />
     <Compile Include="Repositories\BuildTriggerRepository.cs" />
@@ -125,7 +127,7 @@
     <Compile Include="ResponseModels\SystemHookEvent.cs" />
     <Compile Include="ResponseModels\User.cs" />
     <Compile Include="SortOrder.cs" />
-    <Compile Include="StateEvent.cs" />
+    <Compile Include="IssueStateEvent.cs" />
     <Compile Include="VisibilityLevel.cs" />
     <Compile Include="Authenticators\PrivateTokenAuthenticator.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

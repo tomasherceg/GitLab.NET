@@ -181,10 +181,10 @@ namespace GitLab.NET.Repositories
                                                        uint? assigneeId = null,
                                                        uint? milestoneId = null,
                                                        string[] labels = null,
-                                                       StateEvent? state = null,
+                                                       IssueStateEvent? state = null,
                                                        DateTime? updatedAt = null)
         {
-            var stateValue = state != null ? Enum.GetName(typeof(StateEvent), state)?.ToLower() : null;
+            var stateValue = state != null ? Enum.GetName(typeof(IssueStateEvent), state)?.ToLower() : null;
 
             var request = RequestFactory.Create("projects/{projectId}/issues/{issueId}", Method.Put);
 
