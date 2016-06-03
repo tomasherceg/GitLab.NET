@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Threading.Tasks;
 using GitLab.NET.Abstractions;
+using GitLab.NET.EnumHelpers;
 using GitLab.NET.ResponseModels;
 
 namespace GitLab.NET.Repositories
@@ -106,7 +107,7 @@ namespace GitLab.NET.Repositories
         public async Task<PaginatedResult<Issue>> GetOwned(IssueState? state = null, string[] labels = null, IssueOrderBy? orderBy = null, SortOrder? sort = null)
         {
             var stateValue = state != null ? Enum.GetName(typeof(IssueState), state)?.ToLower() : null;
-            var orderByValue = orderBy != null ? Enum.GetName(typeof(IssueOrderBy), orderBy)?.ToLower() : null;
+            var orderByValue = orderBy?.GetDescription();
             var sortValue = sort != null ? Enum.GetName(typeof(SortOrder), sort)?.ToLower() : null;
 
             var request = RequestFactory.Create("issues", Method.Get);

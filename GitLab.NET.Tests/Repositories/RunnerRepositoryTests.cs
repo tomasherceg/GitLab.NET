@@ -116,8 +116,9 @@ namespace GitLab.NET.Tests.Repositories
         public async Task GetAll_ScopeIsSet_AddsScopeParameter()
         {
             const string expected = "active";
+            const RunnerScope scope = RunnerScope.Active;
 
-            await _sut.GetAll(expected);
+            await _sut.GetAll(scope);
 
             _request.Received().AddParameterIfNotNull("scope", expected);
         }
@@ -152,8 +153,9 @@ namespace GitLab.NET.Tests.Repositories
         public async Task GetOwned_ScopeIsSet_AddsScopeParameter()
         {
             const string expected = "active";
+            const RunnerScope scope = RunnerScope.Active;
 
-            await _sut.GetOwned(expected);
+            await _sut.GetOwned(scope);
 
             _request.Received().AddParameterIfNotNull("scope", expected);
         }

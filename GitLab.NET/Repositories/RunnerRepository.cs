@@ -1,4 +1,5 @@
-﻿using System.Threading.Tasks;
+﻿using System;
+using System.Threading.Tasks;
 using GitLab.NET.Abstractions;
 using GitLab.NET.ResponseModels;
 
@@ -66,11 +67,13 @@ namespace GitLab.NET.Repositories
         /// <summary> Gets all runners in the GitLab instance. </summary>
         /// <param name="scope"> The scope to limit the results to (active/paused/online/specific/shared) </param>
         /// <returns> A <see cref="PaginatedResult{Runner}" /> representing the results of the request. </returns>
-        public async Task<PaginatedResult<Runner>> GetAll(string scope = null)
+        public async Task<PaginatedResult<Runner>> GetAll(RunnerScope? scope = null)
         {
+            var scopeValue = scope != null ? Enum.GetName(typeof(RunnerScope), scope)?.ToLower() : null;
+
             var request = RequestFactory.Create("runners/all", Method.Get);
 
-            request.AddParameterIfNotNull("scope", scope);
+            request.AddParameterIfNotNull("scope", scopeValue);
 
             return await request.ExecutePaginatedAsync<Runner>();
         }
@@ -90,11 +93,13 @@ namespace GitLab.NET.Repositories
         /// <summary> Gets all runners owned by the currently authenticated user. </summary>
         /// <param name="scope"> The scope to limit the results to (active/paused/online) </param>
         /// <returns> A <see cref="PaginatedResult{Runner}" /> representing the results of the request. </returns>
-        public async Task<PaginatedResult<Runner>> GetOwned(string scope = null)
+        public async Task<PaginatedResult<Runner>> GetOwned(RunnerScope? scope = null)
         {
+            var scopeValue = scope != null ? Enum.GetName(typeof(RunnerScope), scope)?.ToLower() : null;
+
             var request = RequestFactory.Create("runners", Method.Get);
 
-            request.AddParameterIfNotNull("scope", scope);
+            request.AddParameterIfNotNull("scope", scopeValue);
 
             return await request.ExecutePaginatedAsync<Runner>();
         }

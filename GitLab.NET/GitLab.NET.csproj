@@ -60,6 +60,7 @@
     <Compile Include="Abstractions\RequestFactory.cs" />
     <Compile Include="AccessLevel.cs" />
     <Compile Include="BuildStatus.cs" />
+    <Compile Include="EnumHelpers\DisplayAttributes.cs" />
     <Compile Include="IssueOrderBy.cs" />
     <Compile Include="IssueState.cs" />
     <Compile Include="LineType.cs" />
@@ -126,6 +127,7 @@
     <Compile Include="ResponseModels\SystemHook.cs" />
     <Compile Include="ResponseModels\SystemHookEvent.cs" />
     <Compile Include="ResponseModels\User.cs" />
+    <Compile Include="RunnerScope.cs" />
     <Compile Include="SortOrder.cs" />
     <Compile Include="IssueStateEvent.cs" />
     <Compile Include="VisibilityLevel.cs" />

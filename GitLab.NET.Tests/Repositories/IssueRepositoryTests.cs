@@ -214,9 +214,10 @@ namespace GitLab.NET.Tests.Repositories
         [Fact]
         public async Task GetByProject_StateIsSet_AddsStateParameter()
         {
-            const string expected = "state";
+            const string expected = "closed";
+            const IssueState state = IssueState.Closed;
 
-            await _sut.GetByProject(0, expected);
+            await _sut.GetByProject(0, state);
 
             _request.Received().AddParameterIfNotNull("state", expected);
         }
@@ -258,8 +259,9 @@ namespace GitLab.NET.Tests.Repositories
         public async Task GetOwned_OrderByIsSet_AddsOrderByParameter()
         {
             const string expected = "updated_at";
+            const IssueOrderBy orderBy = IssueOrderBy.UpdatedAt;
 
-            await _sut.GetOwned(orderBy: expected);
+            await _sut.GetOwned(orderBy: orderBy);
 
             _request.Received().AddParameterIfNotNull("order_by", expected);
         }
@@ -268,8 +270,9 @@ namespace GitLab.NET.Tests.Repositories
         public async Task GetOwned_SortIsSet_AddsSortParameter()
         {
             const string expected = "asc";
+            const SortOrder sort = SortOrder.Asc;
 
-            await _sut.GetOwned(sort: expected);
+            await _sut.GetOwned(sort: sort);
 
             _request.Received().AddParameterIfNotNull("sort", expected);
         }
@@ -278,8 +281,9 @@ namespace GitLab.NET.Tests.Repositories
         public async Task GetOwned_StateIsSet_AddsStateParameter()
         {
             const string expected = "opened";
+            const IssueState state = IssueState.Opened;
 
-            await _sut.GetOwned(expected);
+            await _sut.GetOwned(state);
 
             _request.Received().AddParameterIfNotNull("state", expected);
         }
@@ -435,8 +439,9 @@ namespace GitLab.NET.Tests.Repositories
         public async Task Update_StateIsSet_AddsStateEventParameter()
         {
             const string expected = "close";
+            const IssueStateEvent state = IssueStateEvent.Close;
 
-            await _sut.Update(0, 0, state: expected);
+            await _sut.Update(0, 0, state: state);
 
             _request.Received().AddParameterIfNotNull("state_event", expected);
         }

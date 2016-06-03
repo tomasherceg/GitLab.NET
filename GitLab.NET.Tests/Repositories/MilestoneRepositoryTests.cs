@@ -145,8 +145,9 @@ namespace GitLab.NET.Tests.Repositories
         public async Task GetAll_StateIsSet_AddsStateParameter()
         {
             const string expected = "active";
+            const MilestoneState state = MilestoneState.Active;
 
-            await _sut.GetAll(0, expected);
+            await _sut.GetAll(0, state);
 
             _request.Received().AddParameterIfNotNull("state", expected);
         }
@@ -251,8 +252,9 @@ namespace GitLab.NET.Tests.Repositories
         public async Task Update_StateIsSet_AddsStateEventParameter()
         {
             const string expected = "activate";
+            const MilestoneStateEvent state = MilestoneStateEvent.Activate;
 
-            await _sut.Update(0, 0, state: expected);
+            await _sut.Update(0, 0, state: state);
 
             _request.Received().AddParameterIfNotNull("state_event", expected);
         }

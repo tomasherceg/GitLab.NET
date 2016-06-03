@@ -1,6 +1,6 @@
 ﻿// ReSharper disable UnusedMember.Global
 
-using System.ComponentModel.DataAnnotations;
+using System.ComponentModel;
 
 namespace GitLab.NET
 {
@@ -8,9 +8,9 @@ namespace GitLab.NET
     public enum IssueOrderBy
     {
         /// <summary> Order by the date and time the issue was created at. </summary>
-        [Display(Name = "created_at")] CreatedAt,
+        [Description("created_at")] CreatedAt,
 
         /// <summary> Order by the date and time the issue was last updated at. </summary>
-        [Display(Name = "updated_at")] UpdatedAt
+        [Description("updated_at")] UpdatedAt
     }
 }
