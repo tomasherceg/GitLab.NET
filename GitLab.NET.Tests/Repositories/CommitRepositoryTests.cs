@@ -41,10 +41,11 @@ namespace GitLab.NET.Tests.Repositories
         [Fact]
         public async Task CreateComment_LineTypeIsSet_AddsLineTypeParameter()
         {
-            const string expected = "lineType";
+            const string expected = "new";
+            const LineType lineType = LineType.New;
             var sut = new CommitRepository(_requestFactory);
 
-            await sut.CreateComment(0, "commitSha", "note", lineType: expected);
+            await sut.CreateComment(0, "commitSha", "note", lineType: lineType);
 
             _request.Received().AddParameterIfNotNull("line_type", expected);
         }
@@ -116,7 +117,7 @@ namespace GitLab.NET.Tests.Repositories
         {
             var sut = new CommitRepository(_requestFactory);
 
-            await Assert.ThrowsAsync<ArgumentNullException>(() => sut.CreateStatus(0, null, "state"));
+            await Assert.ThrowsAsync<ArgumentNullException>(() => sut.CreateStatus(0, null, BuildStatus.Pending));
         }
 
         [Fact]
@@ -125,7 +126,7 @@ namespace GitLab.NET.Tests.Repositories
             const string expected = "description";
             var sut = new CommitRepository(_requestFactory);
 
-            await sut.CreateStatus(0, "commitSha", "state", description: expected);
+            await sut.CreateStatus(0, "commitSha", BuildStatus.Pending, description: expected);
 
             _request.Received().AddParameterIfNotNull("description", expected);
         }
@@ -136,7 +137,7 @@ namespace GitLab.NET.Tests.Repositories
             const string expected = "name";
             var sut = new CommitRepository(_requestFactory);
 
-            await sut.CreateStatus(0, "commitSha", "state", name: expected);
+            await sut.CreateStatus(0, "commitSha", BuildStatus.Pending, name: expected);
 
             _request.Received().AddParameterIfNotNull("name", expected);
         }
@@ -147,17 +148,9 @@ namespace GitLab.NET.Tests.Repositories
             const string expected = "refName";
             var sut = new CommitRepository(_requestFactory);
 
-            await sut.CreateStatus(0, "commitSha", "state", expected);
+            await sut.CreateStatus(0, "commitSha", BuildStatus.Pending, expected);
 
             _request.Received().AddParameterIfNotNull("ref", expected);
-        }
-
-        [Fact]
-        public async Task CreateStatus_StateIsNull_ThrowsArgumentNullException()
-        {
-            var sut = new CommitRepository(_requestFactory);
-
-            await Assert.ThrowsAsync<ArgumentNullException>(() => sut.CreateStatus(0, "commitSha", null));
         }
 
         [Fact]
@@ -166,7 +159,7 @@ namespace GitLab.NET.Tests.Repositories
             const string expected = "targetUrl";
             var sut = new CommitRepository(_requestFactory);
 
-            await sut.CreateStatus(0, "commitSha", "state", targetUrl: expected);
+            await sut.CreateStatus(0, "commitSha", BuildStatus.Pending, targetUrl: expected);
 
             _request.Received().AddParameterIfNotNull("target_url", expected);
         }
@@ -177,7 +170,7 @@ namespace GitLab.NET.Tests.Repositories
             const string expected = "commitSha";
             var sut = new CommitRepository(_requestFactory);
 
-            await sut.CreateStatus(0, expected, "state");
+            await sut.CreateStatus(0, expected, BuildStatus.Pending);
 
             _request.Received().AddUrlSegment("commitSha", expected);
         }
@@ -188,7 +181,7 @@ namespace GitLab.NET.Tests.Repositories
             const uint expected = 0;
             var sut = new CommitRepository(_requestFactory);
 
-            await sut.CreateStatus(expected, "commitSha", "state");
+            await sut.CreateStatus(expected, "commitSha", BuildStatus.Pending);
 
             _request.Received().AddUrlSegment("projectId", expected);
         }
@@ -196,10 +189,11 @@ namespace GitLab.NET.Tests.Repositories
         [Fact]
         public async Task CreateStatus_ValidParameters_AddsStateParameter()
         {
-            const string expected = "state";
+            const string expected = "pending";
+            const BuildStatus state = BuildStatus.Pending;
             var sut = new CommitRepository(_requestFactory);
 
-            await sut.CreateStatus(0, "commitSha", expected);
+            await sut.CreateStatus(0, "commitSha", state);
 
             _request.Received().AddParameter("state", expected);
         }
@@ -209,7 +203,7 @@ namespace GitLab.NET.Tests.Repositories
         {
             var sut = new CommitRepository(_requestFactory);
 
-            await sut.CreateStatus(0, "commitSha", "state");
+            await sut.CreateStatus(0, "commitSha", BuildStatus.Pending);
 
             _requestFactory.Received().Create("projects/{projectId}/statuses/{commitSha}", Method.Post);
         }
@@ -569,7 +563,7 @@ namespace GitLab.NET.Tests.Repositories
         {
             var sut = new CommitRepository(_requestFactory);
 
-            await Assert.ThrowsAsync<ArgumentNullException>(() => sut.UpdateStatus(0, null, "state"));
+            await Assert.ThrowsAsync<ArgumentNullException>(() => sut.UpdateStatus(0, null, BuildStatus.Pending));
         }
 
         [Fact]
@@ -578,7 +572,7 @@ namespace GitLab.NET.Tests.Repositories
             const string expected = "description";
             var sut = new CommitRepository(_requestFactory);
 
-            await sut.UpdateStatus(0, "commitSha", "state", description: expected);
+            await sut.UpdateStatus(0, "commitSha", BuildStatus.Pending, description: expected);
 
             _request.Received().AddParameterIfNotNull("description", expected);
         }
@@ -589,7 +583,7 @@ namespace GitLab.NET.Tests.Repositories
             const string expected = "name";
             var sut = new CommitRepository(_requestFactory);
 
-            await sut.UpdateStatus(0, "commitSha", "state", name: expected);
+            await sut.UpdateStatus(0, "commitSha", BuildStatus.Pending, name: expected);
 
             _request.Received().AddParameterIfNotNull("name", expected);
         }
@@ -600,17 +594,9 @@ namespace GitLab.NET.Tests.Repositories
             const string expected = "refName";
             var sut = new CommitRepository(_requestFactory);
 
-            await sut.UpdateStatus(0, "commitSha", "state", expected);
+            await sut.UpdateStatus(0, "commitSha", BuildStatus.Pending, expected);
 
             _request.Received().AddParameterIfNotNull("ref", expected);
-        }
-
-        [Fact]
-        public async Task UpdateStatus_StateIsNull_ThrowsArgumentNullException()
-        {
-            var sut = new CommitRepository(_requestFactory);
-
-            await Assert.ThrowsAsync<ArgumentNullException>(() => sut.UpdateStatus(0, "commitSha", null));
         }
 
         [Fact]
@@ -619,7 +605,7 @@ namespace GitLab.NET.Tests.Repositories
             const string expected = "targetUrl";
             var sut = new CommitRepository(_requestFactory);
 
-            await sut.UpdateStatus(0, "commitSha", "state", targetUrl: expected);
+            await sut.UpdateStatus(0, "commitSha", BuildStatus.Pending, targetUrl: expected);
 
             _request.Received().AddParameterIfNotNull("target_url", expected);
         }
@@ -630,7 +616,7 @@ namespace GitLab.NET.Tests.Repositories
             const string expected = "commitSha";
             var sut = new CommitRepository(_requestFactory);
 
-            await sut.UpdateStatus(0, expected, "state");
+            await sut.UpdateStatus(0, expected, BuildStatus.Pending);
 
             _request.Received().AddUrlSegment("commitSha", expected);
         }
@@ -641,7 +627,7 @@ namespace GitLab.NET.Tests.Repositories
             const uint expected = 0;
             var sut = new CommitRepository(_requestFactory);
 
-            await sut.UpdateStatus(expected, "commitSha", "state");
+            await sut.UpdateStatus(expected, "commitSha", BuildStatus.Pending);
 
             _request.Received().AddUrlSegment("projectId", expected);
         }
@@ -649,10 +635,11 @@ namespace GitLab.NET.Tests.Repositories
         [Fact]
         public async Task UpdateStatus_ValidParameters_AddsStateParameter()
         {
-            const string expected = "state";
+            const string expected = "pending";
+            const BuildStatus state = BuildStatus.Pending;
             var sut = new CommitRepository(_requestFactory);
 
-            await sut.UpdateStatus(0, "commitSha", expected);
+            await sut.UpdateStatus(0, "commitSha", state);
 
             _request.Received().AddParameter("state", expected);
         }
@@ -662,7 +649,7 @@ namespace GitLab.NET.Tests.Repositories
         {
             var sut = new CommitRepository(_requestFactory);
 
-            await sut.UpdateStatus(0, "commitSha", "state");
+            await sut.UpdateStatus(0, "commitSha", BuildStatus.Pending);
 
             _requestFactory.Received().Create("projects/{projectId}/statuses/{commitSha}", Method.Post);
         }

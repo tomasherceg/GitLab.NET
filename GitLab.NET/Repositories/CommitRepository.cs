@@ -21,7 +21,7 @@ namespace GitLab.NET.Repositories
         /// <param name="line"> The line to associate this comment with. </param>
         /// <param name="lineType"> The line type for this comment. </param>
         /// <returns> A <see cref="RequestResult{CommitComment}" /> representing the results of the request. </returns>
-        public async Task<RequestResult<CommitComment>> CreateComment(uint projectId, string commitSha, string note, string path = null, uint? line = null, string lineType = null)
+        public async Task<RequestResult<CommitComment>> CreateComment(uint projectId, string commitSha, string note, string path = null, uint? line = null, LineType? lineType = null)
         {
             if (commitSha == null)
                 throw new ArgumentNullException(nameof(commitSha));
@@ -31,12 +31,14 @@ namespace GitLab.NET.Repositories
 
             var request = RequestFactory.Create("projects/{projectId}/repository/commits/{commitSha}/comments", Method.Post);
 
+            var lineTypeValue = lineType != null ? Enum.GetName(typeof(LineType), lineType)?.ToLower() : null;
+
             request.AddUrlSegment("projectId", projectId);
             request.AddUrlSegment("commitSha", commitSha);
             request.AddParameter("note", note);
             request.AddParameterIfNotNull("path", path);
             request.AddParameterIfNotNull("line", line);
-            request.AddParameterIfNotNull("line_type", lineType);
+            request.AddParameterIfNotNull("line_type", lineTypeValue);
 
             return await request.ExecuteAsync<CommitComment>();
         }
@@ -52,7 +54,7 @@ namespace GitLab.NET.Repositories
         /// <returns> A <see cref="RequestResult{CommitStatus}" /> representing the results of the request. </returns>
         public async Task<RequestResult<CommitStatus>> CreateStatus(uint projectId,
                                                                     string commitSha,
-                                                                    string state,
+                                                                    BuildStatus state,
                                                                     string refName = null,
                                                                     string name = null,
                                                                     string targetUrl = null,
@@ -61,14 +63,11 @@ namespace GitLab.NET.Repositories
             if (commitSha == null)
                 throw new ArgumentNullException(nameof(commitSha));
 
-            if (state == null)
-                throw new ArgumentNullException(nameof(state));
-
             var request = RequestFactory.Create("projects/{projectId}/statuses/{commitSha}", Method.Post);
 
             request.AddUrlSegment("projectId", projectId);
             request.AddUrlSegment("commitSha", commitSha);
-            request.AddParameter("state", state);
+            request.AddParameter("state", Enum.GetName(typeof(BuildStatus), state)?.ToLower());
             request.AddParameterIfNotNull("ref", refName);
             request.AddParameterIfNotNull("name", name);
             request.AddParameterIfNotNull("target_url", targetUrl);
@@ -218,7 +217,7 @@ namespace GitLab.NET.Repositories
         /// <returns> A <see cref="RequestResult{CommitStatus}" /> representing the results of the request. </returns>
         public async Task<RequestResult<CommitStatus>> UpdateStatus(uint projectId,
                                                                     string commitSha,
-                                                                    string state,
+                                                                    BuildStatus state,
                                                                     string refName = null,
                                                                     string name = null,
                                                                     string targetUrl = null,
@@ -226,9 +225,6 @@ namespace GitLab.NET.Repositories
         {
             if (commitSha == null)
                 throw new ArgumentNullException(nameof(commitSha));
-
-            if (state == null)
-                throw new ArgumentNullException(nameof(state));
 
             return await CreateStatus(projectId, commitSha, state, refName, name, targetUrl, description);
         }
