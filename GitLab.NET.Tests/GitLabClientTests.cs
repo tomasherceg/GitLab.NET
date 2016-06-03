@@ -14,6 +14,14 @@ namespace GitLab.NET.Tests
         }
 
         [Fact]
+        public void Constructor_ValidParameters_SetsBranches()
+        {
+            var sut = new GitLabClient(ValidHostUri);
+
+            Assert.NotNull(sut.Branches);
+        }
+
+        [Fact]
         public void Constructor_ValidParameters_SetsBuilds()
         {
             var sut = new GitLabClient(ValidHostUri);
