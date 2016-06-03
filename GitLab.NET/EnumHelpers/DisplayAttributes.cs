@@ -5,11 +5,9 @@ namespace GitLab.NET.EnumHelpers
 {
     internal static class DisplayAttributes
     {
-        /// <summary> Gets an attribute on an enum field value </summary>
-        /// <typeparam name="T"> The type of the attribute you want to retrieve </typeparam>
-        /// <param name="enumVal"> The enum value </param>
-        /// <returns> The attribute of type T that exists on the enum value </returns>
-        /// <example> string desc = myEnumVariable.GetAttributeOfType<DescriptionAttribute> ().Description; </example>
+        /// <summary> Gets the description attribute on an enum field value. </summary>
+        /// <param name="enumVal"> The enum value. </param>
+        /// <returns> The description attribute from the enum value. </returns>
         public static string GetDescription(this Enum enumVal)
         {
             var type = enumVal.GetType();
