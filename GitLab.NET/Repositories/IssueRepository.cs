@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Threading.Tasks;
 using GitLab.NET.Abstractions;
-using GitLab.NET.EnumHelpers;
+using GitLab.NET.Helpers;
 using GitLab.NET.ResponseModels;
 
 namespace GitLab.NET.Repositories
@@ -40,7 +40,7 @@ namespace GitLab.NET.Repositories
             request.AddParameterIfNotNull("description", description);
             request.AddParameterIfNotNull("assignee_id", assigneeId);
             request.AddParameterIfNotNull("milestone_id", milestoneId);
-            request.AddParameterIfNotNull("labels", ArrayToCommaSeparated(labels));
+            request.AddParameterIfNotNull("labels", labels.ToCommaSeparated());
             request.AddParameterIfNotNull("created_at", createdAt);
 
             return await request.ExecuteAsync<Issue>();
@@ -82,18 +82,20 @@ namespace GitLab.NET.Repositories
         /// <param name="orderBy"> Order the results by created_at or updated_at. Default is created_at. </param>
         /// <param name="sort"> Sort results in ascending or descending order. (asc/desc) </param>
         /// <returns> A <see cref="PaginatedResult{Issue}" /> representing the results of the request. </returns>
-        public async Task<PaginatedResult<Issue>> GetByProject(uint projectId, IssueState? state = null, string[] labels = null, string milestone = null, string orderBy = null, string sort = null)
+        public async Task<PaginatedResult<Issue>> GetByProject(uint projectId, IssueState? state = null, string[] labels = null, string milestone = null, OrderBy? orderBy = null, SortOrder? sort = null)
         {
             var stateValue = state != null ? Enum.GetName(typeof(IssueState), state)?.ToLower() : null;
+            var orderByValue = orderBy?.GetDescription();
+            var sortValue = sort != null ? Enum.GetName(typeof(SortOrder), sort)?.ToLower() : null;
 
             var request = RequestFactory.Create("projects/{projectId}/issues", Method.Get);
 
             request.AddUrlSegment("projectId", projectId);
             request.AddParameterIfNotNull("state", stateValue);
-            request.AddParameterIfNotNull("labels", ArrayToCommaSeparated(labels));
+            request.AddParameterIfNotNull("labels", labels.ToCommaSeparated());
             request.AddParameterIfNotNull("milestone", milestone);
-            request.AddParameterIfNotNull("order_by", orderBy);
-            request.AddParameterIfNotNull("sort", sort);
+            request.AddParameterIfNotNull("order_by", orderByValue);
+            request.AddParameterIfNotNull("sort", sortValue);
 
             return await request.ExecutePaginatedAsync<Issue>();
         }
@@ -104,7 +106,7 @@ namespace GitLab.NET.Repositories
         /// <param name="orderBy"> Order the results by created_at or updated_at. Default is created_at. </param>
         /// <param name="sort"> Sort results in ascending or descending order. (asc/desc) </param>
         /// <returns> A <see cref="PaginatedResult{Issue}" /> representing the results of the request. </returns>
-        public async Task<PaginatedResult<Issue>> GetOwned(IssueState? state = null, string[] labels = null, IssueOrderBy? orderBy = null, SortOrder? sort = null)
+        public async Task<PaginatedResult<Issue>> GetOwned(IssueState? state = null, string[] labels = null, OrderBy? orderBy = null, SortOrder? sort = null)
         {
             var stateValue = state != null ? Enum.GetName(typeof(IssueState), state)?.ToLower() : null;
             var orderByValue = orderBy?.GetDescription();
@@ -113,7 +115,7 @@ namespace GitLab.NET.Repositories
             var request = RequestFactory.Create("issues", Method.Get);
 
             request.AddParameterIfNotNull("state", stateValue);
-            request.AddParameterIfNotNull("labels", ArrayToCommaSeparated(labels));
+            request.AddParameterIfNotNull("labels", labels.ToCommaSeparated());
             request.AddParameterIfNotNull("order_by", orderByValue);
             request.AddParameterIfNotNull("sort", sortValue);
 
@@ -195,24 +197,11 @@ namespace GitLab.NET.Repositories
             request.AddParameterIfNotNull("description", description);
             request.AddParameterIfNotNull("assignee_id", assigneeId);
             request.AddParameterIfNotNull("milestone_id", milestoneId);
-            request.AddParameterIfNotNull("labels", ArrayToCommaSeparated(labels));
+            request.AddParameterIfNotNull("labels", labels.ToCommaSeparated());
             request.AddParameterIfNotNull("state_event", stateValue);
             request.AddParameterIfNotNull("updated_at", updatedAt);
 
             return await request.ExecuteAsync<Issue>();
-        }
-
-        private static string ArrayToCommaSeparated(string[] input)
-        {
-            if (input == null || input.Length <= 0)
-                return null;
-
-            var result = input[0];
-
-            for (var i = 1; i < input.Length; i++)
-                result += "," + input[i];
-
-            return result;
         }
     }
 }

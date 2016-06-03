@@ -126,6 +126,14 @@ namespace GitLab.NET.Tests
         }
 
         [Fact]
+        public void Constructor_ValidParameters_SetsMergeRequests()
+        {
+            var sut = new GitLabClient(ValidHostUri);
+
+            Assert.NotNull(sut.MergeRequests);
+        }
+
+        [Fact]
         public void Constructor_ValidParameters_SetsMilestones()
         {
             var sut = new GitLabClient(ValidHostUri);

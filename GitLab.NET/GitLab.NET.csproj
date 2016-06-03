@@ -60,8 +60,11 @@
     <Compile Include="Abstractions\RequestFactory.cs" />
     <Compile Include="AccessLevel.cs" />
     <Compile Include="BuildStatus.cs" />
-    <Compile Include="EnumHelpers\DisplayAttributes.cs" />
-    <Compile Include="IssueOrderBy.cs" />
+    <Compile Include="Helpers\ArrayToCommaSeparatedHelper.cs" />
+    <Compile Include="Helpers\EnumDisplayAttributes.cs" />
+    <Compile Include="MergeRequestState.cs" />
+    <Compile Include="MergeRequestStateEvent.cs" />
+    <Compile Include="OrderBy.cs" />
     <Compile Include="IssueState.cs" />
     <Compile Include="LineType.cs" />
     <Compile Include="MilestoneState.cs" />
@@ -78,6 +81,7 @@
     <Compile Include="Repositories\FileRepository.cs" />
     <Compile Include="Repositories\GitLabSettingsRepository.cs" />
     <Compile Include="Repositories\IssueRepository.cs" />
+    <Compile Include="Repositories\MergeRequestRepository.cs" />
     <Compile Include="Repositories\MilestoneRepository.cs" />
     <Compile Include="Repositories\RunnerRepository.cs" />
     <Compile Include="Repositories\TagRepository.cs" />
@@ -85,6 +89,7 @@
     <Compile Include="ResponseModels\Build.cs" />
     <Compile Include="ResponseModels\BuildArtifact.cs" />
     <Compile Include="ResponseModels\GitLabSettings.cs" />
+    <Compile Include="ResponseModels\MergeRequest.cs" />
     <Compile Include="ResponseModels\Project.cs" />
     <Compile Include="ResponseModels\Runner.cs" />
     <Compile Include="ResponseModels\UserPreview.cs" />
