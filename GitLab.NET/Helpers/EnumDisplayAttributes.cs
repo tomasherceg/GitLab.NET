@@ -1,9 +1,9 @@
 ﻿using System;
 using System.ComponentModel;
 
-namespace GitLab.NET.EnumHelpers
+namespace GitLab.NET.Helpers
 {
-    internal static class DisplayAttributes
+    internal static class EnumDisplayAttributes
     {
         /// <summary> Gets the description attribute on an enum field value. </summary>
         /// <param name="enumVal"> The enum value. </param>

@@ -194,9 +194,10 @@ namespace GitLab.NET.Tests.Repositories
         [Fact]
         public async Task GetByProject_OrderByIsSet_AddsOrderByParameter()
         {
+            const OrderBy orderBy = OrderBy.UpdatedAt;
             const string expected = "updated_at";
 
-            await _sut.GetByProject(0, orderBy: expected);
+            await _sut.GetByProject(0, orderBy: orderBy);
 
             _request.Received().AddParameterIfNotNull("order_by", expected);
         }
@@ -204,9 +205,10 @@ namespace GitLab.NET.Tests.Repositories
         [Fact]
         public async Task GetByProject_SortIsSet_AddsSortParameter()
         {
+            const SortOrder sort = SortOrder.Asc;
             const string expected = "asc";
 
-            await _sut.GetByProject(0, sort: expected);
+            await _sut.GetByProject(0, sort: sort);
 
             _request.Received().AddParameterIfNotNull("sort", expected);
         }
@@ -259,7 +261,7 @@ namespace GitLab.NET.Tests.Repositories
         public async Task GetOwned_OrderByIsSet_AddsOrderByParameter()
         {
             const string expected = "updated_at";
-            const IssueOrderBy orderBy = IssueOrderBy.UpdatedAt;
+            const OrderBy orderBy = OrderBy.UpdatedAt;
 
             await _sut.GetOwned(orderBy: orderBy);
 
