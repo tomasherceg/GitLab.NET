@@ -1,8 +1,7 @@
-﻿using NSubstitute;
-using System;
-using System.Threading.Tasks;
+﻿using System.Threading.Tasks;
 using GitLab.NET.Abstractions;
 using GitLab.NET.Repositories;
+using NSubstitute;
 using Xunit;
 
 namespace GitLab.NET.Tests.Repositories
@@ -40,16 +39,6 @@ namespace GitLab.NET.Tests.Repositories
         }
 
         [Fact]
-        public async Task DisableForProject_ValidParameters_AddsRunnerIdUrlSegment()
-        {
-            const uint expected = 0;
-
-            await _sut.DisableForProject(expected, 0);
-
-            _request.Received().AddUrlSegment("runnerId", expected);
-        }
-
-        [Fact]
         public async Task DisableForProject_ValidParameters_AddsProjectIdUrlSegment()
         {
             const uint expected = 0;
@@ -57,6 +46,16 @@ namespace GitLab.NET.Tests.Repositories
             await _sut.DisableForProject(0, expected);
 
             _request.Received().AddUrlSegment("projectId", expected);
+        }
+
+        [Fact]
+        public async Task DisableForProject_ValidParameters_AddsRunnerIdUrlSegment()
+        {
+            const uint expected = 0;
+
+            await _sut.DisableForProject(expected, 0);
+
+            _request.Received().AddUrlSegment("runnerId", expected);
         }
 
         [Fact]
@@ -68,16 +67,6 @@ namespace GitLab.NET.Tests.Repositories
         }
 
         [Fact]
-        public async Task EnableForProject_ValidParameters_AddsRunnerIdParameter()
-        {
-            const uint expected = 0;
-
-            await _sut.EnableForProject(expected, 0);
-
-            _request.Received().AddParameter("runnerId", expected);
-        }
-
-        [Fact]
         public async Task EnableForProject_ValidParameters_AddsProjectIdUrlSegment()
         {
             const uint expected = 0;
@@ -85,6 +74,16 @@ namespace GitLab.NET.Tests.Repositories
             await _sut.EnableForProject(0, expected);
 
             _request.Received().AddUrlSegment("projectId", expected);
+        }
+
+        [Fact]
+        public async Task EnableForProject_ValidParameters_AddsRunnerIdParameter()
+        {
+            const uint expected = 0;
+
+            await _sut.EnableForProject(expected, 0);
+
+            _request.Received().AddParameter("runnerId", expected);
         }
 
         [Fact]
@@ -168,26 +167,6 @@ namespace GitLab.NET.Tests.Repositories
         }
 
         [Fact]
-        public async Task Update_ValidParameters_AddsRunnerIdUrlSegment()
-        {
-            const uint expected = 0;
-
-            await _sut.Update(expected);
-
-            _request.Received().AddUrlSegment("runnerId", expected);
-        }
-
-        [Fact]
-        public async Task Update_DescriptionIsSet_AddsDescriptionParameter()
-        {
-            const string expected = "description";
-
-            await _sut.Update(0, description: expected);
-
-            _request.Received().AddParameterIfNotNull("description", expected);
-        }
-
-        [Fact]
         public async Task Update_ActiveIsSet_AddsActiveParameter()
         {
             const bool expected = true;
@@ -195,6 +174,16 @@ namespace GitLab.NET.Tests.Repositories
             await _sut.Update(0, active: expected);
 
             _request.Received().AddParameterIfNotNull("active", expected);
+        }
+
+        [Fact]
+        public async Task Update_DescriptionIsSet_AddsDescriptionParameter()
+        {
+            const string expected = "description";
+
+            await _sut.Update(0, expected);
+
+            _request.Received().AddParameterIfNotNull("description", expected);
         }
 
         [Fact]
@@ -209,6 +198,16 @@ namespace GitLab.NET.Tests.Repositories
             await _sut.Update(0, tagList: expected);
 
             _request.Received().AddParameterIfNotNull("tag_list", expected);
+        }
+
+        [Fact]
+        public async Task Update_ValidParameters_AddsRunnerIdUrlSegment()
+        {
+            const uint expected = 0;
+
+            await _sut.Update(expected);
+
+            _request.Received().AddUrlSegment("runnerId", expected);
         }
     }
 }

@@ -55,6 +55,9 @@ namespace GitLab.NET
         /// <summary> Provides a wrapper around the GitLab settings API. </summary>
         public GitLabSettingsRepository GitLabSettings { get; }
 
+        /// <summary> Provides a wrapper around the GitLab issues API. </summary>
+        public IssueRepository Issues { get; }
+
         /// <summary> Provides a wrapper around the GitLab keys API. </summary>
         public KeyRepository Keys { get; }
 
@@ -114,6 +117,7 @@ namespace GitLab.NET
             Files = new FileRepository(requestFactory);
             GitLabLicense = new GitLabLicenseRepository(requestFactory);
             GitLabSettings = new GitLabSettingsRepository(requestFactory);
+            Issues = new IssueRepository(requestFactory);
             Keys = new KeyRepository(requestFactory);
             Labels = new LabelRepository(requestFactory);
             Licenses = new LicenseRepository(requestFactory);

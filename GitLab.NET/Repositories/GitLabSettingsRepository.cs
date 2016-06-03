@@ -1,5 +1,4 @@
-﻿using System;
-using System.Threading.Tasks;
+﻿using System.Threading.Tasks;
 using GitLab.NET.Abstractions;
 using GitLab.NET.ResponseModels;
 
@@ -21,24 +20,25 @@ namespace GitLab.NET.Repositories
             return await request.ExecuteAsync<GitLabSettings>();
         }
 
-        /// <summary>
-        /// Sets the GitLab server's settings.
-        /// </summary>
-        /// <param name="afterSignOutPath">Where to redirect users after logout.</param>
-        /// <param name="defaultBranchProtection">The protection level for the default branch.</param>
-        /// <param name="defaultProjectVisibility">The visibility level new projects receive by default.</param>
-        /// <param name="defaultProjectsLimit">The default project limit per user.</param>
-        /// <param name="defaultSnippetVisibility">The visibility level new snippets receive by default.</param>
-        /// <param name="gravatarEnabled">Whether or not gravatars are enabled.</param>
-        /// <param name="homePageUrl">Where users will be redirected when not logged in.</param>
-        /// <param name="maxAttachmentSize">The maximum attachment size in MB.</param>
-        /// <param name="restrictedSignupDomains">Restrict registration to email addresses from these domains only.</param>
-        /// <param name="restrictedVisbilityLevels">The specified levels cannot be used by non-admin users for projects or snippets.</param>
-        /// <param name="sessionExpireDelay">Session duration in minutes.</param>
-        /// <param name="signinText">The text to display on the login page.</param>
-        /// <param name="signinEnabled">Whether or not users can log in via a GitLab account.</param>
-        /// <param name="signupEnabled">Whether or not registration is enabled.</param>
-        /// <param name="userOauthApplications">Allow users to register any application to use GitLab as an OAuth provider.</param>
+        /// <summary> Sets the GitLab server's settings. </summary>
+        /// <param name="afterSignOutPath"> Where to redirect users after logout. </param>
+        /// <param name="defaultBranchProtection"> The protection level for the default branch. </param>
+        /// <param name="defaultProjectVisibility"> The visibility level new projects receive by default. </param>
+        /// <param name="defaultProjectsLimit"> The default project limit per user. </param>
+        /// <param name="defaultSnippetVisibility"> The visibility level new snippets receive by default. </param>
+        /// <param name="gravatarEnabled"> Whether or not gravatars are enabled. </param>
+        /// <param name="homePageUrl"> Where users will be redirected when not logged in. </param>
+        /// <param name="maxAttachmentSize"> The maximum attachment size in MB. </param>
+        /// <param name="restrictedSignupDomains"> Restrict registration to email addresses from these domains only. </param>
+        /// <param name="restrictedVisbilityLevels">
+        ///     The specified levels cannot be used by non-admin users for projects or
+        ///     snippets.
+        /// </param>
+        /// <param name="sessionExpireDelay"> Session duration in minutes. </param>
+        /// <param name="signinText"> The text to display on the login page. </param>
+        /// <param name="signinEnabled"> Whether or not users can log in via a GitLab account. </param>
+        /// <param name="signupEnabled"> Whether or not registration is enabled. </param>
+        /// <param name="userOauthApplications"> Allow users to register any application to use GitLab as an OAuth provider. </param>
         /// <returns> A <see cref="RequestResult{GitLabSettings}" /> representing the results of the request. </returns>
         public async Task<RequestResult<GitLabSettings>> Set(string afterSignOutPath = null,
                                                              uint? defaultBranchProtection = null,

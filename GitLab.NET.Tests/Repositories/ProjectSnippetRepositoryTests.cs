@@ -2,7 +2,6 @@
 using System.Threading.Tasks;
 using GitLab.NET.Abstractions;
 using GitLab.NET.Repositories;
-using GitLab.NET.ResponseModels;
 using NSubstitute;
 using Xunit;
 
