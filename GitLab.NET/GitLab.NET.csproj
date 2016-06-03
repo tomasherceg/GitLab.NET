@@ -58,6 +58,7 @@
     <Compile Include="Abstractions\Request.cs" />
     <Compile Include="Abstractions\RequestFactory.cs" />
     <Compile Include="AccessLevel.cs" />
+    <Compile Include="BuildStatus.cs" />
     <Compile Include="Repositories\BranchRepository.cs" />
     <Compile Include="Repositories\BuildRepository.cs" />
     <Compile Include="Repositories\BuildTriggerRepository.cs" />

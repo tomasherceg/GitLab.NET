@@ -73,7 +73,7 @@ namespace GitLab.NET.Repositories
         /// <param name="commitSha"> The commit SHA. </param>
         /// <param name="scopes"> The scopes to limit the results to. </param>
         /// <returns> A <see cref="PaginatedResult{Build}" /> representing the results of the request. </returns>
-        public async Task<PaginatedResult<Build>> GetByCommit(uint projectId, string commitSha, string[] scopes = null)
+        public async Task<PaginatedResult<Build>> GetByCommit(uint projectId, string commitSha, BuildStatus[] scopes = null)
         {
             if (commitSha == null)
                 throw new ArgumentNullException(nameof(commitSha));
@@ -82,7 +82,7 @@ namespace GitLab.NET.Repositories
 
             request.AddUrlSegment("projectId", projectId);
             request.AddUrlSegment("commitSha", commitSha);
-            request.AddParameterIfNotNull("scope", scopes);
+            request.AddParameterIfNotNull("scope", GetScopes(scopes));
 
             return await request.ExecutePaginatedAsync<Build>();
         }
@@ -91,12 +91,12 @@ namespace GitLab.NET.Repositories
         /// <param name="projectId"> The ID of the project. </param>
         /// <param name="scopes"> The scopes to limit the results to. (pending/running/failed/success/canceled) </param>
         /// <returns> A <see cref="PaginatedResult{Build}" /> representing the results of the request. </returns>
-        public async Task<PaginatedResult<Build>> GetByProject(uint projectId, string[] scopes = null)
+        public async Task<PaginatedResult<Build>> GetByProject(uint projectId, BuildStatus[] scopes = null)
         {
             var request = RequestFactory.Create("projects/{projectId}/builds", Method.Get);
 
             request.AddUrlSegment("projectId", projectId);
-            request.AddParameterIfNotNull("scope", scopes);
+            request.AddParameterIfNotNull("scope", GetScopes(scopes));
 
             return await request.ExecutePaginatedAsync<Build>();
         }
@@ -113,6 +113,24 @@ namespace GitLab.NET.Repositories
             request.AddUrlSegment("buildId", buildId);
 
             return await request.ExecuteAsync<Build>();
+        }
+
+        private static string[] GetScopes(BuildStatus[] input)
+        {
+            if (input == null)
+                return null;
+
+            string[] results = new string[input.Length];
+
+            for (int i = 0; i < input.Length; i++)
+            {
+                results[i] = Enum.GetName(typeof(BuildStatus), input[i])?.ToLower();
+
+                if (results[i] == null)
+                    throw new NullReferenceException("Unable to process element " + i + " from scopes parameter.");
+            }
+
+            return results;
         }
     }
 }

@@ -1,5 +1,6 @@
 ﻿using NSubstitute;
 using System;
+using System.Linq;
 using System.Threading.Tasks;
 using GitLab.NET.Abstractions;
 using GitLab.NET.Repositories;
@@ -162,15 +163,20 @@ namespace GitLab.NET.Tests.Repositories
         [Fact]
         public async Task GetByCommit_ScopesIsSet_AddsScopeParameter()
         {
+            var scopes = new[]
+            {
+                BuildStatus.Pending,
+                BuildStatus.Success
+            };
             var expected = new[]
             {
                 "pending",
-                "running"
+                "success"
             };
 
-            await _sut.GetByCommit(0, "commitSha", expected);
+            await _sut.GetByCommit(0, "commitSha", scopes);
 
-            _request.Received().AddParameterIfNotNull("scope", expected);
+            _request.Received().AddParameterIfNotNull("scope", Arg.Is<string[]>(actual => expected.SequenceEqual(actual)));
         }
 
         [Fact]
@@ -194,15 +200,20 @@ namespace GitLab.NET.Tests.Repositories
         [Fact]
         public async Task GetByProject_ScopesIsSet_AddsScopeParameter()
         {
+            var scopes = new[]
+            {
+                BuildStatus.Pending,
+                BuildStatus.Success
+            };
             var expected = new[]
             {
                 "pending",
-                "running"
+                "success"
             };
 
-            await _sut.GetByProject(0, expected);
+            await _sut.GetByProject(0, scopes);
 
-            _request.Received().AddParameterIfNotNull("scope", expected);
+            _request.Received().AddParameterIfNotNull("scope", Arg.Is<string[]>(actual => expected.SequenceEqual(actual)));
         }
 
         [Fact]
