@@ -2,7 +2,7 @@
 using GitLab.NET.Abstractions;
 using GitLab.NET.Repositories;
 using NSubstitute;
-using Xunit;
+using NUnit.Framework;
 
 namespace GitLab.NET.Tests.Repositories
 {
@@ -15,7 +15,7 @@ namespace GitLab.NET.Tests.Repositories
 
         private readonly IRequestFactory _requestFactory;
 
-        [Fact]
+        [Test]
         public async Task Get_SetsCorrectResourceAndMethod()
         {
             var sut = new GitLabLicenseRepository(_requestFactory);

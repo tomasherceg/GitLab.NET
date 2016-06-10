@@ -2,7 +2,7 @@
 using GitLab.NET.Abstractions;
 using GitLab.NET.Repositories;
 using NSubstitute;
-using Xunit;
+using NUnit.Framework;
 
 namespace GitLab.NET.Tests.Repositories
 {
@@ -20,7 +20,7 @@ namespace GitLab.NET.Tests.Repositories
         private readonly IRequestFactory _requestFactory;
         private readonly RunnerRepository _sut;
 
-        [Fact]
+        [Test]
         public async Task Delete_ValidParameters_AddsRunnerIdUrlSegment()
         {
             const uint expected = 0;
@@ -30,7 +30,7 @@ namespace GitLab.NET.Tests.Repositories
             _request.Received().AddUrlSegment("runnerId", expected);
         }
 
-        [Fact]
+        [Test]
         public async Task Delete_ValidParameters_SetsCorrectResourceAndMethod()
         {
             await _sut.Delete(0);
@@ -38,7 +38,7 @@ namespace GitLab.NET.Tests.Repositories
             _requestFactory.Received().Create("runners/{runnerId}", Method.Delete);
         }
 
-        [Fact]
+        [Test]
         public async Task DisableForProject_ValidParameters_AddsProjectIdUrlSegment()
         {
             const uint expected = 0;
@@ -48,7 +48,7 @@ namespace GitLab.NET.Tests.Repositories
             _request.Received().AddUrlSegment("projectId", expected);
         }
 
-        [Fact]
+        [Test]
         public async Task DisableForProject_ValidParameters_AddsRunnerIdUrlSegment()
         {
             const uint expected = 0;
@@ -58,7 +58,7 @@ namespace GitLab.NET.Tests.Repositories
             _request.Received().AddUrlSegment("runnerId", expected);
         }
 
-        [Fact]
+        [Test]
         public async Task DisableForProject_ValidParameters_SetsCorrectResourceAndMethod()
         {
             await _sut.DisableForProject(0, 0);
@@ -66,7 +66,7 @@ namespace GitLab.NET.Tests.Repositories
             _requestFactory.Received().Create("projects/{projectId}/runners/{runnerId}", Method.Delete);
         }
 
-        [Fact]
+        [Test]
         public async Task EnableForProject_ValidParameters_AddsProjectIdUrlSegment()
         {
             const uint expected = 0;
@@ -76,7 +76,7 @@ namespace GitLab.NET.Tests.Repositories
             _request.Received().AddUrlSegment("projectId", expected);
         }
 
-        [Fact]
+        [Test]
         public async Task EnableForProject_ValidParameters_AddsRunnerIdParameter()
         {
             const uint expected = 0;
@@ -86,7 +86,7 @@ namespace GitLab.NET.Tests.Repositories
             _request.Received().AddParameter("runnerId", expected);
         }
 
-        [Fact]
+        [Test]
         public async Task EnableForProject_ValidParameters_SetsCorrectResourceAndMethod()
         {
             await _sut.EnableForProject(0, 0);
@@ -94,7 +94,7 @@ namespace GitLab.NET.Tests.Repositories
             _requestFactory.Received().Create("projects/{projectId}/runners", Method.Post);
         }
 
-        [Fact]
+        [Test]
         public async Task Find_ValidParameters_AddsRunnerIdUrlSegment()
         {
             const uint expected = 0;
@@ -104,7 +104,7 @@ namespace GitLab.NET.Tests.Repositories
             _request.Received().AddUrlSegment("runnerId", expected);
         }
 
-        [Fact]
+        [Test]
         public async Task Find_ValidParameters_SetsCorrectResourceAndMethod()
         {
             await _sut.Find(0);
@@ -112,7 +112,7 @@ namespace GitLab.NET.Tests.Repositories
             _requestFactory.Received().Create("runners/{runnerId}", Method.Get);
         }
 
-        [Fact]
+        [Test]
         public async Task GetAll_ScopeIsSet_AddsScopeParameter()
         {
             const string expected = "active";
@@ -123,7 +123,7 @@ namespace GitLab.NET.Tests.Repositories
             _request.Received().AddParameterIfNotNull("scope", expected);
         }
 
-        [Fact]
+        [Test]
         public async Task GetAll_ValidParameters_SetsCorrectResourceAndMethod()
         {
             await _sut.GetAll();
@@ -131,7 +131,7 @@ namespace GitLab.NET.Tests.Repositories
             _requestFactory.Received().Create("runners/all", Method.Get);
         }
 
-        [Fact]
+        [Test]
         public async Task GetByProject_ValidParameters_AddsProjectIdUrlSegment()
         {
             const uint expected = 0;
@@ -141,7 +141,7 @@ namespace GitLab.NET.Tests.Repositories
             _request.Received().AddUrlSegment("projectId", expected);
         }
 
-        [Fact]
+        [Test]
         public async Task GetByProject_ValidParameters_SetsCorrectResourceAndMethod()
         {
             await _sut.GetByProject(0);
@@ -149,7 +149,7 @@ namespace GitLab.NET.Tests.Repositories
             _requestFactory.Received().Create("projects/{projectId}/runners", Method.Get);
         }
 
-        [Fact]
+        [Test]
         public async Task GetOwned_ScopeIsSet_AddsScopeParameter()
         {
             const string expected = "active";
@@ -160,7 +160,7 @@ namespace GitLab.NET.Tests.Repositories
             _request.Received().AddParameterIfNotNull("scope", expected);
         }
 
-        [Fact]
+        [Test]
         public async Task GetOwned_ValidParameters_SetsCorrectResourceAndMethod()
         {
             await _sut.GetOwned();
@@ -168,7 +168,7 @@ namespace GitLab.NET.Tests.Repositories
             _requestFactory.Received().Create("runners", Method.Get);
         }
 
-        [Fact]
+        [Test]
         public async Task Update_ActiveIsSet_AddsActiveParameter()
         {
             const bool expected = true;
@@ -178,7 +178,7 @@ namespace GitLab.NET.Tests.Repositories
             _request.Received().AddParameterIfNotNull("active", expected);
         }
 
-        [Fact]
+        [Test]
         public async Task Update_DescriptionIsSet_AddsDescriptionParameter()
         {
             const string expected = "description";
@@ -188,7 +188,7 @@ namespace GitLab.NET.Tests.Repositories
             _request.Received().AddParameterIfNotNull("description", expected);
         }
 
-        [Fact]
+        [Test]
         public async Task Update_TagListIsSet_AddsTagListParameter()
         {
             var expected = new[]
@@ -202,7 +202,7 @@ namespace GitLab.NET.Tests.Repositories
             _request.Received().AddParameterIfNotNull("tag_list", expected);
         }
 
-        [Fact]
+        [Test]
         public async Task Update_ValidParameters_AddsRunnerIdUrlSegment()
         {
             const uint expected = 0;

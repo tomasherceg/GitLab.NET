@@ -1,7 +1,7 @@
 ﻿using System;
 using GitLab.NET.Abstractions;
 using GitLab.NET.Repositories;
-using Xunit;
+using NUnit.Framework;
 
 namespace GitLab.NET.Tests.Repositories
 {
@@ -12,7 +12,7 @@ namespace GitLab.NET.Tests.Repositories
             public TestRepository(IRequestFactory requestFactory) : base(requestFactory) { }
         }
 
-        [Fact]
+        [Test]
         public void Constructor_RequestFactoryIsNull_ThrowsArgumentNullException()
         {
             Assert.Throws<ArgumentNullException>(() => new TestRepository(null));

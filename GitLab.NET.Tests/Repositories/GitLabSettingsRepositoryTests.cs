@@ -2,7 +2,7 @@
 using System.Threading.Tasks;
 using GitLab.NET.Abstractions;
 using GitLab.NET.Repositories;
-using Xunit;
+using NUnit.Framework;
 
 namespace GitLab.NET.Tests.Repositories
 {
@@ -20,7 +20,7 @@ namespace GitLab.NET.Tests.Repositories
         private readonly IRequestFactory _requestFactory;
         private readonly GitLabSettingsRepository _sut;
 
-        [Fact]
+        [Test]
         public async Task Get_ValidParameters_SetsCorrectResourceAndMethod()
         {
             await _sut.Get();
@@ -28,7 +28,7 @@ namespace GitLab.NET.Tests.Repositories
             _requestFactory.Received().Create("application/settings", Method.Get);
         }
 
-        [Fact]
+        [Test]
         public async Task Set_AfterSignOutPathIsSet_AddsAfterSignOutPathParameter()
         {
             const string expected = "afterSignOutPath";
@@ -38,7 +38,7 @@ namespace GitLab.NET.Tests.Repositories
             _request.Received().AddParameterIfNotNull("after_sign_out_path", expected);
         }
 
-        [Fact]
+        [Test]
         public async Task Set_DefaultBranchProtectionIsSet_AddsDefaultBranchProtectionParameter()
         {
             const uint expected = 0;
@@ -48,7 +48,7 @@ namespace GitLab.NET.Tests.Repositories
             _request.Received().AddParameterIfNotNull("default_branch_protection", expected);
         }
 
-        [Fact]
+        [Test]
         public async Task Set_DefaultProjectVisibilityIsSet_AddsDefaultProjectVisibilityParameter()
         {
             const uint expected = 0;
@@ -58,7 +58,7 @@ namespace GitLab.NET.Tests.Repositories
             _request.Received().AddParameterIfNotNull("default_project_visibility", expected);
         }
 
-        [Fact]
+        [Test]
         public async Task Set_DefaultProjectsLimitIsSet_AddsDefaultProjectsLimitParameter()
         {
             const uint expected = 0;
@@ -68,7 +68,7 @@ namespace GitLab.NET.Tests.Repositories
             _request.Received().AddParameterIfNotNull("default_projects_limit", expected);
         }
 
-        [Fact]
+        [Test]
         public async Task Set_DefaultSnippetVisibilityIsSet_AddsDefaultSnippetVisibilityParameter()
         {
             const uint expected = 0;
@@ -78,7 +78,7 @@ namespace GitLab.NET.Tests.Repositories
             _request.Received().AddParameterIfNotNull("default_snippet_visibility", expected);
         }
 
-        [Fact]
+        [Test]
         public async Task Set_GravatarEnabledIsSet_AddsGravatarEnabledParameter()
         {
             const bool expected = true;
@@ -88,7 +88,7 @@ namespace GitLab.NET.Tests.Repositories
             _request.Received().AddParameterIfNotNull("gravatar_enabled", expected);
         }
 
-        [Fact]
+        [Test]
         public async Task Set_HomePageUrlIsSet_AddsHomePageUrlParameter()
         {
             const string expected = "homePageUrl";
@@ -98,7 +98,7 @@ namespace GitLab.NET.Tests.Repositories
             _request.Received().AddParameterIfNotNull("home_page_url", expected);
         }
 
-        [Fact]
+        [Test]
         public async Task Set_MaxAttachmentSizeIsSet_AddsMaxAttachmentSizeParameter()
         {
             const uint expected = 0;
@@ -108,7 +108,7 @@ namespace GitLab.NET.Tests.Repositories
             _request.Received().AddParameterIfNotNull("max_attachment_size", expected);
         }
 
-        [Fact]
+        [Test]
         public async Task Set_RestrictedSignupDomainsIsSet_AddsRestrictedSignupDomainsParameter()
         {
             var expected = new[]
@@ -122,7 +122,7 @@ namespace GitLab.NET.Tests.Repositories
             _request.Received().AddParameterIfNotNull("restricted_signup_domains", expected);
         }
 
-        [Fact]
+        [Test]
         public async Task Set_RestrictedVisbilityLevelsIsSet_AddsRestrictedVisibilityLevelsParameter()
         {
             var expected = new uint[]
@@ -136,7 +136,7 @@ namespace GitLab.NET.Tests.Repositories
             _request.Received().AddParameterIfNotNull("restricted_visibility_levels", expected);
         }
 
-        [Fact]
+        [Test]
         public async Task Set_SessionExpireDelayIsSet_AddsSessionExpireDelayParameter()
         {
             const uint expected = 0;
@@ -146,7 +146,7 @@ namespace GitLab.NET.Tests.Repositories
             _request.Received().AddParameterIfNotNull("session_expire_delay", expected);
         }
 
-        [Fact]
+        [Test]
         public async Task Set_SigninTextIsSet_AddsSignInTextParameter()
         {
             const string expected = "signinText";
@@ -156,7 +156,7 @@ namespace GitLab.NET.Tests.Repositories
             _request.Received().AddParameterIfNotNull("sign_in_text", expected);
         }
 
-        [Fact]
+        [Test]
         public async Task Set_SigninEnabledIsSet_AddsSigninEnabledParameter()
         {
             const bool expected = true;
@@ -166,7 +166,7 @@ namespace GitLab.NET.Tests.Repositories
             _request.Received().AddParameterIfNotNull("signin_enabled", expected);
         }
 
-        [Fact]
+        [Test]
         public async Task Set_SignupEnabledIsSet_AddsSignupEnabledParameter()
         {
             const bool expected = true;
@@ -176,7 +176,7 @@ namespace GitLab.NET.Tests.Repositories
             _request.Received().AddParameterIfNotNull("signup_enabled", expected);
         }
 
-        [Fact]
+        [Test]
         public async Task Set_UserOauthApplicationsIsSet_AddsUserOauthApplicationsParameter()
         {
             const bool expected = true;
@@ -186,7 +186,7 @@ namespace GitLab.NET.Tests.Repositories
             _request.Received().AddParameterIfNotNull("user_oauth_applications", expected);
         }
 
-        [Fact]
+        [Test]
         public async Task Set_ValidParameters_SetsCorrectResourceAndMethod()
         {
             await _sut.Set();

@@ -1,75 +1,75 @@
 ﻿using System;
 using System.Net;
 using RestSharp;
-using Xunit;
+using NUnit.Framework;
 
 namespace GitLab.NET.Tests
 {
-    public class RequestResultTests
-    {
-        [Fact]
-        public void ConstructorWithoutType_ResponseIsNull_ThrowsArgumentNullException()
-        {
-            Assert.Throws<ArgumentNullException>(() => new RequestResult<object>(null, new object()));
-        }
+	public class RequestResultTests
+	{
+		[Test]
+		public void ConstructorWithoutType_ResponseIsNull_ThrowsArgumentNullException()
+		{
+			Assert.Throws<ArgumentNullException>(() => new RequestResult<object>(null, new object()));
+		}
 
-        [Fact]
-        public void ConstructorWithoutType_SetsData()
-        {
-            var expected = new object();
-            var response = new RestResponse<object>();
+		[Test]
+		public void ConstructorWithoutType_SetsData()
+		{
+			var expected = new object();
+			var response = new RestResponse<object>();
 
-            var result = new RequestResult<object>(response, expected);
+			var result = new RequestResult<object>(response, expected);
 
-            Assert.Equal(expected, result.Data);
-        }
+			Assert.AreEqual(expected, result.Data);
+		}
 
-        [Fact]
-        public void ConstructorWithoutType_SetsStatusCode()
-        {
-            const HttpStatusCode expected = HttpStatusCode.OK;
-            var response = new RestResponse<object>
-            {
-                StatusCode = expected
-            };
+		[Test]
+		public void ConstructorWithoutType_SetsStatusCode()
+		{
+			const HttpStatusCode expected = HttpStatusCode.OK;
+			var response = new RestResponse<object>
+			{
+				StatusCode = expected
+			};
 
-            var result = new RequestResult<object>(response, new object());
+			var result = new RequestResult<object>(response, new object());
 
-            Assert.Equal(expected, result.StatusCode);
-        }
+			Assert.AreEqual(expected, result.StatusCode);
+		}
 
-        [Fact]
-        public void ConstructorWithType_ResponseIsNull_ThrowsArgumentNullException()
-        {
-            Assert.Throws<ArgumentNullException>(() => new RequestResult<object>(null));
-        }
+		[Test]
+		public void ConstructorWithType_ResponseIsNull_ThrowsArgumentNullException()
+		{
+			Assert.Throws<ArgumentNullException>(() => new RequestResult<object>(null));
+		}
 
-        [Fact]
-        public void ConstructorWithType_SetsData()
-        {
-            var expected = new object();
-            var response = new RestResponse<object>
-            {
-                Data = expected
-            };
+		[Test]
+		public void ConstructorWithType_SetsData()
+		{
+			var expected = new object();
+			var response = new RestResponse<object>
+			{
+				Data = expected
+			};
 
-            var result = new RequestResult<object>(response);
+			var result = new RequestResult<object>(response);
 
-            Assert.Equal(expected, result.Data);
-        }
+			Assert.AreEqual(expected, result.Data);
+		}
 
-        [Fact]
-        public void ConstructorWithType_SetsStatusCode()
-        {
-            const HttpStatusCode expected = HttpStatusCode.OK;
-            var response = new RestResponse<object>
-            {
-                StatusCode = expected
-            };
+		[Test]
+		public void ConstructorWithType_SetsStatusCode()
+		{
+			const HttpStatusCode expected = HttpStatusCode.OK;
+			var response = new RestResponse<object>
+			{
+				StatusCode = expected
+			};
 
-            var result = new RequestResult<object>(response);
+			var result = new RequestResult<object>(response);
 
-            Assert.Equal(expected, result.StatusCode);
-        }
-    }
+			Assert.AreEqual(expected, result.StatusCode);
+		}
+	}
 }
