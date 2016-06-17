@@ -32,7 +32,7 @@ namespace GitLab.NET.Repositories
             request.AddParameter("page", page);
             request.AddParameter("per_page", resultsPerPage);
 
-            return await request.ExecutePaginatedAsync<Namespace>();
+            return await request.ExecutePaginated<Namespace>();
         }
 
         /// <summary> Gets all namespaces matching the search query that the currently authenticated user is authorized to see. </summary>
@@ -60,7 +60,7 @@ namespace GitLab.NET.Repositories
             request.AddParameter("page", page);
             request.AddParameter("per_page", resultsPerPage);
 
-            return await request.ExecutePaginatedAsync<Namespace>();
+            return await request.ExecutePaginated<Namespace>();
         }
     }
 }

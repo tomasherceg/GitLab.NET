@@ -3,7 +3,7 @@ using System.Threading.Tasks;
 using GitLab.NET.Abstractions;
 using GitLab.NET.Repositories;
 using NSubstitute;
-using NUnit.Framework;
+using Xunit;
 
 namespace GitLab.NET.Tests.Repositories
 {
@@ -19,15 +19,15 @@ namespace GitLab.NET.Tests.Repositories
 		private readonly IRequest _request;
 		private readonly IRequestFactory _requestFactory;
 
-		[Test]
-		public void Create_UrlIsNull_ThrowsArgumentNullException()
+		[Fact]
+		public async Task Create_UrlIsNull_ThrowsArgumentNullException()
 		{
 			var sut = new SystemHookRepository(_requestFactory);
 
-			Assert.ThrowsAsync<ArgumentNullException>(() => sut.Create(null));
+			await Assert.ThrowsAsync<ArgumentNullException>(() => sut.Create(null));
 		}
 
-		[Test]
+		[Fact]
 		public async Task Create_ValidParameters_AddsUrlParameter()
 		{
 			const string expected = "url";
@@ -38,7 +38,7 @@ namespace GitLab.NET.Tests.Repositories
 			_request.Received().AddParameter("url", expected);
 		}
 
-		[Test]
+		[Fact]
 		public async Task Create_ValidParameters_SetsCorrectResourceAndMethod()
 		{
 			var sut = new SystemHookRepository(_requestFactory);
@@ -48,7 +48,7 @@ namespace GitLab.NET.Tests.Repositories
 			_requestFactory.Received().Create("hooks", Method.Post);
 		}
 
-		[Test]
+		[Fact]
 		public async Task Delete_ValidParameters_AddsHookIdParameter()
 		{
 			const uint expected = 0;
@@ -59,7 +59,7 @@ namespace GitLab.NET.Tests.Repositories
 			_request.Received().AddUrlSegment("hookId", expected);
 		}
 
-		[Test]
+		[Fact]
 		public async Task Delete_ValidParameters_SetsCorrectResourceAndMethod()
 		{
 			var sut = new SystemHookRepository(_requestFactory);
@@ -69,7 +69,7 @@ namespace GitLab.NET.Tests.Repositories
 			_requestFactory.Received().Create("hooks/{hookId}", Method.Delete);
 		}
 
-		[Test]
+		[Fact]
 		public async Task GetAll_ValidParameters_SetsCorrectResourceAndMethod()
 		{
 			var sut = new SystemHookRepository(_requestFactory);
@@ -79,7 +79,7 @@ namespace GitLab.NET.Tests.Repositories
 			_requestFactory.Received().Create("hooks", Method.Get);
 		}
 
-		[Test]
+		[Fact]
 		public async Task Test_ValidParameters_AddsHookIdUrlSegment()
 		{
 			const uint expected = 0;
@@ -90,7 +90,7 @@ namespace GitLab.NET.Tests.Repositories
 			_request.Received().AddUrlSegment("hookId", expected);
 		}
 
-		[Test]
+		[Fact]
 		public async Task Test_ValidParameters_SetsCorrectResourceAndMethod()
 		{
 			var sut = new SystemHookRepository(_requestFactory);

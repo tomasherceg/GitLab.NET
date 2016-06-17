@@ -3,7 +3,7 @@ using System.Threading.Tasks;
 using GitLab.NET.Abstractions;
 using GitLab.NET.Repositories;
 using NSubstitute;
-using NUnit.Framework;
+using Xunit;
 
 namespace GitLab.NET.Tests.Repositories
 {
@@ -19,23 +19,23 @@ namespace GitLab.NET.Tests.Repositories
 		private readonly IRequest _request;
 		private readonly IRequestFactory _requestFactory;
 
-		[Test]
-		public void RequestSession_PasswordIsNull_ThrowsArgumentNullException()
+		[Fact]
+		public async Task RequestSession_PasswordIsNull_ThrowsArgumentNullException()
 		{
 			var sut = new SessionRepository(_requestFactory);
 
-			Assert.ThrowsAsync<ArgumentNullException>(() => sut.RequestSession("username", null));
+			await Assert.ThrowsAsync<ArgumentNullException>(() => sut.RequestSession("username", null));
 		}
 
-		[Test]
-		public void RequestSession_UsernameIsNull_ThrowsArgumentNullException()
+		[Fact]
+		public async Task RequestSession_UsernameIsNull_ThrowsArgumentNullException()
 		{
 			var sut = new SessionRepository(_requestFactory);
 
-			Assert.ThrowsAsync<ArgumentNullException>(() => sut.RequestSession(null, "password"));
+			await Assert.ThrowsAsync<ArgumentNullException>(() => sut.RequestSession(null, "password"));
 		}
 
-		[Test]
+		[Fact]
 		public async Task RequestSession_ValidParameters_AddsLoginParameter()
 		{
 			const string expected = "username";
@@ -46,7 +46,7 @@ namespace GitLab.NET.Tests.Repositories
 			_request.Received().AddParameter("login", expected);
 		}
 
-		[Test]
+		[Fact]
 		public async Task RequestSession_ValidParameters_AddsPasswordParameter()
 		{
 			const string expected = "password";
@@ -57,7 +57,7 @@ namespace GitLab.NET.Tests.Repositories
 			_request.Received().AddParameter("password", expected);
 		}
 
-		[Test]
+		[Fact]
 		public async Task RequestSession_ValidParameters_SetsCorrectResourceAndMethod()
 		{
 			var sut = new SessionRepository(_requestFactory);

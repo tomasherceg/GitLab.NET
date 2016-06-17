@@ -3,7 +3,7 @@ using System.Threading.Tasks;
 using GitLab.NET.Abstractions;
 using GitLab.NET.Repositories;
 using NSubstitute;
-using NUnit.Framework;
+using Xunit;
 
 namespace GitLab.NET.Tests.Repositories
 {
@@ -19,23 +19,23 @@ namespace GitLab.NET.Tests.Repositories
 		private readonly IRequest _request;
 		private readonly IRequestFactory _requestFactory;
 
-		[Test]
-		public void Compare_FromIsNull_ThrowsArgumentNullException()
+		[Fact]
+		public async Task Compare_FromIsNull_ThrowsArgumentNullException()
 		{
 			var sut = new RepositoryRepository(_requestFactory);
 
-			Assert.ThrowsAsync<ArgumentNullException>(() => sut.Compare(0, null, "to"));
+			await Assert.ThrowsAsync<ArgumentNullException>(() => sut.Compare(0, null, "to"));
 		}
 
-		[Test]
-		public void Compare_ToIsNull_ThrowsArgumentNullException()
+		[Fact]
+		public async Task Compare_ToIsNull_ThrowsArgumentNullException()
 		{
 			var sut = new RepositoryRepository(_requestFactory);
 
-			Assert.ThrowsAsync<ArgumentNullException>(() => sut.Compare(0, "from", null));
+			await Assert.ThrowsAsync<ArgumentNullException>(() => sut.Compare(0, "from", null));
 		}
 
-		[Test]
+		[Fact]
 		public async Task Compare_ValidParameters_AddsFromParameter()
 		{
 			const string expected = "from";
@@ -46,7 +46,7 @@ namespace GitLab.NET.Tests.Repositories
 			_request.Received().AddParameter("from", expected);
 		}
 
-		[Test]
+		[Fact]
 		public async Task Compare_ValidParameters_AddsProjectIdUrlSegment()
 		{
 			const uint expected = 0;
@@ -57,7 +57,7 @@ namespace GitLab.NET.Tests.Repositories
 			_request.Received().AddUrlSegment("projectId", expected);
 		}
 
-		[Test]
+		[Fact]
 		public async Task Compare_ValidParameters_AddsToParameter()
 		{
 			const string expected = "to";
@@ -68,7 +68,7 @@ namespace GitLab.NET.Tests.Repositories
 			_request.Received().AddParameter("to", expected);
 		}
 
-		[Test]
+		[Fact]
 		public async Task Compare_ValidParameters_SetsCorrectResourceAndMethod()
 		{
 			var sut = new RepositoryRepository(_requestFactory);
@@ -78,7 +78,7 @@ namespace GitLab.NET.Tests.Repositories
 			_requestFactory.Received().Create("projects/{projectId}/repository/compare", Method.Get);
 		}
 
-		[Test]
+		[Fact]
 		public async Task GetArchive_ShaIsSet_AddsShaParameter()
 		{
 			const string expected = "sha";
@@ -89,7 +89,7 @@ namespace GitLab.NET.Tests.Repositories
 			_request.Received().AddParameterIfNotNull("sha", expected);
 		}
 
-		[Test]
+		[Fact]
 		public async Task GetArchive_ValidParameters_AddsProjectIdUrlSegment()
 		{
 			const uint expected = 0;
@@ -100,7 +100,7 @@ namespace GitLab.NET.Tests.Repositories
 			_request.Received().AddUrlSegment("projectId", expected);
 		}
 
-		[Test]
+		[Fact]
 		public async Task GetArchive_ValidParameters_SetsCorrectResourceAndMethod()
 		{
 			var sut = new RepositoryRepository(_requestFactory);
@@ -110,15 +110,15 @@ namespace GitLab.NET.Tests.Repositories
 			_requestFactory.Received().Create("projects/{projectId}/repository/archive", Method.Get);
 		}
 
-		[Test]
-		public void GetBlobContent_ShaIsNull_ThrowsArgumentNullException()
+		[Fact]
+		public async Task GetBlobContent_ShaIsNull_ThrowsArgumentNullException()
 		{
 			var sut = new RepositoryRepository(_requestFactory);
 
-			Assert.ThrowsAsync<ArgumentNullException>(() => sut.GetBlobContent(0, null));
+			await Assert.ThrowsAsync<ArgumentNullException>(() => sut.GetBlobContent(0, null));
 		}
 
-		[Test]
+		[Fact]
 		public async Task GetBlobContent_ValidParameters_AddsProjectIdUrlSegment()
 		{
 			const uint expected = 0;
@@ -129,7 +129,7 @@ namespace GitLab.NET.Tests.Repositories
 			_request.Received().AddUrlSegment("projectId", expected);
 		}
 
-		[Test]
+		[Fact]
 		public async Task GetBlobContent_ValidParameters_AddsShaUrlSegment()
 		{
 			const string expected = "sha";
@@ -140,7 +140,7 @@ namespace GitLab.NET.Tests.Repositories
 			_request.Received().AddUrlSegment("sha", expected);
 		}
 
-		[Test]
+		[Fact]
 		public async Task GetBlobContent_ValidParameters_SetsCorrectResourceAndMethod()
 		{
 			var sut = new RepositoryRepository(_requestFactory);
@@ -150,7 +150,7 @@ namespace GitLab.NET.Tests.Repositories
 			_requestFactory.Received().Create("projects/{projectId}/repository/raw_blobs/{sha}", Method.Get);
 		}
 
-		[Test]
+		[Fact]
 		public async Task GetContributors_ValidParameters_AddsProjectIdUrlSegment()
 		{
 			const uint expected = 0;
@@ -161,7 +161,7 @@ namespace GitLab.NET.Tests.Repositories
 			_request.Received().AddUrlSegment("projectId", expected);
 		}
 
-		[Test]
+		[Fact]
 		public async Task GetContributors_ValidParameters_SetsCorrectResourceAndMethod()
 		{
 			var sut = new RepositoryRepository(_requestFactory);
@@ -171,23 +171,23 @@ namespace GitLab.NET.Tests.Repositories
 			_requestFactory.Received().Create("projects/{projectId}/repository/contributors", Method.Get);
 		}
 
-		[Test]
-		public void GetFileContent_FilePathIsNull_ThrowsArgumentNullException()
+		[Fact]
+		public async Task GetFileContent_FilePathIsNull_ThrowsArgumentNullException()
 		{
 			var sut = new RepositoryRepository(_requestFactory);
 
-			Assert.ThrowsAsync<ArgumentNullException>(() => sut.GetFileContent(0, "sha", null));
+			await Assert.ThrowsAsync<ArgumentNullException>(() => sut.GetFileContent(0, "sha", null));
 		}
 
-		[Test]
-		public void GetFileContent_ShaIsNull_ThrowsArgumentNullException()
+		[Fact]
+		public async Task GetFileContent_ShaIsNull_ThrowsArgumentNullException()
 		{
 			var sut = new RepositoryRepository(_requestFactory);
 
-			Assert.ThrowsAsync<ArgumentNullException>(() => sut.GetFileContent(0, null, "filePath"));
+			await Assert.ThrowsAsync<ArgumentNullException>(() => sut.GetFileContent(0, null, "filePath"));
 		}
 
-		[Test]
+		[Fact]
 		public async Task GetFileContent_ValidParameters_AddsFilePathParameter()
 		{
 			const string expected = "filePath";
@@ -198,7 +198,7 @@ namespace GitLab.NET.Tests.Repositories
 			_request.Received().AddParameter("filepath", expected);
 		}
 
-		[Test]
+		[Fact]
 		public async Task GetFileContent_ValidParameters_AddsProjectIdUrlSegment()
 		{
 			const uint expected = 0;
@@ -209,7 +209,7 @@ namespace GitLab.NET.Tests.Repositories
 			_request.Received().AddUrlSegment("projectId", expected);
 		}
 
-		[Test]
+		[Fact]
 		public async Task GetFileContent_ValidParameters_AddsShaUrlSegment()
 		{
 			const string expected = "sha";
@@ -220,7 +220,7 @@ namespace GitLab.NET.Tests.Repositories
 			_request.Received().AddUrlSegment("sha", expected);
 		}
 
-		[Test]
+		[Fact]
 		public async Task GetFileContent_ValidParameters_SetsCorrectResourceAndMethod()
 		{
 			var sut = new RepositoryRepository(_requestFactory);
@@ -230,7 +230,7 @@ namespace GitLab.NET.Tests.Repositories
 			_requestFactory.Received().Create("projects/{projectId}/repository/blobs/{sha}", Method.Get);
 		}
 
-		[Test]
+		[Fact]
 		public async Task GetTree_PathIsSet_AddsPathParameter()
 		{
 			const string expected = "path";
@@ -241,7 +241,7 @@ namespace GitLab.NET.Tests.Repositories
 			_request.Received().AddParameterIfNotNull("path", expected);
 		}
 
-		[Test]
+		[Fact]
 		public async Task GetTree_RefNameIsSet_AddsRefNameParameter()
 		{
 			const string expected = "refName";
@@ -252,7 +252,7 @@ namespace GitLab.NET.Tests.Repositories
 			_request.Received().AddParameterIfNotNull("ref_name", expected);
 		}
 
-		[Test]
+		[Fact]
 		public async Task GetTree_ValidParameters_AddsProjectIdUrlSegment()
 		{
 			const uint expected = 0;
@@ -263,7 +263,7 @@ namespace GitLab.NET.Tests.Repositories
 			_request.Received().AddUrlSegment("projectId", expected);
 		}
 
-		[Test]
+		[Fact]
 		public async Task GetTree_ValidParameters_SetsCorrectResourceAndMethod()
 		{
 			var sut = new RepositoryRepository(_requestFactory);

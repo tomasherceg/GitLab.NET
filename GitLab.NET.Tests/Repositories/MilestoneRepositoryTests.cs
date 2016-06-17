@@ -3,7 +3,7 @@ using System.Threading.Tasks;
 using GitLab.NET.Abstractions;
 using GitLab.NET.Repositories;
 using NSubstitute;
-using NUnit.Framework;
+using Xunit;
 
 namespace GitLab.NET.Tests.Repositories
 {
@@ -21,7 +21,7 @@ namespace GitLab.NET.Tests.Repositories
 		private readonly IRequestFactory _requestFactory;
 		private readonly MilestoneRepository _sut;
 
-		[Test]
+		[Fact]
 		public async Task Create_DescriptionIsSet_AddsDescriptionParameter()
 		{
 			const string expected = "description";
@@ -31,7 +31,7 @@ namespace GitLab.NET.Tests.Repositories
 			_request.Received().AddParameterIfNotNull("description", expected);
 		}
 
-		[Test]
+		[Fact]
 		public async Task Create_DueDateIsSet_AddsDueDateParameter()
 		{
 			var expected = DateTime.MaxValue;
@@ -41,13 +41,13 @@ namespace GitLab.NET.Tests.Repositories
 			_request.Received().AddParameterIfNotNull("due_date", expected);
 		}
 
-		[Test]
-		public void Create_TitleIsNull_ThrowsArgumentNullException()
+		[Fact]
+		public async Task Create_TitleIsNull_ThrowsArgumentNullException()
 		{
-			Assert.ThrowsAsync<ArgumentNullException>(() => _sut.Create(0, null));
+			await Assert.ThrowsAsync<ArgumentNullException>(() => _sut.Create(0, null));
 		}
 
-		[Test]
+		[Fact]
 		public async Task Create_ValidParameters_AddsProjectIdUrlSegment()
 		{
 			const uint expected = 0;
@@ -57,7 +57,7 @@ namespace GitLab.NET.Tests.Repositories
 			_request.Received().AddUrlSegment("projectId", expected);
 		}
 
-		[Test]
+		[Fact]
 		public async Task Create_ValidParameters_AddsTitleParameter()
 		{
 			const string expected = "title";
@@ -67,7 +67,7 @@ namespace GitLab.NET.Tests.Repositories
 			_request.Received().AddParameter("title", expected);
 		}
 
-		[Test]
+		[Fact]
 		public async Task Create_ValidParameters_SetsCorrectResourceAndMethod()
 		{
 			await _sut.Create(0, "title");
@@ -75,7 +75,7 @@ namespace GitLab.NET.Tests.Repositories
 			_requestFactory.Received().Create("projects/{projectId}/milestones", Method.Post);
 		}
 
-		[Test]
+		[Fact]
 		public async Task Find_ValidParameters_AddsMilestoneIdUrlSegment()
 		{
 			const uint expected = 0;
@@ -85,7 +85,7 @@ namespace GitLab.NET.Tests.Repositories
 			_request.Received().AddUrlSegment("milestoneId", expected);
 		}
 
-		[Test]
+		[Fact]
 		public async Task Find_ValidParameters_AddsProjectIdUrlSegment()
 		{
 			const uint expected = 0;
@@ -95,7 +95,7 @@ namespace GitLab.NET.Tests.Repositories
 			_request.Received().AddUrlSegment("projectId", expected);
 		}
 
-		[Test]
+		[Fact]
 		public async Task Find_ValidParameters_SetsCorrectResourceAndMethod()
 		{
 			await _sut.Find(0, 0);
@@ -103,13 +103,13 @@ namespace GitLab.NET.Tests.Repositories
 			_requestFactory.Received().Create("projects/{projectId}/milestones/{milestoneId}", Method.Get);
 		}
 
-		[Test]
-		public void GetAll_PageIsLessThanMinimum_ThrowsArgumentOutOfRangeException()
+		[Fact]
+		public async Task GetAll_PageIsLessThanMinimum_ThrowsArgumentOutOfRangeException()
 		{
-			Assert.ThrowsAsync<ArgumentOutOfRangeException>(() => _sut.GetAll(0, page: uint.MinValue));
+			await Assert.ThrowsAsync<ArgumentOutOfRangeException>(() => _sut.GetAll(0, page: uint.MinValue));
 		}
 
-		[Test]
+		[Fact]
 		public async Task GetAll_PageIsSet_AddsPageParameter()
 		{
 			const uint expected = 5;
@@ -119,19 +119,19 @@ namespace GitLab.NET.Tests.Repositories
 			_request.Received().AddParameter("page", expected);
 		}
 
-		[Test]
-		public void GetAll_ResultsPerPageIsGreaterThanMaximum_ThrowsArgumentOutOfRangeException()
+		[Fact]
+		public async Task GetAll_ResultsPerPageIsGreaterThanMaximum_ThrowsArgumentOutOfRangeException()
 		{
-			Assert.ThrowsAsync<ArgumentOutOfRangeException>(() => _sut.GetAll(0, resultsPerPage: uint.MaxValue));
+			await Assert.ThrowsAsync<ArgumentOutOfRangeException>(() => _sut.GetAll(0, resultsPerPage: uint.MaxValue));
 		}
 
-		[Test]
-		public void GetAll_ResultsPerPageIsLessThanMinimum_ThrowsArgumentOutOfRangeException()
+		[Fact]
+		public async Task GetAll_ResultsPerPageIsLessThanMinimum_ThrowsArgumentOutOfRangeException()
 		{
-			Assert.ThrowsAsync<ArgumentOutOfRangeException>(() => _sut.GetAll(0, resultsPerPage: uint.MinValue));
+			await Assert.ThrowsAsync<ArgumentOutOfRangeException>(() => _sut.GetAll(0, resultsPerPage: uint.MinValue));
 		}
 
-		[Test]
+		[Fact]
 		public async Task GetAll_ResultsPerPageIsSet_AddsPerPageParameter()
 		{
 			const uint expected = 5;
@@ -141,7 +141,7 @@ namespace GitLab.NET.Tests.Repositories
 			_request.Received().AddParameter("per_page", expected);
 		}
 
-		[Test]
+		[Fact]
 		public async Task GetAll_StateIsSet_AddsStateParameter()
 		{
 			const string expected = "active";
@@ -152,7 +152,7 @@ namespace GitLab.NET.Tests.Repositories
 			_request.Received().AddParameterIfNotNull("state", expected);
 		}
 
-		[Test]
+		[Fact]
 		public async Task GetAll_ValidParameters_AddsProjectIdUrlSegment()
 		{
 			const uint expected = 0;
@@ -162,7 +162,7 @@ namespace GitLab.NET.Tests.Repositories
 			_request.Received().AddUrlSegment("projectId", expected);
 		}
 
-		[Test]
+		[Fact]
 		public async Task GetAll_ValidParameters_SetsCorrectResourceAndMethod()
 		{
 			await _sut.GetAll(0);
@@ -170,13 +170,13 @@ namespace GitLab.NET.Tests.Repositories
 			_requestFactory.Received().Create("projects/{projectId}/milestones", Method.Get);
 		}
 
-		[Test]
-		public void GetIssues_PageIsLessThanMinimum_ThrowsArgumentOutOfRangeException()
+		[Fact]
+		public async Task GetIssues_PageIsLessThanMinimum_ThrowsArgumentOutOfRangeException()
 		{
-			Assert.ThrowsAsync<ArgumentOutOfRangeException>(() => _sut.GetIssues(0, 0, uint.MinValue));
+			await Assert.ThrowsAsync<ArgumentOutOfRangeException>(() => _sut.GetIssues(0, 0, uint.MinValue));
 		}
 
-		[Test]
+		[Fact]
 		public async Task GetIssues_PageIsSet_AddsPageParameter()
 		{
 			const uint expected = 5;
@@ -186,19 +186,19 @@ namespace GitLab.NET.Tests.Repositories
 			_request.Received().AddParameter("page", expected);
 		}
 
-		[Test]
-		public void GetIssues_ResultsPerPageIsGreaterThanMaximum_ThrowsArgumentOutOfRangeException()
+		[Fact]
+		public async Task GetIssues_ResultsPerPageIsGreaterThanMaximum_ThrowsArgumentOutOfRangeException()
 		{
-			Assert.ThrowsAsync<ArgumentOutOfRangeException>(() => _sut.GetIssues(0, 0, resultsPerPage: uint.MaxValue));
+			await Assert.ThrowsAsync<ArgumentOutOfRangeException>(() => _sut.GetIssues(0, 0, resultsPerPage: uint.MaxValue));
 		}
 
-		[Test]
-		public void GetIssues_ResultsPerPageIsLessThanMinimum_ThrowsArgumentOutOfRangeException()
+		[Fact]
+		public async Task GetIssues_ResultsPerPageIsLessThanMinimum_ThrowsArgumentOutOfRangeException()
 		{
-			Assert.ThrowsAsync<ArgumentOutOfRangeException>(() => _sut.GetIssues(0, 0, resultsPerPage: uint.MinValue));
+			await Assert.ThrowsAsync<ArgumentOutOfRangeException>(() => _sut.GetIssues(0, 0, resultsPerPage: uint.MinValue));
 		}
 
-		[Test]
+		[Fact]
 		public async Task GetIssues_ResultsPerPageIsSet_AddsPerPageParameter()
 		{
 			const uint expected = 5;
@@ -208,7 +208,7 @@ namespace GitLab.NET.Tests.Repositories
 			_request.Received().AddParameter("per_page", expected);
 		}
 
-		[Test]
+		[Fact]
 		public async Task GetIssues_ValidParameters_AddsMilestoneIdUrlSegment()
 		{
 			const uint expected = 0;
@@ -218,7 +218,7 @@ namespace GitLab.NET.Tests.Repositories
 			_request.Received().AddUrlSegment("milestoneId", expected);
 		}
 
-		[Test]
+		[Fact]
 		public async Task GetIssues_ValidParameters_AddsProjectIdUrlSegment()
 		{
 			const uint expected = 0;
@@ -228,7 +228,7 @@ namespace GitLab.NET.Tests.Repositories
 			_request.Received().AddUrlSegment("projectId", expected);
 		}
 
-		[Test]
+		[Fact]
 		public async Task Update_DescriptionIsSet_AddsDescriptionParameter()
 		{
 			const string expected = "description";
@@ -238,7 +238,7 @@ namespace GitLab.NET.Tests.Repositories
 			_request.Received().AddParameterIfNotNull("description", expected);
 		}
 
-		[Test]
+		[Fact]
 		public async Task Update_DueDateIsSet_AddsDueDateParameter()
 		{
 			var expected = DateTime.MaxValue;
@@ -248,7 +248,7 @@ namespace GitLab.NET.Tests.Repositories
 			_request.Received().AddParameterIfNotNull("due_date", expected);
 		}
 
-		[Test]
+		[Fact]
 		public async Task Update_StateIsSet_AddsStateEventParameter()
 		{
 			const string expected = "activate";
@@ -259,7 +259,7 @@ namespace GitLab.NET.Tests.Repositories
 			_request.Received().AddParameterIfNotNull("state_event", expected);
 		}
 
-		[Test]
+		[Fact]
 		public async Task Update_TitleIsSet_AddsTitleParameter()
 		{
 			const string expected = "title";
@@ -269,7 +269,7 @@ namespace GitLab.NET.Tests.Repositories
 			_request.Received().AddParameterIfNotNull("title", expected);
 		}
 
-		[Test]
+		[Fact]
 		public async Task Update_ValidParameters_AddsMilestoneIdUrlSegment()
 		{
 			const uint expected = 0;
@@ -279,7 +279,7 @@ namespace GitLab.NET.Tests.Repositories
 			_request.Received().AddUrlSegment("milestoneId", expected);
 		}
 
-		[Test]
+		[Fact]
 		public async Task Update_ValidParameters_AddsProjectIdUrlSegment()
 		{
 			const uint expected = 0;
@@ -289,7 +289,7 @@ namespace GitLab.NET.Tests.Repositories
 			_request.Received().AddUrlSegment("projectId", expected);
 		}
 
-		[Test]
+		[Fact]
 		public async Task Update_ValidParameters_SetsCorrectResourceAndMethod()
 		{
 			await _sut.Update(0, 0);

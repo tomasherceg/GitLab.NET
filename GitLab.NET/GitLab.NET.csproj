@@ -139,6 +139,7 @@
     <Compile Include="Repositories\SessionRepository.cs" />
     <Compile Include="Repositories\SystemHookRepository.cs" />
     <Compile Include="Repositories\UserRepository.cs" />
+    <Compile Include="Abstractions\RestRequest.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />

@@ -31,7 +31,7 @@ namespace GitLab.NET.Repositories
             request.AddParameterIfNotNull("should_remove_source_branch", removeSourceBranch);
             request.AddParameterIfNotNull("merged_when_build_succeeds", mergedWhenBuildSucceeds);
 
-            return await request.ExecuteAsync<MergeRequest>();
+            return await request.Execute<MergeRequest>();
         }
 
         /// <summary> Cancels a merge request that is set to merge on build success. </summary>
@@ -45,7 +45,7 @@ namespace GitLab.NET.Repositories
             request.AddUrlSegment("projectId", projectId);
             request.AddUrlSegment("mergeRequestId", mergeRequestId);
 
-            return await request.ExecuteAsync<MergeRequest>();
+            return await request.Execute<MergeRequest>();
         }
 
         /// <summary> Creates a new merge request. </summary>
@@ -90,7 +90,7 @@ namespace GitLab.NET.Repositories
             request.AddParameterIfNotNull("labels", labels.ToCommaSeparated());
             request.AddParameterIfNotNull("milestone_id", milestoneId);
 
-            return await request.ExecuteAsync<MergeRequest>();
+            return await request.Execute<MergeRequest>();
         }
 
         /// <summary> Deletes a merge request. </summary>
@@ -104,7 +104,7 @@ namespace GitLab.NET.Repositories
             request.AddUrlSegment("projectId", projectId);
             request.AddUrlSegment("mergeRequestId", mergeRequestId);
 
-            return await request.ExecuteAsync<MergeRequest>();
+            return await request.Execute<MergeRequest>();
         }
 
         /// <summary> Finds a merge request by its ID. </summary>
@@ -118,7 +118,7 @@ namespace GitLab.NET.Repositories
             request.AddUrlSegment("projectId", projectId);
             request.AddUrlSegment("mergeRequestId", mergeRequestId);
 
-            return await request.ExecuteAsync<MergeRequest>();
+            return await request.Execute<MergeRequest>();
         }
 
         /// <summary> Gets all merge requests associated with the specified project. </summary>
@@ -158,7 +158,7 @@ namespace GitLab.NET.Repositories
             request.AddParameter("page", page);
             request.AddParameter("per_page", resultsPerPage);
 
-            return await request.ExecutePaginatedAsync<MergeRequest>();
+            return await request.ExecutePaginated<MergeRequest>();
         }
 
         /// <summary> Gets all changes that will be applied by the merge request. </summary>
@@ -172,7 +172,7 @@ namespace GitLab.NET.Repositories
             request.AddUrlSegment("projectId", projectId);
             request.AddUrlSegment("mergeRequestId", mergeRequestId);
 
-            return await request.ExecuteAsync<MergeRequest>();
+            return await request.Execute<MergeRequest>();
         }
 
         /// <summary> Gets the commits for the specified merge request. </summary>
@@ -189,7 +189,7 @@ namespace GitLab.NET.Repositories
             request.AddUrlSegment("projectId", projectId);
             request.AddUrlSegment("mergeRequestId", mergeRequestId);
 
-            return await request.ExecuteAsync<List<Commit>>();
+            return await request.Execute<List<Commit>>();
         }
 
         /// <summary> Gets all issues that will be closed on accepting the merge request. </summary>
@@ -216,7 +216,7 @@ namespace GitLab.NET.Repositories
             request.AddParameter("page", page);
             request.AddParameter("per_page", resultsPerPage);
 
-            return await request.ExecutePaginatedAsync<Issue>();
+            return await request.ExecutePaginated<Issue>();
         }
 
         /// <summary> Subscribes to a merge request. </summary>
@@ -230,7 +230,7 @@ namespace GitLab.NET.Repositories
             request.AddUrlSegment("projectId", projectId);
             request.AddUrlSegment("mergeRequestId", mergeRequestId);
 
-            return await request.ExecuteAsync<MergeRequest>();
+            return await request.Execute<MergeRequest>();
         }
 
         /// <summary> Unsubscribes from a merge request. </summary>
@@ -244,7 +244,7 @@ namespace GitLab.NET.Repositories
             request.AddUrlSegment("projectId", projectId);
             request.AddUrlSegment("mergeRequestId", mergeRequestId);
 
-            return await request.ExecuteAsync<MergeRequest>();
+            return await request.Execute<MergeRequest>();
         }
 
         /// <summary> Updates a merge request. </summary>
@@ -282,7 +282,7 @@ namespace GitLab.NET.Repositories
             request.AddParameterIfNotNull("labels", labels.ToCommaSeparated());
             request.AddParameterIfNotNull("state", stateValue);
 
-            return await request.ExecuteAsync<MergeRequest>();
+            return await request.Execute<MergeRequest>();
         }
     }
 }

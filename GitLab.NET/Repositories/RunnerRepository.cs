@@ -21,7 +21,7 @@ namespace GitLab.NET.Repositories
 
             request.AddUrlSegment("runnerId", runnerId);
 
-            return await request.ExecuteAsync<Runner>();
+            return await request.Execute<Runner>();
         }
 
         /// <summary> Disables a runner for the specified project. </summary>
@@ -35,7 +35,7 @@ namespace GitLab.NET.Repositories
             request.AddUrlSegment("runnerId", runnerId);
             request.AddUrlSegment("projectId", projectId);
 
-            return await request.ExecuteAsync<Runner>();
+            return await request.Execute<Runner>();
         }
 
         /// <summary> Enables a runner for the specified project. </summary>
@@ -49,7 +49,7 @@ namespace GitLab.NET.Repositories
             request.AddUrlSegment("projectId", projectId);
             request.AddParameter("runnerId", runnerId);
 
-            return await request.ExecuteAsync<Runner>();
+            return await request.Execute<Runner>();
         }
 
         /// <summary> Finds a runner by its ID. </summary>
@@ -61,7 +61,7 @@ namespace GitLab.NET.Repositories
 
             request.AddUrlSegment("runnerId", runnerId);
 
-            return await request.ExecuteAsync<Runner>();
+            return await request.Execute<Runner>();
         }
 
         /// <summary> Gets all runners in the GitLab instance. </summary>
@@ -75,7 +75,7 @@ namespace GitLab.NET.Repositories
 
             request.AddParameterIfNotNull("scope", scopeValue);
 
-            return await request.ExecutePaginatedAsync<Runner>();
+            return await request.ExecutePaginated<Runner>();
         }
 
         /// <summary> Gets all runners assigned to the specified project. </summary>
@@ -87,7 +87,7 @@ namespace GitLab.NET.Repositories
 
             request.AddUrlSegment("projectId", projectId);
 
-            return await request.ExecutePaginatedAsync<Runner>();
+            return await request.ExecutePaginated<Runner>();
         }
 
         /// <summary> Gets all runners owned by the currently authenticated user. </summary>
@@ -101,7 +101,7 @@ namespace GitLab.NET.Repositories
 
             request.AddParameterIfNotNull("scope", scopeValue);
 
-            return await request.ExecutePaginatedAsync<Runner>();
+            return await request.ExecutePaginated<Runner>();
         }
 
         /// <summary> Updates a runner's details. </summary>
@@ -119,7 +119,7 @@ namespace GitLab.NET.Repositories
             request.AddParameterIfNotNull("active", active);
             request.AddParameterIfNotNull("tag_list", tagList);
 
-            return await request.ExecuteAsync<Runner>();
+            return await request.Execute<Runner>();
         }
     }
 }

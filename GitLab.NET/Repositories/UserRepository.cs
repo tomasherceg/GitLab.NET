@@ -21,7 +21,7 @@ namespace GitLab.NET.Repositories
 
             request.AddUrlSegment("id", id);
 
-            return await request.ExecuteAsync<User>();
+            return await request.Execute<User>();
         }
 
         /// <summary> Creates a new user. </summary>
@@ -93,7 +93,7 @@ namespace GitLab.NET.Repositories
             request.AddParameterIfNotNull("confirm", confirm);
             request.AddParameterIfNotNull("external", external);
 
-            return await request.ExecuteAsync<User>();
+            return await request.Execute<User>();
         }
 
         /// <summary> Deletes a user. </summary>
@@ -105,7 +105,7 @@ namespace GitLab.NET.Repositories
 
             request.AddUrlSegment("id", id);
 
-            return await request.ExecuteAsync<User>();
+            return await request.Execute<User>();
         }
 
         /// <summary> Finds a user by id. </summary>
@@ -117,7 +117,7 @@ namespace GitLab.NET.Repositories
 
             request.AddUrlSegment("id", id);
 
-            return await request.ExecuteAsync<User>();
+            return await request.Execute<User>();
         }
 
         /// <summary> Finds a user by username. </summary>
@@ -132,7 +132,7 @@ namespace GitLab.NET.Repositories
 
             request.AddParameter("username", username);
 
-            return await request.ExecuteAsync<User>();
+            return await request.Execute<User>();
         }
 
         /// <summary> Gets all users. </summary>
@@ -155,7 +155,7 @@ namespace GitLab.NET.Repositories
             request.AddParameter("page", page);
             request.AddParameter("per_page", resultsPerPage);
 
-            return await request.ExecutePaginatedAsync<User>();
+            return await request.ExecutePaginated<User>();
         }
 
         /// <summary> Gets the currently authenticated user. </summary>
@@ -164,7 +164,7 @@ namespace GitLab.NET.Repositories
         {
             var request = RequestFactory.Create("user", Method.Get);
 
-            return await request.ExecuteAsync<User>();
+            return await request.Execute<User>();
         }
 
         /// <summary> Searches for a user by email address or name. </summary>
@@ -192,7 +192,7 @@ namespace GitLab.NET.Repositories
             request.AddParameter("page", page);
             request.AddParameter("per_page", resultsPerPage);
 
-            return await request.ExecutePaginatedAsync<User>();
+            return await request.ExecutePaginated<User>();
         }
 
         /// <summary> Unblocks a user. </summary>
@@ -204,7 +204,7 @@ namespace GitLab.NET.Repositories
 
             request.AddUrlSegment("id", id);
 
-            return await request.ExecuteAsync<User>();
+            return await request.Execute<User>();
         }
 
         /// <summary> Updates information for a user. </summary>
@@ -264,7 +264,7 @@ namespace GitLab.NET.Repositories
             request.AddParameterIfNotNull("can_create_group", canCreateGroup);
             request.AddParameterIfNotNull("external", external);
 
-            return await request.ExecuteAsync<User>();
+            return await request.Execute<User>();
         }
     }
 }

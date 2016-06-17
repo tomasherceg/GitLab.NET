@@ -34,7 +34,7 @@ namespace GitLab.NET.Repositories
             request.AddParameter("color", color);
             request.AddParameterIfNotNull("description", description);
 
-            return await request.ExecuteAsync<Label>();
+            return await request.Execute<Label>();
         }
 
         /// <summary> Deletes a label. </summary>
@@ -51,7 +51,7 @@ namespace GitLab.NET.Repositories
             request.AddUrlSegment("projectId", projectId);
             request.AddParameter("name", name);
 
-            return await request.ExecuteAsync<Label>();
+            return await request.Execute<Label>();
         }
 
         /// <summary> Gets all labels attached to the specified project. </summary>
@@ -66,7 +66,7 @@ namespace GitLab.NET.Repositories
 
             request.AddUrlSegment("projectId", projectId);
 
-            return await request.ExecuteAsync<List<Label>>();
+            return await request.Execute<List<Label>>();
         }
 
         /// <summary> Subscribes to a label. </summary>
@@ -83,7 +83,7 @@ namespace GitLab.NET.Repositories
             request.AddUrlSegment("projectId", projectId);
             request.AddUrlSegment("labelId", name);
 
-            return await request.ExecuteAsync<Label>();
+            return await request.Execute<Label>();
         }
 
         /// <summary> Unsubscribes from a label. </summary>
@@ -100,7 +100,7 @@ namespace GitLab.NET.Repositories
             request.AddUrlSegment("projectId", projectId);
             request.AddUrlSegment("labelId", name);
 
-            return await request.ExecuteAsync<Label>();
+            return await request.Execute<Label>();
         }
 
         /// <summary> Updates a label. </summary>
@@ -123,7 +123,7 @@ namespace GitLab.NET.Repositories
             request.AddParameterIfNotNull("color", color);
             request.AddParameterIfNotNull("description", description);
 
-            return await request.ExecuteAsync<Label>();
+            return await request.Execute<Label>();
         }
     }
 }

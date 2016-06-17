@@ -3,7 +3,7 @@ using System.Threading.Tasks;
 using GitLab.NET.Abstractions;
 using GitLab.NET.Repositories;
 using NSubstitute;
-using NUnit.Framework;
+using Xunit;
 
 namespace GitLab.NET.Tests.Repositories
 {
@@ -19,7 +19,7 @@ namespace GitLab.NET.Tests.Repositories
 		private readonly IRequest _request;
 		private readonly IRequestFactory _requestFactory;
 
-		[Test]
+		[Fact]
 		public async Task Block_ValidParameters_AddsIdUrlSegment()
 		{
 			const uint expected = 0;
@@ -30,7 +30,7 @@ namespace GitLab.NET.Tests.Repositories
 			_request.Received().AddUrlSegment("id", expected);
 		}
 
-		[Test]
+		[Fact]
 		public async Task Block_ValidParameters_SetsCorrectResourceAndMethod()
 		{
 			var sut = new UserRepository(_requestFactory);
@@ -40,7 +40,7 @@ namespace GitLab.NET.Tests.Repositories
 			_requestFactory.Received().Create("users/{id}/block", Method.Put);
 		}
 
-		[Test]
+		[Fact]
 		public async Task Create_AdminIsSet_AddsAdminParameter()
 		{
 			const bool expected = true;
@@ -51,7 +51,7 @@ namespace GitLab.NET.Tests.Repositories
 			_request.Received().AddParameterIfNotNull("admin", expected);
 		}
 
-		[Test]
+		[Fact]
 		public async Task Create_BioIsSet_AddsBioParameter()
 		{
 			const string expected = "bio";
@@ -62,7 +62,7 @@ namespace GitLab.NET.Tests.Repositories
 			_request.Received().AddParameterIfNotNull("bio", expected);
 		}
 
-		[Test]
+		[Fact]
 		public async Task Create_CanCreateGroupIsSet_AddsCanCreateGroupParameter()
 		{
 			const bool expected = true;
@@ -73,7 +73,7 @@ namespace GitLab.NET.Tests.Repositories
 			_request.Received().AddParameterIfNotNull("can_create_group", expected);
 		}
 
-		[Test]
+		[Fact]
 		public async Task Create_ConfirmIsSet_AddsConfirmParameter()
 		{
 			const bool expected = true;
@@ -84,15 +84,15 @@ namespace GitLab.NET.Tests.Repositories
 			_request.Received().AddParameterIfNotNull("confirm", expected);
 		}
 
-		[Test]
-		public void Create_EmailIsNull_ThrowsArgumentNullException()
+		[Fact]
+		public async Task Create_EmailIsNull_ThrowsArgumentNullException()
 		{
 			var sut = new UserRepository(_requestFactory);
 
-			Assert.ThrowsAsync<ArgumentNullException>(() => sut.Create(null, "password", "username", "name"));
+			await Assert.ThrowsAsync<ArgumentNullException>(() => sut.Create(null, "password", "username", "name"));
 		}
 
-		[Test]
+		[Fact]
 		public async Task Create_ExternalIsSet_AddsExternalParameter()
 		{
 			const bool expected = true;
@@ -103,7 +103,7 @@ namespace GitLab.NET.Tests.Repositories
 			_request.Received().AddParameterIfNotNull("external", expected);
 		}
 
-		[Test]
+		[Fact]
 		public async Task Create_ExternUidIsSet_AddsExternUidParameter()
 		{
 			const string expected = "externUid";
@@ -114,7 +114,7 @@ namespace GitLab.NET.Tests.Repositories
 			_request.Received().AddParameterIfNotNull("extern_uid", expected);
 		}
 
-		[Test]
+		[Fact]
 		public async Task Create_LinkedInIsSet_AddsLinkedInParameter()
 		{
 			const string expected = "linkedIn";
@@ -125,7 +125,7 @@ namespace GitLab.NET.Tests.Repositories
 			_request.Received().AddParameterIfNotNull("linkedin", expected);
 		}
 
-		[Test]
+		[Fact]
 		public async Task Create_LocationIsSet_AddsLocationParameter()
 		{
 			const string expected = "location";
@@ -136,23 +136,23 @@ namespace GitLab.NET.Tests.Repositories
 			_request.Received().AddParameterIfNotNull("location", expected);
 		}
 
-		[Test]
-		public void Create_NameIsNull_ThrowsArgumentNullException()
+		[Fact]
+		public async Task Create_NameIsNull_ThrowsArgumentNullException()
 		{
 			var sut = new UserRepository(_requestFactory);
 
-			Assert.ThrowsAsync<ArgumentNullException>(() => sut.Create("email", "password", "username", null));
+			await Assert.ThrowsAsync<ArgumentNullException>(() => sut.Create("email", "password", "username", null));
 		}
 
-		[Test]
-		public void Create_PasswordIsNull_ThrowsArgumentNullException()
+		[Fact]
+		public async Task Create_PasswordIsNull_ThrowsArgumentNullException()
 		{
 			var sut = new UserRepository(_requestFactory);
 
-			Assert.ThrowsAsync<ArgumentNullException>(() => sut.Create("email", null, "username", "name"));
+			await Assert.ThrowsAsync<ArgumentNullException>(() => sut.Create("email", null, "username", "name"));
 		}
 
-		[Test]
+		[Fact]
 		public async Task Create_ProjectsLimitIsSet_AddsProjectsLimitParameter()
 		{
 			const uint expected = 0;
@@ -163,7 +163,7 @@ namespace GitLab.NET.Tests.Repositories
 			_request.Received().AddParameterIfNotNull("projects_limit", expected);
 		}
 
-		[Test]
+		[Fact]
 		public async Task Create_ProviderIsSet_AddsProviderParameter()
 		{
 			const string expected = "provider";
@@ -174,7 +174,7 @@ namespace GitLab.NET.Tests.Repositories
 			_request.Received().AddParameterIfNotNull("provider", expected);
 		}
 
-		[Test]
+		[Fact]
 		public async Task Create_SkypeIsSet_AddsSkypeParameter()
 		{
 			const string expected = "skype";
@@ -185,7 +185,7 @@ namespace GitLab.NET.Tests.Repositories
 			_request.Received().AddParameterIfNotNull("skype", expected);
 		}
 
-		[Test]
+		[Fact]
 		public async Task Create_TwitterIsSet_AddsTwitterParameter()
 		{
 			const string expected = "twitter";
@@ -196,15 +196,15 @@ namespace GitLab.NET.Tests.Repositories
 			_request.Received().AddParameterIfNotNull("twitter", expected);
 		}
 
-		[Test]
-		public void Create_UsernameIsNull_ThrowsArgumentNullException()
+		[Fact]
+		public async Task Create_UsernameIsNull_ThrowsArgumentNullException()
 		{
 			var sut = new UserRepository(_requestFactory);
 
-			Assert.ThrowsAsync<ArgumentNullException>(() => sut.Create("email", "password", null, "name"));
+			await Assert.ThrowsAsync<ArgumentNullException>(() => sut.Create("email", "password", null, "name"));
 		}
 
-		[Test]
+		[Fact]
 		public async Task Create_ValidParameters_AddsEmailParameter()
 		{
 			const string expected = "email";
@@ -215,7 +215,7 @@ namespace GitLab.NET.Tests.Repositories
 			_request.Received().AddParameter("email", expected);
 		}
 
-		[Test]
+		[Fact]
 		public async Task Create_ValidParameters_AddsNameParameter()
 		{
 			const string expected = "name";
@@ -226,7 +226,7 @@ namespace GitLab.NET.Tests.Repositories
 			_request.Received().AddParameter("name", expected);
 		}
 
-		[Test]
+		[Fact]
 		public async Task Create_ValidParameters_AddsPasswordParameter()
 		{
 			const string expected = "password";
@@ -237,7 +237,7 @@ namespace GitLab.NET.Tests.Repositories
 			_request.Received().AddParameter("password", expected);
 		}
 
-		[Test]
+		[Fact]
 		public async Task Create_ValidParameters_AddsUsernameParameter()
 		{
 			const string expected = "username";
@@ -248,7 +248,7 @@ namespace GitLab.NET.Tests.Repositories
 			_request.Received().AddParameter("username", expected);
 		}
 
-		[Test]
+		[Fact]
 		public async Task Create_ValidParameters_SetsCorrectResourceAndMethod()
 		{
 			var sut = new UserRepository(_requestFactory);
@@ -258,7 +258,7 @@ namespace GitLab.NET.Tests.Repositories
 			_requestFactory.Received().Create("users", Method.Post);
 		}
 
-		[Test]
+		[Fact]
 		public async Task Create_WebsiteUrlIsSet_AddsWebsiteUrlParameter()
 		{
 			const string expected = "websiteUrl";
@@ -269,7 +269,7 @@ namespace GitLab.NET.Tests.Repositories
 			_request.Received().AddParameterIfNotNull("website_url", expected);
 		}
 
-		[Test]
+		[Fact]
 		public async Task Delete_ValidParameters_AddsIdUrlSegment()
 		{
 			const uint expected = 0;
@@ -280,7 +280,7 @@ namespace GitLab.NET.Tests.Repositories
 			_request.Received().AddUrlSegment("id", expected);
 		}
 
-		[Test]
+		[Fact]
 		public async Task Delete_ValidParameters_SetsCorrectResourceAndMethod()
 		{
 			var sut = new UserRepository(_requestFactory);
@@ -290,7 +290,7 @@ namespace GitLab.NET.Tests.Repositories
 			_requestFactory.Received().Create("users/{id}", Method.Delete);
 		}
 
-		[Test]
+		[Fact]
 		public async Task Find_IdOverload_ValidParameters_AddsIdUrlSegment()
 		{
 			const uint expected = 0;
@@ -301,7 +301,7 @@ namespace GitLab.NET.Tests.Repositories
 			_request.Received().AddUrlSegment("id", expected);
 		}
 
-		[Test]
+		[Fact]
 		public async Task Find_IdOverload_ValidParameters_SetsCorrectResourceAndMethod()
 		{
 			var sut = new UserRepository(_requestFactory);
@@ -311,15 +311,15 @@ namespace GitLab.NET.Tests.Repositories
 			_requestFactory.Received().Create("users/{id}", Method.Get);
 		}
 
-		[Test]
-		public void Find_UsernameOverload_UsernameIsNull_ThrowsArgumentNullException()
+		[Fact]
+		public async Task Find_UsernameOverload_UsernameIsNull_ThrowsArgumentNullException()
 		{
 			var sut = new UserRepository(_requestFactory);
 
-			Assert.ThrowsAsync<ArgumentNullException>(() => sut.Find(null));
+			await Assert.ThrowsAsync<ArgumentNullException>(() => sut.Find(null));
 		}
 
-		[Test]
+		[Fact]
 		public async Task Find_UsernameOverload_ValidParameters_AddsUsernameParameter()
 		{
 			const string expected = "username";
@@ -330,7 +330,7 @@ namespace GitLab.NET.Tests.Repositories
 			_request.Received().AddParameter("username", expected);
 		}
 
-		[Test]
+		[Fact]
 		public async Task Find_UsernameOverload_ValidParameters_SetsCorrectResourceAndMethod()
 		{
 			var sut = new UserRepository(_requestFactory);
@@ -340,15 +340,15 @@ namespace GitLab.NET.Tests.Repositories
 			_requestFactory.Received().Create("users", Method.Get);
 		}
 
-		[Test]
-		public void GetAll_PageIsLessThanMinimum_ThrowsArgumentOutOfRangeException()
+		[Fact]
+		public async Task GetAll_PageIsLessThanMinimum_ThrowsArgumentOutOfRangeException()
 		{
 			var sut = new UserRepository(_requestFactory);
 
-			Assert.ThrowsAsync<ArgumentOutOfRangeException>(() => sut.GetAll(uint.MinValue));
+			await Assert.ThrowsAsync<ArgumentOutOfRangeException>(() => sut.GetAll(uint.MinValue));
 		}
 
-		[Test]
+		[Fact]
 		public async Task GetAll_PageIsSet_AddsPageParameter()
 		{
 			const uint expected = 5;
@@ -359,23 +359,23 @@ namespace GitLab.NET.Tests.Repositories
 			_request.Received().AddParameter("page", expected);
 		}
 
-		[Test]
-		public void GetAll_ResultsPerPageIsGreaterThanMaximum_ThrowsArgumentOutOfRangeException()
+		[Fact]
+		public async Task GetAll_ResultsPerPageIsGreaterThanMaximum_ThrowsArgumentOutOfRangeException()
 		{
 			var sut = new UserRepository(_requestFactory);
 
-			Assert.ThrowsAsync<ArgumentOutOfRangeException>(() => sut.GetAll(resultsPerPage: uint.MaxValue));
+			await Assert.ThrowsAsync<ArgumentOutOfRangeException>(() => sut.GetAll(resultsPerPage: uint.MaxValue));
 		}
 
-		[Test]
-		public void GetAll_ResultsPerPageIsLessThanMinimum_ThrowsArgumentOutOfRangeException()
+		[Fact]
+		public async Task GetAll_ResultsPerPageIsLessThanMinimum_ThrowsArgumentOutOfRangeException()
 		{
 			var sut = new UserRepository(_requestFactory);
 
-			Assert.ThrowsAsync<ArgumentOutOfRangeException>(() => sut.GetAll(resultsPerPage: uint.MinValue));
+			await Assert.ThrowsAsync<ArgumentOutOfRangeException>(() => sut.GetAll(resultsPerPage: uint.MinValue));
 		}
 
-		[Test]
+		[Fact]
 		public async Task GetAll_ResultsPerPageIsSet_AddsPerPageParameter()
 		{
 			const uint expected = 5;
@@ -386,7 +386,7 @@ namespace GitLab.NET.Tests.Repositories
 			_request.Received().AddParameter("per_page", expected);
 		}
 
-		[Test]
+		[Fact]
 		public async Task GetAll_ValidParameters_SetsCorrectResourceAndMethod()
 		{
 			var sut = new UserRepository(_requestFactory);
@@ -396,7 +396,7 @@ namespace GitLab.NET.Tests.Repositories
 			_requestFactory.Received().Create("users", Method.Get);
 		}
 
-		[Test]
+		[Fact]
 		public async Task GetCurrent_ValidParameters_SetsCorrectResourceAndMethod()
 		{
 			var sut = new UserRepository(_requestFactory);
@@ -406,15 +406,15 @@ namespace GitLab.NET.Tests.Repositories
 			_requestFactory.Received().Create("user", Method.Get);
 		}
 
-		[Test]
-		public void Search_PageIsLessThanMinimum_ThrowsArgumentOutOfRangeException()
+		[Fact]
+		public async Task Search_PageIsLessThanMinimum_ThrowsArgumentOutOfRangeException()
 		{
 			var sut = new UserRepository(_requestFactory);
 
-			Assert.ThrowsAsync<ArgumentOutOfRangeException>(() => sut.Search("search", uint.MinValue));
+			await Assert.ThrowsAsync<ArgumentOutOfRangeException>(() => sut.Search("search", uint.MinValue));
 		}
 
-		[Test]
+		[Fact]
 		public async Task Search_PageIsSet_AddsPageParameter()
 		{
 			const uint expected = 5;
@@ -425,23 +425,23 @@ namespace GitLab.NET.Tests.Repositories
 			_request.Received().AddParameter("page", expected);
 		}
 
-		[Test]
-		public void Search_ResultsPerPageIsGreaterThanMaximum_ThrowsArgumentOutOfRangeException()
+		[Fact]
+		public async Task Search_ResultsPerPageIsGreaterThanMaximum_ThrowsArgumentOutOfRangeException()
 		{
 			var sut = new UserRepository(_requestFactory);
 
-			Assert.ThrowsAsync<ArgumentOutOfRangeException>(() => sut.Search("search", resultsPerPage: uint.MaxValue));
+			await Assert.ThrowsAsync<ArgumentOutOfRangeException>(() => sut.Search("search", resultsPerPage: uint.MaxValue));
 		}
 
-		[Test]
-		public void Search_ResultsPerPageIsLessThanMinimum_ThrowsArgumentOutOfRangeException()
+		[Fact]
+		public async Task Search_ResultsPerPageIsLessThanMinimum_ThrowsArgumentOutOfRangeException()
 		{
 			var sut = new UserRepository(_requestFactory);
 
-			Assert.ThrowsAsync<ArgumentOutOfRangeException>(() => sut.Search("search", resultsPerPage: uint.MinValue));
+			await Assert.ThrowsAsync<ArgumentOutOfRangeException>(() => sut.Search("search", resultsPerPage: uint.MinValue));
 		}
 
-		[Test]
+		[Fact]
 		public async Task Search_ResultsPerPageIsSet_AddsPerPageParameter()
 		{
 			const uint expected = 5;
@@ -452,15 +452,15 @@ namespace GitLab.NET.Tests.Repositories
 			_request.Received().AddParameter("per_page", expected);
 		}
 
-		[Test]
-		public void Search_SearchQueryIsNull_ThrowsArgumentNullException()
+		[Fact]
+		public async Task Search_SearchQueryIsNull_ThrowsArgumentNullException()
 		{
 			var sut = new UserRepository(_requestFactory);
 
-			Assert.ThrowsAsync<ArgumentNullException>(() => sut.Search(null));
+			await Assert.ThrowsAsync<ArgumentNullException>(() => sut.Search(null));
 		}
 
-		[Test]
+		[Fact]
 		public async Task Search_ValidParameters_AddsSearchParameter()
 		{
 			const string expected = "search";
@@ -471,7 +471,7 @@ namespace GitLab.NET.Tests.Repositories
 			_request.Received().AddParameter("search", expected);
 		}
 
-		[Test]
+		[Fact]
 		public async Task Search_ValidParameters_SetsCorrectResourceAndMethod()
 		{
 			var sut = new UserRepository(_requestFactory);
@@ -481,7 +481,7 @@ namespace GitLab.NET.Tests.Repositories
 			_requestFactory.Received().Create("users", Method.Get);
 		}
 
-		[Test]
+		[Fact]
 		public async Task Unblock_ValidParameters_AddsIdUrlSegment()
 		{
 			const uint expected = 0;
@@ -492,7 +492,7 @@ namespace GitLab.NET.Tests.Repositories
 			_request.Received().AddUrlSegment("id", expected);
 		}
 
-		[Test]
+		[Fact]
 		public async Task Unblock_ValidParameters_SetsCorrectResourceAndMethod()
 		{
 			var sut = new UserRepository(_requestFactory);
@@ -502,7 +502,7 @@ namespace GitLab.NET.Tests.Repositories
 			_requestFactory.Received().Create("users/{id}/unblock", Method.Put);
 		}
 
-		[Test]
+		[Fact]
 		public async Task Update_AdminIsSet_AddsAdminParameter()
 		{
 			const bool expected = true;
@@ -513,7 +513,7 @@ namespace GitLab.NET.Tests.Repositories
 			_request.Received().AddParameterIfNotNull("admin", expected);
 		}
 
-		[Test]
+		[Fact]
 		public async Task Update_BioIsSet_AddsBioParameter()
 		{
 			const string expected = "bio";
@@ -524,7 +524,7 @@ namespace GitLab.NET.Tests.Repositories
 			_request.Received().AddParameterIfNotNull("bio", expected);
 		}
 
-		[Test]
+		[Fact]
 		public async Task Update_CanCreateGroupIsSet_AddsCanCreateGroupParameter()
 		{
 			const bool expected = true;
@@ -535,7 +535,7 @@ namespace GitLab.NET.Tests.Repositories
 			_request.Received().AddParameterIfNotNull("can_create_group", expected);
 		}
 
-		[Test]
+		[Fact]
 		public async Task Update_EmailIsSet_AddsEmailParameter()
 		{
 			const string expected = "email";
@@ -546,7 +546,7 @@ namespace GitLab.NET.Tests.Repositories
 			_request.Received().AddParameterIfNotNull("email", expected);
 		}
 
-		[Test]
+		[Fact]
 		public async Task Update_ExternalIsSet_AddsExternalParameter()
 		{
 			const bool expected = true;
@@ -557,7 +557,7 @@ namespace GitLab.NET.Tests.Repositories
 			_request.Received().AddParameterIfNotNull("external", expected);
 		}
 
-		[Test]
+		[Fact]
 		public async Task Update_ExternUidIsSet_AddsExternUidParameter()
 		{
 			const string expected = "externUid";
@@ -568,7 +568,7 @@ namespace GitLab.NET.Tests.Repositories
 			_request.Received().AddParameterIfNotNull("extern_uid", expected);
 		}
 
-		[Test]
+		[Fact]
 		public async Task Update_IsSet_AddsParameter()
 		{
 			const uint expected = 0;
@@ -579,7 +579,7 @@ namespace GitLab.NET.Tests.Repositories
 			_request.Received().AddParameterIfNotNull("projects_limit", expected);
 		}
 
-		[Test]
+		[Fact]
 		public async Task Update_LinkedInIsSet_AddsLinkedInParameter()
 		{
 			const string expected = "linkedIn";
@@ -590,7 +590,7 @@ namespace GitLab.NET.Tests.Repositories
 			_request.Received().AddParameterIfNotNull("linkedin", expected);
 		}
 
-		[Test]
+		[Fact]
 		public async Task Update_LocationIsSet_AddsLocationParameter()
 		{
 			const string expected = "location";
@@ -601,7 +601,7 @@ namespace GitLab.NET.Tests.Repositories
 			_request.Received().AddParameterIfNotNull("location", expected);
 		}
 
-		[Test]
+		[Fact]
 		public async Task Update_NameIsSet_AddsNameParameter()
 		{
 			const string expected = "name";
@@ -612,7 +612,7 @@ namespace GitLab.NET.Tests.Repositories
 			_request.Received().AddParameterIfNotNull("name", expected);
 		}
 
-		[Test]
+		[Fact]
 		public async Task Update_PasswordIsSet_AddsPasswordParameter()
 		{
 			const string expected = "password";
@@ -623,7 +623,7 @@ namespace GitLab.NET.Tests.Repositories
 			_request.Received().AddParameterIfNotNull("password", expected);
 		}
 
-		[Test]
+		[Fact]
 		public async Task Update_ProviderIsSet_AddsProviderParameter()
 		{
 			const string expected = "provider";
@@ -634,7 +634,7 @@ namespace GitLab.NET.Tests.Repositories
 			_request.Received().AddParameterIfNotNull("provider", expected);
 		}
 
-		[Test]
+		[Fact]
 		public async Task Update_SkypeIsSet_AddsSkypeParameter()
 		{
 			const string expected = "skype";
@@ -645,7 +645,7 @@ namespace GitLab.NET.Tests.Repositories
 			_request.Received().AddParameterIfNotNull("skype", expected);
 		}
 
-		[Test]
+		[Fact]
 		public async Task Update_TwitterIsSet_AddsTwitterParameter()
 		{
 			const string expected = "twitter";
@@ -656,7 +656,7 @@ namespace GitLab.NET.Tests.Repositories
 			_request.Received().AddParameterIfNotNull("twitter", expected);
 		}
 
-		[Test]
+		[Fact]
 		public async Task Update_UsernameIsSet_AddsUsernameParameter()
 		{
 			const string expected = "username";
@@ -667,7 +667,7 @@ namespace GitLab.NET.Tests.Repositories
 			_request.Received().AddParameterIfNotNull("username", expected);
 		}
 
-		[Test]
+		[Fact]
 		public async Task Update_ValidParameters_AddsIdUrlSegment()
 		{
 			const uint expected = 0;
@@ -678,7 +678,7 @@ namespace GitLab.NET.Tests.Repositories
 			_request.Received().AddUrlSegment("id", expected);
 		}
 
-		[Test]
+		[Fact]
 		public async Task Update_ValidParameters_SetsCorrectResourceAndMethod()
 		{
 			var sut = new UserRepository(_requestFactory);
@@ -688,7 +688,7 @@ namespace GitLab.NET.Tests.Repositories
 			_requestFactory.Received().Create("users/{id}", Method.Put);
 		}
 
-		[Test]
+		[Fact]
 		public async Task Update_WebsiteUrlIsSet_AddsWebsiteUrlParameter()
 		{
 			const string expected = "websiteUrl";

@@ -3,7 +3,7 @@ using System.Threading.Tasks;
 using GitLab.NET.Abstractions;
 using GitLab.NET.Repositories;
 using NSubstitute;
-using NUnit.Framework;
+using Xunit;
 
 namespace GitLab.NET.Tests.Repositories
 {
@@ -19,7 +19,7 @@ namespace GitLab.NET.Tests.Repositories
 		private readonly IRequest _request;
 		private readonly IRequestFactory _requestFactory;
 
-		[Test]
+		[Fact]
 		public async Task Create_ValidParameters_AddsProjectIdUrlSegment()
 		{
 			const uint expected = 0;
@@ -30,7 +30,7 @@ namespace GitLab.NET.Tests.Repositories
 			_request.Received().AddUrlSegment("projectId", expected);
 		}
 
-		[Test]
+		[Fact]
 		public async Task Create_ValidParameters_SetsCorrectResourceAndMethod()
 		{
 			var sut = new BuildTriggerRepository(_requestFactory);
@@ -40,15 +40,15 @@ namespace GitLab.NET.Tests.Repositories
 			_requestFactory.Received().Create("projects/{projectId}/triggers", Method.Post);
 		}
 
-		[Test]
-		public void Delete_TokenIsNull_ThrowsArgumentNullException()
+		[Fact]
+		public async Task Delete_TokenIsNull_ThrowsArgumentNullException()
 		{
 			var sut = new BuildTriggerRepository(_requestFactory);
 
-			Assert.ThrowsAsync<ArgumentNullException>(() => sut.Delete(0, null));
+			await Assert.ThrowsAsync<ArgumentNullException>(() => sut.Delete(0, null));
 		}
 
-		[Test]
+		[Fact]
 		public async Task Delete_ValidParameters_AddsProjectIdUrlSegment()
 		{
 			const uint expected = 0;
@@ -59,7 +59,7 @@ namespace GitLab.NET.Tests.Repositories
 			_request.Received().AddUrlSegment("projectId", expected);
 		}
 
-		[Test]
+		[Fact]
 		public async Task Delete_ValidParameters_AddsTokenUrlSegment()
 		{
 			const string expected = "token";
@@ -70,7 +70,7 @@ namespace GitLab.NET.Tests.Repositories
 			_request.Received().AddUrlSegment("token", expected);
 		}
 
-		[Test]
+		[Fact]
 		public async Task Delete_ValidParameters_SetsCorrectResourceAndMethod()
 		{
 			var sut = new BuildTriggerRepository(_requestFactory);
@@ -80,15 +80,15 @@ namespace GitLab.NET.Tests.Repositories
 			_requestFactory.Received().Create("projects/{projectId}/triggers/{token}", Method.Delete);
 		}
 
-		[Test]
-		public void Find_TokenIsNull_ThrowsArgumentNullException()
+		[Fact]
+		public async Task Find_TokenIsNull_ThrowsArgumentNullException()
 		{
 			var sut = new BuildTriggerRepository(_requestFactory);
 
-			Assert.ThrowsAsync<ArgumentNullException>(() => sut.Find(0, null));
+			await Assert.ThrowsAsync<ArgumentNullException>(() => sut.Find(0, null));
 		}
 
-		[Test]
+		[Fact]
 		public async Task Find_ValidParameters_AddsProjectIdUrlSegment()
 		{
 			const uint expected = 0;
@@ -99,7 +99,7 @@ namespace GitLab.NET.Tests.Repositories
 			_request.Received().AddUrlSegment("projectId", expected);
 		}
 
-		[Test]
+		[Fact]
 		public async Task Find_ValidParameters_AddsTokenUrlSegment()
 		{
 			const string expected = "token";
@@ -110,7 +110,7 @@ namespace GitLab.NET.Tests.Repositories
 			_request.Received().AddUrlSegment("token", expected);
 		}
 
-		[Test]
+		[Fact]
 		public async Task Find_ValidParameters_SetsCorrectResourceAndMethod()
 		{
 			var sut = new BuildTriggerRepository(_requestFactory);
@@ -120,15 +120,15 @@ namespace GitLab.NET.Tests.Repositories
 			_requestFactory.Received().Create("projects/{projectId}/triggers/{token}", Method.Get);
 		}
 
-		[Test]
-		public void GetAll_PageIsLessThanMinimum_ThrowsArgumentOutOfRangeException()
+		[Fact]
+		public async Task GetAll_PageIsLessThanMinimum_ThrowsArgumentOutOfRangeException()
 		{
 			var sut = new BuildTriggerRepository(_requestFactory);
 
-			Assert.ThrowsAsync<ArgumentOutOfRangeException>(() => sut.GetAll(0, uint.MinValue));
+			await Assert.ThrowsAsync<ArgumentOutOfRangeException>(() => sut.GetAll(0, uint.MinValue));
 		}
 
-		[Test]
+		[Fact]
 		public async Task GetAll_PageIsSet_AddsPageParameter()
 		{
 			const uint expected = 5;
@@ -139,23 +139,23 @@ namespace GitLab.NET.Tests.Repositories
 			_request.Received().AddParameter("page", expected);
 		}
 
-		[Test]
-		public void GetAll_ResultsPerPageIsGreaterThanMaximum_ThrowsArgumentOutOfRangeException()
+		[Fact]
+		public async Task GetAll_ResultsPerPageIsGreaterThanMaximum_ThrowsArgumentOutOfRangeException()
 		{
 			var sut = new BuildTriggerRepository(_requestFactory);
 
-			Assert.ThrowsAsync<ArgumentOutOfRangeException>(() => sut.GetAll(0, resultsPerPage: uint.MaxValue));
+			await Assert.ThrowsAsync<ArgumentOutOfRangeException>(() => sut.GetAll(0, resultsPerPage: uint.MaxValue));
 		}
 
-		[Test]
-		public void GetAll_ResultsPerPageIsLessThanMinimum_ThrowsArgumentOutOfRangeException()
+		[Fact]
+		public async Task GetAll_ResultsPerPageIsLessThanMinimum_ThrowsArgumentOutOfRangeException()
 		{
 			var sut = new BuildTriggerRepository(_requestFactory);
 
-			Assert.ThrowsAsync<ArgumentOutOfRangeException>(() => sut.GetAll(0, resultsPerPage: uint.MinValue));
+			await Assert.ThrowsAsync<ArgumentOutOfRangeException>(() => sut.GetAll(0, resultsPerPage: uint.MinValue));
 		}
 
-		[Test]
+		[Fact]
 		public async Task GetAll_ResultsPerPageIsSet_AddsPerPageParameter()
 		{
 			const uint expected = 5;
@@ -166,7 +166,7 @@ namespace GitLab.NET.Tests.Repositories
 			_request.Received().AddParameter("per_page", expected);
 		}
 
-		[Test]
+		[Fact]
 		public async Task GetAll_ValidParameters_AddsProjectIdUrlSegment()
 		{
 			const uint expected = 0;
@@ -177,7 +177,7 @@ namespace GitLab.NET.Tests.Repositories
 			_request.Received().AddUrlSegment("projectId", expected);
 		}
 
-		[Test]
+		[Fact]
 		public async Task GetAll_ValidParameters_SetsCorrectResourceAndMethod()
 		{
 			var sut = new BuildTriggerRepository(_requestFactory);

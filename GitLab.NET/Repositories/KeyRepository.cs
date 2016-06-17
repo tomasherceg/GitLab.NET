@@ -33,7 +33,7 @@ namespace GitLab.NET.Repositories
             request.AddParameter("title", title);
             request.AddParameter("key", key);
 
-            return await request.ExecuteAsync<SshKey>();
+            return await request.Execute<SshKey>();
         }
 
         /// <summary> Delete's an SSH key from the currently authenticated user's account or the specified user's account. </summary>
@@ -48,7 +48,7 @@ namespace GitLab.NET.Repositories
             request.AddUrlSegmentIfNotNull("userId", userId);
             request.AddUrlSegment("id", id);
 
-            return await request.ExecuteAsync<SshKey>();
+            return await request.Execute<SshKey>();
         }
 
         /// <summary> Finds an SSH key by ID. </summary>
@@ -60,7 +60,7 @@ namespace GitLab.NET.Repositories
 
             request.AddUrlSegment("id", id);
 
-            return await request.ExecuteAsync<SshKey>();
+            return await request.Execute<SshKey>();
         }
 
         /// <summary> Finds an SSH key and user information by ID. </summary>
@@ -72,7 +72,7 @@ namespace GitLab.NET.Repositories
 
             request.AddUrlSegment("id", id);
 
-            return await request.ExecuteAsync<SshKey>();
+            return await request.Execute<SshKey>();
         }
 
         /// <summary> Gets all SSH keys for the current user or the specified user. </summary>
@@ -88,7 +88,7 @@ namespace GitLab.NET.Repositories
 
             request.AddUrlSegmentIfNotNull("userId", userId);
 
-            return await request.ExecuteAsync<List<SshKey>>();
+            return await request.Execute<List<SshKey>>();
         }
     }
 }

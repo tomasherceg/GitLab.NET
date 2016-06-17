@@ -1,5 +1,5 @@
 ﻿using System;
-using NUnit.Framework;
+using Xunit;
 
 namespace GitLab.NET.Tests
 {
@@ -7,13 +7,13 @@ namespace GitLab.NET.Tests
 	{
 		private static readonly Uri ValidHostUri = new Uri("https://host.com");
 
-		[Test]
+		[Fact]
 		public void Constructor_BaseUriIsNull_ThrowsArgumentNullException()
 		{
 			Assert.Throws<ArgumentNullException>(() => new GitLabClient(null));
 		}
 
-		[Test]
+		[Fact]
 		public void Constructor_ValidParameters_SetsBranches()
 		{
 			var sut = new GitLabClient(ValidHostUri);
@@ -21,7 +21,7 @@ namespace GitLab.NET.Tests
 			Assert.NotNull(sut.Branches);
 		}
 
-		[Test]
+		[Fact]
 		public void Constructor_ValidParameters_SetsBuilds()
 		{
 			var sut = new GitLabClient(ValidHostUri);
@@ -29,7 +29,7 @@ namespace GitLab.NET.Tests
 			Assert.NotNull(sut.Builds);
 		}
 
-		[Test]
+		[Fact]
 		public void Constructor_ValidParameters_SetsBuildTriggers()
 		{
 			var sut = new GitLabClient(ValidHostUri);
@@ -37,7 +37,7 @@ namespace GitLab.NET.Tests
 			Assert.NotNull(sut.BuildTriggers);
 		}
 
-		[Test]
+		[Fact]
 		public void Constructor_ValidParameters_SetsBuildVariables()
 		{
 			var sut = new GitLabClient(ValidHostUri);
@@ -45,7 +45,7 @@ namespace GitLab.NET.Tests
 			Assert.NotNull(sut.BuildVariables);
 		}
 
-		[Test]
+		[Fact]
 		public void Constructor_ValidParameters_SetsCommits()
 		{
 			var sut = new GitLabClient(ValidHostUri);
@@ -53,7 +53,7 @@ namespace GitLab.NET.Tests
 			Assert.NotNull(sut.Commits);
 		}
 
-		[Test]
+		[Fact]
 		public void Constructor_ValidParameters_SetsDeployKeys()
 		{
 			var sut = new GitLabClient(ValidHostUri);
@@ -61,7 +61,7 @@ namespace GitLab.NET.Tests
 			Assert.NotNull(sut.DeployKeys);
 		}
 
-		[Test]
+		[Fact]
 		public void Constructor_ValidParameters_SetsEmails()
 		{
 			var sut = new GitLabClient(ValidHostUri);
@@ -69,7 +69,7 @@ namespace GitLab.NET.Tests
 			Assert.NotNull(sut.Emails);
 		}
 
-		[Test]
+		[Fact]
 		public void Constructor_ValidParameters_SetsFiles()
 		{
 			var sut = new GitLabClient(ValidHostUri);
@@ -77,7 +77,7 @@ namespace GitLab.NET.Tests
 			Assert.NotNull(sut.Files);
 		}
 
-		[Test]
+		[Fact]
 		public void Constructor_ValidParameters_SetsGitLabLicense()
 		{
 			var sut = new GitLabClient(ValidHostUri);
@@ -85,7 +85,7 @@ namespace GitLab.NET.Tests
 			Assert.NotNull(sut.GitLabLicense);
 		}
 
-		[Test]
+		[Fact]
 		public void Constructor_ValidParameters_SetsGitLabSettings()
 		{
 			var sut = new GitLabClient(ValidHostUri);
@@ -93,7 +93,7 @@ namespace GitLab.NET.Tests
 			Assert.NotNull(sut.GitLabSettings);
 		}
 
-		[Test]
+		[Fact]
 		public void Constructor_ValidParameters_SetsIssues()
 		{
 			var sut = new GitLabClient(ValidHostUri);
@@ -101,7 +101,7 @@ namespace GitLab.NET.Tests
 			Assert.NotNull(sut.Issues);
 		}
 
-		[Test]
+		[Fact]
 		public void Constructor_ValidParameters_SetsKeys()
 		{
 			var sut = new GitLabClient(ValidHostUri);
@@ -109,7 +109,7 @@ namespace GitLab.NET.Tests
 			Assert.NotNull(sut.Keys);
 		}
 
-		[Test]
+		[Fact]
 		public void Constructor_ValidParameters_SetsLabels()
 		{
 			var sut = new GitLabClient(ValidHostUri);
@@ -117,7 +117,7 @@ namespace GitLab.NET.Tests
 			Assert.NotNull(sut.Labels);
 		}
 
-		[Test]
+		[Fact]
 		public void Constructor_ValidParameters_SetsLicenses()
 		{
 			var sut = new GitLabClient(ValidHostUri);
@@ -125,7 +125,7 @@ namespace GitLab.NET.Tests
 			Assert.NotNull(sut.Licenses);
 		}
 
-		[Test]
+		[Fact]
 		public void Constructor_ValidParameters_SetsMergeRequests()
 		{
 			var sut = new GitLabClient(ValidHostUri);
@@ -133,7 +133,7 @@ namespace GitLab.NET.Tests
 			Assert.NotNull(sut.MergeRequests);
 		}
 
-		[Test]
+		[Fact]
 		public void Constructor_ValidParameters_SetsMilestones()
 		{
 			var sut = new GitLabClient(ValidHostUri);
@@ -141,7 +141,7 @@ namespace GitLab.NET.Tests
 			Assert.NotNull(sut.Milestones);
 		}
 
-		[Test]
+		[Fact]
 		public void Constructor_ValidParameters_SetsNamespaces()
 		{
 			var sut = new GitLabClient(ValidHostUri);
@@ -149,7 +149,7 @@ namespace GitLab.NET.Tests
 			Assert.NotNull(sut.Namespaces);
 		}
 
-		[Test]
+		[Fact]
 		public void Constructor_ValidParameters_SetsProjectSnippets()
 		{
 			var sut = new GitLabClient(ValidHostUri);
@@ -157,7 +157,7 @@ namespace GitLab.NET.Tests
 			Assert.NotNull(sut.ProjectSnippets);
 		}
 
-		[Test]
+		[Fact]
 		public void Constructor_ValidParameters_SetsRepositories()
 		{
 			var sut = new GitLabClient(ValidHostUri);
@@ -165,7 +165,7 @@ namespace GitLab.NET.Tests
 			Assert.NotNull(sut.Repositories);
 		}
 
-		[Test]
+		[Fact]
 		public void Constructor_ValidParameters_SetsRunners()
 		{
 			var sut = new GitLabClient(ValidHostUri);
@@ -173,7 +173,7 @@ namespace GitLab.NET.Tests
 			Assert.NotNull(sut.Runners);
 		}
 
-		[Test]
+		[Fact]
 		public void Constructor_ValidParameters_SetsSession()
 		{
 			var sut = new GitLabClient(ValidHostUri);
@@ -181,7 +181,7 @@ namespace GitLab.NET.Tests
 			Assert.NotNull(sut.Session);
 		}
 
-		[Test]
+		[Fact]
 		public void Constructor_ValidParameters_SetsSystemHooks()
 		{
 			var sut = new GitLabClient(ValidHostUri);
@@ -189,7 +189,7 @@ namespace GitLab.NET.Tests
 			Assert.NotNull(sut.SystemHooks);
 		}
 
-		[Test]
+		[Fact]
 		public void Constructor_ValidParameters_SetsTags()
 		{
 			var sut = new GitLabClient(ValidHostUri);
@@ -197,7 +197,7 @@ namespace GitLab.NET.Tests
 			Assert.NotNull(sut.Tags);
 		}
 
-		[Test]
+		[Fact]
 		public void Constructor_ValidParameters_SetsUsers()
 		{
 			var sut = new GitLabClient(ValidHostUri);
@@ -205,7 +205,7 @@ namespace GitLab.NET.Tests
 			Assert.NotNull(sut.Users);
 		}
 
-		[Test]
+		[Fact]
 		public void PrivateToken_ReturnsCorrectValue()
 		{
 			const string privateToken = "privateToken";
@@ -214,10 +214,10 @@ namespace GitLab.NET.Tests
 				PrivateToken = privateToken
 			};
 
-			Assert.AreEqual(privateToken, sut.PrivateToken);
+			Assert.Equal(privateToken, sut.PrivateToken);
 		}
 
-		[Test]
+		[Fact]
 		public void SetPrivateToken_ValueIsNull_ThrowsArgumentNullException()
 		{
 			var sut = new GitLabClient(ValidHostUri);

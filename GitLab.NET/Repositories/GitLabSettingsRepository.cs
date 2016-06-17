@@ -17,7 +17,7 @@ namespace GitLab.NET.Repositories
         {
             var request = RequestFactory.Create("application/settings", Method.Get);
 
-            return await request.ExecuteAsync<GitLabSettings>();
+            return await request.Execute<GitLabSettings>();
         }
 
         /// <summary> Sets the GitLab server's settings. </summary>
@@ -74,7 +74,7 @@ namespace GitLab.NET.Repositories
             request.AddParameterIfNotNull("signup_enabled", signupEnabled);
             request.AddParameterIfNotNull("user_oauth_applications", userOauthApplications);
 
-            return await request.ExecuteAsync<GitLabSettings>();
+            return await request.Execute<GitLabSettings>();
         }
     }
 }

@@ -4,7 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using GitLab.NET.Abstractions;
 using GitLab.NET.Repositories;
-using NUnit.Framework;
+using Xunit;
 
 namespace GitLab.NET.Tests.Repositories
 {
@@ -22,7 +22,7 @@ namespace GitLab.NET.Tests.Repositories
 		private readonly IRequestFactory _requestFactory;
 		private readonly BuildRepository _sut;
 
-		[Test]
+		[Fact]
 		public async Task Cancel_ValidParameters_AddsProjectIdUrlSegment()
 		{
 			const uint expected = 0;
@@ -32,7 +32,7 @@ namespace GitLab.NET.Tests.Repositories
 			_request.Received().AddUrlSegment("projectId", expected);
 		}
 
-		[Test]
+		[Fact]
 		public async Task Cancel_ValidParameters_AddsBuildIdUrlSegment()
 		{
 			const uint expected = 0;
@@ -42,7 +42,7 @@ namespace GitLab.NET.Tests.Repositories
 			_request.Received().AddUrlSegment("buildId", expected);
 		}
 
-		[Test]
+		[Fact]
 		public async Task Cancel_ValidParameters_SetsCorrectResourceAndMethod()
 		{
 			await _sut.Cancel(0, 0);
@@ -50,7 +50,7 @@ namespace GitLab.NET.Tests.Repositories
 			_requestFactory.Received().Create("projects/{projectId}/builds/{buildId}/cancel", Method.Post);
 		}
 
-		[Test]
+		[Fact]
 		public async Task Erase_ValidParameters_AddsProjectIdUrlSegment()
 		{
 			const uint expected = 0;
@@ -60,7 +60,7 @@ namespace GitLab.NET.Tests.Repositories
 			_request.Received().AddUrlSegment("projectId", expected);
 		}
 
-		[Test]
+		[Fact]
 		public async Task Erase_ValidParameters_AddsBuildIdUrlSegment()
 		{
 			const uint expected = 0;
@@ -70,7 +70,7 @@ namespace GitLab.NET.Tests.Repositories
 			_request.Received().AddUrlSegment("buildId", expected);
 		}
 
-		[Test]
+		[Fact]
 		public async Task Erase_ValidParameters_SetsCorrectResourceAndMethod()
 		{
 			await _sut.Erase(0, 0);
@@ -78,7 +78,7 @@ namespace GitLab.NET.Tests.Repositories
 			_requestFactory.Received().Create("projects/{projectId}/builds/{buildId}/erase", Method.Post);
 		}
 
-		[Test]
+		[Fact]
 		public async Task Find_ValidParameters_AddsProjectIdUrlSegment()
 		{
 			const uint expected = 0;
@@ -88,7 +88,7 @@ namespace GitLab.NET.Tests.Repositories
 			_request.Received().AddUrlSegment("projectId", expected);
 		}
 
-		[Test]
+		[Fact]
 		public async Task Find_ValidParameters_AddsBuildIdUrlSegment()
 		{
 			const uint expected = 0;
@@ -98,7 +98,7 @@ namespace GitLab.NET.Tests.Repositories
 			_request.Received().AddUrlSegment("buildId", expected);
 		}
 
-		[Test]
+		[Fact]
 		public async Task Find_ValidParameters_SetsCorrectResourceAndMethod()
 		{
 			await _sut.Find(0, 0);
@@ -106,7 +106,7 @@ namespace GitLab.NET.Tests.Repositories
 			_requestFactory.Received().Create("projects/{projectId}/builds/{buildId}", Method.Get);
 		}
 
-		[Test]
+		[Fact]
 		public async Task GetArtifacts_ValidParameters_AddsProjectIdUrlSegment()
 		{
 			const uint expected = 0;
@@ -116,7 +116,7 @@ namespace GitLab.NET.Tests.Repositories
 			_request.Received().AddUrlSegment("projectId", expected);
 		}
 
-		[Test]
+		[Fact]
 		public async Task GetArtifacts_ValidParameters_AddsBuildIdUrlSegment()
 		{
 			const uint expected = 0;
@@ -126,7 +126,7 @@ namespace GitLab.NET.Tests.Repositories
 			_request.Received().AddUrlSegment("buildId", expected);
 		}
 
-		[Test]
+		[Fact]
 		public async Task GetArtifacts_ValidParameters_SetsCorrectResourceAndMethod()
 		{
 			await _sut.GetArtifacts(0, 0);
@@ -134,13 +134,13 @@ namespace GitLab.NET.Tests.Repositories
 			_requestFactory.Received().Create("projects/{projectId}/builds/{buildId}/artifacts", Method.Get);
 		}
 
-		[Test]
-		public void GetByCommit_CommitShaIsNull_ThrowsArgumentNullException()
+		[Fact]
+		public async Task GetByCommit_CommitShaIsNull_ThrowsArgumentNullException()
 		{
-			Assert.ThrowsAsync<ArgumentNullException>(() => _sut.GetByCommit(0, null));
+			await Assert.ThrowsAsync<ArgumentNullException>(() => _sut.GetByCommit(0, null));
 		}
 
-		[Test]
+		[Fact]
 		public async Task GetByCommit_ValidParameters_AddsProjectIdUrlSegment()
 		{
 			const uint expected = 0;
@@ -150,7 +150,7 @@ namespace GitLab.NET.Tests.Repositories
 			_request.Received().AddUrlSegment("projectId", expected);
 		}
 
-		[Test]
+		[Fact]
 		public async Task GetByCommit_ValidParameters_AddsCommitShaUrlSegment()
 		{
 			const string expected = "commitSha";
@@ -160,7 +160,7 @@ namespace GitLab.NET.Tests.Repositories
 			_request.Received().AddUrlSegment("commitSha", expected);
 		}
 
-		[Test]
+		[Fact]
 		public async Task GetByCommit_ScopesIsSet_AddsScopeParameter()
 		{
 			var scopes = new[]
@@ -179,7 +179,7 @@ namespace GitLab.NET.Tests.Repositories
 			_request.Received().AddParameterIfNotNull("scope", Arg.Is<string[]>(actual => expected.SequenceEqual(actual)));
 		}
 
-		[Test]
+		[Fact]
 		public async Task GetByCommit_ValidParameters_SetsCorrectResourceAndMethod()
 		{
 			await _sut.GetByCommit(0, "commitSha");
@@ -187,7 +187,7 @@ namespace GitLab.NET.Tests.Repositories
 			_requestFactory.Received().Create("projects/{projectId}/repository/commits/{commitSha}/builds", Method.Get);
 		}
 
-		[Test]
+		[Fact]
 		public async Task GetByProject_ValidParameters_AddsProjectIdUrlSegment()
 		{
 			const uint expected = 0;
@@ -197,7 +197,7 @@ namespace GitLab.NET.Tests.Repositories
 			_request.Received().AddUrlSegment("projectId", expected);
 		}
 
-		[Test]
+		[Fact]
 		public async Task GetByProject_ScopesIsSet_AddsScopeParameter()
 		{
 			var scopes = new[]
@@ -216,7 +216,7 @@ namespace GitLab.NET.Tests.Repositories
 			_request.Received().AddParameterIfNotNull("scope", Arg.Is<string[]>(actual => expected.SequenceEqual(actual)));
 		}
 
-		[Test]
+		[Fact]
 		public async Task GetByProject_ValidParameters_SetsCorrectResourceAndMethod()
 		{
 			await _sut.GetByProject(0);
@@ -224,7 +224,7 @@ namespace GitLab.NET.Tests.Repositories
 			_requestFactory.Received().Create("projects/{projectId}/builds", Method.Get);
 		}
 
-		[Test]
+		[Fact]
 		public async Task Retry_ValidParameters_AddsProjectIdUrlSegment()
 		{
 			const uint expected = 0;
@@ -234,7 +234,7 @@ namespace GitLab.NET.Tests.Repositories
 			_request.Received().AddUrlSegment("projectId", expected);
 		}
 
-		[Test]
+		[Fact]
 		public async Task Retry_ValidParameters_AddsBuildIdUrlSegment()
 		{
 			const uint expected = 0;
@@ -244,7 +244,7 @@ namespace GitLab.NET.Tests.Repositories
 			_request.Received().AddUrlSegment("buildId", expected);
 		}
 
-		[Test]
+		[Fact]
 		public async Task Retry_ValidParameters_SetsCorrectResourceAndMethod()
 		{
 			await _sut.Retry(0, 0);

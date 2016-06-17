@@ -28,7 +28,7 @@ namespace GitLab.NET.Repositories
             request.AddParameter("email", email);
             request.AddUrlSegmentIfNotNull("userId", userId);
 
-            return await request.ExecuteAsync<EmailAddress>();
+            return await request.Execute<EmailAddress>();
         }
 
         /// <summary> Deletes an email address from the current user's account. </summary>
@@ -43,7 +43,7 @@ namespace GitLab.NET.Repositories
             request.AddUrlSegment("id", id);
             request.AddUrlSegmentIfNotNull("userId", userId);
 
-            return await request.ExecuteAsync<EmailAddress>();
+            return await request.Execute<EmailAddress>();
         }
 
         /// <summary> Gets an email address by ID. </summary>
@@ -55,7 +55,7 @@ namespace GitLab.NET.Repositories
 
             request.AddUrlSegment("id", id);
 
-            return await request.ExecuteAsync<EmailAddress>();
+            return await request.Execute<EmailAddress>();
         }
 
         /// <summary>
@@ -74,7 +74,7 @@ namespace GitLab.NET.Repositories
 
             request.AddUrlSegmentIfNotNull("userId", userId);
 
-            return await request.ExecuteAsync<List<EmailAddress>>();
+            return await request.Execute<List<EmailAddress>>();
         }
     }
 }

@@ -3,7 +3,7 @@ using System.Threading.Tasks;
 using GitLab.NET.Abstractions;
 using GitLab.NET.Repositories;
 using NSubstitute;
-using NUnit.Framework;
+using Xunit;
 
 namespace GitLab.NET.Tests.Repositories
 {
@@ -19,15 +19,15 @@ namespace GitLab.NET.Tests.Repositories
 		private readonly IRequest _request;
 		private readonly IRequestFactory _requestFactory;
 
-		[Test]
-		public void Create_EmailIsNull_ThrowsArgumentNullException()
+		[Fact]
+		public async Task Create_EmailIsNull_ThrowsArgumentNullException()
 		{
 			var sut = new EmailRepository(_requestFactory);
 
-			Assert.ThrowsAsync<ArgumentNullException>(() => sut.Create(null));
+			await Assert.ThrowsAsync<ArgumentNullException>(() => sut.Create(null));
 		}
 
-		[Test]
+		[Fact]
 		public async Task Create_UserIdIsNotSet_SetsCorrectResourceAndMethod()
 		{
 			var sut = new EmailRepository(_requestFactory);
@@ -37,7 +37,7 @@ namespace GitLab.NET.Tests.Repositories
 			_requestFactory.Received().Create("user/emails", Method.Post);
 		}
 
-		[Test]
+		[Fact]
 		public async Task Create_UserIdIsSet_AddsUserIdUrlSegment()
 		{
 			const uint expected = 0;
@@ -48,7 +48,7 @@ namespace GitLab.NET.Tests.Repositories
 			_request.Received().AddUrlSegmentIfNotNull("userId", expected);
 		}
 
-		[Test]
+		[Fact]
 		public async Task Create_UserIdIsSet_SetsCorrectResourceAndMethod()
 		{
 			const uint expected = 0;
@@ -59,7 +59,7 @@ namespace GitLab.NET.Tests.Repositories
 			_requestFactory.Received().Create("users/{userId}/emails", Method.Post);
 		}
 
-		[Test]
+		[Fact]
 		public async Task Create_ValidParameters_AddsEmailParameter()
 		{
 			const string expected = "email";
@@ -70,7 +70,7 @@ namespace GitLab.NET.Tests.Repositories
 			_request.Received().AddParameter("email", expected);
 		}
 
-		[Test]
+		[Fact]
 		public async Task Delete_UserIdIsNotSet_SetsCorrectResourceAndMethod()
 		{
 			var sut = new EmailRepository(_requestFactory);
@@ -80,7 +80,7 @@ namespace GitLab.NET.Tests.Repositories
 			_requestFactory.Received().Create("user/emails/{id}", Method.Delete);
 		}
 
-		[Test]
+		[Fact]
 		public async Task Delete_UserIdIsSet_AddsUserIdUrlSegment()
 		{
 			const uint expected = 0;
@@ -91,7 +91,7 @@ namespace GitLab.NET.Tests.Repositories
 			_request.Received().AddUrlSegmentIfNotNull("userId", expected);
 		}
 
-		[Test]
+		[Fact]
 		public async Task Delete_UserIdIsSet_SetsCorrectResourceAndMethod()
 		{
 			var sut = new EmailRepository(_requestFactory);
@@ -101,7 +101,7 @@ namespace GitLab.NET.Tests.Repositories
 			_requestFactory.Received().Create("users/{userId}/emails/{id}", Method.Delete);
 		}
 
-		[Test]
+		[Fact]
 		public async Task Delete_ValidParameters_AddsIdUrlSegment()
 		{
 			const uint expected = 0;
@@ -112,7 +112,7 @@ namespace GitLab.NET.Tests.Repositories
 			_request.Received().AddUrlSegment("id", expected);
 		}
 
-		[Test]
+		[Fact]
 		public async Task Find_ValidParameters_AddsIdUrlSegment()
 		{
 			const uint expected = 0;
@@ -123,7 +123,7 @@ namespace GitLab.NET.Tests.Repositories
 			_request.Received().AddUrlSegment("id", expected);
 		}
 
-		[Test]
+		[Fact]
 		public async Task Find_ValidParameters_SetsCorrectResourceAndMethod()
 		{
 			var sut = new EmailRepository(_requestFactory);
@@ -133,7 +133,7 @@ namespace GitLab.NET.Tests.Repositories
 			_requestFactory.Received().Create("user/emails/{id}", Method.Get);
 		}
 
-		[Test]
+		[Fact]
 		public async Task GetForUser_UserIdIsNotSet_SetsCorrectResourceAndMethod()
 		{
 			var sut = new EmailRepository(_requestFactory);
@@ -143,7 +143,7 @@ namespace GitLab.NET.Tests.Repositories
 			_requestFactory.Received().Create("user/emails", Method.Get);
 		}
 
-		[Test]
+		[Fact]
 		public async Task GetForUser_UserIdIsSet_AddsUserIdUrlSegment()
 		{
 			const uint expected = 0;
@@ -154,7 +154,7 @@ namespace GitLab.NET.Tests.Repositories
 			_request.Received().AddUrlSegmentIfNotNull("userId", expected);
 		}
 
-		[Test]
+		[Fact]
 		public async Task GetForUser_UserIdIsSet_SetsCorrectResourceAndMethod()
 		{
 			var sut = new EmailRepository(_requestFactory);

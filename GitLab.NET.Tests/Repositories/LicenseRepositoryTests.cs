@@ -3,7 +3,7 @@ using System.Threading.Tasks;
 using GitLab.NET.Abstractions;
 using GitLab.NET.Repositories;
 using NSubstitute;
-using NUnit.Framework;
+using Xunit;
 
 namespace GitLab.NET.Tests.Repositories
 {
@@ -19,7 +19,7 @@ namespace GitLab.NET.Tests.Repositories
 		private readonly IRequest _request;
 		private readonly IRequestFactory _requestFactory;
 
-		[Test]
+		[Fact]
 		public async Task Find_FullNameIsSet_AddsFullNameParameter()
 		{
 			const string expected = "fullName";
@@ -30,15 +30,15 @@ namespace GitLab.NET.Tests.Repositories
 			_request.Received().AddParameterIfNotNull("fullname", expected);
 		}
 
-		[Test]
-		public void Find_KeyIsNull_ThrowsArgumentNullException()
+		[Fact]
+		public async Task Find_KeyIsNull_ThrowsArgumentNullException()
 		{
 			var sut = new LicenseRepository(_requestFactory);
 
-			Assert.ThrowsAsync<ArgumentNullException>(() => sut.Find(null));
+			await Assert.ThrowsAsync<ArgumentNullException>(() => sut.Find(null));
 		}
 
-		[Test]
+		[Fact]
 		public async Task Find_ProjectIsSet_AddsProjectParameter()
 		{
 			const string expected = "project";
@@ -49,7 +49,7 @@ namespace GitLab.NET.Tests.Repositories
 			_request.Received().AddParameterIfNotNull("project", expected);
 		}
 
-		[Test]
+		[Fact]
 		public async Task Find_ValidParameters_AddsKeyUrlSegment()
 		{
 			const string expected = "key";
@@ -60,7 +60,7 @@ namespace GitLab.NET.Tests.Repositories
 			_request.Received().AddUrlSegment("key", expected);
 		}
 
-		[Test]
+		[Fact]
 		public async Task Find_ValidParameters_SetsCorrectResourceAndmethod()
 		{
 			var sut = new LicenseRepository(_requestFactory);
@@ -70,7 +70,7 @@ namespace GitLab.NET.Tests.Repositories
 			_requestFactory.Received().Create("licenses/{key}", Method.Get);
 		}
 
-		[Test]
+		[Fact]
 		public async Task GetAll_PopularIsSet_AddsPopularParameter()
 		{
 			const bool expected = true;
@@ -81,7 +81,7 @@ namespace GitLab.NET.Tests.Repositories
 			_request.Received().AddParameterIfNotNull("popular", expected);
 		}
 
-		[Test]
+		[Fact]
 		public async Task GetAll_ValidParameters_SetsCorrectResourceAndMethod()
 		{
 			var sut = new LicenseRepository(_requestFactory);

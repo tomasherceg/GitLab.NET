@@ -23,7 +23,7 @@ namespace GitLab.NET.Repositories
             request.AddUrlSegment("projectId", projectId);
             request.AddUrlSegment("buildId", buildId);
 
-            return await request.ExecuteAsync<Build>();
+            return await request.Execute<Build>();
         }
 
         /// <summary> Erases the build trace and artifacts of a build. </summary>
@@ -37,7 +37,7 @@ namespace GitLab.NET.Repositories
             request.AddUrlSegment("projectId", projectId);
             request.AddUrlSegment("buildId", buildId);
 
-            return await request.ExecuteAsync<Build>();
+            return await request.Execute<Build>();
         }
 
         /// <summary> Gets a build by its ID. </summary>
@@ -51,7 +51,7 @@ namespace GitLab.NET.Repositories
             request.AddUrlSegment("projectId", projectId);
             request.AddUrlSegment("buildId", buildId);
 
-            return await request.ExecuteAsync<Build>();
+            return await request.Execute<Build>();
         }
 
         /// <summary> Gets the artifacts from a build by its ID. </summary>
@@ -65,7 +65,7 @@ namespace GitLab.NET.Repositories
             request.AddUrlSegment("projectId", projectId);
             request.AddUrlSegment("buildId", buildId);
 
-            return await request.ExecuteBytesAsync();
+            return await request.ExecuteBytes();
         }
 
         /// <summary> Gets all builds for the specified commit. </summary>
@@ -84,7 +84,7 @@ namespace GitLab.NET.Repositories
             request.AddUrlSegment("commitSha", commitSha);
             request.AddParameterIfNotNull("scope", GetScopes(scopes));
 
-            return await request.ExecutePaginatedAsync<Build>();
+            return await request.ExecutePaginated<Build>();
         }
 
         /// <summary> Gets all builds for the specified project. </summary>
@@ -98,7 +98,7 @@ namespace GitLab.NET.Repositories
             request.AddUrlSegment("projectId", projectId);
             request.AddParameterIfNotNull("scope", GetScopes(scopes));
 
-            return await request.ExecutePaginatedAsync<Build>();
+            return await request.ExecutePaginated<Build>();
         }
 
         /// <summary> Retries a build. </summary>
@@ -112,7 +112,7 @@ namespace GitLab.NET.Repositories
             request.AddUrlSegment("projectId", projectId);
             request.AddUrlSegment("buildId", buildId);
 
-            return await request.ExecuteAsync<Build>();
+            return await request.Execute<Build>();
         }
 
         private static string[] GetScopes(BuildStatus[] input)

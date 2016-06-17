@@ -43,7 +43,7 @@ namespace GitLab.NET.Repositories
             request.AddParameterIfNotNull("labels", labels.ToCommaSeparated());
             request.AddParameterIfNotNull("created_at", createdAt);
 
-            return await request.ExecuteAsync<Issue>();
+            return await request.Execute<Issue>();
         }
 
         /// <summary> Deletes an issue. </summary>
@@ -57,7 +57,7 @@ namespace GitLab.NET.Repositories
             request.AddUrlSegment("projectId", projectId);
             request.AddUrlSegment("issueId", issueId);
 
-            return await request.ExecuteAsync<Issue>();
+            return await request.Execute<Issue>();
         }
 
         /// <summary> Gets an issue by its ID. </summary>
@@ -71,7 +71,7 @@ namespace GitLab.NET.Repositories
             request.AddUrlSegment("projectId", projectId);
             request.AddUrlSegment("issueId", issueId);
 
-            return await request.ExecuteAsync<Issue>();
+            return await request.Execute<Issue>();
         }
 
         /// <summary> Gets all issues for the specified project. </summary>
@@ -97,7 +97,7 @@ namespace GitLab.NET.Repositories
             request.AddParameterIfNotNull("order_by", orderByValue);
             request.AddParameterIfNotNull("sort", sortValue);
 
-            return await request.ExecutePaginatedAsync<Issue>();
+            return await request.ExecutePaginated<Issue>();
         }
 
         /// <summary> Gets all issues created by the currently authenticated user. </summary>
@@ -119,7 +119,7 @@ namespace GitLab.NET.Repositories
             request.AddParameterIfNotNull("order_by", orderByValue);
             request.AddParameterIfNotNull("sort", sortValue);
 
-            return await request.ExecutePaginatedAsync<Issue>();
+            return await request.ExecutePaginated<Issue>();
         }
 
         /// <summary> Moves an issue to a new project. </summary>
@@ -135,7 +135,7 @@ namespace GitLab.NET.Repositories
             request.AddUrlSegment("issueId", issueId);
             request.AddParameter("to_project_id", newProjectId);
 
-            return await request.ExecuteAsync<Issue>();
+            return await request.Execute<Issue>();
         }
 
         /// <summary> Subscribes to an issue. </summary>
@@ -149,7 +149,7 @@ namespace GitLab.NET.Repositories
             request.AddUrlSegment("projectId", projectId);
             request.AddUrlSegment("issueId", issueId);
 
-            return await request.ExecuteAsync<Issue>();
+            return await request.Execute<Issue>();
         }
 
         /// <summary> Unsubscribes from an issue. </summary>
@@ -163,7 +163,7 @@ namespace GitLab.NET.Repositories
             request.AddUrlSegment("projectId", projectId);
             request.AddUrlSegment("issueId", issueId);
 
-            return await request.ExecuteAsync<Issue>();
+            return await request.Execute<Issue>();
         }
 
         /// <summary> updates an issue. </summary>
@@ -201,7 +201,7 @@ namespace GitLab.NET.Repositories
             request.AddParameterIfNotNull("state_event", stateValue);
             request.AddParameterIfNotNull("updated_at", updatedAt);
 
-            return await request.ExecuteAsync<Issue>();
+            return await request.Execute<Issue>();
         }
     }
 }

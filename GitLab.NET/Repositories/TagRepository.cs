@@ -36,7 +36,7 @@ namespace GitLab.NET.Repositories
             request.AddParameterIfNotNull("message", message);
             request.AddParameterIfNotNull("release_description", releaseDescription);
 
-            return await request.ExecuteAsync<Tag>();
+            return await request.Execute<Tag>();
         }
 
         /// <summary> Creates a release associated with the specified tag. </summary>
@@ -58,7 +58,7 @@ namespace GitLab.NET.Repositories
             request.AddUrlSegment("tagName", tagName);
             request.AddParameter("description", description);
 
-            return await request.ExecuteAsync<Tag>();
+            return await request.Execute<Tag>();
         }
 
         /// <summary> Deletes a tag. </summary>
@@ -75,7 +75,7 @@ namespace GitLab.NET.Repositories
             request.AddUrlSegment("projectId", projectId);
             request.AddUrlSegment("tagName", tagName);
 
-            return await request.ExecuteAsync<Tag>();
+            return await request.Execute<Tag>();
         }
 
         /// <summary> Finds a tag by name. </summary>
@@ -92,7 +92,7 @@ namespace GitLab.NET.Repositories
             request.AddUrlSegment("projectId", projectId);
             request.AddUrlSegment("tagName", tagName);
 
-            return await request.ExecuteAsync<Tag>();
+            return await request.Execute<Tag>();
         }
 
         /// <summary> Gets all tags associated with the specified project. </summary>
@@ -107,7 +107,7 @@ namespace GitLab.NET.Repositories
 
             request.AddUrlSegment("projectId", projectId);
 
-            return await request.ExecuteAsync<List<Tag>>();
+            return await request.Execute<List<Tag>>();
         }
 
         /// <summary> Updates a release associated with the specified tag. </summary>
@@ -129,7 +129,7 @@ namespace GitLab.NET.Repositories
             request.AddUrlSegment("tagName", tagName);
             request.AddParameter("description", description);
 
-            return await request.ExecuteAsync<Tag>();
+            return await request.Execute<Tag>();
         }
     }
 }

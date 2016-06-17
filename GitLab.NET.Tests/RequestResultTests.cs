@@ -1,19 +1,19 @@
 ﻿using System;
 using System.Net;
 using RestSharp;
-using NUnit.Framework;
+using Xunit;
 
 namespace GitLab.NET.Tests
 {
 	public class RequestResultTests
 	{
-		[Test]
+		[Fact]
 		public void ConstructorWithoutType_ResponseIsNull_ThrowsArgumentNullException()
 		{
 			Assert.Throws<ArgumentNullException>(() => new RequestResult<object>(null, new object()));
 		}
 
-		[Test]
+		[Fact]
 		public void ConstructorWithoutType_SetsData()
 		{
 			var expected = new object();
@@ -21,10 +21,10 @@ namespace GitLab.NET.Tests
 
 			var result = new RequestResult<object>(response, expected);
 
-			Assert.AreEqual(expected, result.Data);
+			Assert.Equal(expected, result.Data);
 		}
 
-		[Test]
+		[Fact]
 		public void ConstructorWithoutType_SetsStatusCode()
 		{
 			const HttpStatusCode expected = HttpStatusCode.OK;
@@ -35,16 +35,16 @@ namespace GitLab.NET.Tests
 
 			var result = new RequestResult<object>(response, new object());
 
-			Assert.AreEqual(expected, result.StatusCode);
+			Assert.Equal(expected, result.StatusCode);
 		}
 
-		[Test]
+		[Fact]
 		public void ConstructorWithType_ResponseIsNull_ThrowsArgumentNullException()
 		{
 			Assert.Throws<ArgumentNullException>(() => new RequestResult<object>(null));
 		}
 
-		[Test]
+		[Fact]
 		public void ConstructorWithType_SetsData()
 		{
 			var expected = new object();
@@ -55,10 +55,10 @@ namespace GitLab.NET.Tests
 
 			var result = new RequestResult<object>(response);
 
-			Assert.AreEqual(expected, result.Data);
+			Assert.Equal(expected, result.Data);
 		}
 
-		[Test]
+		[Fact]
 		public void ConstructorWithType_SetsStatusCode()
 		{
 			const HttpStatusCode expected = HttpStatusCode.OK;
@@ -69,7 +69,7 @@ namespace GitLab.NET.Tests
 
 			var result = new RequestResult<object>(response);
 
-			Assert.AreEqual(expected, result.StatusCode);
+			Assert.Equal(expected, result.StatusCode);
 		}
 	}
 }

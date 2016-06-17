@@ -30,7 +30,7 @@ namespace GitLab.NET.Repositories
             request.AddParameterIfNotNull("description", description);
             request.AddParameterIfNotNull("due_date", dueDate);
 
-            return await request.ExecuteAsync<Milestone>();
+            return await request.Execute<Milestone>();
         }
 
         /// <summary> Finds a milestone by its ID. </summary>
@@ -44,7 +44,7 @@ namespace GitLab.NET.Repositories
             request.AddUrlSegment("projectId", projectId);
             request.AddUrlSegment("milestoneId", milestoneId);
 
-            return await request.ExecuteAsync<Milestone>();
+            return await request.Execute<Milestone>();
         }
 
         /// <summary> Gets all milestones attached to the specified project. </summary>
@@ -73,7 +73,7 @@ namespace GitLab.NET.Repositories
             request.AddParameter("page", page);
             request.AddParameter("per_page", resultsPerPage);
 
-            return await request.ExecutePaginatedAsync<Milestone>();
+            return await request.ExecutePaginated<Milestone>();
         }
 
         /// <summary> Gets all issues attached to the specified milestone. </summary>
@@ -100,7 +100,7 @@ namespace GitLab.NET.Repositories
             request.AddParameter("page", page);
             request.AddParameter("per_page", resultsPerPage);
 
-            return await request.ExecutePaginatedAsync<Issue>();
+            return await request.ExecutePaginated<Issue>();
         }
 
         /// <summary> Updates a milestone. </summary>
@@ -124,7 +124,7 @@ namespace GitLab.NET.Repositories
             request.AddParameterIfNotNull("due_date", dueDate);
             request.AddParameterIfNotNull("state_event", stateValue);
 
-            return await request.ExecuteAsync<Milestone>();
+            return await request.Execute<Milestone>();
         }
     }
 }

@@ -29,7 +29,7 @@ namespace GitLab.NET.Repositories
             request.AddParameter("login", username);
             request.AddParameter("password", password);
 
-            return await request.ExecuteAsync<User>();
+            return await request.Execute<User>();
         }
     }
 }

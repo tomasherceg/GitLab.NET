@@ -3,7 +3,7 @@ using System.Threading.Tasks;
 using GitLab.NET.Abstractions;
 using GitLab.NET.Repositories;
 using NSubstitute;
-using NUnit.Framework;
+using Xunit;
 
 namespace GitLab.NET.Tests.Repositories
 {
@@ -19,15 +19,15 @@ namespace GitLab.NET.Tests.Repositories
 		private readonly IRequest _request;
 		private readonly IRequestFactory _requestFactory;
 
-		[Test]
-		public void Create_ColorIsNull_ThrowsArgumentNullException()
+		[Fact]
+		public async Task Create_ColorIsNull_ThrowsArgumentNullException()
 		{
 			var sut = new LabelRepository(_requestFactory);
 
-			Assert.ThrowsAsync<ArgumentNullException>(() => sut.Create(0, "name", null));
+			await Assert.ThrowsAsync<ArgumentNullException>(() => sut.Create(0, "name", null));
 		}
 
-		[Test]
+		[Fact]
 		public async Task Create_DescriptionIsSet_AddsDescriptionParameter()
 		{
 			const string expected = "description";
@@ -38,15 +38,15 @@ namespace GitLab.NET.Tests.Repositories
 			_request.Received().AddParameterIfNotNull("description", expected);
 		}
 
-		[Test]
-		public void Create_NameIsNull_ThrowsArgumentNullException()
+		[Fact]
+		public async Task Create_NameIsNull_ThrowsArgumentNullException()
 		{
 			var sut = new LabelRepository(_requestFactory);
 
-			Assert.ThrowsAsync<ArgumentNullException>(() => sut.Create(0, null, "color"));
+			await Assert.ThrowsAsync<ArgumentNullException>(() => sut.Create(0, null, "color"));
 		}
 
-		[Test]
+		[Fact]
 		public async Task Create_ValidParameters_AddsColorParameter()
 		{
 			const string expected = "color";
@@ -57,7 +57,7 @@ namespace GitLab.NET.Tests.Repositories
 			_request.Received().AddParameter("color", expected);
 		}
 
-		[Test]
+		[Fact]
 		public async Task Create_ValidParameters_AddsNameParameter()
 		{
 			const string expected = "name";
@@ -68,7 +68,7 @@ namespace GitLab.NET.Tests.Repositories
 			_request.Received().AddParameter("name", expected);
 		}
 
-		[Test]
+		[Fact]
 		public async Task Create_ValidParameters_AddsProjectIdUrlSegment()
 		{
 			const uint expected = 0;
@@ -79,7 +79,7 @@ namespace GitLab.NET.Tests.Repositories
 			_request.Received().AddUrlSegment("projectId", expected);
 		}
 
-		[Test]
+		[Fact]
 		public async Task Create_ValidParameters_SetsCorrectResourceAndMethod()
 		{
 			var sut = new LabelRepository(_requestFactory);
@@ -89,15 +89,15 @@ namespace GitLab.NET.Tests.Repositories
 			_requestFactory.Received().Create("projects/{projectId}/labels", Method.Post);
 		}
 
-		[Test]
-		public void Delete_NameIsNull_ThrowsArgumentNullException()
+		[Fact]
+		public async Task Delete_NameIsNull_ThrowsArgumentNullException()
 		{
 			var sut = new LabelRepository(_requestFactory);
 
-			Assert.ThrowsAsync<ArgumentNullException>(() => sut.Delete(0, null));
+			await Assert.ThrowsAsync<ArgumentNullException>(() => sut.Delete(0, null));
 		}
 
-		[Test]
+		[Fact]
 		public async Task Delete_ValidParameters_AddsNameParameter()
 		{
 			const string expected = "name";
@@ -108,7 +108,7 @@ namespace GitLab.NET.Tests.Repositories
 			_request.Received().AddParameter("name", expected);
 		}
 
-		[Test]
+		[Fact]
 		public async Task Delete_ValidParameters_AddsProjectIdUrlSegment()
 		{
 			const uint expected = 0;
@@ -119,7 +119,7 @@ namespace GitLab.NET.Tests.Repositories
 			_request.Received().AddUrlSegment("projectId", expected);
 		}
 
-		[Test]
+		[Fact]
 		public async Task Delete_ValidParameters_SetsCorrectResourceAndMethod()
 		{
 			var sut = new LabelRepository(_requestFactory);
@@ -129,7 +129,7 @@ namespace GitLab.NET.Tests.Repositories
 			_requestFactory.Received().Create("projects/{projectId}/labels", Method.Delete);
 		}
 
-		[Test]
+		[Fact]
 		public async Task GetAll_ValidParameters_AddsProjectIdUrlSegment()
 		{
 			const uint expected = 0;
@@ -140,7 +140,7 @@ namespace GitLab.NET.Tests.Repositories
 			_request.Received().AddUrlSegment("projectId", expected);
 		}
 
-		[Test]
+		[Fact]
 		public async Task GetAll_ValidParameters_SetsCorrectResourceAndMethod()
 		{
 			var sut = new LabelRepository(_requestFactory);
@@ -150,15 +150,15 @@ namespace GitLab.NET.Tests.Repositories
 			_requestFactory.Received().Create("projects/{projectId}/labels", Method.Get);
 		}
 
-		[Test]
-		public void Subscribe_NameIsNull_ThrowsArgumentNullException()
+		[Fact]
+		public async Task Subscribe_NameIsNull_ThrowsArgumentNullException()
 		{
 			var sut = new LabelRepository(_requestFactory);
 
-			Assert.ThrowsAsync<ArgumentNullException>(() => sut.Subscribe(0, null));
+			await Assert.ThrowsAsync<ArgumentNullException>(() => sut.Subscribe(0, null));
 		}
 
-		[Test]
+		[Fact]
 		public async Task Subscribe_ValidParameters_AddsLabelIdUrlSegment()
 		{
 			const string expected = "name";
@@ -169,7 +169,7 @@ namespace GitLab.NET.Tests.Repositories
 			_request.Received().AddUrlSegment("labelId", expected);
 		}
 
-		[Test]
+		[Fact]
 		public async Task Subscribe_ValidParameters_AddsProjectIdUrlSegment()
 		{
 			const uint expected = 0;
@@ -180,7 +180,7 @@ namespace GitLab.NET.Tests.Repositories
 			_request.Received().AddUrlSegment("projectId", expected);
 		}
 
-		[Test]
+		[Fact]
 		public async Task Subscribe_ValidParameters_SetsCorrectResourceAndMethod()
 		{
 			var sut = new LabelRepository(_requestFactory);
@@ -190,15 +190,15 @@ namespace GitLab.NET.Tests.Repositories
 			_requestFactory.Received().Create("projects/{projectId}/labels/{labelId}/subscription", Method.Post);
 		}
 
-		[Test]
-		public void Unsubscribe_NameIsNull_ThrowsArgumentNullException()
+		[Fact]
+		public async Task Unsubscribe_NameIsNull_ThrowsArgumentNullException()
 		{
 			var sut = new LabelRepository(_requestFactory);
 
-			Assert.ThrowsAsync<ArgumentNullException>(() => sut.Unsubscribe(0, null));
+			await Assert.ThrowsAsync<ArgumentNullException>(() => sut.Unsubscribe(0, null));
 		}
 
-		[Test]
+		[Fact]
 		public async Task Unsubscribe_ValidParameters_AddsLabelIdUrlSegment()
 		{
 			const string expected = "name";
@@ -209,7 +209,7 @@ namespace GitLab.NET.Tests.Repositories
 			_request.Received().AddUrlSegment("labelId", expected);
 		}
 
-		[Test]
+		[Fact]
 		public async Task Unsubscribe_ValidParameters_AddsProjectIdUrlSegment()
 		{
 			const uint expected = 0;
@@ -220,7 +220,7 @@ namespace GitLab.NET.Tests.Repositories
 			_request.Received().AddUrlSegment("projectId", expected);
 		}
 
-		[Test]
+		[Fact]
 		public async Task Unsubscribe_ValidParameters_SetsCorrectResourceAndMethod()
 		{
 			var sut = new LabelRepository(_requestFactory);
@@ -230,7 +230,7 @@ namespace GitLab.NET.Tests.Repositories
 			_requestFactory.Received().Create("projects/{projectId}/labels/{labelId}/subscription", Method.Delete);
 		}
 
-		[Test]
+		[Fact]
 		public async Task Update_ColorIsSet_AddsColorParameter()
 		{
 			const string expected = "color";
@@ -241,7 +241,7 @@ namespace GitLab.NET.Tests.Repositories
 			_request.Received().AddParameterIfNotNull("color", expected);
 		}
 
-		[Test]
+		[Fact]
 		public async Task Update_DescriptionIsSet_AddsDescriptionParameter()
 		{
 			const string expected = "description";
@@ -252,15 +252,15 @@ namespace GitLab.NET.Tests.Repositories
 			_request.Received().AddParameterIfNotNull("description", expected);
 		}
 
-		[Test]
-		public void Update_NameIsNull_ThrowsArgumentNullException()
+		[Fact]
+		public async Task Update_NameIsNull_ThrowsArgumentNullException()
 		{
 			var sut = new LabelRepository(_requestFactory);
 
-			Assert.ThrowsAsync<ArgumentNullException>(() => sut.Update(0, null));
+			await Assert.ThrowsAsync<ArgumentNullException>(() => sut.Update(0, null));
 		}
 
-		[Test]
+		[Fact]
 		public async Task Update_NewNameIsSet_AddsNewNameParameter()
 		{
 			const string expected = "newName";
@@ -271,7 +271,7 @@ namespace GitLab.NET.Tests.Repositories
 			_request.Received().AddParameterIfNotNull("new_name", expected);
 		}
 
-		[Test]
+		[Fact]
 		public async Task Update_ValidParameters_AddsNameParameter()
 		{
 			const string expected = "name";
@@ -282,7 +282,7 @@ namespace GitLab.NET.Tests.Repositories
 			_request.Received().AddParameter("name", expected);
 		}
 
-		[Test]
+		[Fact]
 		public async Task Update_ValidParameters_AddsProjectIdUrlSegment()
 		{
 			const uint expected = 0;
@@ -293,7 +293,7 @@ namespace GitLab.NET.Tests.Repositories
 			_request.Received().AddUrlSegment("projectId", expected);
 		}
 
-		[Test]
+		[Fact]
 		public async Task Update_ValidParameters_SetsCorrectResourceAndMethod()
 		{
 			var sut = new LabelRepository(_requestFactory);

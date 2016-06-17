@@ -3,7 +3,7 @@ using System;
 using System.Threading.Tasks;
 using GitLab.NET.Abstractions;
 using GitLab.NET.Repositories;
-using NUnit.Framework;
+using Xunit;
 
 namespace GitLab.NET.Tests.Repositories
 {
@@ -21,19 +21,19 @@ namespace GitLab.NET.Tests.Repositories
 		private readonly IRequestFactory _requestFactory;
 		private readonly BranchRepository _sut;
 
-		[Test]
-		public void Create_BranchNameIsNull_ThrowsArgumentNullException()
+		[Fact]
+		public async Task Create_BranchNameIsNull_ThrowsArgumentNullException()
 		{
-			Assert.ThrowsAsync<ArgumentNullException>(() => _sut.Create(0, null, "refName"));
+			await Assert.ThrowsAsync<ArgumentNullException>(() => _sut.Create(0, null, "refName"));
 		}
 
-		[Test]
-		public void Create_RefNameIsNull_ThrowsArgumentNullException()
+		[Fact]
+		public async Task Create_RefNameIsNull_ThrowsArgumentNullException()
 		{
-			Assert.ThrowsAsync<ArgumentNullException>(() => _sut.Create(0, "branchName", null));
+			await Assert.ThrowsAsync<ArgumentNullException>(() => _sut.Create(0, "branchName", null));
 		}
 
-		[Test]
+		[Fact]
 		public async Task Create_ValidParameters_AddsProjectIdUrlSegment()
 		{
 			const uint expected = 0;
@@ -43,7 +43,7 @@ namespace GitLab.NET.Tests.Repositories
 			_request.Received().AddUrlSegment("projectId", expected);
 		}
 
-		[Test]
+		[Fact]
 		public async Task Create_ValidParameters_AddsBranchNameParameter()
 		{
 			const string expected = "branchName";
@@ -53,7 +53,7 @@ namespace GitLab.NET.Tests.Repositories
 			_request.Received().AddParameter("branch_name", expected);
 		}
 
-		[Test]
+		[Fact]
 		public async Task Create_ValidParameters_AddsRefParameter()
 		{
 			const string expected = "refName";
@@ -63,7 +63,7 @@ namespace GitLab.NET.Tests.Repositories
 			_request.Received().AddParameter("ref", expected);
 		}
 
-		[Test]
+		[Fact]
 		public async Task Create_ValidParameters_SetsCorrectResourceAndMethod()
 		{
 			await _sut.Create(0, "branchName", "refName");
@@ -71,13 +71,13 @@ namespace GitLab.NET.Tests.Repositories
 			_requestFactory.Received().Create("projects/{projectId}/repository/branches", Method.Post);
 		}
 
-		[Test]
-		public void Delete_BranchNameIsNull_ThrowsArgumentNullException()
+		[Fact]
+		public async Task Delete_BranchNameIsNull_ThrowsArgumentNullException()
 		{
-			Assert.ThrowsAsync<ArgumentNullException>(() => _sut.Delete(0, null));
+			await Assert.ThrowsAsync<ArgumentNullException>(() => _sut.Delete(0, null));
 		}
 
-		[Test]
+		[Fact]
 		public async Task Delete_ValidParameters_AddsProjectIdUrlSegment()
 		{
 			const uint expected = 0;
@@ -87,7 +87,7 @@ namespace GitLab.NET.Tests.Repositories
 			_request.Received().AddUrlSegment("projectId", expected);
 		}
 
-		[Test]
+		[Fact]
 		public async Task Delete_ValidParameters_AddsBranchNameUrlSegment()
 		{
 			const string expected = "branchName";
@@ -97,7 +97,7 @@ namespace GitLab.NET.Tests.Repositories
 			_request.Received().AddUrlSegment("branchName", expected);
 		}
 
-		[Test]
+		[Fact]
 		public async Task Delete_ValidParameters_SetsCorrectResourceAndMethod()
 		{
 			await _sut.Delete(0, "branchName");
@@ -105,13 +105,13 @@ namespace GitLab.NET.Tests.Repositories
 			_requestFactory.Received().Create("projects/{projectId}/repository/branches/{branchName}", Method.Delete);
 		}
 
-		[Test]
-		public void Find_BranchNameIsNull_ThrowsArgumentNullException()
+		[Fact]
+		public async Task Find_BranchNameIsNull_ThrowsArgumentNullException()
 		{
-			Assert.ThrowsAsync<ArgumentNullException>(() => _sut.Find(0, null));
+			await Assert.ThrowsAsync<ArgumentNullException>(() => _sut.Find(0, null));
 		}
 
-		[Test]
+		[Fact]
 		public async Task Find_ValidParameters_AddsProjectIdUrlSegment()
 		{
 			const uint expected = 0;
@@ -121,7 +121,7 @@ namespace GitLab.NET.Tests.Repositories
 			_request.Received().AddUrlSegment("projectId", expected);
 		}
 
-		[Test]
+		[Fact]
 		public async Task Find_ValidParameters_AddsBranchNameUrlSegment()
 		{
 			const string expected = "branchName";
@@ -131,7 +131,7 @@ namespace GitLab.NET.Tests.Repositories
 			_request.Received().AddUrlSegment("branchName", expected);
 		}
 
-		[Test]
+		[Fact]
 		public async Task Find_ValidParameters_SetsCorrectResourceAndMethod()
 		{
 			await _sut.Find(0, "branchName");
@@ -139,7 +139,7 @@ namespace GitLab.NET.Tests.Repositories
 			_requestFactory.Received().Create("projects/{projectId}/repository/branches/{branchName}", Method.Get);
 		}
 
-		[Test]
+		[Fact]
 		public async Task GetAll_ValidParameters_AddsProjectIdUrlSegment()
 		{
 			const uint expected = 0;
@@ -149,7 +149,7 @@ namespace GitLab.NET.Tests.Repositories
 			_request.Received().AddUrlSegment("projectId", expected);
 		}
 
-		[Test]
+		[Fact]
 		public async Task GetAll_ValidParameters_SetsCorrectResourceAndMethod()
 		{
 			await _sut.GetAll(0);
@@ -157,13 +157,13 @@ namespace GitLab.NET.Tests.Repositories
 			_requestFactory.Received().Create("projects/{projectId}/repository/branches", Method.Get);
 		}
 
-		[Test]
-		public void Protect_BranchNameIsNull_ThrowsArgumentNullException()
+		[Fact]
+		public async Task Protect_BranchNameIsNull_ThrowsArgumentNullException()
 		{
-			Assert.ThrowsAsync<ArgumentNullException>(() => _sut.Protect(0, null));
+			await Assert.ThrowsAsync<ArgumentNullException>(() => _sut.Protect(0, null));
 		}
 
-		[Test]
+		[Fact]
 		public async Task Protect_ValidParameters_AddsProjectIdUrlSegment()
 		{
 			const uint expected = 0;
@@ -173,7 +173,7 @@ namespace GitLab.NET.Tests.Repositories
 			_request.Received().AddUrlSegment("projectId", expected);
 		}
 
-		[Test]
+		[Fact]
 		public async Task Protect_ValidParameters_AddsBranchNameUrlSegment()
 		{
 			const string expected = "branchName";
@@ -183,7 +183,7 @@ namespace GitLab.NET.Tests.Repositories
 			_request.Received().AddUrlSegment("branchName", expected);
 		}
 
-		[Test]
+		[Fact]
 		public async Task Protect_ValidParameters_SetsCorrectResourceAndMethod()
 		{
 			await _sut.Protect(0, "branchName");
@@ -191,13 +191,13 @@ namespace GitLab.NET.Tests.Repositories
 			_requestFactory.Received().Create("projects/{projectId}/repository/branches/{branchName}/protect", Method.Put);
 		}
 
-		[Test]
-		public void Unprotect_BranchNameIsNull_ThrowsArgumentNullException()
+		[Fact]
+		public async Task Unprotect_BranchNameIsNull_ThrowsArgumentNullException()
 		{
-			Assert.ThrowsAsync<ArgumentNullException>(() => _sut.Unprotect(0, null));
+			await Assert.ThrowsAsync<ArgumentNullException>(() => _sut.Unprotect(0, null));
 		}
 
-		[Test]
+		[Fact]
 		public async Task Unprotect_ValidParameters_AddsProjectIdUrlSegment()
 		{
 			const uint expected = 0;
@@ -207,7 +207,7 @@ namespace GitLab.NET.Tests.Repositories
 			_request.Received().AddUrlSegment("projectId", expected);
 		}
 
-		[Test]
+		[Fact]
 		public async Task Unprotect_ValidParameters_AddsBranchNameUrlSegment()
 		{
 			const string expected = "branchName";
@@ -217,7 +217,7 @@ namespace GitLab.NET.Tests.Repositories
 			_request.Received().AddUrlSegment("branchName", expected);
 		}
 
-		[Test]
+		[Fact]
 		public async Task Unprotect_ValidParameters_SetsCorrectResourceAndMethod()
 		{
 			await _sut.Unprotect(0, "branchName");

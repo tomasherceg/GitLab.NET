@@ -38,7 +38,7 @@ namespace GitLab.NET.Repositories
             request.AddParameter("code", code);
             request.AddParameter("visibility_level", visibilityLevel);
 
-            return await request.ExecuteAsync<ProjectSnippet>();
+            return await request.Execute<ProjectSnippet>();
         }
 
         /// <summary> Deletes a project snippet. </summary>
@@ -52,7 +52,7 @@ namespace GitLab.NET.Repositories
             request.AddUrlSegment("projectId", projectId);
             request.AddUrlSegment("id", id);
 
-            return await request.ExecuteAsync<ProjectSnippet>();
+            return await request.Execute<ProjectSnippet>();
         }
 
         /// <summary> Finds a snippet by its ID and the project ID it is associated with. </summary>
@@ -66,7 +66,7 @@ namespace GitLab.NET.Repositories
             request.AddUrlSegment("projectId", projectId);
             request.AddUrlSegment("id", id);
 
-            return await request.ExecuteAsync<ProjectSnippet>();
+            return await request.Execute<ProjectSnippet>();
         }
 
         /// <summary> Gets all of the project snippets associated with a project. </summary>
@@ -91,7 +91,7 @@ namespace GitLab.NET.Repositories
             request.AddParameter("page", page);
             request.AddParameter("per_page", resultsPerPage);
 
-            return await request.ExecutePaginatedAsync<ProjectSnippet>();
+            return await request.ExecutePaginated<ProjectSnippet>();
         }
 
         /// <summary> Gets a snippet's content by its ID and the project ID it is associated with. </summary>
@@ -105,7 +105,7 @@ namespace GitLab.NET.Repositories
             request.AddUrlSegment("projectId", projectId);
             request.AddUrlSegment("id", id);
 
-            return await request.ExecuteContentAsync();
+            return await request.ExecuteContent();
         }
 
         /// <summary> Updates a project snippet associated with the provided project ID. </summary>
@@ -127,7 +127,7 @@ namespace GitLab.NET.Repositories
             request.AddParameterIfNotNull("code", code);
             request.AddParameterIfNotNull("visibility_level", visibilityLevel);
 
-            return await request.ExecuteAsync<ProjectSnippet>();
+            return await request.Execute<ProjectSnippet>();
         }
     }
 }

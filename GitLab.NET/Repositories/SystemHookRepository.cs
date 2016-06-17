@@ -25,7 +25,7 @@ namespace GitLab.NET.Repositories
 
             request.AddParameter("url", url);
 
-            return await request.ExecuteAsync<SystemHook>();
+            return await request.Execute<SystemHook>();
         }
 
         /// <summary> Deletes a system hook. </summary>
@@ -37,7 +37,7 @@ namespace GitLab.NET.Repositories
 
             request.AddUrlSegment("hookId", hookId);
 
-            return await request.ExecuteAsync<SystemHook>();
+            return await request.Execute<SystemHook>();
         }
 
         /// <summary> Gets all system hooks. </summary>
@@ -49,7 +49,7 @@ namespace GitLab.NET.Repositories
         {
             var request = RequestFactory.Create("hooks", Method.Get);
 
-            return await request.ExecuteAsync<List<SystemHook>>();
+            return await request.Execute<List<SystemHook>>();
         }
 
         /// <summary> Tests a system hook. </summary>
@@ -61,7 +61,7 @@ namespace GitLab.NET.Repositories
 
             request.AddUrlSegment("hookId", hookId);
 
-            return await request.ExecuteAsync<SystemHookEvent>();
+            return await request.Execute<SystemHookEvent>();
         }
     }
 }

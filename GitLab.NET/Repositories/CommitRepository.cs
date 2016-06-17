@@ -40,7 +40,7 @@ namespace GitLab.NET.Repositories
             request.AddParameterIfNotNull("line", line);
             request.AddParameterIfNotNull("line_type", lineTypeValue);
 
-            return await request.ExecuteAsync<CommitComment>();
+            return await request.Execute<CommitComment>();
         }
 
         /// <summary> Creates a status for a commit. </summary>
@@ -73,7 +73,7 @@ namespace GitLab.NET.Repositories
             request.AddParameterIfNotNull("target_url", targetUrl);
             request.AddParameterIfNotNull("description", description);
 
-            return await request.ExecuteAsync<CommitStatus>();
+            return await request.Execute<CommitStatus>();
         }
 
         /// <summary> Gets a commit by its SHA. </summary>
@@ -90,7 +90,7 @@ namespace GitLab.NET.Repositories
             request.AddUrlSegment("projectId", projectId);
             request.AddUrlSegment("commitSha", commitSha);
 
-            return await request.ExecuteAsync<Commit>();
+            return await request.Execute<Commit>();
         }
 
         /// <summary> Gets all commits for the specified project. </summary>
@@ -111,7 +111,7 @@ namespace GitLab.NET.Repositories
             request.AddParameterIfNotNull("since", since);
             request.AddParameterIfNotNull("until", until);
 
-            return await request.ExecuteAsync<List<Commit>>();
+            return await request.Execute<List<Commit>>();
         }
 
         /// <summary> Gets the comments for a commit. </summary>
@@ -141,7 +141,7 @@ namespace GitLab.NET.Repositories
             request.AddParameter("page", page);
             request.AddParameter("per_page", resultsPerPage);
 
-            return await request.ExecutePaginatedAsync<CommitComment>();
+            return await request.ExecutePaginated<CommitComment>();
         }
 
         /// <summary> Gets a commit diff. </summary>
@@ -158,7 +158,7 @@ namespace GitLab.NET.Repositories
             request.AddUrlSegment("projectId", projectId);
             request.AddUrlSegment("commitSha", commitSha);
 
-            return await request.ExecuteAsync<CommitDiff>();
+            return await request.Execute<CommitDiff>();
         }
 
         /// <summary> Gets the status for a commit. </summary>
@@ -203,7 +203,7 @@ namespace GitLab.NET.Repositories
             request.AddParameterIfNotNull("name", name);
             request.AddParameterIfNotNull("all", all);
 
-            return await request.ExecutePaginatedAsync<CommitStatus>();
+            return await request.ExecutePaginated<CommitStatus>();
         }
 
         /// <summary> Updates the status for a commit. </summary>

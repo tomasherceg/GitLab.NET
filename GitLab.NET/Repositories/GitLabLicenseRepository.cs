@@ -17,7 +17,7 @@ namespace GitLab.NET.Repositories
         {
             var request = RequestFactory.Create("license", Method.Get);
 
-            return await request.ExecuteAsync<GitLabLicense>();
+            return await request.Execute<GitLabLicense>();
         }
     }
 }

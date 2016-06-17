@@ -3,7 +3,7 @@ using System;
 using System.Threading.Tasks;
 using GitLab.NET.Abstractions;
 using GitLab.NET.Repositories;
-using NUnit.Framework;
+using Xunit;
 
 namespace GitLab.NET.Tests.Repositories
 {
@@ -21,7 +21,7 @@ namespace GitLab.NET.Tests.Repositories
 		private readonly IRequestFactory _requestFactory;
 		private readonly MergeRequestRepository _sut;
 
-		[Test]
+		[Fact]
 		public async Task Accept_ValidParameters_AddsProjectIdUrlSegment()
 		{
 			const uint expected = 0;
@@ -31,7 +31,7 @@ namespace GitLab.NET.Tests.Repositories
 			_request.Received().AddUrlSegment("projectId", expected);
 		}
 
-		[Test]
+		[Fact]
 		public async Task Accept_ValidParameters_AddsMergeRequestIdUrlSegment()
 		{
 			const uint expected = 0;
@@ -41,7 +41,7 @@ namespace GitLab.NET.Tests.Repositories
 			_request.Received().AddUrlSegment("mergeRequestId", expected);
 		}
 
-		[Test]
+		[Fact]
 		public async Task Accept_CommitMessageIsSet_AddsMergeCommitMessageParameter()
 		{
 			const string expected = "commitMessage";
@@ -51,7 +51,7 @@ namespace GitLab.NET.Tests.Repositories
 			_request.Received().AddParameterIfNotNull("merge_commit_message", expected);
 		}
 
-		[Test]
+		[Fact]
 		public async Task Accept_RemoveSourceBranchIsSet_AddsShouldRemoveSourceBranchParameter()
 		{
 			const bool expected = true;
@@ -61,7 +61,7 @@ namespace GitLab.NET.Tests.Repositories
 			_request.Received().AddParameterIfNotNull("should_remove_source_branch", expected);
 		}
 
-		[Test]
+		[Fact]
 		public async Task Accept_MergedWhenBuildSucceedsIsSet_AddsMergedWhenBuildSucceedsParameter()
 		{
 			const bool expected = true;
@@ -71,7 +71,7 @@ namespace GitLab.NET.Tests.Repositories
 			_request.Received().AddParameterIfNotNull("merged_when_build_succeeds", expected);
 		}
 
-		[Test]
+		[Fact]
 		public async Task Accept_ValidParameters_SetsCorrectResourceAndMethod()
 		{
 			await _sut.Accept(0, 0);
@@ -79,7 +79,7 @@ namespace GitLab.NET.Tests.Repositories
 			_requestFactory.Received().Create("projects/{projectId}/merge_requests/{mergeRequestId}/merge", Method.Put);
 		}
 
-		[Test]
+		[Fact]
 		public async Task CancelMergeOnBuildSuccess_ValidParameters_AddsProjectIdUrlSegment()
 		{
 			const uint expected = 0;
@@ -89,7 +89,7 @@ namespace GitLab.NET.Tests.Repositories
 			_request.Received().AddUrlSegment("projectId", expected);
 		}
 
-		[Test]
+		[Fact]
 		public async Task CancelMergeOnBuildSuccess_ValidParameters_AddsMergeRequestIdParameter()
 		{
 			const uint expected = 0;
@@ -99,7 +99,7 @@ namespace GitLab.NET.Tests.Repositories
 			_request.Received().AddUrlSegment("mergeRequestId", expected);
 		}
 
-		[Test]
+		[Fact]
 		public async Task CancelMergeOnBuildSuccess_ValidParameters_SetsCorrectResourceAndMethod()
 		{
 			await _sut.CancelMergeOnBuildSuccess(0, 0);
@@ -107,25 +107,25 @@ namespace GitLab.NET.Tests.Repositories
 			_requestFactory.Received().Create("projects/{projectId}/merge_requests/{mergeRequestId}/cancel_merge_when_build_succeeds", Method.Put);
 		}
 
-		[Test]
-		public void Create_SourceBranchIsNull_ThrowsArgumentNullException()
+		[Fact]
+		public async Task Create_SourceBranchIsNull_ThrowsArgumentNullException()
 		{
-			Assert.ThrowsAsync<ArgumentNullException>(() => _sut.Create(0, null, "targetBranch", "title"));
+			await Assert.ThrowsAsync<ArgumentNullException>(() => _sut.Create(0, null, "targetBranch", "title"));
 		}
 
-		[Test]
-		public void Create_TargetBranchIsNull_ThrowsArgumentNullException()
+		[Fact]
+		public async Task Create_TargetBranchIsNull_ThrowsArgumentNullException()
 		{
-			Assert.ThrowsAsync<ArgumentNullException>(() => _sut.Create(0, "sourceBranch", null, "title"));
+			await Assert.ThrowsAsync<ArgumentNullException>(() => _sut.Create(0, "sourceBranch", null, "title"));
 		}
 
-		[Test]
-		public void Create_TitleIsNull_ThrowsArgumentNullException()
+		[Fact]
+		public async Task Create_TitleIsNull_ThrowsArgumentNullException()
 		{
-			Assert.ThrowsAsync<ArgumentNullException>(() => _sut.Create(0, "sourceBranch", "targetBranch", null));
+			await Assert.ThrowsAsync<ArgumentNullException>(() => _sut.Create(0, "sourceBranch", "targetBranch", null));
 		}
 
-		[Test]
+		[Fact]
 		public async Task Create_ValidParameters_AddsProjectIdUrlSegment()
 		{
 			const uint expected = 0;
@@ -135,7 +135,7 @@ namespace GitLab.NET.Tests.Repositories
 			_request.Received().AddUrlSegment("projectId", expected);
 		}
 
-		[Test]
+		[Fact]
 		public async Task Create_ValidParameters_AddsSourceBranchParameter()
 		{
 			const string expected = "sourceBranch";
@@ -145,7 +145,7 @@ namespace GitLab.NET.Tests.Repositories
 			_request.Received().AddParameter("source_branch", expected);
 		}
 
-		[Test]
+		[Fact]
 		public async Task Create_ValidParameters_AddsTargetBranchParameter()
 		{
 			const string expected = "targetBranch";
@@ -155,7 +155,7 @@ namespace GitLab.NET.Tests.Repositories
 			_request.Received().AddParameter("target_branch", expected);
 		}
 
-		[Test]
+		[Fact]
 		public async Task Create_ValidParameters_AddsTitleParameter()
 		{
 			const string expected = "title";
@@ -165,7 +165,7 @@ namespace GitLab.NET.Tests.Repositories
 			_request.Received().AddParameter("title", expected);
 		}
 
-		[Test]
+		[Fact]
 		public async Task Create_AssigneeIdIsSet_AddsAssigneeIdParameter()
 		{
 			const uint expected = 0;
@@ -175,7 +175,7 @@ namespace GitLab.NET.Tests.Repositories
 			_request.Received().AddParameterIfNotNull("assignee_id", expected);
 		}
 
-		[Test]
+		[Fact]
 		public async Task Create_DescriptionIsSet_AddsDescriptionParameter()
 		{
 			const string expected = "description";
@@ -185,7 +185,7 @@ namespace GitLab.NET.Tests.Repositories
 			_request.Received().AddParameterIfNotNull("description", expected);
 		}
 
-		[Test]
+		[Fact]
 		public async Task Create_TargetProjectIdIsSet_AddsTargetProjectIdParameter()
 		{
 			const uint expected = 0;
@@ -195,7 +195,7 @@ namespace GitLab.NET.Tests.Repositories
 			_request.Received().AddParameterIfNotNull("target_project_id", expected);
 		}
 
-		[Test]
+		[Fact]
 		public async Task Create_LabelsIsSet_AddsLabelsParameter()
 		{
 			var labels = new[]
@@ -210,7 +210,7 @@ namespace GitLab.NET.Tests.Repositories
 			_request.Received().AddParameterIfNotNull("labels", expected);
 		}
 
-		[Test]
+		[Fact]
 		public async Task Create_MilestoneIdIsSet_AddsMilestoneIdParameter()
 		{
 			const uint expected = 0;
@@ -220,7 +220,7 @@ namespace GitLab.NET.Tests.Repositories
 			_request.Received().AddParameterIfNotNull("milestone_id", expected);
 		}
 
-		[Test]
+		[Fact]
 		public async Task Create_ValidParameters_SetsCorrectResourceAndMethod()
 		{
 			await _sut.Create(0, "sourceBranch", "targetBranch", "title");
@@ -228,7 +228,7 @@ namespace GitLab.NET.Tests.Repositories
 			_requestFactory.Received().Create("projects/{projectId}/merge_requests", Method.Post);
 		}
 
-		[Test]
+		[Fact]
 		public async Task Delete_ValidParameters_AddsProjectIdUrlSegment()
 		{
 			const uint expected = 0;
@@ -238,7 +238,7 @@ namespace GitLab.NET.Tests.Repositories
 			_request.Received().AddUrlSegment("projectId", expected);
 		}
 
-		[Test]
+		[Fact]
 		public async Task Delete_ValidParameters_AddsMergeRequestIdUrlSegment()
 		{
 			const uint expected = 0;
@@ -248,7 +248,7 @@ namespace GitLab.NET.Tests.Repositories
 			_request.Received().AddUrlSegment("mergeRequestId", expected);
 		}
 
-		[Test]
+		[Fact]
 		public async Task Delete_ValidParameters_SetsCorrectResourceAndMethod()
 		{
 			await _sut.Delete(0, 0);
@@ -256,7 +256,7 @@ namespace GitLab.NET.Tests.Repositories
 			_requestFactory.Received().Create("projects/{projectId}/merge_requests/{mergeRequestId}", Method.Delete);
 		}
 
-		[Test]
+		[Fact]
 		public async Task Find_ValidParameters_AddsProjectIdUrlSegment()
 		{
 			const uint expected = 0;
@@ -266,7 +266,7 @@ namespace GitLab.NET.Tests.Repositories
 			_request.Received().AddUrlSegment("projectId", expected);
 		}
 
-		[Test]
+		[Fact]
 		public async Task Find_ValidParameters_AddsMergeRequestIdUrlSegment()
 		{
 			const uint expected = 0;
@@ -276,7 +276,7 @@ namespace GitLab.NET.Tests.Repositories
 			_request.Received().AddUrlSegment("mergeRequestId", expected);
 		}
 
-		[Test]
+		[Fact]
 		public async Task Find_ValidParameters_SetsCorrectResourceAndMethod()
 		{
 			await _sut.Find(0, 0);
@@ -284,25 +284,25 @@ namespace GitLab.NET.Tests.Repositories
 			_requestFactory.Received().Create("projects/{projectId}/merge_requests/{mergeRequestId}", Method.Get);
 		}
 
-		[Test]
-		public void GetAll_PageIsLessThanMinimum_ThrowsArgumentOutOfRangeException()
+		[Fact]
+		public async Task GetAll_PageIsLessThanMinimum_ThrowsArgumentOutOfRangeException()
 		{
-			Assert.ThrowsAsync<ArgumentOutOfRangeException>(() => _sut.GetAll(0, page: uint.MinValue));
+			await Assert.ThrowsAsync<ArgumentOutOfRangeException>(() => _sut.GetAll(0, page: uint.MinValue));
 		}
 
-		[Test]
-		public void GetAll_ResultsPerPageIsLessThanMinimum_ThrowsArgumentOutOfRangeException()
+		[Fact]
+		public async Task GetAll_ResultsPerPageIsLessThanMinimum_ThrowsArgumentOutOfRangeException()
 		{
-			Assert.ThrowsAsync<ArgumentOutOfRangeException>(() => _sut.GetAll(0, resultsPerPage: uint.MinValue));
+			await Assert.ThrowsAsync<ArgumentOutOfRangeException>(() => _sut.GetAll(0, resultsPerPage: uint.MinValue));
 		}
 
-		[Test]
-		public void GetAll_ResultsPerPageIsGreaterThanMaximum_ThrowsArgumentOutOfRangeException()
+		[Fact]
+		public async Task GetAll_ResultsPerPageIsGreaterThanMaximum_ThrowsArgumentOutOfRangeException()
 		{
-			Assert.ThrowsAsync<ArgumentOutOfRangeException>(() => _sut.GetAll(0, resultsPerPage: uint.MaxValue));
+			await Assert.ThrowsAsync<ArgumentOutOfRangeException>(() => _sut.GetAll(0, resultsPerPage: uint.MaxValue));
 		}
 
-		[Test]
+		[Fact]
 		public async Task GetAll_PageIsSet_AddsPageParameter()
 		{
 			const uint expected = 5;
@@ -312,7 +312,7 @@ namespace GitLab.NET.Tests.Repositories
 			_request.Received().AddParameter("page", expected);
 		}
 
-		[Test]
+		[Fact]
 		public async Task GetAll_ResultsPerPageIsSet_AddsPerPageParameter()
 		{
 			const uint expected = 5;
@@ -322,7 +322,7 @@ namespace GitLab.NET.Tests.Repositories
 			_request.Received().AddParameter("per_page", expected);
 		}
 
-		[Test]
+		[Fact]
 		public async Task GetAll_ValidParameters_AddsProjectIdUrlSegment()
 		{
 			const uint expected = 0;
@@ -332,7 +332,7 @@ namespace GitLab.NET.Tests.Repositories
 			_request.Received().AddUrlSegment("projectId", expected);
 		}
 
-		[Test]
+		[Fact]
 		public async Task GetAll_StateIsSet_AddsStateParameter()
 		{
 			const MergeRequestState state = MergeRequestState.Merged;
@@ -343,7 +343,7 @@ namespace GitLab.NET.Tests.Repositories
 			_request.Received().AddParameterIfNotNull("state", expected);
 		}
 
-		[Test]
+		[Fact]
 		public async Task GetAll_OrderByIsSet_AddsOrderByParameter()
 		{
 			const OrderBy orderBy = OrderBy.UpdatedAt;
@@ -354,7 +354,7 @@ namespace GitLab.NET.Tests.Repositories
 			_request.Received().AddParameterIfNotNull("order_by", expected);
 		}
 
-		[Test]
+		[Fact]
 		public async Task GetAll_SortIsSet_AddsSortParameter()
 		{
 			const SortOrder sort = SortOrder.Asc;
@@ -365,7 +365,7 @@ namespace GitLab.NET.Tests.Repositories
 			_request.Received().AddParameterIfNotNull("sort", expected);
 		}
 
-		[Test]
+		[Fact]
 		public async Task GetAll_ValidParameters_SetsCorrectResourceAndMethod()
 		{
 			await _sut.GetAll(0);
@@ -373,7 +373,7 @@ namespace GitLab.NET.Tests.Repositories
 			_requestFactory.Received().Create("projects/{projectId}/merge_requests", Method.Get);
 		}
 
-		[Test]
+		[Fact]
 		public async Task GetChanges_ValidParameters_AddsProjectIdUrlSegment()
 		{
 			const uint expected = 0;
@@ -383,7 +383,7 @@ namespace GitLab.NET.Tests.Repositories
 			_request.Received().AddUrlSegment("projectId", expected);
 		}
 
-		[Test]
+		[Fact]
 		public async Task GetChanges_ValidParameters_AddsMergeRequestIdUrlSegment()
 		{
 			const uint expected = 0;
@@ -393,7 +393,7 @@ namespace GitLab.NET.Tests.Repositories
 			_request.Received().AddUrlSegment("mergeRequestId", expected);
 		}
 
-		[Test]
+		[Fact]
 		public async Task GetChanges_ValidParameters_SetsCorrectResourceAndMethod()
 		{
 			await _sut.GetChanges(0, 0);
@@ -401,7 +401,7 @@ namespace GitLab.NET.Tests.Repositories
 			_requestFactory.Received().Create("projects/{projectId}/merge_requests/{mergeRequestId}/changes", Method.Get);
 		}
 
-		[Test]
+		[Fact]
 		public async Task GetCommits_ValidParameters_AddsProjectIdUrlSegment()
 		{
 			const uint expected = 0;
@@ -411,7 +411,7 @@ namespace GitLab.NET.Tests.Repositories
 			_request.Received().AddUrlSegment("projectId", expected);
 		}
 
-		[Test]
+		[Fact]
 		public async Task GetCommits_ValidParameters_AddsMergeRequestIdUrlSegment()
 		{
 			const uint expected = 0;
@@ -421,7 +421,7 @@ namespace GitLab.NET.Tests.Repositories
 			_request.Received().AddUrlSegment("mergeRequestId", expected);
 		}
 
-		[Test]
+		[Fact]
 		public async Task GetCommits_ValidParameters_SetsCorrectResourceAndMethod()
 		{
 			await _sut.GetCommits(0, 0);
@@ -429,25 +429,25 @@ namespace GitLab.NET.Tests.Repositories
 			_requestFactory.Received().Create("projects/{projectId}/merge_requests/{mergeRequestId}/commits", Method.Get);
 		}
 
-		[Test]
-		public void GetIssuesClosedOnMerge_PageIsLessThanMinimum_ThrowsArgumentOutOfRangeException()
+		[Fact]
+		public async Task GetIssuesClosedOnMerge_PageIsLessThanMinimum_ThrowsArgumentOutOfRangeException()
 		{
-			Assert.ThrowsAsync<ArgumentOutOfRangeException>(() => _sut.GetIssuesClosedOnMerge(0, 0, page: uint.MinValue));
+			await Assert.ThrowsAsync<ArgumentOutOfRangeException>(() => _sut.GetIssuesClosedOnMerge(0, 0, page: uint.MinValue));
 		}
 
-		[Test]
-		public void GetIssuesClosedOnMerge_ResultsPerPageIsLessThanMinimum_ThrowsArgumentOutOfRangeException()
+		[Fact]
+		public async Task GetIssuesClosedOnMerge_ResultsPerPageIsLessThanMinimum_ThrowsArgumentOutOfRangeException()
 		{
-			Assert.ThrowsAsync<ArgumentOutOfRangeException>(() => _sut.GetIssuesClosedOnMerge(0, 0, resultsPerPage: uint.MinValue));
+			await Assert.ThrowsAsync<ArgumentOutOfRangeException>(() => _sut.GetIssuesClosedOnMerge(0, 0, resultsPerPage: uint.MinValue));
 		}
 
-		[Test]
-		public void GetIssuesClosedOnMerge_ResultsPerPageIsGreaterThanMaximum_ThrowsArgumentOutOfRangeException()
+		[Fact]
+		public async Task GetIssuesClosedOnMerge_ResultsPerPageIsGreaterThanMaximum_ThrowsArgumentOutOfRangeException()
 		{
-			Assert.ThrowsAsync<ArgumentOutOfRangeException>(() => _sut.GetIssuesClosedOnMerge(0, 0, resultsPerPage: uint.MaxValue));
+			await Assert.ThrowsAsync<ArgumentOutOfRangeException>(() => _sut.GetIssuesClosedOnMerge(0, 0, resultsPerPage: uint.MaxValue));
 		}
 
-		[Test]
+		[Fact]
 		public async Task GetIssuesClosedOnMerge_PageIsSet_AddsPageParameter()
 		{
 			const uint expected = 5;
@@ -457,7 +457,7 @@ namespace GitLab.NET.Tests.Repositories
 			_request.Received().AddParameter("page", expected);
 		}
 
-		[Test]
+		[Fact]
 		public async Task GetIssuesClosedOnMerge_ResultsPerPageIsSet_AddsPerPageParameter()
 		{
 			const uint expected = 5;
@@ -467,7 +467,7 @@ namespace GitLab.NET.Tests.Repositories
 			_request.Received().AddParameter("per_page", expected);
 		}
 
-		[Test]
+		[Fact]
 		public async Task GetIssuesClosedOnMerge_ValidParameters_AddsProjectIdUrlSegment()
 		{
 			const uint expected = 0;
@@ -477,7 +477,7 @@ namespace GitLab.NET.Tests.Repositories
 			_request.Received().AddUrlSegment("projectId", expected);
 		}
 
-		[Test]
+		[Fact]
 		public async Task GetIssuesClosedOnMerge_ValidParameters_AddsMergeRequestIdUrlSegment()
 		{
 			const uint expected = 0;
@@ -487,7 +487,7 @@ namespace GitLab.NET.Tests.Repositories
 			_request.Received().AddUrlSegment("mergeRequestId", expected);
 		}
 
-		[Test]
+		[Fact]
 		public async Task GetIssuesClosedOnMerge_ValidParameters_SetsCorrectResourceAndMethod()
 		{
 			await _sut.GetIssuesClosedOnMerge(0, 0);
@@ -495,7 +495,7 @@ namespace GitLab.NET.Tests.Repositories
 			_requestFactory.Received().Create("projects/{projectId}/merge_requests/{mergeRequestId}/closes_issues", Method.Get);
 		}
 
-		[Test]
+		[Fact]
 		public async Task Subscribe_ValidParameters_AddsProjectIdUrlSegment()
 		{
 			const uint expected = 0;
@@ -505,7 +505,7 @@ namespace GitLab.NET.Tests.Repositories
 			_request.Received().AddUrlSegment("projectId", expected);
 		}
 
-		[Test]
+		[Fact]
 		public async Task Subscribe_ValidParameters_AddsMergeRequestIdUrlSegment()
 		{
 			const uint expected = 0;
@@ -515,7 +515,7 @@ namespace GitLab.NET.Tests.Repositories
 			_request.Received().AddUrlSegment("mergeRequestId", expected);
 		}
 
-		[Test]
+		[Fact]
 		public async Task Subscribe_ValidParameters_SetsCorrectResourceAndMethod()
 		{
 			await _sut.Subscribe(0, 0);
@@ -523,7 +523,7 @@ namespace GitLab.NET.Tests.Repositories
 			_requestFactory.Received().Create("projects/{projectId}/merge_requests/{mergeRequestId}/subscription", Method.Post);
 		}
 
-		[Test]
+		[Fact]
 		public async Task Unsubscribe_ValidParameters_AddsProjectIdUrlSegment()
 		{
 			const uint expected = 0;
@@ -533,7 +533,7 @@ namespace GitLab.NET.Tests.Repositories
 			_request.Received().AddUrlSegment("projectId", expected);
 		}
 
-		[Test]
+		[Fact]
 		public async Task Unsubscribe_ValidParameters_AddsMergeRequestIdUrlSegment()
 		{
 			const uint expected = 0;
@@ -543,7 +543,7 @@ namespace GitLab.NET.Tests.Repositories
 			_request.Received().AddUrlSegment("mergeRequestId", expected);
 		}
 
-		[Test]
+		[Fact]
 		public async Task Unsubscribe_ValidParameters_SetsCorrectResourceAndMethod()
 		{
 			await _sut.Unsubscribe(0, 0);
@@ -551,7 +551,7 @@ namespace GitLab.NET.Tests.Repositories
 			_requestFactory.Received().Create("projects/{projectId}/merge_requests/{mergeRequestId}/subscription", Method.Delete);
 		}
 
-		[Test]
+		[Fact]
 		public async Task Update_ValidParameters_AddsProjectIdUrlSegment()
 		{
 			const uint expected = 0;
@@ -561,7 +561,7 @@ namespace GitLab.NET.Tests.Repositories
 			_request.Received().AddUrlSegment("projectId", expected);
 		}
 
-		[Test]
+		[Fact]
 		public async Task Update_ValidParameters_AddsMergeRequestIdUrlSegment()
 		{
 			const uint expected = 0;
@@ -571,7 +571,7 @@ namespace GitLab.NET.Tests.Repositories
 			_request.Received().AddUrlSegment("mergeRequestId", expected);
 		}
 
-		[Test]
+		[Fact]
 		public async Task Update_TargetBranchIsSet_AddsTargetBranchParameter()
 		{
 			const string expected = "targetBranch";
@@ -581,7 +581,7 @@ namespace GitLab.NET.Tests.Repositories
 			_request.Received().AddParameterIfNotNull("target_branch", expected);
 		}
 
-		[Test]
+		[Fact]
 		public async Task Update_AssigneeIdIsSet_AddsAssigneeIdParameter()
 		{
 			const uint expected = 0;
@@ -591,7 +591,7 @@ namespace GitLab.NET.Tests.Repositories
 			_request.Received().AddParameterIfNotNull("assignee_id", expected);
 		}
 
-		[Test]
+		[Fact]
 		public async Task Update_TitleIsSet_AddsTitleParameter()
 		{
 			const string expected = "title";
@@ -601,7 +601,7 @@ namespace GitLab.NET.Tests.Repositories
 			_request.Received().AddParameterIfNotNull("title", expected);
 		}
 
-		[Test]
+		[Fact]
 		public async Task Update_DescriptionIsSet_AddsDescriptionParameter()
 		{
 			const string expected = "description";
@@ -611,7 +611,7 @@ namespace GitLab.NET.Tests.Repositories
 			_request.Received().AddParameterIfNotNull("description", expected);
 		}
 
-		[Test]
+		[Fact]
 		public async Task Update_StateIsSet_AddsStateEventParameter()
 		{
 			const MergeRequestStateEvent state = MergeRequestStateEvent.Merge;
@@ -622,7 +622,7 @@ namespace GitLab.NET.Tests.Repositories
 			_request.Received().AddParameterIfNotNull("state", expected);
 		}
 
-		[Test]
+		[Fact]
 		public async Task Update_LabelsIsSet_AddsLabelsParameter()
 		{
 			var labels = new[]
@@ -637,7 +637,7 @@ namespace GitLab.NET.Tests.Repositories
 			_request.Received().AddParameterIfNotNull("labels", expected);
 		}
 
-		[Test]
+		[Fact]
 		public async Task Update_MilestoneIdIsSet_AddsMilestoneIdParameter()
 		{
 			const uint expected = 0;
@@ -647,7 +647,7 @@ namespace GitLab.NET.Tests.Repositories
 			_request.Received().AddParameterIfNotNull("milestone_id", expected);
 		}
 
-		[Test]
+		[Fact]
 		public async Task Update_ValidParameters_SetsCorrectResourceAndMethod()
 		{
 			await _sut.Update(0, 0);

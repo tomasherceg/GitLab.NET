@@ -31,7 +31,7 @@ namespace GitLab.NET.Repositories
             request.AddParameter("key", key);
             request.AddParameter("value", value);
 
-            return await request.ExecuteAsync<BuildVariable>();
+            return await request.Execute<BuildVariable>();
         }
 
         /// <summary> Deletes a build variable by the specified key. </summary>
@@ -48,7 +48,7 @@ namespace GitLab.NET.Repositories
             request.AddUrlSegment("projectId", projectId);
             request.AddUrlSegment("key", key);
 
-            return await request.ExecuteAsync<BuildVariable>();
+            return await request.Execute<BuildVariable>();
         }
 
         /// <summary> Gets a build variable by the specified key. </summary>
@@ -65,7 +65,7 @@ namespace GitLab.NET.Repositories
             request.AddUrlSegment("projectId", projectId);
             request.AddUrlSegment("key", key);
 
-            return await request.ExecuteAsync<BuildVariable>();
+            return await request.Execute<BuildVariable>();
         }
 
         /// <summary> Gets all build variables for the specified project. </summary>
@@ -90,7 +90,7 @@ namespace GitLab.NET.Repositories
             request.AddParameter("page", page);
             request.AddParameter("per_page", resultsPerPage);
 
-            return await request.ExecutePaginatedAsync<BuildVariable>();
+            return await request.ExecutePaginated<BuildVariable>();
         }
 
         /// <summary> Updates an existing build variable. </summary>
@@ -112,7 +112,7 @@ namespace GitLab.NET.Repositories
             request.AddUrlSegment("key", key);
             request.AddParameter("value", value);
 
-            return await request.ExecuteAsync<BuildVariable>();
+            return await request.Execute<BuildVariable>();
         }
     }
 }

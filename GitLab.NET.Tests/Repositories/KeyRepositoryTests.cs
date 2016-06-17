@@ -3,7 +3,7 @@ using System.Threading.Tasks;
 using GitLab.NET.Abstractions;
 using GitLab.NET.Repositories;
 using NSubstitute;
-using NUnit.Framework;
+using Xunit;
 
 namespace GitLab.NET.Tests.Repositories
 {
@@ -19,23 +19,23 @@ namespace GitLab.NET.Tests.Repositories
 		private readonly IRequest _request;
 		private readonly IRequestFactory _requestFactory;
 
-		[Test]
-		public void Create_KeyIsNull_ThrowsArgumentNullException()
+		[Fact]
+		public async Task Create_KeyIsNull_ThrowsArgumentNullException()
 		{
 			var sut = new KeyRepository(_requestFactory);
 
-			Assert.ThrowsAsync<ArgumentNullException>(() => sut.Create("title", null));
+			await Assert.ThrowsAsync<ArgumentNullException>(() => sut.Create("title", null));
 		}
 
-		[Test]
-		public void Create_TitleIsNull_ThrowsArgumentNullException()
+		[Fact]
+		public async Task Create_TitleIsNull_ThrowsArgumentNullException()
 		{
 			var sut = new KeyRepository(_requestFactory);
 
-			Assert.ThrowsAsync<ArgumentNullException>(() => sut.Create(null, "key"));
+			await Assert.ThrowsAsync<ArgumentNullException>(() => sut.Create(null, "key"));
 		}
 
-		[Test]
+		[Fact]
 		public async Task Create_UserIdIsNotSet_SetsCorrectResourceAndMethod()
 		{
 			var sut = new KeyRepository(_requestFactory);
@@ -45,7 +45,7 @@ namespace GitLab.NET.Tests.Repositories
 			_requestFactory.Received().Create("user/keys", Method.Post);
 		}
 
-		[Test]
+		[Fact]
 		public async Task Create_UserIdIsSet_AddsUserIdUrlSegment()
 		{
 			const uint expected = 0;
@@ -56,7 +56,7 @@ namespace GitLab.NET.Tests.Repositories
 			_request.Received().AddUrlSegmentIfNotNull("userId", expected);
 		}
 
-		[Test]
+		[Fact]
 		public async Task Create_UserIdIsSet_SetsCorrectResourceAndMethod()
 		{
 			var sut = new KeyRepository(_requestFactory);
@@ -66,7 +66,7 @@ namespace GitLab.NET.Tests.Repositories
 			_requestFactory.Received().Create("users/{userId}/keys", Method.Post);
 		}
 
-		[Test]
+		[Fact]
 		public async Task Create_ValidParameters_AddsKeyParameter()
 		{
 			const string expected = "key";
@@ -77,7 +77,7 @@ namespace GitLab.NET.Tests.Repositories
 			_request.Received().AddParameter("key", expected);
 		}
 
-		[Test]
+		[Fact]
 		public async Task Create_ValidParameters_AddsTitleParameter()
 		{
 			const string expected = "title";
@@ -88,7 +88,7 @@ namespace GitLab.NET.Tests.Repositories
 			_request.Received().AddParameter("title", expected);
 		}
 
-		[Test]
+		[Fact]
 		public async Task Delete_UserIdIsNotSet_SetsCorrectResourceAndMethod()
 		{
 			var sut = new KeyRepository(_requestFactory);
@@ -98,7 +98,7 @@ namespace GitLab.NET.Tests.Repositories
 			_requestFactory.Received().Create("user/keys/{id}", Method.Delete);
 		}
 
-		[Test]
+		[Fact]
 		public async Task Delete_UserIdIsSet_AddsUserIdUrlSegment()
 		{
 			const uint expected = 0;
@@ -109,7 +109,7 @@ namespace GitLab.NET.Tests.Repositories
 			_request.Received().AddUrlSegmentIfNotNull("userId", expected);
 		}
 
-		[Test]
+		[Fact]
 		public async Task Delete_UserIdIsSet_SetsCorrectResourceAndMethod()
 		{
 			var sut = new KeyRepository(_requestFactory);
@@ -119,7 +119,7 @@ namespace GitLab.NET.Tests.Repositories
 			_requestFactory.Received().Create("users/{userId}/keys/{id}", Method.Delete);
 		}
 
-		[Test]
+		[Fact]
 		public async Task Delete_ValidParameters_AddsIdUrlSegment()
 		{
 			const uint expected = 0;
@@ -130,7 +130,7 @@ namespace GitLab.NET.Tests.Repositories
 			_request.Received().AddUrlSegment("id", expected);
 		}
 
-		[Test]
+		[Fact]
 		public async Task Find_ValidParameters_AddsIdUrlSegment()
 		{
 			const uint expected = 0;
@@ -141,7 +141,7 @@ namespace GitLab.NET.Tests.Repositories
 			_request.Received().AddUrlSegment("id", expected);
 		}
 
-		[Test]
+		[Fact]
 		public async Task Find_ValidParameters_SetsCorrectResourceAndMethod()
 		{
 			var sut = new KeyRepository(_requestFactory);
@@ -151,7 +151,7 @@ namespace GitLab.NET.Tests.Repositories
 			_requestFactory.Received().Create("user/keys/{id}", Method.Get);
 		}
 
-		[Test]
+		[Fact]
 		public async Task FindWithUser_ValidParameters_AddsIdUrlSegment()
 		{
 			const uint expected = 0;
@@ -162,7 +162,7 @@ namespace GitLab.NET.Tests.Repositories
 			_request.Received().AddUrlSegment("id", expected);
 		}
 
-		[Test]
+		[Fact]
 		public async Task FindWithUser_ValidParameters_SetsCorrectResourceAndMethod()
 		{
 			var sut = new KeyRepository(_requestFactory);
@@ -172,7 +172,7 @@ namespace GitLab.NET.Tests.Repositories
 			_requestFactory.Received().Create("keys/{id}", Method.Get);
 		}
 
-		[Test]
+		[Fact]
 		public async Task GetAll_UserIdIsNotSet_SetsCorrectResourceAndMethod()
 		{
 			var sut = new KeyRepository(_requestFactory);
@@ -182,7 +182,7 @@ namespace GitLab.NET.Tests.Repositories
 			_requestFactory.Received().Create("user/keys", Method.Get);
 		}
 
-		[Test]
+		[Fact]
 		public async Task GetAll_UserIdIsSet_AddsUserIdUrlSegment()
 		{
 			const uint expected = 0;
@@ -193,7 +193,7 @@ namespace GitLab.NET.Tests.Repositories
 			_request.Received().AddUrlSegmentIfNotNull("userId", expected);
 		}
 
-		[Test]
+		[Fact]
 		public async Task GetAll_UserIdIsSet_SetsCorrectResourceAndMethod()
 		{
 			var sut = new KeyRepository(_requestFactory);

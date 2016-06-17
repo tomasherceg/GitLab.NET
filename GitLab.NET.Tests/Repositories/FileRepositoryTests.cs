@@ -3,7 +3,7 @@ using System.Threading.Tasks;
 using GitLab.NET.Abstractions;
 using GitLab.NET.Repositories;
 using NSubstitute;
-using NUnit.Framework;
+using Xunit;
 
 namespace GitLab.NET.Tests.Repositories
 {
@@ -19,31 +19,31 @@ namespace GitLab.NET.Tests.Repositories
 		private readonly IRequest _request;
 		private readonly IRequestFactory _requestFactory;
 
-		[Test]
-		public void Create_BranchNameIsNull_ThrowsArgumentNullException()
+		[Fact]
+		public async Task Create_BranchNameIsNull_ThrowsArgumentNullException()
 		{
 			var sut = new FileRepository(_requestFactory);
 
-			Assert.ThrowsAsync<ArgumentNullException>(() => sut.Create(0, "filePath", null, "content", "commitMessage"));
+			await Assert.ThrowsAsync<ArgumentNullException>(() => sut.Create(0, "filePath", null, "content", "commitMessage"));
 		}
 
-		[Test]
-		public void Create_CommitMessageIsNull_ThrowsArgumentNullException()
+		[Fact]
+		public async Task Create_CommitMessageIsNull_ThrowsArgumentNullException()
 		{
 			var sut = new FileRepository(_requestFactory);
 
-			Assert.ThrowsAsync<ArgumentNullException>(() => sut.Create(0, "filePath", "branchName", "content", null));
+			await Assert.ThrowsAsync<ArgumentNullException>(() => sut.Create(0, "filePath", "branchName", "content", null));
 		}
 
-		[Test]
-		public void Create_ContentIsNull_ThrowsArgumentNullException()
+		[Fact]
+		public async Task Create_ContentIsNull_ThrowsArgumentNullException()
 		{
 			var sut = new FileRepository(_requestFactory);
 
-			Assert.ThrowsAsync<ArgumentNullException>(() => sut.Create(0, "filePath", "branchName", null, "commitMessage"));
+			await Assert.ThrowsAsync<ArgumentNullException>(() => sut.Create(0, "filePath", "branchName", null, "commitMessage"));
 		}
 
-		[Test]
+		[Fact]
 		public async Task Create_EncodingIsSet_AddsEncodingParameter()
 		{
 			const string expected = "encoding";
@@ -54,15 +54,15 @@ namespace GitLab.NET.Tests.Repositories
 			_request.Received().AddParameterIfNotNull("encoding", expected);
 		}
 
-		[Test]
-		public void Create_FilePathIsNull_ThrowsArgumentNullException()
+		[Fact]
+		public async Task Create_FilePathIsNull_ThrowsArgumentNullException()
 		{
 			var sut = new FileRepository(_requestFactory);
 
-			Assert.ThrowsAsync<ArgumentNullException>(() => sut.Create(0, null, "branchName", "content", "commitMessage"));
+			await Assert.ThrowsAsync<ArgumentNullException>(() => sut.Create(0, null, "branchName", "content", "commitMessage"));
 		}
 
-		[Test]
+		[Fact]
 		public async Task Create_ValidParameters_AddsBranchNameParameter()
 		{
 			const string expected = "branchName";
@@ -73,7 +73,7 @@ namespace GitLab.NET.Tests.Repositories
 			_request.Received().AddParameter("branch_name", expected);
 		}
 
-		[Test]
+		[Fact]
 		public async Task Create_ValidParameters_AddsCommitMessageParameter()
 		{
 			const string expected = "commitMessage";
@@ -84,7 +84,7 @@ namespace GitLab.NET.Tests.Repositories
 			_request.Received().AddParameter("commit_message", expected);
 		}
 
-		[Test]
+		[Fact]
 		public async Task Create_ValidParameters_AddsContentParameter()
 		{
 			const string expected = "content";
@@ -95,7 +95,7 @@ namespace GitLab.NET.Tests.Repositories
 			_request.Received().AddParameter("content", expected);
 		}
 
-		[Test]
+		[Fact]
 		public async Task Create_ValidParameters_AddsFilePathParameter()
 		{
 			const string expected = "filePath";
@@ -106,7 +106,7 @@ namespace GitLab.NET.Tests.Repositories
 			_request.Received().AddParameter("file_path", expected);
 		}
 
-		[Test]
+		[Fact]
 		public async Task Create_ValidParameters_AddsProjectIdUrlSegment()
 		{
 			const uint expected = 0;
@@ -117,7 +117,7 @@ namespace GitLab.NET.Tests.Repositories
 			_request.Received().AddUrlSegment("projectId", expected);
 		}
 
-		[Test]
+		[Fact]
 		public async Task Create_ValidParameters_SetsCorrectResourceAndMethod()
 		{
 			var sut = new FileRepository(_requestFactory);
@@ -127,31 +127,31 @@ namespace GitLab.NET.Tests.Repositories
 			_requestFactory.Received().Create("projects/{projectId}/repository/files", Method.Post);
 		}
 
-		[Test]
-		public void Delete_BranchNameIsNull_ThrowsArgumentNullException()
+		[Fact]
+		public async Task Delete_BranchNameIsNull_ThrowsArgumentNullException()
 		{
 			var sut = new FileRepository(_requestFactory);
 
-			Assert.ThrowsAsync<ArgumentNullException>(() => sut.Delete(0, "filePath", null, "commitMessage"));
+			await Assert.ThrowsAsync<ArgumentNullException>(() => sut.Delete(0, "filePath", null, "commitMessage"));
 		}
 
-		[Test]
-		public void Delete_CommitMessageIsNull_ThrowsArgumentNullException()
+		[Fact]
+		public async Task Delete_CommitMessageIsNull_ThrowsArgumentNullException()
 		{
 			var sut = new FileRepository(_requestFactory);
 
-			Assert.ThrowsAsync<ArgumentNullException>(() => sut.Delete(0, "filePath", "branchName", null));
+			await Assert.ThrowsAsync<ArgumentNullException>(() => sut.Delete(0, "filePath", "branchName", null));
 		}
 
-		[Test]
-		public void Delete_FilePathIsNull_ThrowsArgumentNullException()
+		[Fact]
+		public async Task Delete_FilePathIsNull_ThrowsArgumentNullException()
 		{
 			var sut = new FileRepository(_requestFactory);
 
-			Assert.ThrowsAsync<ArgumentNullException>(() => sut.Delete(0, null, "branchName", "commitMessage"));
+			await Assert.ThrowsAsync<ArgumentNullException>(() => sut.Delete(0, null, "branchName", "commitMessage"));
 		}
 
-		[Test]
+		[Fact]
 		public async Task Delete_ValidParameters_AddsBranchNameParameter()
 		{
 			const string expected = "branchName";
@@ -162,7 +162,7 @@ namespace GitLab.NET.Tests.Repositories
 			_request.Received().AddParameter("branch_name", expected);
 		}
 
-		[Test]
+		[Fact]
 		public async Task Delete_ValidParameters_AddsCommitMessageParameter()
 		{
 			const string expected = "commitMessage";
@@ -173,7 +173,7 @@ namespace GitLab.NET.Tests.Repositories
 			_request.Received().AddParameter("commit_message", expected);
 		}
 
-		[Test]
+		[Fact]
 		public async Task Delete_ValidParameters_AddsFilePathParameter()
 		{
 			const string expected = "filePath";
@@ -184,7 +184,7 @@ namespace GitLab.NET.Tests.Repositories
 			_request.Received().AddParameter("file_path", expected);
 		}
 
-		[Test]
+		[Fact]
 		public async Task Delete_ValidParameters_AddsProjectIdUrlSegment()
 		{
 			const uint expected = 0;
@@ -195,7 +195,7 @@ namespace GitLab.NET.Tests.Repositories
 			_request.Received().AddUrlSegment("projectId", expected);
 		}
 
-		[Test]
+		[Fact]
 		public async Task Delete_ValidParameters_SetsCorrectResourceAndMethod()
 		{
 			var sut = new FileRepository(_requestFactory);
@@ -205,23 +205,23 @@ namespace GitLab.NET.Tests.Repositories
 			_requestFactory.Received().Create("projects/{projectId}/repository/files", Method.Delete);
 		}
 
-		[Test]
-		public void Find_FilePathIsNull_ThrowsArgumentNullException()
+		[Fact]
+		public async Task Find_FilePathIsNull_ThrowsArgumentNullException()
 		{
 			var sut = new FileRepository(_requestFactory);
 
-			Assert.ThrowsAsync<ArgumentNullException>(() => sut.Find(0, null, "refName"));
+			await Assert.ThrowsAsync<ArgumentNullException>(() => sut.Find(0, null, "refName"));
 		}
 
-		[Test]
-		public void Find_RefNameIsNull_ThrowsArgumentNullException()
+		[Fact]
+		public async Task Find_RefNameIsNull_ThrowsArgumentNullException()
 		{
 			var sut = new FileRepository(_requestFactory);
 
-			Assert.ThrowsAsync<ArgumentNullException>(() => sut.Find(0, "filePath", null));
+			await Assert.ThrowsAsync<ArgumentNullException>(() => sut.Find(0, "filePath", null));
 		}
 
-		[Test]
+		[Fact]
 		public async Task Find_ValidParameters_AddsFilePathParameter()
 		{
 			const string expected = "filePath";
@@ -232,7 +232,7 @@ namespace GitLab.NET.Tests.Repositories
 			_request.Received().AddParameter("file_path", expected);
 		}
 
-		[Test]
+		[Fact]
 		public async Task Find_ValidParameters_AddsProjectIdUrlSegment()
 		{
 			const uint expected = 0;
@@ -243,7 +243,7 @@ namespace GitLab.NET.Tests.Repositories
 			_request.Received().AddUrlSegment("projectId", expected);
 		}
 
-		[Test]
+		[Fact]
 		public async Task Find_ValidParameters_AddsRefParameter()
 		{
 			const string expected = "refName";
@@ -254,7 +254,7 @@ namespace GitLab.NET.Tests.Repositories
 			_request.Received().AddParameter("ref", expected);
 		}
 
-		[Test]
+		[Fact]
 		public async Task Find_ValidParameters_SetsCorrectResourceAndMethod()
 		{
 			var sut = new FileRepository(_requestFactory);
@@ -264,31 +264,31 @@ namespace GitLab.NET.Tests.Repositories
 			_requestFactory.Received().Create("projects/{projectId}/repository/files", Method.Get);
 		}
 
-		[Test]
-		public void Update_BranchNameIsNull_ThrowsArgumentNullException()
+		[Fact]
+		public async Task Update_BranchNameIsNull_ThrowsArgumentNullException()
 		{
 			var sut = new FileRepository(_requestFactory);
 
-			Assert.ThrowsAsync<ArgumentNullException>(() => sut.Update(0, "filePath", null, "content", "commitMessage"));
+			await Assert.ThrowsAsync<ArgumentNullException>(() => sut.Update(0, "filePath", null, "content", "commitMessage"));
 		}
 
-		[Test]
-		public void Update_CommitMessageIsNull_ThrowsArgumentNullException()
+		[Fact]
+		public async Task Update_CommitMessageIsNull_ThrowsArgumentNullException()
 		{
 			var sut = new FileRepository(_requestFactory);
 
-			Assert.ThrowsAsync<ArgumentNullException>(() => sut.Update(0, "filePath", "branchName", "content", null));
+			await Assert.ThrowsAsync<ArgumentNullException>(() => sut.Update(0, "filePath", "branchName", "content", null));
 		}
 
-		[Test]
-		public void Update_ContentIsNull_ThrowsArgumentNullException()
+		[Fact]
+		public async Task Update_ContentIsNull_ThrowsArgumentNullException()
 		{
 			var sut = new FileRepository(_requestFactory);
 
-			Assert.ThrowsAsync<ArgumentNullException>(() => sut.Update(0, "filePath", "branchName", null, "commitMessage"));
+			await Assert.ThrowsAsync<ArgumentNullException>(() => sut.Update(0, "filePath", "branchName", null, "commitMessage"));
 		}
 
-		[Test]
+		[Fact]
 		public async Task Update_EncodingIsSet_AddsEncodingParameter()
 		{
 			const string expected = "encoding";
@@ -299,15 +299,15 @@ namespace GitLab.NET.Tests.Repositories
 			_request.Received().AddParameterIfNotNull("encoding", expected);
 		}
 
-		[Test]
-		public void Update_FilePathIsNull_ThrowsArgumentNullException()
+		[Fact]
+		public async Task Update_FilePathIsNull_ThrowsArgumentNullException()
 		{
 			var sut = new FileRepository(_requestFactory);
 
-			Assert.ThrowsAsync<ArgumentNullException>(() => sut.Update(0, null, "branchName", "content", "commitMessage"));
+			await Assert.ThrowsAsync<ArgumentNullException>(() => sut.Update(0, null, "branchName", "content", "commitMessage"));
 		}
 
-		[Test]
+		[Fact]
 		public async Task Update_ValidParameters_AddsBranchNameParameter()
 		{
 			const string expected = "branchName";
@@ -318,7 +318,7 @@ namespace GitLab.NET.Tests.Repositories
 			_request.Received().AddParameter("branch_name", expected);
 		}
 
-		[Test]
+		[Fact]
 		public async Task Update_ValidParameters_AddsCommitMessageParameter()
 		{
 			const string expected = "commitMessage";
@@ -329,7 +329,7 @@ namespace GitLab.NET.Tests.Repositories
 			_request.Received().AddParameter("commit_message", expected);
 		}
 
-		[Test]
+		[Fact]
 		public async Task Update_ValidParameters_AddsContentParameter()
 		{
 			const string expected = "content";
@@ -340,7 +340,7 @@ namespace GitLab.NET.Tests.Repositories
 			_request.Received().AddParameter("content", expected);
 		}
 
-		[Test]
+		[Fact]
 		public async Task Update_ValidParameters_AddsFilePathParameter()
 		{
 			const string expected = "filePath";
@@ -351,7 +351,7 @@ namespace GitLab.NET.Tests.Repositories
 			_request.Received().AddParameter("file_path", expected);
 		}
 
-		[Test]
+		[Fact]
 		public async Task Update_ValidParameters_AddsProjectIdUrlSegment()
 		{
 			const uint expected = 0;
@@ -362,7 +362,7 @@ namespace GitLab.NET.Tests.Repositories
 			_request.Received().AddUrlSegment("projectId", expected);
 		}
 
-		[Test]
+		[Fact]
 		public async Task Update_ValidParameters_SetsCorrectResourceAndMethod()
 		{
 			var sut = new FileRepository(_requestFactory);

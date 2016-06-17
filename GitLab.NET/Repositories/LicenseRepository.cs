@@ -29,7 +29,7 @@ namespace GitLab.NET.Repositories
             request.AddParameterIfNotNull("project", project);
             request.AddParameterIfNotNull("fullname", fullName);
 
-            return await request.ExecuteAsync<License>();
+            return await request.Execute<License>();
         }
 
         /// <summary> Gets all license templates. </summary>
@@ -44,7 +44,7 @@ namespace GitLab.NET.Repositories
 
             request.AddParameterIfNotNull("popular", popular);
 
-            return await request.ExecuteAsync<List<License>>();
+            return await request.Execute<List<License>>();
         }
     }
 }

@@ -3,7 +3,7 @@ using System.Threading.Tasks;
 using GitLab.NET.Abstractions;
 using GitLab.NET.Repositories;
 using NSubstitute;
-using NUnit.Framework;
+using Xunit;
 
 namespace GitLab.NET.Tests.Repositories
 {
@@ -19,23 +19,23 @@ namespace GitLab.NET.Tests.Repositories
 		private readonly IRequest _request;
 		private readonly IRequestFactory _requestFactory;
 
-		[Test]
-		public void Create_KeyIsNull_ThrowsArgumentNullException()
+		[Fact]
+		public async Task Create_KeyIsNull_ThrowsArgumentNullException()
 		{
 			var sut = new DeployKeyRepository(_requestFactory);
 
-			Assert.ThrowsAsync<ArgumentNullException>(() => sut.Create(0, "title", null));
+			await Assert.ThrowsAsync<ArgumentNullException>(() => sut.Create(0, "title", null));
 		}
 
-		[Test]
-		public void Create_TitleIsNull_ThrowsArgumentNullException()
+		[Fact]
+		public async Task Create_TitleIsNull_ThrowsArgumentNullException()
 		{
 			var sut = new DeployKeyRepository(_requestFactory);
 
-			Assert.ThrowsAsync<ArgumentNullException>(() => sut.Create(0, null, "key"));
+			await Assert.ThrowsAsync<ArgumentNullException>(() => sut.Create(0, null, "key"));
 		}
 
-		[Test]
+		[Fact]
 		public async Task Create_ValidParameters_AddsKeyParameter()
 		{
 			const string expected = "key";
@@ -46,7 +46,7 @@ namespace GitLab.NET.Tests.Repositories
 			_request.Received().AddParameter("key", expected);
 		}
 
-		[Test]
+		[Fact]
 		public async Task Create_ValidParameters_AddsProjectIdUrlSegment()
 		{
 			const uint expected = 0;
@@ -57,7 +57,7 @@ namespace GitLab.NET.Tests.Repositories
 			_request.Received().AddUrlSegment("projectId", expected);
 		}
 
-		[Test]
+		[Fact]
 		public async Task Create_ValidParameters_AddsTitleParameter()
 		{
 			const string expected = "title";
@@ -68,7 +68,7 @@ namespace GitLab.NET.Tests.Repositories
 			_request.Received().AddParameter("title", expected);
 		}
 
-		[Test]
+		[Fact]
 		public async Task Create_ValidParameters_SetsCorrectResourceAndMethod()
 		{
 			var sut = new DeployKeyRepository(_requestFactory);
@@ -78,7 +78,7 @@ namespace GitLab.NET.Tests.Repositories
 			_requestFactory.Received().Create("projects/{projectId}/keys", Method.Post);
 		}
 
-		[Test]
+		[Fact]
 		public async Task Delete_ValidParameters_AddsKeyIdUrlSegment()
 		{
 			const uint expected = 0;
@@ -89,7 +89,7 @@ namespace GitLab.NET.Tests.Repositories
 			_request.Received().AddUrlSegment("keyId", expected);
 		}
 
-		[Test]
+		[Fact]
 		public async Task Delete_ValidParameters_AddsProjectIdUrlSegment()
 		{
 			const uint expected = 0;
@@ -100,7 +100,7 @@ namespace GitLab.NET.Tests.Repositories
 			_request.Received().AddUrlSegment("projectId", expected);
 		}
 
-		[Test]
+		[Fact]
 		public async Task Delete_ValidParameters_SetsCorrectResourceAndMethod()
 		{
 			var sut = new DeployKeyRepository(_requestFactory);
@@ -110,7 +110,7 @@ namespace GitLab.NET.Tests.Repositories
 			_requestFactory.Received().Create("projects/{projectId}/keys/{keyId}", Method.Delete);
 		}
 
-		[Test]
+		[Fact]
 		public async Task Find_ValidParameters_AddsKeyIdUrlSegment()
 		{
 			const uint expected = 0;
@@ -121,7 +121,7 @@ namespace GitLab.NET.Tests.Repositories
 			_request.Received().AddUrlSegment("keyId", expected);
 		}
 
-		[Test]
+		[Fact]
 		public async Task Find_ValidParameters_AddsProjectIdUrlSegment()
 		{
 			const uint expected = 0;
@@ -132,7 +132,7 @@ namespace GitLab.NET.Tests.Repositories
 			_request.Received().AddUrlSegment("projectId", expected);
 		}
 
-		[Test]
+		[Fact]
 		public async Task Find_ValidParameters_SetsCorrectResourceAndMethod()
 		{
 			var sut = new DeployKeyRepository(_requestFactory);
@@ -142,7 +142,7 @@ namespace GitLab.NET.Tests.Repositories
 			_requestFactory.Received().Create("projects/{projectId}/keys/{keyId}", Method.Get);
 		}
 
-		[Test]
+		[Fact]
 		public async Task GetAll_ValidParameters_AddsProjectIdUrlSegment()
 		{
 			const uint expected = 0;
@@ -153,7 +153,7 @@ namespace GitLab.NET.Tests.Repositories
 			_request.Received().AddUrlSegment("projectId", expected);
 		}
 
-		[Test]
+		[Fact]
 		public async Task GetAll_ValidParameters_SetsCorrectResourceAndMethod()
 		{
 			var sut = new DeployKeyRepository(_requestFactory);

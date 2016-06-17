@@ -32,7 +32,7 @@ namespace GitLab.NET.Repositories
             request.AddParameter("from", from);
             request.AddParameter("to", to);
 
-            return await request.ExecuteAsync<RepositoryComparison>();
+            return await request.Execute<RepositoryComparison>();
         }
 
         /// <summary> Gets an archive of the repository. </summary>
@@ -46,7 +46,7 @@ namespace GitLab.NET.Repositories
             request.AddUrlSegment("projectId", projectId);
             request.AddParameterIfNotNull("sha", sha);
 
-            return await request.ExecuteBytesAsync();
+            return await request.ExecuteBytes();
         }
 
         /// <summary> Gets the contents of a blob file. </summary>
@@ -63,7 +63,7 @@ namespace GitLab.NET.Repositories
             request.AddUrlSegment("projectId", projectId);
             request.AddUrlSegment("sha", sha);
 
-            return await request.ExecuteBytesAsync();
+            return await request.ExecuteBytes();
         }
 
         /// <summary> Gets the contributors for the repository. </summary>
@@ -78,7 +78,7 @@ namespace GitLab.NET.Repositories
 
             request.AddUrlSegment("projectId", projectId);
 
-            return await request.ExecuteAsync<List<RepositoryContributor>>();
+            return await request.Execute<List<RepositoryContributor>>();
         }
 
         /// <summary> Gets the contents of a file. </summary>
@@ -100,7 +100,7 @@ namespace GitLab.NET.Repositories
             request.AddUrlSegment("sha", sha);
             request.AddParameter("filepath", filePath);
 
-            return await request.ExecuteBytesAsync();
+            return await request.ExecuteBytes();
         }
 
         /// <summary> Gets a list of repository files and directories in a project. </summary>
@@ -119,7 +119,7 @@ namespace GitLab.NET.Repositories
             request.AddParameterIfNotNull("path", path);
             request.AddParameterIfNotNull("ref_name", refName);
 
-            return await request.ExecuteAsync<List<RepositoryTreeItem>>();
+            return await request.Execute<List<RepositoryTreeItem>>();
         }
     }
 }

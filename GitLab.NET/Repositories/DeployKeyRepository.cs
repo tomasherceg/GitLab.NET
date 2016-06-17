@@ -32,7 +32,7 @@ namespace GitLab.NET.Repositories
             request.AddParameter("title", title);
             request.AddParameter("key", key);
 
-            return await request.ExecuteAsync<DeployKey>();
+            return await request.Execute<DeployKey>();
         }
 
         /// <summary> Deletes a deploy key. </summary>
@@ -46,7 +46,7 @@ namespace GitLab.NET.Repositories
             request.AddUrlSegment("projectId", projectId);
             request.AddUrlSegment("keyId", keyId);
 
-            return await request.ExecuteAsync<DeployKey>();
+            return await request.Execute<DeployKey>();
         }
 
         /// <summary> Gets a deploy key. </summary>
@@ -60,7 +60,7 @@ namespace GitLab.NET.Repositories
             request.AddUrlSegment("projectId", projectId);
             request.AddUrlSegment("keyId", keyId);
 
-            return await request.ExecuteAsync<DeployKey>();
+            return await request.Execute<DeployKey>();
         }
 
         /// <summary> Gets all deploy keys associated with the specified project. </summary>
@@ -75,7 +75,7 @@ namespace GitLab.NET.Repositories
 
             request.AddUrlSegment("projectId", projectId);
 
-            return await request.ExecuteAsync<List<DeployKey>>();
+            return await request.Execute<List<DeployKey>>();
         }
     }
 }

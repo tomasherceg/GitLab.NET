@@ -3,7 +3,7 @@ using System.Threading.Tasks;
 using GitLab.NET.Abstractions;
 using GitLab.NET.Repositories;
 using NSubstitute;
-using NUnit.Framework;
+using Xunit;
 
 namespace GitLab.NET.Tests.Repositories
 {
@@ -19,15 +19,15 @@ namespace GitLab.NET.Tests.Repositories
 		private readonly IRequest _request;
 		private readonly IRequestFactory _requestFactory;
 
-		[Test]
-		public void Create_KeyIsNull_ThrowsArgumentNullException()
+		[Fact]
+		public async Task Create_KeyIsNull_ThrowsArgumentNullException()
 		{
 			var sut = new BuildVariableRepository(_requestFactory);
 
-			Assert.ThrowsAsync<ArgumentNullException>(() => sut.Create(0, null, "value"));
+			await Assert.ThrowsAsync<ArgumentNullException>(() => sut.Create(0, null, "value"));
 		}
 
-		[Test]
+		[Fact]
 		public async Task Create_ValidParameters_AddsKeyParameter()
 		{
 			const string expected = "key";
@@ -38,7 +38,7 @@ namespace GitLab.NET.Tests.Repositories
 			_request.Received().AddParameter("key", expected);
 		}
 
-		[Test]
+		[Fact]
 		public async Task Create_ValidParameters_AddsProjectIdUrlSegment()
 		{
 			const uint expected = 0;
@@ -49,7 +49,7 @@ namespace GitLab.NET.Tests.Repositories
 			_request.Received().AddUrlSegment("projectId", expected);
 		}
 
-		[Test]
+		[Fact]
 		public async Task Create_ValidParameters_AddsValueParameter()
 		{
 			const string expected = "value";
@@ -60,7 +60,7 @@ namespace GitLab.NET.Tests.Repositories
 			_request.Received().AddParameter("value", expected);
 		}
 
-		[Test]
+		[Fact]
 		public async Task Create_ValidParameters_SetsCorrectResourceAndMethod()
 		{
 			var sut = new BuildVariableRepository(_requestFactory);
@@ -70,23 +70,23 @@ namespace GitLab.NET.Tests.Repositories
 			_requestFactory.Received().Create("projects/{projectId}/variables", Method.Post);
 		}
 
-		[Test]
-		public void Create_ValueIsNull_ThrowsArgumentNullException()
+		[Fact]
+		public async Task Create_ValueIsNull_ThrowsArgumentNullException()
 		{
 			var sut = new BuildVariableRepository(_requestFactory);
 
-			Assert.ThrowsAsync<ArgumentNullException>(() => sut.Create(0, "key", null));
+			await Assert.ThrowsAsync<ArgumentNullException>(() => sut.Create(0, "key", null));
 		}
 
-		[Test]
-		public void Delete_KeyIsNull_ThrowsArgumentNullException()
+		[Fact]
+		public async Task Delete_KeyIsNull_ThrowsArgumentNullException()
 		{
 			var sut = new BuildVariableRepository(_requestFactory);
 
-			Assert.ThrowsAsync<ArgumentNullException>(() => sut.Delete(0, null));
+			await Assert.ThrowsAsync<ArgumentNullException>(() => sut.Delete(0, null));
 		}
 
-		[Test]
+		[Fact]
 		public async Task Delete_ValidParameters_AddsKeyUrlSegment()
 		{
 			const string expected = "key";
@@ -97,7 +97,7 @@ namespace GitLab.NET.Tests.Repositories
 			_request.Received().AddUrlSegment("key", expected);
 		}
 
-		[Test]
+		[Fact]
 		public async Task Delete_ValidParameters_AddsProjectIdUrlSegment()
 		{
 			const uint expected = 0;
@@ -108,7 +108,7 @@ namespace GitLab.NET.Tests.Repositories
 			_request.Received().AddUrlSegment("projectId", expected);
 		}
 
-		[Test]
+		[Fact]
 		public async Task Delete_ValidParameters_SetsCorrectResourceAndMethod()
 		{
 			var sut = new BuildVariableRepository(_requestFactory);
@@ -118,15 +118,15 @@ namespace GitLab.NET.Tests.Repositories
 			_requestFactory.Received().Create("projects/{projectId}/variables/{key}", Method.Delete);
 		}
 
-		[Test]
-		public void Find_KeyIsNull_ThrowsArgumentNullException()
+		[Fact]
+		public async Task Find_KeyIsNull_ThrowsArgumentNullException()
 		{
 			var sut = new BuildVariableRepository(_requestFactory);
 
-			Assert.ThrowsAsync<ArgumentNullException>(() => sut.Find(0, null));
+			await Assert.ThrowsAsync<ArgumentNullException>(() => sut.Find(0, null));
 		}
 
-		[Test]
+		[Fact]
 		public async Task Find_ValidParameters_AddsKeyUrlSegment()
 		{
 			const string expected = "key";
@@ -137,7 +137,7 @@ namespace GitLab.NET.Tests.Repositories
 			_request.Received().AddUrlSegment("key", expected);
 		}
 
-		[Test]
+		[Fact]
 		public async Task Find_ValidParameters_AddsProjectIdUrlSegment()
 		{
 			const uint expected = 0;
@@ -148,7 +148,7 @@ namespace GitLab.NET.Tests.Repositories
 			_request.Received().AddUrlSegment("projectId", expected);
 		}
 
-		[Test]
+		[Fact]
 		public async Task Find_ValidParameters_SetsCorrectResourceAndMethod()
 		{
 			var sut = new BuildVariableRepository(_requestFactory);
@@ -158,15 +158,15 @@ namespace GitLab.NET.Tests.Repositories
 			_requestFactory.Received().Create("projects/{projectId}/variables/{key}", Method.Get);
 		}
 
-		[Test]
-		public void GetAll_PageIsLessThanMinimum_ThrowsArgumentOutOfRangeException()
+		[Fact]
+		public async Task GetAll_PageIsLessThanMinimum_ThrowsArgumentOutOfRangeException()
 		{
 			var sut = new BuildVariableRepository(_requestFactory);
 
-			Assert.ThrowsAsync<ArgumentOutOfRangeException>(() => sut.GetAll(0, uint.MinValue));
+			await Assert.ThrowsAsync<ArgumentOutOfRangeException>(() => sut.GetAll(0, uint.MinValue));
 		}
 
-		[Test]
+		[Fact]
 		public async Task GetAll_PageIsSet_AddsPageParameter()
 		{
 			const uint expected = 5;
@@ -177,23 +177,23 @@ namespace GitLab.NET.Tests.Repositories
 			_request.Received().AddParameter("page", expected);
 		}
 
-		[Test]
-		public void GetAll_ResultsPerPageIsGreaterThanMaximum_ThrowsArgumentOutOfRangeException()
+		[Fact]
+		public async Task GetAll_ResultsPerPageIsGreaterThanMaximum_ThrowsArgumentOutOfRangeException()
 		{
 			var sut = new BuildVariableRepository(_requestFactory);
 
-			Assert.ThrowsAsync<ArgumentOutOfRangeException>(() => sut.GetAll(0, resultsPerPage: uint.MaxValue));
+			await Assert.ThrowsAsync<ArgumentOutOfRangeException>(() => sut.GetAll(0, resultsPerPage: uint.MaxValue));
 		}
 
-		[Test]
-		public void GetAll_ResultsPerPageIsLessThanMinimum_ThrowsArgumentOutOfRangeException()
+		[Fact]
+		public async Task GetAll_ResultsPerPageIsLessThanMinimum_ThrowsArgumentOutOfRangeException()
 		{
 			var sut = new BuildVariableRepository(_requestFactory);
 
-			Assert.ThrowsAsync<ArgumentOutOfRangeException>(() => sut.GetAll(0, resultsPerPage: uint.MinValue));
+			await Assert.ThrowsAsync<ArgumentOutOfRangeException>(() => sut.GetAll(0, resultsPerPage: uint.MinValue));
 		}
 
-		[Test]
+		[Fact]
 		public async Task GetAll_ResultsPerPageIsSet_AddsPerPageParameter()
 		{
 			const uint expected = 5;
@@ -204,7 +204,7 @@ namespace GitLab.NET.Tests.Repositories
 			_request.Received().AddParameter("per_page", expected);
 		}
 
-		[Test]
+		[Fact]
 		public async Task GetAll_ValidParameters_AddsProjectIdUrlSegment()
 		{
 			const uint expected = 0;
@@ -215,7 +215,7 @@ namespace GitLab.NET.Tests.Repositories
 			_request.Received().AddUrlSegment("projectId", expected);
 		}
 
-		[Test]
+		[Fact]
 		public async Task GetAll_ValidParameters_SetsCorrectResourceAndMethod()
 		{
 			var sut = new BuildVariableRepository(_requestFactory);
@@ -225,15 +225,15 @@ namespace GitLab.NET.Tests.Repositories
 			_requestFactory.Received().Create("projects/{projectId}/variables", Method.Get);
 		}
 
-		[Test]
-		public void Update_KeyIsNull_ThrowsArgumentNullException()
+		[Fact]
+		public async Task Update_KeyIsNull_ThrowsArgumentNullException()
 		{
 			var sut = new BuildVariableRepository(_requestFactory);
 
-			Assert.ThrowsAsync<ArgumentNullException>(() => sut.Update(0, null, "value"));
+			await Assert.ThrowsAsync<ArgumentNullException>(() => sut.Update(0, null, "value"));
 		}
 
-		[Test]
+		[Fact]
 		public async Task Update_ValidParameters_AddsKeyUrlSegment()
 		{
 			const string expected = "key";
@@ -244,7 +244,7 @@ namespace GitLab.NET.Tests.Repositories
 			_request.Received().AddUrlSegment("key", expected);
 		}
 
-		[Test]
+		[Fact]
 		public async Task Update_ValidParameters_AddsProjectIdUrlSegment()
 		{
 			const uint expected = 0;
@@ -255,7 +255,7 @@ namespace GitLab.NET.Tests.Repositories
 			_request.Received().AddUrlSegment("projectId", expected);
 		}
 
-		[Test]
+		[Fact]
 		public async Task Update_ValidParameters_AddsValueParameter()
 		{
 			const string expected = "value";
@@ -266,7 +266,7 @@ namespace GitLab.NET.Tests.Repositories
 			_request.Received().AddParameter("value", expected);
 		}
 
-		[Test]
+		[Fact]
 		public async Task Update_ValidParameters_SetsCorrectResourceAndMethod()
 		{
 			var sut = new BuildVariableRepository(_requestFactory);
@@ -276,12 +276,12 @@ namespace GitLab.NET.Tests.Repositories
 			_requestFactory.Received().Create("projects/{projectId}/variables/{key}", Method.Put);
 		}
 
-		[Test]
-		public void Update_ValueIsNull_ThrowsArgumentNullException()
+		[Fact]
+		public async Task Update_ValueIsNull_ThrowsArgumentNullException()
 		{
 			var sut = new BuildVariableRepository(_requestFactory);
 
-			Assert.ThrowsAsync<ArgumentNullException>(() => sut.Update(0, "key", null));
+			await Assert.ThrowsAsync<ArgumentNullException>(() => sut.Update(0, "key", null));
 		}
 	}
 }

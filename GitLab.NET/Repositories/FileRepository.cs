@@ -43,7 +43,7 @@ namespace GitLab.NET.Repositories
             request.AddParameter("commit_message", commitMessage);
             request.AddParameterIfNotNull("encoding", encoding);
 
-            return await request.ExecuteAsync<RepositoryFile>();
+            return await request.Execute<RepositoryFile>();
         }
 
         /// <summary> Deletes a file. </summary>
@@ -70,7 +70,7 @@ namespace GitLab.NET.Repositories
             request.AddParameter("branch_name", branchName);
             request.AddParameter("commit_message", commitMessage);
 
-            return await request.ExecuteAsync<RepositoryFile>();
+            return await request.Execute<RepositoryFile>();
         }
 
         /// <summary> Finds a file by its path. </summary>
@@ -92,7 +92,7 @@ namespace GitLab.NET.Repositories
             request.AddParameter("file_path", filePath);
             request.AddParameter("ref", refName);
 
-            return await request.ExecuteAsync<RepositoryFile>();
+            return await request.Execute<RepositoryFile>();
         }
 
         /// <summary> Updates a file. </summary>
@@ -126,7 +126,7 @@ namespace GitLab.NET.Repositories
             request.AddParameter("commit_message", commitMessage);
             request.AddParameterIfNotNull("encoding", encoding);
 
-            return await request.ExecuteAsync<RepositoryFile>();
+            return await request.Execute<RepositoryFile>();
         }
     }
 }

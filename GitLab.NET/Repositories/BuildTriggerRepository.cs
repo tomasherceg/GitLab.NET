@@ -21,7 +21,7 @@ namespace GitLab.NET.Repositories
 
             request.AddUrlSegment("projectId", projectId);
 
-            return await request.ExecuteAsync<BuildTrigger>();
+            return await request.Execute<BuildTrigger>();
         }
 
         /// <summary> Deletes the build trigger with the provided token. </summary>
@@ -38,7 +38,7 @@ namespace GitLab.NET.Repositories
             request.AddUrlSegment("projectId", projectId);
             request.AddUrlSegment("token", token);
 
-            return await request.ExecuteAsync<BuildTrigger>();
+            return await request.Execute<BuildTrigger>();
         }
 
         /// <summary> Gets a build trigger by its token. </summary>
@@ -55,7 +55,7 @@ namespace GitLab.NET.Repositories
             request.AddUrlSegment("projectId", projectId);
             request.AddUrlSegment("token", token);
 
-            return await request.ExecuteAsync<BuildTrigger>();
+            return await request.Execute<BuildTrigger>();
         }
 
         /// <summary> Gets all build triggers associated with the specified project. </summary>
@@ -80,7 +80,7 @@ namespace GitLab.NET.Repositories
             request.AddParameter("page", page);
             request.AddParameter("per_page", resultsPerPage);
 
-            return await request.ExecutePaginatedAsync<BuildTrigger>();
+            return await request.ExecutePaginated<BuildTrigger>();
         }
     }
 }

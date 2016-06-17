@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 using RestSharp;
-using NUnit.Framework;
+using Xunit;
 
 namespace GitLab.NET.Tests
 {
@@ -56,52 +56,52 @@ namespace GitLab.NET.Tests
 
 		private readonly IRestResponse<List<object>> _response;
 
-		[Test]
+		[Fact]
 		public void Constructor_SetsCurrentPage()
 		{
 			var sut = new PaginatedResult<object>(_response);
 
-			Assert.AreEqual(ExpectedPage, sut.CurrentPage);
+			Assert.Equal(ExpectedPage, sut.CurrentPage);
 		}
 
-		[Test]
+		[Fact]
 		public void Constructor_SetsNextPage()
 		{
 			var sut = new PaginatedResult<object>(_response);
 
-			Assert.AreEqual(ExpectedNextPage, sut.NextPage);
+			Assert.Equal(ExpectedNextPage, sut.NextPage);
 		}
 
-		[Test]
+		[Fact]
 		public void Constructor_SetsPreviousPage()
 		{
 			var sut = new PaginatedResult<object>(_response);
 
-			Assert.AreEqual(ExpectedPrevPage, sut.PreviousPage);
+			Assert.Equal(ExpectedPrevPage, sut.PreviousPage);
 		}
 
-		[Test]
+		[Fact]
 		public void Constructor_SetsResultsPerPage()
 		{
 			var sut = new PaginatedResult<object>(_response);
 
-			Assert.AreEqual(ExpectedPerPage, sut.ResultsPerPage);
+			Assert.Equal(ExpectedPerPage, sut.ResultsPerPage);
 		}
 
-		[Test]
+		[Fact]
 		public void Constructor_SetsTotalPages()
 		{
 			var sut = new PaginatedResult<object>(_response);
 
-			Assert.AreEqual(ExpectedTotalPages, sut.TotalPages);
+			Assert.Equal(ExpectedTotalPages, sut.TotalPages);
 		}
 
-		[Test]
+		[Fact]
 		public void Constructor_SetsTotalResults()
 		{
 			var sut = new PaginatedResult<object>(_response);
 
-			Assert.AreEqual(ExpectedTotal, sut.TotalResults);
+			Assert.Equal(ExpectedTotal, sut.TotalResults);
 		}
 	}
 }
