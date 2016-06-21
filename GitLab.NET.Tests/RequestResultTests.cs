@@ -7,6 +7,8 @@ namespace GitLab.NET.Tests
 {
 	public class RequestResultTests
 	{
+        // testing
+
 		[Fact]
 		public void ConstructorWithoutType_ResponseIsNull_ThrowsArgumentNullException()
 		{
