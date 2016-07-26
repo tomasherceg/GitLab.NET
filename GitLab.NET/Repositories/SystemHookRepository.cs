@@ -28,6 +28,19 @@ namespace GitLab.NET.Repositories
             return await request.Execute<SystemHook>();
         }
 
+        public async Task<RequestResult<SystemHook>> Update(uint hookId, string url, bool mergeRequestsEvents, bool pushEvents) {
+            var request = RequestFactory.Create("hooks/{hookId}", Method.Put);
+
+            request.AddUrlSegment("hookId", hookId);
+
+            request.AddParameter("url", url);
+            
+            request.AddParameter("merge_requests_events", mergeRequestsEvents);
+            request.AddParameter("push_events", pushEvents);
+
+            return await request.Execute<SystemHook>();
+        }
+
         /// <summary> Deletes a system hook. </summary>
         /// <param name="hookId"> The ID of the system hook to delete. </param>
         /// <returns> A <see cref="RequestResult{SystemHook}" /> representing the results of the request. </returns>
