@@ -16,19 +16,22 @@ namespace GitLab.NET.Repositories
         /// <summary> Creates a new system hook. </summary>
         /// <param name="url"> The URL to use for the new system hook. </param>
         /// <returns> A <see cref="RequestResult{SystemHook}" /> representing the results of the request. </returns>
-        public async Task<RequestResult<SystemHook>> Create(string url)
-        {
+        public async Task<RequestResult<SystemHook>> Create(string url, bool? mergeRequestsEvents = null, bool? pushEvents = null, bool? buildEvents = null, bool? enableSSLVerification = null) {
             if (url == null)
                 throw new ArgumentNullException(nameof(url));
 
             var request = RequestFactory.Create("hooks", Method.Post);
 
             request.AddParameter("url", url);
+            request.AddParameterIfNotNull("merge_requests_events", mergeRequestsEvents);
+            request.AddParameterIfNotNull("push_events", pushEvents);
+            request.AddParameterIfNotNull("build_events", buildEvents);
+            request.AddParameterIfNotNull("enable_ssl_verification", enableSSLVerification);
 
             return await request.Execute<SystemHook>();
         }
 
-        public async Task<RequestResult<SystemHook>> Update(uint hookId, string url, bool mergeRequestsEvents, bool pushEvents) {
+        public async Task<RequestResult<SystemHook>> Update(uint hookId, string url, bool mergeRequestsEvents, bool pushEvents, bool buildEvents, bool enableSSLVerification) {
             var request = RequestFactory.Create("hooks/{hookId}", Method.Put);
 
             request.AddUrlSegment("hookId", hookId);
@@ -37,6 +40,8 @@ namespace GitLab.NET.Repositories
             
             request.AddParameter("merge_requests_events", mergeRequestsEvents);
             request.AddParameter("push_events", pushEvents);
+            request.AddParameter("build_events", buildEvents);
+            request.AddParameter("enable_ssl_verification", enableSSLVerification);
 
             return await request.Execute<SystemHook>();
         }
@@ -58,9 +63,11 @@ namespace GitLab.NET.Repositories
         ///     A <see cref="RequestResult{T}" /> containing a <see cref="List{SystemHoook}" /> representing the results of
         ///     the request.
         /// </returns>
-        public async Task<RequestResult<List<SystemHook>>> GetAll()
+        public async Task<RequestResult<List<SystemHook>>> GetAll(uint? projectId = null)
         {
             var request = RequestFactory.Create("hooks", Method.Get);
+
+            request.AddParameterIfNotNull("project_id", projectId);
 
             return await request.Execute<List<SystemHook>>();
         }
