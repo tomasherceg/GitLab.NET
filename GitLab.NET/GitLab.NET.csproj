@@ -82,12 +82,15 @@
     <Compile Include="Repositories\IssueRepository.cs" />
     <Compile Include="Repositories\MergeRequestRepository.cs" />
     <Compile Include="Repositories\MilestoneRepository.cs" />
+    <Compile Include="Repositories\ProjectRepository.cs" />
     <Compile Include="Repositories\RunnerRepository.cs" />
     <Compile Include="Repositories\TagRepository.cs" />
     <Compile Include="ResponseModels\Branch.cs" />
     <Compile Include="ResponseModels\Build.cs" />
     <Compile Include="ResponseModels\BuildArtifact.cs" />
+    <Compile Include="ResponseModels\Comment.cs" />
     <Compile Include="ResponseModels\GitLabSettings.cs" />
+    <Compile Include="ResponseModels\Group.cs" />
     <Compile Include="ResponseModels\MergeRequest.cs" />
     <Compile Include="ResponseModels\Project.cs" />
     <Compile Include="ResponseModels\Runner.cs" />

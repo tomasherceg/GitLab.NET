@@ -97,6 +97,9 @@ namespace GitLab.NET
         /// <summary> Provides a wrapper around the GitLab users API. </summary>
         public UserRepository Users { get; }
 
+        /// <summary> Provides a wrapper around the GitLab projects API. </summary>
+        public ProjectRepository Projects { get; }
+
         /// <summary> Creates a new <see cref="GitLabClient" /> instance. </summary>
         /// <param name="hostUri"> The GitLab server to connect to. </param>
         /// <param name="privateToken"> The private token to use when making requests to the GitLab API. </param>
@@ -134,6 +137,7 @@ namespace GitLab.NET
             SystemHooks = new SystemHookRepository(requestFactory);
             Tags = new TagRepository(requestFactory);
             Users = new UserRepository(requestFactory);
+            Projects = new ProjectRepository(requestFactory);
         }
     }
 }

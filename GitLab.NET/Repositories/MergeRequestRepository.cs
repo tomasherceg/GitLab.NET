@@ -192,6 +192,33 @@ namespace GitLab.NET.Repositories
             return await request.Execute<List<Commit>>();
         }
 
+        /// <summary> Creates a new comment for merge request. </summary>
+        /// <param name="projectId"> The ID of the project. </param>
+        /// <param name="mergeRequestId"> The ID of the merge request. </param>
+        /// /// <param name="comment"> The comment content. </param>
+        /// <returns> A <see cref="RequestResult{Comment}" /> representing the results of this request. </returns>
+        public async Task<RequestResult<Comment>> CreateComment(uint projectId, uint mergeRequestId, string comment) {
+            var request = RequestFactory.Create("projects/{projectId}/merge_requests/{mergeRequestId}/comments", Method.Post);
+
+            request.AddUrlSegment("projectId", projectId);
+            request.AddUrlSegment("mergeRequestId", mergeRequestId);
+            request.AddParameter("note", comment);
+
+            return await request.Execute<Comment>();
+        }
+        /// <summary> Gets all comments of the merge request. </summary>
+        /// <param name="projectId"> The ID of the project. </param>
+        /// <param name="mergeRequestId"> The ID of the merge request. </param>
+        /// <returns> A <see cref="RequestResult{T}" /> containing a <see cref="List{Comment}" /> representing the results of this request. </returns>
+        public async Task<RequestResult<List<Comment>>> GetComments(uint projectId, uint mergeRequestId) {
+            var request = RequestFactory.Create("projects/{projectId}/merge_requests/{mergeRequestId}/comments", Method.Get);
+
+            request.AddUrlSegment("projectId", projectId);
+            request.AddUrlSegment("mergeRequestId", mergeRequestId);
+
+            return await request.Execute<List<Comment>>();
+        }
+
         /// <summary> Gets all issues that will be closed on accepting the merge request. </summary>
         /// <param name="projectId"> The ID of the project. </param>
         /// <param name="mergeRequestId"> The ID of the merge request. </param>

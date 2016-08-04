@@ -31,6 +31,9 @@ namespace GitLab.NET.ResponseModels
         /// <summary> Whether or not this system hook fires push events. </summary>
         public bool? PushEvents { get; set; }
 
+        /// <summary> Whether or not this system hook fires build events. </summary>
+        public bool? BuildEvents { get; set; }
+        
         /// <summary> Whether or not this system hook fires tag push events. </summary>
         public bool? TagPushEvents { get; set; }
 
