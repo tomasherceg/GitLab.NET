@@ -28,8 +28,9 @@ namespace GitLab.NET.Repositories {
             if(resultsPerPage > Config.MaxResultsPerPage)
                 throw new ArgumentOutOfRangeException(nameof(resultsPerPage), resultsPerPage, "The parameter 'resultsPerPage' must be less than " + Config.MaxResultsPerPage + ".");
 
-            var request = RequestFactory.Create("projects/all", Method.Get);
+            var request = RequestFactory.Create("projects", Method.Get);
 
+            request.AddParameter("all", "all");
             request.AddParameter("page", page);
             request.AddParameter("per_page", resultsPerPage);
 
@@ -65,7 +66,7 @@ namespace GitLab.NET.Repositories {
             if(id < 0)
                 throw new ArgumentOutOfRangeException(nameof(id));
 
-            var request = RequestFactory.Create("projects", Method.Get);
+            var request = RequestFactory.Create("projects/{id}", Method.Get);
 
             request.AddUrlSegment("id", id);
 
