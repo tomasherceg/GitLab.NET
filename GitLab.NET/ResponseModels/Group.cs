@@ -8,12 +8,12 @@ namespace GitLab.NET.ResponseModels {
     /// <summary> Stores information about a group. </summary>
     public class Group {
         /// <summary> The GroupId for this group. </summary>
-        public int GroupId { get; set; }
+        public uint GroupId { get; set; }
 
         /// <summary> The GroupName for this group. </summary>
         public string GroupName { get; set; }
 
         /// <summary> The GroupAccessLevel for this group. </summary>
-        public int GroupAccessLevel { get; set; }
+        public uint GroupAccessLevel { get; set; }
     }
 }
