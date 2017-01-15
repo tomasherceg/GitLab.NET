@@ -7,7 +7,7 @@ namespace GitLab.NET.ResponseModels
     public class Project
     {
         /// <summary> The ID for this project. </summary>
-        public uint Id { get; set; }
+        public uint? Id { get; set; }
 
         /// <summary> The Description for this project. </summary>
         public string Description { get; set; }
