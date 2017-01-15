@@ -74,9 +74,6 @@ namespace GitLab.NET.Repositories
         /// <returns> A <see cref="RequestResult{Project}" /> representing the results of the request. </returns>
         public async Task<RequestResult<Project>> Find(uint id)
         {
-            if (id < 0)
-                throw new ArgumentOutOfRangeException(nameof(id));
-
             var request = RequestFactory.Create("projects/{id}", Method.Get);
 
             request.AddUrlSegment("id", id);
