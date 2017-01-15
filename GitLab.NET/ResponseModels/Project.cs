@@ -105,10 +105,13 @@ namespace GitLab.NET.ResponseModels
         /// <summary> The groups what shared this project. </summary>
         public List<Group> SharedWithGroups { get; set; }
 
+        /// <summary> Whether or not to allow a failing build to merge. </summary>
         public bool? OnlyAllowMergeIfBuildSucceeds { get; set; }
 
+        /// <summary> Whether or not to allow merge before all discussions are resolved. </summary>
         public bool? OnlyAllowMergeIfAllDiscussionsAreResolved { get; set; }
 
+        /// <summary> Whether to allow access requests. </summary>
         public bool? RequestAccessEnabled { get; set; }
     }
 }
