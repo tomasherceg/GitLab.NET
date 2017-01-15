@@ -10,7 +10,9 @@ namespace GitLab.NET.Repositories
     {
         /// <summary> Creates a new <see cref="BuildRepository" /> instance. </summary>
         /// <param name="requestFactory"> An instance of <see cref="IRequestFactory" /> to use for this repository. </param>
-        public BuildRepository(IRequestFactory requestFactory) : base(requestFactory) { }
+        public BuildRepository(IRequestFactory requestFactory) : base(requestFactory)
+        {
+        }
 
         /// <summary> Cancels a build. </summary>
         /// <param name="projectId"> The ID of the project. </param>
@@ -73,7 +75,8 @@ namespace GitLab.NET.Repositories
         /// <param name="commitSha"> The commit SHA. </param>
         /// <param name="scopes"> The scopes to limit the results to. </param>
         /// <returns> A <see cref="PaginatedResult{Build}" /> representing the results of the request. </returns>
-        public async Task<PaginatedResult<Build>> GetByCommit(uint projectId, string commitSha, BuildStatus[] scopes = null)
+        public async Task<PaginatedResult<Build>> GetByCommit(uint projectId, string commitSha,
+            BuildStatus[] scopes = null)
         {
             if (commitSha == null)
                 throw new ArgumentNullException(nameof(commitSha));
@@ -120,9 +123,9 @@ namespace GitLab.NET.Repositories
             if (input == null)
                 return null;
 
-            string[] results = new string[input.Length];
+            var results = new string[input.Length];
 
-            for (int i = 0; i < input.Length; i++)
+            for (var i = 0; i < input.Length; i++)
             {
                 results[i] = Enum.GetName(typeof(BuildStatus), input[i])?.ToLower();
 

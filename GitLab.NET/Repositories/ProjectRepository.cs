@@ -1,32 +1,37 @@
-﻿using GitLab.NET;
-using GitLab.NET.Abstractions;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
+﻿using System;
 using System.Threading.Tasks;
+using GitLab.NET.Abstractions;
 using GitLab.NET.ResponseModels;
 
-namespace GitLab.NET.Repositories {
+namespace GitLab.NET.Repositories
+{
     /// <summary> Provides GitLab Projects access in a repository pattern. </summary>
-    public class ProjectRepository : RepositoryBase {
+    public class ProjectRepository : RepositoryBase
+    {
         /// <summary> Creates a new <see cref="ProjectRepository" /> instance. </summary>
         /// <param name="requestFactory"> An instance of <see cref="IRequestFactory" /> to use for this repository. </param>
-        public ProjectRepository(IRequestFactory requestFactory) : base(requestFactory) { }
+        public ProjectRepository(IRequestFactory requestFactory) : base(requestFactory)
+        {
+        }
 
         /// <summary> Gets all projects. </summary>
         /// <param name="page"> The page number for a paginated request. </param>
         /// <param name="resultsPerPage"> The number of results to return per request. </param>
         /// <returns> A <see cref="PaginatedResult{Project}" /> representing the results of the request. </returns>
-        public async Task<PaginatedResult<Project>> GetAll(uint page = Config.DefaultPage, uint resultsPerPage = Config.DefaultResultsPerPage) {
-            if(page < Config.DefaultPage)
-                throw new ArgumentOutOfRangeException(nameof(page), page, "The parameter 'page' must be greater than " + Config.DefaultPage + ".");
+        public async Task<PaginatedResult<Project>> GetAll(uint page = Config.DefaultPage,
+            uint resultsPerPage = Config.DefaultResultsPerPage)
+        {
+            if (page < Config.DefaultPage)
+                throw new ArgumentOutOfRangeException(nameof(page), page,
+                    "The parameter 'page' must be greater than " + Config.DefaultPage + ".");
 
-            if(resultsPerPage < Config.MinResultsPerPage)
-                throw new ArgumentOutOfRangeException(nameof(resultsPerPage), resultsPerPage, "The parameter 'resultsPerPage' must be greater than " + Config.MinResultsPerPage + ".");
+            if (resultsPerPage < Config.MinResultsPerPage)
+                throw new ArgumentOutOfRangeException(nameof(resultsPerPage), resultsPerPage,
+                    "The parameter 'resultsPerPage' must be greater than " + Config.MinResultsPerPage + ".");
 
-            if(resultsPerPage > Config.MaxResultsPerPage)
-                throw new ArgumentOutOfRangeException(nameof(resultsPerPage), resultsPerPage, "The parameter 'resultsPerPage' must be less than " + Config.MaxResultsPerPage + ".");
+            if (resultsPerPage > Config.MaxResultsPerPage)
+                throw new ArgumentOutOfRangeException(nameof(resultsPerPage), resultsPerPage,
+                    "The parameter 'resultsPerPage' must be less than " + Config.MaxResultsPerPage + ".");
 
             var request = RequestFactory.Create("projects", Method.Get);
 
@@ -41,15 +46,20 @@ namespace GitLab.NET.Repositories {
         /// <param name="page"> The page number for a paginated request. </param>
         /// <param name="resultsPerPage"> The number of results to return per request. </param>
         /// <returns> A <see cref="PaginatedResult{Project}" /> representing the results of the request. </returns>
-        public async Task<PaginatedResult<Project>> Accessible(uint page = Config.DefaultPage, uint resultsPerPage = Config.DefaultResultsPerPage) {
-            if(page < Config.DefaultPage)
-                throw new ArgumentOutOfRangeException(nameof(page), page, "The parameter 'page' must be greater than " + Config.DefaultPage + ".");
+        public async Task<PaginatedResult<Project>> Accessible(uint page = Config.DefaultPage,
+            uint resultsPerPage = Config.DefaultResultsPerPage)
+        {
+            if (page < Config.DefaultPage)
+                throw new ArgumentOutOfRangeException(nameof(page), page,
+                    "The parameter 'page' must be greater than " + Config.DefaultPage + ".");
 
-            if(resultsPerPage < Config.MinResultsPerPage)
-                throw new ArgumentOutOfRangeException(nameof(resultsPerPage), resultsPerPage, "The parameter 'resultsPerPage' must be greater than " + Config.MinResultsPerPage + ".");
+            if (resultsPerPage < Config.MinResultsPerPage)
+                throw new ArgumentOutOfRangeException(nameof(resultsPerPage), resultsPerPage,
+                    "The parameter 'resultsPerPage' must be greater than " + Config.MinResultsPerPage + ".");
 
-            if(resultsPerPage > Config.MaxResultsPerPage)
-                throw new ArgumentOutOfRangeException(nameof(resultsPerPage), resultsPerPage, "The parameter 'resultsPerPage' must be less than " + Config.MaxResultsPerPage + ".");
+            if (resultsPerPage > Config.MaxResultsPerPage)
+                throw new ArgumentOutOfRangeException(nameof(resultsPerPage), resultsPerPage,
+                    "The parameter 'resultsPerPage' must be less than " + Config.MaxResultsPerPage + ".");
 
             var request = RequestFactory.Create("projects", Method.Get);
 
@@ -62,10 +72,8 @@ namespace GitLab.NET.Repositories {
         /// <summary> Gets a project by its ID. </summary>
         /// <param name="id"> The ID of the project. </param>
         /// <returns> A <see cref="RequestResult{Project}" /> representing the results of the request. </returns>
-        public async Task<RequestResult<Project>> Find(uint id) {
-            if(id < 0)
-                throw new ArgumentOutOfRangeException(nameof(id));
-
+        public async Task<RequestResult<Project>> Find(uint id)
+        {
             var request = RequestFactory.Create("projects/{id}", Method.Get);
 
             request.AddUrlSegment("id", id);

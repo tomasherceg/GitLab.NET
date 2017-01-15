@@ -42,11 +42,11 @@ namespace GitLab.NET
         {
             uint result;
 
-            var header = (string)headers.FirstOrDefault(h => h.Name == name)?.Value;
+            var header = (string) headers.FirstOrDefault(h => h.Name == name)?.Value;
 
             var didParse = uint.TryParse(header, out result);
 
-            return didParse ? result : (uint?)null;
+            return didParse ? result : (uint?) null;
         }
     }
 }

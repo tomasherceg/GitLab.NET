@@ -10,7 +10,9 @@ namespace GitLab.NET.Repositories
     {
         /// <summary> Creates a new <see cref="SessionRepository" /> instance. </summary>
         /// <param name="requestFactory"> An instance of <see cref="IRequestFactory" /> to use for this repository. </param>
-        public SessionRepository(IRequestFactory requestFactory) : base(requestFactory) { }
+        public SessionRepository(IRequestFactory requestFactory) : base(requestFactory)
+        {
+        }
 
         /// <summary> Asynchronously retrieves a private token for a user. </summary>
         /// <param name="username"> The username or email address for the user. </param>

@@ -11,7 +11,9 @@ namespace GitLab.NET.Repositories
     {
         /// <summary> Creates a new <see cref="DeployKeyRepository" /> instance. </summary>
         /// <param name="requestFactory"> An instance of <see cref="IRequestFactory" /> to use for this repository. </param>
-        public DeployKeyRepository(IRequestFactory requestFactory) : base(requestFactory) { }
+        public DeployKeyRepository(IRequestFactory requestFactory) : base(requestFactory)
+        {
+        }
 
         /// <summary> Creates a new deploy key. </summary>
         /// <param name="projectId"> The ID of the project to associate this key with. </param>

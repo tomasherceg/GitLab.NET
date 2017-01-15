@@ -11,7 +11,9 @@ namespace GitLab.NET.Repositories
     {
         /// <summary> Creates a new <see cref="LabelRepository" /> instance. </summary>
         /// <param name="requestFactory"> An instance of <see cref="IRequestFactory" /> to use for this repository. </param>
-        public LabelRepository(IRequestFactory requestFactory) : base(requestFactory) { }
+        public LabelRepository(IRequestFactory requestFactory) : base(requestFactory)
+        {
+        }
 
         /// <summary> Creates a new label. </summary>
         /// <param name="projectId"> The ID of the project to attach this label to. </param>
@@ -19,7 +21,8 @@ namespace GitLab.NET.Repositories
         /// <param name="color"> The color for the new label. </param>
         /// <param name="description"> The description for the new label. </param>
         /// <returns> A <see cref="RequestResult{Label}" /> representing the results of the request. </returns>
-        public async Task<RequestResult<Label>> Create(uint projectId, string name, string color, string description = null)
+        public async Task<RequestResult<Label>> Create(uint projectId, string name, string color,
+            string description = null)
         {
             if (name == null)
                 throw new ArgumentNullException(nameof(name));
@@ -110,7 +113,8 @@ namespace GitLab.NET.Repositories
         /// <param name="color"> The new color for the label. </param>
         /// <param name="description"> The new description for the label. </param>
         /// <returns> A <see cref="RequestResult{Label}" /> representing the results of the request. </returns>
-        public async Task<RequestResult<Label>> Update(uint projectId, string name, string newName = null, string color = null, string description = null)
+        public async Task<RequestResult<Label>> Update(uint projectId, string name, string newName = null,
+            string color = null, string description = null)
         {
             if (name == null)
                 throw new ArgumentNullException(nameof(name));

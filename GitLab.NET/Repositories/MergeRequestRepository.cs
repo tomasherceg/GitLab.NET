@@ -12,7 +12,9 @@ namespace GitLab.NET.Repositories
     {
         /// <summary> Creates a new <see cref="MergeRequestRepository" /> instance. </summary>
         /// <param name="requestFactory"> An instance of <see cref="IRequestFactory" /> to use for this repository. </param>
-        public MergeRequestRepository(IRequestFactory requestFactory) : base(requestFactory) { }
+        public MergeRequestRepository(IRequestFactory requestFactory) : base(requestFactory)
+        {
+        }
 
         /// <summary> Accepts a merge request. </summary>
         /// <param name="projectId"> The ID of the project. </param>
@@ -21,7 +23,8 @@ namespace GitLab.NET.Repositories
         /// <param name="removeSourceBranch"> Whether or not to remove the source branch on merge. </param>
         /// <param name="mergedWhenBuildSucceeds"> Whether or not to merge when the build succeeds. </param>
         /// <returns> A <see cref="RequestResult{MergeRequest}" /> representing the results of the request. </returns>
-        public async Task<RequestResult<MergeRequest>> Accept(uint projectId, uint mergeRequestId, string commitMessage = null, bool? removeSourceBranch = null, bool? mergedWhenBuildSucceeds = null)
+        public async Task<RequestResult<MergeRequest>> Accept(uint projectId, uint mergeRequestId,
+            string commitMessage = null, bool? removeSourceBranch = null, bool? mergedWhenBuildSucceeds = null)
         {
             var request = RequestFactory.Create("projects/{projectId}/merge_requests/{mergeRequestId}/merge", Method.Put);
 
@@ -40,7 +43,9 @@ namespace GitLab.NET.Repositories
         /// <returns> A <see cref="RequestResult{MergeRequest}" /> representing the results of the request. </returns>
         public async Task<RequestResult<MergeRequest>> CancelMergeOnBuildSuccess(uint projectId, uint mergeRequestId)
         {
-            var request = RequestFactory.Create("projects/{projectId}/merge_requests/{mergeRequestId}/cancel_merge_when_build_succeeds", Method.Put);
+            var request =
+                RequestFactory.Create(
+                    "projects/{projectId}/merge_requests/{mergeRequestId}/cancel_merge_when_build_succeeds", Method.Put);
 
             request.AddUrlSegment("projectId", projectId);
             request.AddUrlSegment("mergeRequestId", mergeRequestId);
@@ -60,14 +65,14 @@ namespace GitLab.NET.Repositories
         /// <param name="milestoneId"> The ID of the milestone to assign to this merge request. </param>
         /// <returns> A <see cref="RequestResult{MergeRequest}" /> representing the results of this request. </returns>
         public async Task<RequestResult<MergeRequest>> Create(uint projectId,
-                                                              string sourceBranch,
-                                                              string targetBranch,
-                                                              string title,
-                                                              string description = null,
-                                                              uint? assigneeId = null,
-                                                              uint? targetProjectId = null,
-                                                              string[] labels = null,
-                                                              uint? milestoneId = null)
+            string sourceBranch,
+            string targetBranch,
+            string title,
+            string description = null,
+            uint? assigneeId = null,
+            uint? targetProjectId = null,
+            string[] labels = null,
+            uint? milestoneId = null)
         {
             if (sourceBranch == null)
                 throw new ArgumentNullException(nameof(sourceBranch));
@@ -130,20 +135,23 @@ namespace GitLab.NET.Repositories
         /// <param name="resultsPerPage"> The number of results to return per request. </param>
         /// <returns> A <see cref="PaginatedResult{MergeRequest}" /> representing the results of the request. </returns>
         public async Task<PaginatedResult<MergeRequest>> GetAll(uint projectId,
-                                                                MergeRequestState? state = null,
-                                                                OrderBy? orderBy = null,
-                                                                SortOrder? sort = null,
-                                                                uint? page = Config.DefaultPage,
-                                                                uint? resultsPerPage = Config.DefaultResultsPerPage)
+            MergeRequestState? state = null,
+            OrderBy? orderBy = null,
+            SortOrder? sort = null,
+            uint? page = Config.DefaultPage,
+            uint? resultsPerPage = Config.DefaultResultsPerPage)
         {
             if (page < Config.DefaultPage)
-                throw new ArgumentOutOfRangeException(nameof(page), page, "The parameter 'page' must be greater than " + Config.DefaultPage + ".");
+                throw new ArgumentOutOfRangeException(nameof(page), page,
+                    "The parameter 'page' must be greater than " + Config.DefaultPage + ".");
 
             if (resultsPerPage < Config.MinResultsPerPage)
-                throw new ArgumentOutOfRangeException(nameof(resultsPerPage), resultsPerPage, "The parameter 'resultsPerPage' must be greater than " + Config.MinResultsPerPage + ".");
+                throw new ArgumentOutOfRangeException(nameof(resultsPerPage), resultsPerPage,
+                    "The parameter 'resultsPerPage' must be greater than " + Config.MinResultsPerPage + ".");
 
             if (resultsPerPage > Config.MaxResultsPerPage)
-                throw new ArgumentOutOfRangeException(nameof(resultsPerPage), resultsPerPage, "The parameter 'resultsPerPage' must be less than " + Config.MaxResultsPerPage + ".");
+                throw new ArgumentOutOfRangeException(nameof(resultsPerPage), resultsPerPage,
+                    "The parameter 'resultsPerPage' must be less than " + Config.MaxResultsPerPage + ".");
 
             var stateValue = state != null ? Enum.GetName(typeof(MergeRequestState), state)?.ToLower() : null;
             var orderByValue = orderBy?.GetDescription();
@@ -167,7 +175,8 @@ namespace GitLab.NET.Repositories
         /// <returns> A <see cref="RequestResult{MergeRequest}" /> representing the results of this request. </returns>
         public async Task<RequestResult<MergeRequest>> GetChanges(uint projectId, uint mergeRequestId)
         {
-            var request = RequestFactory.Create("projects/{projectId}/merge_requests/{mergeRequestId}/changes", Method.Get);
+            var request = RequestFactory.Create("projects/{projectId}/merge_requests/{mergeRequestId}/changes",
+                Method.Get);
 
             request.AddUrlSegment("projectId", projectId);
             request.AddUrlSegment("mergeRequestId", mergeRequestId);
@@ -184,7 +193,8 @@ namespace GitLab.NET.Repositories
         /// </returns>
         public async Task<RequestResult<List<Commit>>> GetCommits(uint projectId, uint mergeRequestId)
         {
-            var request = RequestFactory.Create("projects/{projectId}/merge_requests/{mergeRequestId}/commits", Method.Get);
+            var request = RequestFactory.Create("projects/{projectId}/merge_requests/{mergeRequestId}/commits",
+                Method.Get);
 
             request.AddUrlSegment("projectId", projectId);
             request.AddUrlSegment("mergeRequestId", mergeRequestId);
@@ -195,10 +205,13 @@ namespace GitLab.NET.Repositories
         /// <summary> Creates a new comment for merge request. </summary>
         /// <param name="projectId"> The ID of the project. </param>
         /// <param name="mergeRequestId"> The ID of the merge request. </param>
-        /// /// <param name="comment"> The comment content. </param>
+        /// ///
+        /// <param name="comment"> The comment content. </param>
         /// <returns> A <see cref="RequestResult{Comment}" /> representing the results of this request. </returns>
-        public async Task<RequestResult<Comment>> CreateComment(uint projectId, uint mergeRequestId, string comment) {
-            var request = RequestFactory.Create("projects/{projectId}/merge_requests/{mergeRequestId}/comments", Method.Post);
+        public async Task<RequestResult<Comment>> CreateComment(uint projectId, uint mergeRequestId, string comment)
+        {
+            var request = RequestFactory.Create("projects/{projectId}/merge_requests/{mergeRequestId}/comments",
+                Method.Post);
 
             request.AddUrlSegment("projectId", projectId);
             request.AddUrlSegment("mergeRequestId", mergeRequestId);
@@ -206,12 +219,18 @@ namespace GitLab.NET.Repositories
 
             return await request.Execute<Comment>();
         }
+
         /// <summary> Gets all comments of the merge request. </summary>
         /// <param name="projectId"> The ID of the project. </param>
         /// <param name="mergeRequestId"> The ID of the merge request. </param>
-        /// <returns> A <see cref="RequestResult{T}" /> containing a <see cref="List{Comment}" /> representing the results of this request. </returns>
-        public async Task<RequestResult<List<Comment>>> GetComments(uint projectId, uint mergeRequestId) {
-            var request = RequestFactory.Create("projects/{projectId}/merge_requests/{mergeRequestId}/comments", Method.Get);
+        /// <returns>
+        ///     A <see cref="RequestResult{T}" /> containing a <see cref="List{Comment}" /> representing the results of this
+        ///     request.
+        /// </returns>
+        public async Task<RequestResult<List<Comment>>> GetComments(uint projectId, uint mergeRequestId)
+        {
+            var request = RequestFactory.Create("projects/{projectId}/merge_requests/{mergeRequestId}/comments",
+                Method.Get);
 
             request.AddUrlSegment("projectId", projectId);
             request.AddUrlSegment("mergeRequestId", mergeRequestId);
@@ -225,18 +244,23 @@ namespace GitLab.NET.Repositories
         /// <param name="page"> The page number for a paginated request. </param>
         /// <param name="resultsPerPage"> The number of results to return per request. </param>
         /// <returns> A <see cref="PaginatedResult{Issue}" /> representing the results of the request. </returns>
-        public async Task<PaginatedResult<Issue>> GetIssuesClosedOnMerge(uint projectId, uint mergeRequestId, uint page = Config.DefaultPage, uint resultsPerPage = Config.DefaultResultsPerPage)
+        public async Task<PaginatedResult<Issue>> GetIssuesClosedOnMerge(uint projectId, uint mergeRequestId,
+            uint page = Config.DefaultPage, uint resultsPerPage = Config.DefaultResultsPerPage)
         {
             if (page < Config.DefaultPage)
-                throw new ArgumentOutOfRangeException(nameof(page), page, "The parameter 'page' must be greater than " + Config.DefaultPage + ".");
+                throw new ArgumentOutOfRangeException(nameof(page), page,
+                    "The parameter 'page' must be greater than " + Config.DefaultPage + ".");
 
             if (resultsPerPage < Config.MinResultsPerPage)
-                throw new ArgumentOutOfRangeException(nameof(resultsPerPage), resultsPerPage, "The parameter 'resultsPerPage' must be greater than " + Config.MinResultsPerPage + ".");
+                throw new ArgumentOutOfRangeException(nameof(resultsPerPage), resultsPerPage,
+                    "The parameter 'resultsPerPage' must be greater than " + Config.MinResultsPerPage + ".");
 
             if (resultsPerPage > Config.MaxResultsPerPage)
-                throw new ArgumentOutOfRangeException(nameof(resultsPerPage), resultsPerPage, "The parameter 'resultsPerPage' must be less than " + Config.MaxResultsPerPage + ".");
+                throw new ArgumentOutOfRangeException(nameof(resultsPerPage), resultsPerPage,
+                    "The parameter 'resultsPerPage' must be less than " + Config.MaxResultsPerPage + ".");
 
-            var request = RequestFactory.Create("projects/{projectId}/merge_requests/{mergeRequestId}/closes_issues", Method.Get);
+            var request = RequestFactory.Create("projects/{projectId}/merge_requests/{mergeRequestId}/closes_issues",
+                Method.Get);
 
             request.AddUrlSegment("projectId", projectId);
             request.AddUrlSegment("mergeRequestId", mergeRequestId);
@@ -252,7 +276,8 @@ namespace GitLab.NET.Repositories
         /// <returns> </returns>
         public async Task<RequestResult<MergeRequest>> Subscribe(uint projectId, uint mergeRequestId)
         {
-            var request = RequestFactory.Create("projects/{projectId}/merge_requests/{mergeRequestId}/subscription", Method.Post);
+            var request = RequestFactory.Create("projects/{projectId}/merge_requests/{mergeRequestId}/subscription",
+                Method.Post);
 
             request.AddUrlSegment("projectId", projectId);
             request.AddUrlSegment("mergeRequestId", mergeRequestId);
@@ -266,7 +291,8 @@ namespace GitLab.NET.Repositories
         /// <returns> </returns>
         public async Task<RequestResult<MergeRequest>> Unsubscribe(uint projectId, uint mergeRequestId)
         {
-            var request = RequestFactory.Create("projects/{projectId}/merge_requests/{mergeRequestId}/subscription", Method.Delete);
+            var request = RequestFactory.Create("projects/{projectId}/merge_requests/{mergeRequestId}/subscription",
+                Method.Delete);
 
             request.AddUrlSegment("projectId", projectId);
             request.AddUrlSegment("mergeRequestId", mergeRequestId);
@@ -286,14 +312,14 @@ namespace GitLab.NET.Repositories
         /// <param name="state"> The state event for this merge request. </param>
         /// <returns> A <see cref="RequestResult{MergeRequest}" /> representing the results of this request. </returns>
         public async Task<RequestResult<MergeRequest>> Update(uint projectId,
-                                                              uint mergeRequestId,
-                                                              string targetBranch = null,
-                                                              string title = null,
-                                                              string description = null,
-                                                              uint? assigneeId = null,
-                                                              uint? milestoneId = null,
-                                                              string[] labels = null,
-                                                              MergeRequestStateEvent? state = null)
+            uint mergeRequestId,
+            string targetBranch = null,
+            string title = null,
+            string description = null,
+            uint? assigneeId = null,
+            uint? milestoneId = null,
+            string[] labels = null,
+            MergeRequestStateEvent? state = null)
         {
             var stateValue = state != null ? Enum.GetName(typeof(MergeRequestStateEvent), state)?.ToLower() : null;
 

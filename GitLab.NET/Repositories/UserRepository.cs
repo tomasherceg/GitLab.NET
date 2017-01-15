@@ -10,7 +10,9 @@ namespace GitLab.NET.Repositories
     {
         /// <summary> Creates a new <see cref="UserRepository" /> instance. </summary>
         /// <param name="requestFactory"> An instance of <see cref="IRequestFactory" /> to use for this repository. </param>
-        public UserRepository(IRequestFactory requestFactory) : base(requestFactory) { }
+        public UserRepository(IRequestFactory requestFactory) : base(requestFactory)
+        {
+        }
 
         /// <summary> Blocks a user. </summary>
         /// <param name="id"> The user's ID. </param>
@@ -44,22 +46,22 @@ namespace GitLab.NET.Repositories
         /// <param name="external"> Whether or not the user's account should be flagged as external. </param>
         /// <returns> A <see cref="RequestResult{User}" /> representing the results of the request. </returns>
         public async Task<RequestResult<User>> Create(string email,
-                                                      string password,
-                                                      string username,
-                                                      string name,
-                                                      string skype = null,
-                                                      string linkedIn = null,
-                                                      string twitter = null,
-                                                      string websiteUrl = null,
-                                                      uint? projectsLimit = null,
-                                                      string externUid = null,
-                                                      string provider = null,
-                                                      string bio = null,
-                                                      string location = null,
-                                                      bool? admin = null,
-                                                      bool? canCreateGroup = null,
-                                                      bool? confirm = null,
-                                                      bool? external = null)
+            string password,
+            string username,
+            string name,
+            string skype = null,
+            string linkedIn = null,
+            string twitter = null,
+            string websiteUrl = null,
+            uint? projectsLimit = null,
+            string externUid = null,
+            string provider = null,
+            string bio = null,
+            string location = null,
+            bool? admin = null,
+            bool? canCreateGroup = null,
+            bool? confirm = null,
+            bool? external = null)
         {
             if (email == null)
                 throw new ArgumentNullException(nameof(email));
@@ -139,16 +141,20 @@ namespace GitLab.NET.Repositories
         /// <param name="page"> The page number for a paginated request. </param>
         /// <param name="resultsPerPage"> The number of results to return per request. </param>
         /// <returns> A <see cref="PaginatedResult{User}" /> representing the results of the request. </returns>
-        public async Task<PaginatedResult<User>> GetAll(uint page = Config.DefaultPage, uint resultsPerPage = Config.DefaultResultsPerPage)
+        public async Task<PaginatedResult<User>> GetAll(uint page = Config.DefaultPage,
+            uint resultsPerPage = Config.DefaultResultsPerPage)
         {
             if (page < Config.DefaultPage)
-                throw new ArgumentOutOfRangeException(nameof(page), page, "The parameter 'page' must be greater than " + Config.DefaultPage + ".");
+                throw new ArgumentOutOfRangeException(nameof(page), page,
+                    "The parameter 'page' must be greater than " + Config.DefaultPage + ".");
 
             if (resultsPerPage < Config.MinResultsPerPage)
-                throw new ArgumentOutOfRangeException(nameof(resultsPerPage), resultsPerPage, "The parameter 'resultsPerPage' must be greater than " + Config.MinResultsPerPage + ".");
+                throw new ArgumentOutOfRangeException(nameof(resultsPerPage), resultsPerPage,
+                    "The parameter 'resultsPerPage' must be greater than " + Config.MinResultsPerPage + ".");
 
             if (resultsPerPage > Config.MaxResultsPerPage)
-                throw new ArgumentOutOfRangeException(nameof(resultsPerPage), resultsPerPage, "The parameter 'resultsPerPage' must be less than " + Config.MaxResultsPerPage + ".");
+                throw new ArgumentOutOfRangeException(nameof(resultsPerPage), resultsPerPage,
+                    "The parameter 'resultsPerPage' must be less than " + Config.MaxResultsPerPage + ".");
 
             var request = RequestFactory.Create("users", Method.Get);
 
@@ -172,19 +178,23 @@ namespace GitLab.NET.Repositories
         /// <param name="page"> The page number for a paginated request. </param>
         /// <param name="resultsPerPage"> The number of results to return per request. </param>
         /// <returns> A <see cref="PaginatedResult{User}" /> representing the results of the request. </returns>
-        public async Task<PaginatedResult<User>> Search(string searchQuery, uint page = Config.DefaultPage, uint resultsPerPage = Config.DefaultResultsPerPage)
+        public async Task<PaginatedResult<User>> Search(string searchQuery, uint page = Config.DefaultPage,
+            uint resultsPerPage = Config.DefaultResultsPerPage)
         {
             if (searchQuery == null)
                 throw new ArgumentNullException(nameof(searchQuery));
 
             if (page < Config.DefaultPage)
-                throw new ArgumentOutOfRangeException(nameof(page), page, "The parameter 'page' must be greater than " + Config.DefaultPage + ".");
+                throw new ArgumentOutOfRangeException(nameof(page), page,
+                    "The parameter 'page' must be greater than " + Config.DefaultPage + ".");
 
             if (resultsPerPage < Config.MinResultsPerPage)
-                throw new ArgumentOutOfRangeException(nameof(resultsPerPage), resultsPerPage, "The parameter 'resultsPerPage' must be greater than " + Config.MinResultsPerPage + ".");
+                throw new ArgumentOutOfRangeException(nameof(resultsPerPage), resultsPerPage,
+                    "The parameter 'resultsPerPage' must be greater than " + Config.MinResultsPerPage + ".");
 
             if (resultsPerPage > Config.MaxResultsPerPage)
-                throw new ArgumentOutOfRangeException(nameof(resultsPerPage), resultsPerPage, "The parameter 'resultsPerPage' must be less than " + Config.MaxResultsPerPage + ".");
+                throw new ArgumentOutOfRangeException(nameof(resultsPerPage), resultsPerPage,
+                    "The parameter 'resultsPerPage' must be less than " + Config.MaxResultsPerPage + ".");
 
             var request = RequestFactory.Create("users", Method.Get);
 
@@ -227,22 +237,22 @@ namespace GitLab.NET.Repositories
         /// <param name="external"> Whether or not the user's account should be flagged as external. </param>
         /// <returns> A <see cref="RequestResult{User}" /> representing the results of the request. </returns>
         public async Task<RequestResult<User>> Update(uint id,
-                                                      string email = null,
-                                                      string password = null,
-                                                      string username = null,
-                                                      string name = null,
-                                                      string skype = null,
-                                                      string linkedIn = null,
-                                                      string twitter = null,
-                                                      string websiteUrl = null,
-                                                      uint? projectsLimit = null,
-                                                      string externUid = null,
-                                                      string provider = null,
-                                                      string bio = null,
-                                                      string location = null,
-                                                      bool? admin = null,
-                                                      bool? canCreateGroup = null,
-                                                      bool? external = null)
+            string email = null,
+            string password = null,
+            string username = null,
+            string name = null,
+            string skype = null,
+            string linkedIn = null,
+            string twitter = null,
+            string websiteUrl = null,
+            uint? projectsLimit = null,
+            string externUid = null,
+            string provider = null,
+            string bio = null,
+            string location = null,
+            bool? admin = null,
+            bool? canCreateGroup = null,
+            bool? external = null)
         {
             var request = RequestFactory.Create("users/{id}", Method.Put);
 

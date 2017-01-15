@@ -1,12 +1,11 @@
-﻿// ReSharper disable ClassNeverInstantiated.Global
-
-using System;
+﻿using System;
 using System.Collections.Generic;
 
 namespace GitLab.NET.ResponseModels
 {
     /// <summary> Stores information about a project. </summary>
-    public class Project {
+    public class Project
+    {
         /// <summary> The ID for this project. </summary>
         public uint Id { get; set; }
 
@@ -32,7 +31,7 @@ namespace GitLab.NET.ResponseModels
         public string WebUrl { get; set; }
 
         /// <summary> The tags for this project. </summary>
-        List<string> TagList { get; set; }
+        private List<string> TagList { get; set; }
 
         /// <summary> The project owner. </summary>
         public User Owner { get; set; }

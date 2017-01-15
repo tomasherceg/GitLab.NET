@@ -9,7 +9,9 @@ namespace GitLab.NET.Repositories
     {
         /// <summary> Creates a new <see cref="GitLabSettingsRepository" /> instance. </summary>
         /// <param name="requestFactory"> An instance of <see cref="IRequestFactory" /> to use for this repository. </param>
-        public GitLabSettingsRepository(IRequestFactory requestFactory) : base(requestFactory) { }
+        public GitLabSettingsRepository(IRequestFactory requestFactory) : base(requestFactory)
+        {
+        }
 
         /// <summary> Gets the current settings for the server. </summary>
         /// <returns> A <see cref="RequestResult{GitLabSettings}" /> representing the results of the request. </returns>
@@ -41,20 +43,20 @@ namespace GitLab.NET.Repositories
         /// <param name="userOauthApplications"> Allow users to register any application to use GitLab as an OAuth provider. </param>
         /// <returns> A <see cref="RequestResult{GitLabSettings}" /> representing the results of the request. </returns>
         public async Task<RequestResult<GitLabSettings>> Set(string afterSignOutPath = null,
-                                                             uint? defaultBranchProtection = null,
-                                                             uint? defaultProjectVisibility = null,
-                                                             uint? defaultProjectsLimit = null,
-                                                             uint? defaultSnippetVisibility = null,
-                                                             bool? gravatarEnabled = null,
-                                                             string homePageUrl = null,
-                                                             uint? maxAttachmentSize = null,
-                                                             string[] restrictedSignupDomains = null,
-                                                             uint[] restrictedVisbilityLevels = null,
-                                                             uint? sessionExpireDelay = null,
-                                                             string signinText = null,
-                                                             bool? signinEnabled = null,
-                                                             bool? signupEnabled = null,
-                                                             bool? userOauthApplications = null)
+            uint? defaultBranchProtection = null,
+            uint? defaultProjectVisibility = null,
+            uint? defaultProjectsLimit = null,
+            uint? defaultSnippetVisibility = null,
+            bool? gravatarEnabled = null,
+            string homePageUrl = null,
+            uint? maxAttachmentSize = null,
+            string[] restrictedSignupDomains = null,
+            uint[] restrictedVisbilityLevels = null,
+            uint? sessionExpireDelay = null,
+            string signinText = null,
+            bool? signinEnabled = null,
+            bool? signupEnabled = null,
+            bool? userOauthApplications = null)
         {
             var request = RequestFactory.Create("application/settings", Method.Put);
 

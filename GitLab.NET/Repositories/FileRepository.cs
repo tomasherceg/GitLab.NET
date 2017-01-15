@@ -10,7 +10,9 @@ namespace GitLab.NET.Repositories
     {
         /// <summary> Creates a new <see cref="FileRepository" /> instance. </summary>
         /// <param name="requestFactory"> An instance of <see cref="IRequestFactory" /> to use for this repository. </param>
-        public FileRepository(IRequestFactory requestFactory) : base(requestFactory) { }
+        public FileRepository(IRequestFactory requestFactory) : base(requestFactory)
+        {
+        }
 
         /// <summary> Creates a new file. </summary>
         /// <param name="projectId"> The ID of the project. </param>
@@ -20,7 +22,8 @@ namespace GitLab.NET.Repositories
         /// <param name="commitMessage"> The commit message to use for the commit created by this operation. </param>
         /// <param name="encoding"> The encoding of the content field. </param>
         /// <returns> A <see cref="RequestResult{RepositoryFile}" /> representing the results of the request. </returns>
-        public async Task<RequestResult<RepositoryFile>> Create(uint projectId, string filePath, string branchName, string content, string commitMessage, string encoding = null)
+        public async Task<RequestResult<RepositoryFile>> Create(uint projectId, string filePath, string branchName,
+            string content, string commitMessage, string encoding = null)
         {
             if (filePath == null)
                 throw new ArgumentNullException(nameof(filePath));
@@ -52,7 +55,8 @@ namespace GitLab.NET.Repositories
         /// <param name="branchName"> The name of the branch to delete the file from. </param>
         /// <param name="commitMessage"> The commit message to use for this operation. </param>
         /// <returns> A <see cref="RequestResult{RepositoryFile}" /> representing the results of this request. </returns>
-        public async Task<RequestResult<RepositoryFile>> Delete(uint projectId, string filePath, string branchName, string commitMessage)
+        public async Task<RequestResult<RepositoryFile>> Delete(uint projectId, string filePath, string branchName,
+            string commitMessage)
         {
             if (filePath == null)
                 throw new ArgumentNullException(nameof(filePath));
@@ -103,7 +107,8 @@ namespace GitLab.NET.Repositories
         /// <param name="commitMessage"> The commit message to use for the commit created by this operation. </param>
         /// <param name="encoding"> The encoding of the content field. </param>
         /// <returns> A <see cref="RequestResult{RepositoryFile}" /> representing the results of the request. </returns>
-        public async Task<RequestResult<RepositoryFile>> Update(uint projectId, string filePath, string branchName, string content, string commitMessage, string encoding = null)
+        public async Task<RequestResult<RepositoryFile>> Update(uint projectId, string filePath, string branchName,
+            string content, string commitMessage, string encoding = null)
         {
             if (filePath == null)
                 throw new ArgumentNullException(nameof(filePath));

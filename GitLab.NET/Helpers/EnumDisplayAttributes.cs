@@ -13,7 +13,7 @@ namespace GitLab.NET.Helpers
             var type = enumVal.GetType();
             var memInfo = type.GetMember(enumVal.ToString());
             var attributes = memInfo[0].GetCustomAttributes(typeof(DescriptionAttribute), false);
-            return attributes.Length > 0 ? ((DescriptionAttribute)attributes[0]).Description : null;
+            return attributes.Length > 0 ? ((DescriptionAttribute) attributes[0]).Description : null;
         }
     }
 }

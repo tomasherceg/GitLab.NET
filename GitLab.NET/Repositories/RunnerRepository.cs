@@ -10,7 +10,9 @@ namespace GitLab.NET.Repositories
     {
         /// <summary> Creates a new <see cref="RunnerRepository" /> instance. </summary>
         /// <param name="requestFactory"> An instance of <see cref="IRequestFactory" /> to use for this repository. </param>
-        public RunnerRepository(IRequestFactory requestFactory) : base(requestFactory) { }
+        public RunnerRepository(IRequestFactory requestFactory) : base(requestFactory)
+        {
+        }
 
         /// <summary> Deletes a runner. </summary>
         /// <param name="runnerId"> The runner's ID. </param>
@@ -110,7 +112,8 @@ namespace GitLab.NET.Repositories
         /// <param name="active"> Whether or not the runner is active. </param>
         /// <param name="tagList"> The new tag list for the runner. </param>
         /// <returns> A <see cref="RequestResult{Runner}" /> representing the results of the request. </returns>
-        public async Task<RequestResult<Runner>> Update(uint runnerId, string description = null, bool? active = null, string[] tagList = null)
+        public async Task<RequestResult<Runner>> Update(uint runnerId, string description = null, bool? active = null,
+            string[] tagList = null)
         {
             var request = RequestFactory.Create("runners/{runnerId}", Method.Put);
 

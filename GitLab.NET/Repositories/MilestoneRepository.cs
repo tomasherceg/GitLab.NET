@@ -10,7 +10,9 @@ namespace GitLab.NET.Repositories
     {
         /// <summary> Creates a new <see cref="MilestoneRepository" /> instance. </summary>
         /// <param name="requestFactory"> An instance of <see cref="IRequestFactory" /> to use for this repository. </param>
-        public MilestoneRepository(IRequestFactory requestFactory) : base(requestFactory) { }
+        public MilestoneRepository(IRequestFactory requestFactory) : base(requestFactory)
+        {
+        }
 
         /// <summary> Creates a milestone. </summary>
         /// <param name="projectId"> The ID of the project to attach the milestone to. </param>
@@ -18,7 +20,8 @@ namespace GitLab.NET.Repositories
         /// <param name="description"> The description for the milestone. </param>
         /// <param name="dueDate"> The due date for the milestone. </param>
         /// <returns> A <see cref="RequestResult{Milestone}" /> representing the results of the request. </returns>
-        public async Task<RequestResult<Milestone>> Create(uint projectId, string title, string description = null, DateTime? dueDate = null)
+        public async Task<RequestResult<Milestone>> Create(uint projectId, string title, string description = null,
+            DateTime? dueDate = null)
         {
             if (title == null)
                 throw new ArgumentNullException(nameof(title));
@@ -53,16 +56,20 @@ namespace GitLab.NET.Repositories
         /// <param name="page"> The page number for a paginated request. </param>
         /// <param name="resultsPerPage"> The number of results to return per request. </param>
         /// <returns> A <see cref="PaginatedResult{Milestone}" /> representing the results of the request. </returns>
-        public async Task<PaginatedResult<Milestone>> GetAll(uint projectId, MilestoneState? state = null, uint page = Config.DefaultPage, uint resultsPerPage = Config.DefaultResultsPerPage)
+        public async Task<PaginatedResult<Milestone>> GetAll(uint projectId, MilestoneState? state = null,
+            uint page = Config.DefaultPage, uint resultsPerPage = Config.DefaultResultsPerPage)
         {
             if (page < Config.DefaultPage)
-                throw new ArgumentOutOfRangeException(nameof(page), page, "The parameter 'page' must be greater than " + Config.DefaultPage + ".");
+                throw new ArgumentOutOfRangeException(nameof(page), page,
+                    "The parameter 'page' must be greater than " + Config.DefaultPage + ".");
 
             if (resultsPerPage < Config.MinResultsPerPage)
-                throw new ArgumentOutOfRangeException(nameof(resultsPerPage), resultsPerPage, "The parameter 'resultsPerPage' must be greater than " + Config.MinResultsPerPage + ".");
+                throw new ArgumentOutOfRangeException(nameof(resultsPerPage), resultsPerPage,
+                    "The parameter 'resultsPerPage' must be greater than " + Config.MinResultsPerPage + ".");
 
             if (resultsPerPage > Config.MaxResultsPerPage)
-                throw new ArgumentOutOfRangeException(nameof(resultsPerPage), resultsPerPage, "The parameter 'resultsPerPage' must be less than " + Config.MaxResultsPerPage + ".");
+                throw new ArgumentOutOfRangeException(nameof(resultsPerPage), resultsPerPage,
+                    "The parameter 'resultsPerPage' must be less than " + Config.MaxResultsPerPage + ".");
 
             var stateValue = state != null ? Enum.GetName(typeof(MilestoneState), state)?.ToLower() : null;
 
@@ -82,16 +89,20 @@ namespace GitLab.NET.Repositories
         /// <param name="page"> The page number for a paginated request. </param>
         /// <param name="resultsPerPage"> The number of results to return per request. </param>
         /// <returns> A <see cref="PaginatedResult{Issue}" /> representing the results of the request. </returns>
-        public async Task<PaginatedResult<Issue>> GetIssues(uint projectId, uint milestoneId, uint page = Config.DefaultPage, uint resultsPerPage = Config.DefaultResultsPerPage)
+        public async Task<PaginatedResult<Issue>> GetIssues(uint projectId, uint milestoneId,
+            uint page = Config.DefaultPage, uint resultsPerPage = Config.DefaultResultsPerPage)
         {
             if (page < Config.DefaultPage)
-                throw new ArgumentOutOfRangeException(nameof(page), page, "The parameter 'page' must be greater than " + Config.DefaultPage + ".");
+                throw new ArgumentOutOfRangeException(nameof(page), page,
+                    "The parameter 'page' must be greater than " + Config.DefaultPage + ".");
 
             if (resultsPerPage < Config.MinResultsPerPage)
-                throw new ArgumentOutOfRangeException(nameof(resultsPerPage), resultsPerPage, "The parameter 'resultsPerPage' must be greater than " + Config.MinResultsPerPage + ".");
+                throw new ArgumentOutOfRangeException(nameof(resultsPerPage), resultsPerPage,
+                    "The parameter 'resultsPerPage' must be greater than " + Config.MinResultsPerPage + ".");
 
             if (resultsPerPage > Config.MaxResultsPerPage)
-                throw new ArgumentOutOfRangeException(nameof(resultsPerPage), resultsPerPage, "The parameter 'resultsPerPage' must be less than " + Config.MaxResultsPerPage + ".");
+                throw new ArgumentOutOfRangeException(nameof(resultsPerPage), resultsPerPage,
+                    "The parameter 'resultsPerPage' must be less than " + Config.MaxResultsPerPage + ".");
 
             var request = RequestFactory.Create("projects/{projectId}/milestones/{milestoneId}/issues", Method.Get);
 
@@ -111,7 +122,8 @@ namespace GitLab.NET.Repositories
         /// <param name="dueDate"> The new due date for the milestone. </param>
         /// <param name="state"> The new state for the milestone (close/activate). </param>
         /// <returns> A <see cref="RequestResult{Milestone}" /> representing the results of the request. </returns>
-        public async Task<RequestResult<Milestone>> Update(uint projectId, uint milestoneId, string title = null, string description = null, DateTime? dueDate = null, MilestoneStateEvent? state = null)
+        public async Task<RequestResult<Milestone>> Update(uint projectId, uint milestoneId, string title = null,
+            string description = null, DateTime? dueDate = null, MilestoneStateEvent? state = null)
         {
             var stateValue = state != null ? Enum.GetName(typeof(MilestoneStateEvent), state)?.ToLower() : null;
 

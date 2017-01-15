@@ -10,7 +10,9 @@ namespace GitLab.NET.Repositories
     {
         /// <summary> Creates a new <see cref="ProjectSnippetRepository" /> instance. </summary>
         /// <param name="requestFactory"> An instance of <see cref="IRequestFactory" /> to use for this repository. </param>
-        public ProjectSnippetRepository(IRequestFactory requestFactory) : base(requestFactory) { }
+        public ProjectSnippetRepository(IRequestFactory requestFactory) : base(requestFactory)
+        {
+        }
 
         /// <summary> Creates a new project snippet associated with the provided project ID. </summary>
         /// <param name="projectId"> The ID of the project to create this snippet for. </param>
@@ -19,7 +21,8 @@ namespace GitLab.NET.Repositories
         /// <param name="code"> The code for this snippet. </param>
         /// <param name="visibilityLevel"> The visibility level for this snippet. </param>
         /// <returns> A <see cref="RequestResult{ProjectSnippet}" /> representing the results of the request. </returns>
-        public async Task<RequestResult<ProjectSnippet>> Create(uint projectId, string title, string fileName, string code, VisibilityLevel visibilityLevel)
+        public async Task<RequestResult<ProjectSnippet>> Create(uint projectId, string title, string fileName,
+            string code, VisibilityLevel visibilityLevel)
         {
             if (title == null)
                 throw new ArgumentNullException(nameof(title));
@@ -74,16 +77,20 @@ namespace GitLab.NET.Repositories
         /// <param name="page"> The page number for a paginated request. </param>
         /// <param name="resultsPerPage"> The number of results to return per request. </param>
         /// <returns> A <see cref="PaginatedResult{ProjectSnippet}" /> representing the results of the request. </returns>
-        public async Task<PaginatedResult<ProjectSnippet>> GetAll(uint projectId, uint page = Config.DefaultPage, uint resultsPerPage = Config.DefaultResultsPerPage)
+        public async Task<PaginatedResult<ProjectSnippet>> GetAll(uint projectId, uint page = Config.DefaultPage,
+            uint resultsPerPage = Config.DefaultResultsPerPage)
         {
             if (page < Config.DefaultPage)
-                throw new ArgumentOutOfRangeException(nameof(page), page, "The parameter 'page' must be greater than " + Config.DefaultPage + ".");
+                throw new ArgumentOutOfRangeException(nameof(page), page,
+                    "The parameter 'page' must be greater than " + Config.DefaultPage + ".");
 
             if (resultsPerPage < Config.MinResultsPerPage)
-                throw new ArgumentOutOfRangeException(nameof(resultsPerPage), resultsPerPage, "The parameter 'resultsPerPage' must be greater than " + Config.MinResultsPerPage + ".");
+                throw new ArgumentOutOfRangeException(nameof(resultsPerPage), resultsPerPage,
+                    "The parameter 'resultsPerPage' must be greater than " + Config.MinResultsPerPage + ".");
 
             if (resultsPerPage > Config.MaxResultsPerPage)
-                throw new ArgumentOutOfRangeException(nameof(resultsPerPage), resultsPerPage, "The parameter 'resultsPerPage' must be less than " + Config.MaxResultsPerPage + ".");
+                throw new ArgumentOutOfRangeException(nameof(resultsPerPage), resultsPerPage,
+                    "The parameter 'resultsPerPage' must be less than " + Config.MaxResultsPerPage + ".");
 
             var request = RequestFactory.Create("projects/{projectId}/snippets", Method.Get);
 
@@ -116,7 +123,8 @@ namespace GitLab.NET.Repositories
         /// <param name="code"> The code for this snippet. </param>
         /// <param name="visibilityLevel"> The visibility level for this snippet. </param>
         /// <returns> A <see cref="RequestResult{ProjectSnippet}" /> representing the results of the request. </returns>
-        public async Task<RequestResult<ProjectSnippet>> Update(uint id, uint projectId, string title = null, string fileName = null, string code = null, VisibilityLevel? visibilityLevel = null)
+        public async Task<RequestResult<ProjectSnippet>> Update(uint id, uint projectId, string title = null,
+            string fileName = null, string code = null, VisibilityLevel? visibilityLevel = null)
         {
             var request = RequestFactory.Create("projects/{projectId}/snippets/{id}", Method.Put);
 

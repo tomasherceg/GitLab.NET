@@ -9,7 +9,9 @@ namespace GitLab.NET.Tests.Repositories
     {
         private class TestRepository : RepositoryBase
         {
-            public TestRepository(IRequestFactory requestFactory) : base(requestFactory) { }
+            public TestRepository(IRequestFactory requestFactory) : base(requestFactory)
+            {
+            }
         }
 
         [Fact]
