@@ -19,7 +19,7 @@ namespace GitLab.NET.ResponseModels
         public bool? Public { get; set; }
 
         /// <summary> The VisibilityLevel for this project. </summary>
-        public VisibilityLevel VisibilityLevel { get; set; }
+        public VisibilityLevel? VisibilityLevel { get; set; }
 
         /// <summary> The ssh url to this project. </summary>
         public string SshUrlToRepo { get; set; }
@@ -52,55 +52,55 @@ namespace GitLab.NET.ResponseModels
         public bool? IssuesEnabled { get; set; }
 
         /// <summary> How many issues are open for this project. </summary>
-        public int OpenIssuesCount { get; set; }
+        public uint? OpenIssuesCount { get; set; }
 
         /// <summary> Is this project allows merge requests. </summary>
-        public bool MergeRequestsEnabled { get; set; }
+        public bool? MergeRequestsEnabled { get; set; }
 
         /// <summary> Is builds enabled for this project. </summary>
-        public bool BuildsEnabled { get; set; }
+        public bool? BuildsEnabled { get; set; }
 
         /// <summary> Is wiki enabled for this project. </summary>
-        public bool WikiEnabled { get; set; }
+        public bool? WikiEnabled { get; set; }
 
         /// <summary> Is snippets enabled for this project. </summary>
-        public bool SnippetsEnabled { get; set; }
+        public bool? SnippetsEnabled { get; set; }
 
         /// <summary> Is container repository enabled for this project. </summary>
-        public bool ContainerRegistryEnabled { get; set; }
+        public bool? ContainerRegistryEnabled { get; set; }
 
         /// <summary> The date and time this project was created at. </summary>
-        public DateTime CreatedAt { get; set; }
+        public DateTime? CreatedAt { get; set; }
 
         /// <summary> The date and time this project was updated at. </summary>
-        public DateTime LastActivityAt { get; set; }
+        public DateTime? LastActivityAt { get; set; }
 
         /// <summary> The creator id for this project. </summary>
-        public int CreatorId { get; set; }
+        public uint? CreatorId { get; set; }
 
         /// <summary> The namespace for this project. </summary>
         public Namespace Namespace { get; set; }
 
         /// <summary> Is this project archived. </summary>
-        public bool Archived { get; set; }
+        public bool? Archived { get; set; }
 
         /// <summary> The avatar url for this project. </summary>
         public string AvatarUrl { get; set; }
 
         /// <summary> Is shared runners enabled for this project. </summary>
-        public bool SharedRunnersEnabled { get; set; }
+        public bool? SharedRunnersEnabled { get; set; }
 
         /// <summary> The forks count for this project. </summary>
-        public int ForksCount { get; set; }
+        public uint? ForksCount { get; set; }
 
         /// <summary> The stars count for this project. </summary>
-        public int StarCount { get; set; }
+        public uint? StarCount { get; set; }
 
         /// <summary> The runners token for this project. </summary>
         public string RunnersToken { get; set; }
 
         /// <summary> Is public builds enabled for this project. </summary>
-        public bool PublicBuilds { get; set; }
+        public bool? PublicBuilds { get; set; }
 
         /// <summary> The groups what shared this project. </summary>
         public List<Group> SharedWithGroups { get; set; }
