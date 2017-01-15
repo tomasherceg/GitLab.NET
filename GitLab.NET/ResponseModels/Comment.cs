@@ -1,12 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace GitLab.NET.ResponseModels {
+﻿namespace GitLab.NET.ResponseModels
+{
     /// <summary> Stores information about a comment on a merge request. </summary>
-    public class Comment {
+    public class Comment
+    {
         /// <summary> The text of the comment. </summary>
         public string Note { get; set; }
 

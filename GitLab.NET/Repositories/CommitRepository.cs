@@ -11,7 +11,9 @@ namespace GitLab.NET.Repositories
     {
         /// <summary> Creates a new <see cref="CommitRepository" /> instance. </summary>
         /// <param name="requestFactory"> An instance of <see cref="IRequestFactory" /> to use for this repository. </param>
-        public CommitRepository(IRequestFactory requestFactory) : base(requestFactory) { }
+        public CommitRepository(IRequestFactory requestFactory) : base(requestFactory)
+        {
+        }
 
         /// <summary> Creates a new commit comment. </summary>
         /// <param name="projectId"> The ID of the project. </param>
@@ -21,7 +23,8 @@ namespace GitLab.NET.Repositories
         /// <param name="line"> The line to associate this comment with. </param>
         /// <param name="lineType"> The line type for this comment. </param>
         /// <returns> A <see cref="RequestResult{CommitComment}" /> representing the results of the request. </returns>
-        public async Task<RequestResult<CommitComment>> CreateComment(uint projectId, string commitSha, string note, string path = null, uint? line = null, LineType? lineType = null)
+        public async Task<RequestResult<CommitComment>> CreateComment(uint projectId, string commitSha, string note,
+            string path = null, uint? line = null, LineType? lineType = null)
         {
             if (commitSha == null)
                 throw new ArgumentNullException(nameof(commitSha));
@@ -29,7 +32,8 @@ namespace GitLab.NET.Repositories
             if (note == null)
                 throw new ArgumentNullException(nameof(note));
 
-            var request = RequestFactory.Create("projects/{projectId}/repository/commits/{commitSha}/comments", Method.Post);
+            var request = RequestFactory.Create("projects/{projectId}/repository/commits/{commitSha}/comments",
+                Method.Post);
 
             var lineTypeValue = lineType != null ? Enum.GetName(typeof(LineType), lineType)?.ToLower() : null;
 
@@ -53,12 +57,12 @@ namespace GitLab.NET.Repositories
         /// <param name="description"> The description for the build status. </param>
         /// <returns> A <see cref="RequestResult{CommitStatus}" /> representing the results of the request. </returns>
         public async Task<RequestResult<CommitStatus>> CreateStatus(uint projectId,
-                                                                    string commitSha,
-                                                                    BuildStatus state,
-                                                                    string refName = null,
-                                                                    string name = null,
-                                                                    string targetUrl = null,
-                                                                    string description = null)
+            string commitSha,
+            BuildStatus state,
+            string refName = null,
+            string name = null,
+            string targetUrl = null,
+            string description = null)
         {
             if (commitSha == null)
                 throw new ArgumentNullException(nameof(commitSha));
@@ -102,7 +106,8 @@ namespace GitLab.NET.Repositories
         ///     A <see cref="RequestResult{T}" /> containing a <see cref="List{Commit}" /> representing the results of the
         ///     request.
         /// </returns>
-        public async Task<RequestResult<List<Commit>>> GetAll(uint projectId, string refName = null, DateTime? since = null, DateTime? until = null)
+        public async Task<RequestResult<List<Commit>>> GetAll(uint projectId, string refName = null,
+            DateTime? since = null, DateTime? until = null)
         {
             var request = RequestFactory.Create("projects/{projectId}/repository/commits", Method.Get);
 
@@ -120,21 +125,26 @@ namespace GitLab.NET.Repositories
         /// <param name="page"> The page number for a paginated request. </param>
         /// <param name="resultsPerPage"> The number of results to return per request. </param>
         /// <returns> A <see cref="PaginatedResult{CommitComment}" /> representing the results of the request. </returns>
-        public async Task<PaginatedResult<CommitComment>> GetComments(uint projectId, string commitSha, uint page = Config.DefaultPage, uint resultsPerPage = Config.DefaultResultsPerPage)
+        public async Task<PaginatedResult<CommitComment>> GetComments(uint projectId, string commitSha,
+            uint page = Config.DefaultPage, uint resultsPerPage = Config.DefaultResultsPerPage)
         {
             if (commitSha == null)
                 throw new ArgumentNullException(nameof(commitSha));
 
             if (page < Config.DefaultPage)
-                throw new ArgumentOutOfRangeException(nameof(page), page, "The parameter 'page' must be greater than " + Config.DefaultPage + ".");
+                throw new ArgumentOutOfRangeException(nameof(page), page,
+                    "The parameter 'page' must be greater than " + Config.DefaultPage + ".");
 
             if (resultsPerPage < Config.MinResultsPerPage)
-                throw new ArgumentOutOfRangeException(nameof(resultsPerPage), resultsPerPage, "The parameter 'resultsPerPage' must be greater than " + Config.MinResultsPerPage + ".");
+                throw new ArgumentOutOfRangeException(nameof(resultsPerPage), resultsPerPage,
+                    "The parameter 'resultsPerPage' must be greater than " + Config.MinResultsPerPage + ".");
 
             if (resultsPerPage > Config.MaxResultsPerPage)
-                throw new ArgumentOutOfRangeException(nameof(resultsPerPage), resultsPerPage, "The parameter 'resultsPerPage' must be less than " + Config.MaxResultsPerPage + ".");
+                throw new ArgumentOutOfRangeException(nameof(resultsPerPage), resultsPerPage,
+                    "The parameter 'resultsPerPage' must be less than " + Config.MaxResultsPerPage + ".");
 
-            var request = RequestFactory.Create("projects/{projectId}/repository/commits/{commitSha}/comments", Method.Get);
+            var request = RequestFactory.Create("projects/{projectId}/repository/commits/{commitSha}/comments",
+                Method.Get);
 
             request.AddUrlSegment("projectId", projectId);
             request.AddUrlSegment("commitSha", commitSha);
@@ -172,27 +182,31 @@ namespace GitLab.NET.Repositories
         /// <param name="resultsPerPage"> The number of results to return per request. </param>
         /// <returns> </returns>
         public async Task<PaginatedResult<CommitStatus>> GetStatus(uint projectId,
-                                                                   string commitSha,
-                                                                   string refName = null,
-                                                                   string stage = null,
-                                                                   string name = null,
-                                                                   bool? all = null,
-                                                                   uint page = Config.DefaultPage,
-                                                                   uint resultsPerPage = Config.DefaultResultsPerPage)
+            string commitSha,
+            string refName = null,
+            string stage = null,
+            string name = null,
+            bool? all = null,
+            uint page = Config.DefaultPage,
+            uint resultsPerPage = Config.DefaultResultsPerPage)
         {
             if (commitSha == null)
                 throw new ArgumentNullException(nameof(commitSha));
 
             if (page < Config.DefaultPage)
-                throw new ArgumentOutOfRangeException(nameof(page), page, "The parameter 'page' must be greater than " + Config.DefaultPage + ".");
+                throw new ArgumentOutOfRangeException(nameof(page), page,
+                    "The parameter 'page' must be greater than " + Config.DefaultPage + ".");
 
             if (resultsPerPage < Config.MinResultsPerPage)
-                throw new ArgumentOutOfRangeException(nameof(resultsPerPage), resultsPerPage, "The parameter 'resultsPerPage' must be greater than " + Config.MinResultsPerPage + ".");
+                throw new ArgumentOutOfRangeException(nameof(resultsPerPage), resultsPerPage,
+                    "The parameter 'resultsPerPage' must be greater than " + Config.MinResultsPerPage + ".");
 
             if (resultsPerPage > Config.MaxResultsPerPage)
-                throw new ArgumentOutOfRangeException(nameof(resultsPerPage), resultsPerPage, "The parameter 'resultsPerPage' must be less than " + Config.MaxResultsPerPage + ".");
+                throw new ArgumentOutOfRangeException(nameof(resultsPerPage), resultsPerPage,
+                    "The parameter 'resultsPerPage' must be less than " + Config.MaxResultsPerPage + ".");
 
-            var request = RequestFactory.Create("projects/{projectId}/repository/commits/{commitSha}/statuses", Method.Get);
+            var request = RequestFactory.Create("projects/{projectId}/repository/commits/{commitSha}/statuses",
+                Method.Get);
 
             request.AddUrlSegment("projectId", projectId);
             request.AddUrlSegment("commitSha", commitSha);
@@ -216,12 +230,12 @@ namespace GitLab.NET.Repositories
         /// <param name="description"> The description for the build status. </param>
         /// <returns> A <see cref="RequestResult{CommitStatus}" /> representing the results of the request. </returns>
         public async Task<RequestResult<CommitStatus>> UpdateStatus(uint projectId,
-                                                                    string commitSha,
-                                                                    BuildStatus state,
-                                                                    string refName = null,
-                                                                    string name = null,
-                                                                    string targetUrl = null,
-                                                                    string description = null)
+            string commitSha,
+            BuildStatus state,
+            string refName = null,
+            string name = null,
+            string targetUrl = null,
+            string description = null)
         {
             if (commitSha == null)
                 throw new ArgumentNullException(nameof(commitSha));

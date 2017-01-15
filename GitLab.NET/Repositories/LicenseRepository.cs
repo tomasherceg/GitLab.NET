@@ -11,7 +11,9 @@ namespace GitLab.NET.Repositories
     {
         /// <summary> Creates a new <see cref="LicenseRepository" /> instance. </summary>
         /// <param name="requestFactory"> An instance of <see cref="IRequestFactory" /> to use for this repository. </param>
-        public LicenseRepository(IRequestFactory requestFactory) : base(requestFactory) { }
+        public LicenseRepository(IRequestFactory requestFactory) : base(requestFactory)
+        {
+        }
 
         /// <summary> Finds a license template matching the specified key. </summary>
         /// <param name="key"> The key for the desired license. </param>

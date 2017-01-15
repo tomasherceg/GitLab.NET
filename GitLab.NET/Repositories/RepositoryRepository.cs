@@ -11,7 +11,9 @@ namespace GitLab.NET.Repositories
     {
         /// <summary> Creates a new <see cref="RepositoryRepository" /> instance. </summary>
         /// <param name="requestFactory"> An instance of <see cref="IRequestFactory" /> to use for this repository. </param>
-        public RepositoryRepository(IRequestFactory requestFactory) : base(requestFactory) { }
+        public RepositoryRepository(IRequestFactory requestFactory) : base(requestFactory)
+        {
+        }
 
         /// <summary> Compares two branches or tags. </summary>
         /// <param name="projectId"> The ID of the project. </param>
@@ -111,7 +113,8 @@ namespace GitLab.NET.Repositories
         ///     A <see cref="RequestResult{T}" /> containing a <see cref="List{RepositoryTreeItem}" /> representing the
         ///     results of the request.
         /// </returns>
-        public async Task<RequestResult<List<RepositoryTreeItem>>> GetTree(uint projectId, string path = null, string refName = null)
+        public async Task<RequestResult<List<RepositoryTreeItem>>> GetTree(uint projectId, string path = null,
+            string refName = null)
         {
             var request = RequestFactory.Create("projects/{projectId}/repository/tree", Method.Get);
 

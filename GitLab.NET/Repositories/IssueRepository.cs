@@ -11,7 +11,9 @@ namespace GitLab.NET.Repositories
     {
         /// <summary> Creates a new <see cref="IssueRepository" /> instance. </summary>
         /// <param name="requestFactory"> An instance of <see cref="IRequestFactory" /> to use for this repository. </param>
-        public IssueRepository(IRequestFactory requestFactory) : base(requestFactory) { }
+        public IssueRepository(IRequestFactory requestFactory) : base(requestFactory)
+        {
+        }
 
         /// <summary> Creates a new issue. </summary>
         /// <param name="projectId"> The ID of the project. </param>
@@ -23,12 +25,12 @@ namespace GitLab.NET.Repositories
         /// <param name="createdAt"> The date and time this issue was created at. </param>
         /// <returns> A <see cref="RequestResult{Issue}" /> representing the results of this request. </returns>
         public async Task<RequestResult<Issue>> Create(uint projectId,
-                                                       string title,
-                                                       string description = null,
-                                                       uint? assigneeId = null,
-                                                       uint? milestoneId = null,
-                                                       string[] labels = null,
-                                                       DateTime? createdAt = null)
+            string title,
+            string description = null,
+            uint? assigneeId = null,
+            uint? milestoneId = null,
+            string[] labels = null,
+            DateTime? createdAt = null)
         {
             if (title == null)
                 throw new ArgumentNullException(nameof(title));
@@ -82,7 +84,8 @@ namespace GitLab.NET.Repositories
         /// <param name="orderBy"> Order the results by created_at or updated_at. Default is created_at. </param>
         /// <param name="sort"> Sort results in ascending or descending order. (asc/desc) </param>
         /// <returns> A <see cref="PaginatedResult{Issue}" /> representing the results of the request. </returns>
-        public async Task<PaginatedResult<Issue>> GetByProject(uint projectId, IssueState? state = null, string[] labels = null, string milestone = null, OrderBy? orderBy = null, SortOrder? sort = null)
+        public async Task<PaginatedResult<Issue>> GetByProject(uint projectId, IssueState? state = null,
+            string[] labels = null, string milestone = null, OrderBy? orderBy = null, SortOrder? sort = null)
         {
             var stateValue = state != null ? Enum.GetName(typeof(IssueState), state)?.ToLower() : null;
             var orderByValue = orderBy?.GetDescription();
@@ -106,7 +109,8 @@ namespace GitLab.NET.Repositories
         /// <param name="orderBy"> Order the results by created_at or updated_at. Default is created_at. </param>
         /// <param name="sort"> Sort results in ascending or descending order. (asc/desc) </param>
         /// <returns> A <see cref="PaginatedResult{Issue}" /> representing the results of the request. </returns>
-        public async Task<PaginatedResult<Issue>> GetOwned(IssueState? state = null, string[] labels = null, OrderBy? orderBy = null, SortOrder? sort = null)
+        public async Task<PaginatedResult<Issue>> GetOwned(IssueState? state = null, string[] labels = null,
+            OrderBy? orderBy = null, SortOrder? sort = null)
         {
             var stateValue = state != null ? Enum.GetName(typeof(IssueState), state)?.ToLower() : null;
             var orderByValue = orderBy?.GetDescription();
@@ -178,14 +182,14 @@ namespace GitLab.NET.Repositories
         /// <param name="updatedAt"> The date and time this issue was updated at. </param>
         /// <returns> A <see cref="RequestResult{Issue}" /> representing the results of this request. </returns>
         public async Task<RequestResult<Issue>> Update(uint projectId,
-                                                       uint issueId,
-                                                       string title = null,
-                                                       string description = null,
-                                                       uint? assigneeId = null,
-                                                       uint? milestoneId = null,
-                                                       string[] labels = null,
-                                                       IssueStateEvent? state = null,
-                                                       DateTime? updatedAt = null)
+            uint issueId,
+            string title = null,
+            string description = null,
+            uint? assigneeId = null,
+            uint? milestoneId = null,
+            string[] labels = null,
+            IssueStateEvent? state = null,
+            DateTime? updatedAt = null)
         {
             var stateValue = state != null ? Enum.GetName(typeof(IssueStateEvent), state)?.ToLower() : null;
 

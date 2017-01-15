@@ -7,651 +7,659 @@ using Xunit;
 
 namespace GitLab.NET.Tests.Repositories
 {
-	public class CommitRepositoryTests
-	{
-		public CommitRepositoryTests()
-		{
-			_request = Substitute.For<IRequest>();
-			_requestFactory = Substitute.For<IRequestFactory>();
-			_requestFactory.Create(Arg.Any<string>(), Arg.Any<Method>(), Arg.Any<bool>()).Returns(_request);
-		}
+    public class CommitRepositoryTests
+    {
+        public CommitRepositoryTests()
+        {
+            _request = Substitute.For<IRequest>();
+            _requestFactory = Substitute.For<IRequestFactory>();
+            _requestFactory.Create(Arg.Any<string>(), Arg.Any<Method>(), Arg.Any<bool>()).Returns(_request);
+        }
 
-		private readonly IRequest _request;
-		private readonly IRequestFactory _requestFactory;
+        private readonly IRequest _request;
+        private readonly IRequestFactory _requestFactory;
 
-		[Fact]
-		public async Task CreateComment_CommitShaIsNull_ThrowsArgumentNullException()
-		{
-			var sut = new CommitRepository(_requestFactory);
+        [Fact]
+        public async Task CreateComment_CommitShaIsNull_ThrowsArgumentNullException()
+        {
+            var sut = new CommitRepository(_requestFactory);
 
-			await Assert.ThrowsAsync<ArgumentNullException>(() => sut.CreateComment(0, null, "note"));
-		}
+            await Assert.ThrowsAsync<ArgumentNullException>(() => sut.CreateComment(0, null, "note"));
+        }
+
+        [Fact]
+        public async Task CreateComment_LineIsSet_AddsLineParameter()
+        {
+            const uint expected = 0;
+            var sut = new CommitRepository(_requestFactory);
 
-		[Fact]
-		public async Task CreateComment_LineIsSet_AddsLineParameter()
-		{
-			const uint expected = 0;
-			var sut = new CommitRepository(_requestFactory);
+            await sut.CreateComment(0, "commitSha", "note", line: expected);
 
-			await sut.CreateComment(0, "commitSha", "note", line: expected);
+            _request.Received().AddParameterIfNotNull("line", expected);
+        }
+
+        [Fact]
+        public async Task CreateComment_LineTypeIsSet_AddsLineTypeParameter()
+        {
+            const string expected = "new";
+            const LineType lineType = LineType.New;
+            var sut = new CommitRepository(_requestFactory);
 
-			_request.Received().AddParameterIfNotNull("line", expected);
-		}
+            await sut.CreateComment(0, "commitSha", "note", lineType: lineType);
 
-		[Fact]
-		public async Task CreateComment_LineTypeIsSet_AddsLineTypeParameter()
-		{
-			const string expected = "new";
-			const LineType lineType = LineType.New;
-			var sut = new CommitRepository(_requestFactory);
+            _request.Received().AddParameterIfNotNull("line_type", expected);
+        }
 
-			await sut.CreateComment(0, "commitSha", "note", lineType: lineType);
+        [Fact]
+        public async Task CreateComment_NoteIsNull_ThrowsArgumentNullException()
+        {
+            var sut = new CommitRepository(_requestFactory);
 
-			_request.Received().AddParameterIfNotNull("line_type", expected);
-		}
+            await Assert.ThrowsAsync<ArgumentNullException>(() => sut.CreateComment(0, "commitSha", null));
+        }
 
-		[Fact]
-		public async Task CreateComment_NoteIsNull_ThrowsArgumentNullException()
-		{
-			var sut = new CommitRepository(_requestFactory);
+        [Fact]
+        public async Task CreateComment_PathIsSet_AddsPathParameter()
+        {
+            const string expected = "path";
+            var sut = new CommitRepository(_requestFactory);
 
-			await Assert.ThrowsAsync<ArgumentNullException>(() => sut.CreateComment(0, "commitSha", null));
-		}
+            await sut.CreateComment(0, "commitSha", "note", expected);
 
-		[Fact]
-		public async Task CreateComment_PathIsSet_AddsPathParameter()
-		{
-			const string expected = "path";
-			var sut = new CommitRepository(_requestFactory);
+            _request.Received().AddParameterIfNotNull("path", expected);
+        }
 
-			await sut.CreateComment(0, "commitSha", "note", expected);
+        [Fact]
+        public async Task CreateComment_ValidParameters_AddsCommitShaUrlSegment()
+        {
+            const string expected = "commitSha";
+            var sut = new CommitRepository(_requestFactory);
 
-			_request.Received().AddParameterIfNotNull("path", expected);
-		}
+            await sut.CreateComment(0, expected, "note");
 
-		[Fact]
-		public async Task CreateComment_ValidParameters_AddsCommitShaUrlSegment()
-		{
-			const string expected = "commitSha";
-			var sut = new CommitRepository(_requestFactory);
+            _request.Received().AddUrlSegment("commitSha", expected);
+        }
 
-			await sut.CreateComment(0, expected, "note");
+        [Fact]
+        public async Task CreateComment_ValidParameters_AddsProjectIdUrlSegment()
+        {
+            const uint expected = 0;
+            var sut = new CommitRepository(_requestFactory);
 
-			_request.Received().AddUrlSegment("commitSha", expected);
-		}
+            await sut.CreateComment(expected, "commitSha", "note");
 
-		[Fact]
-		public async Task CreateComment_ValidParameters_AddsProjectIdUrlSegment()
-		{
-			const uint expected = 0;
-			var sut = new CommitRepository(_requestFactory);
+            _request.Received().AddUrlSegment("projectId", expected);
+        }
 
-			await sut.CreateComment(expected, "commitSha", "note");
+        [Fact]
+        public async Task CreateComment_ValidParameters_SetsCorrectResourceAndMethod()
+        {
+            var sut = new CommitRepository(_requestFactory);
 
-			_request.Received().AddUrlSegment("projectId", expected);
-		}
+            await sut.CreateComment(0, "commitSha", "note");
 
-		[Fact]
-		public async Task CreateComment_ValidParameters_SetsCorrectResourceAndMethod()
-		{
-			var sut = new CommitRepository(_requestFactory);
+            _requestFactory.Received()
+                .Create("projects/{projectId}/repository/commits/{commitSha}/comments", Method.Post);
+        }
 
-			await sut.CreateComment(0, "commitSha", "note");
+        [Fact]
+        public async Task CreateCommit_ValidParameters_AddsNoteParameter()
+        {
+            const string expected = "note";
+            var sut = new CommitRepository(_requestFactory);
 
-			_requestFactory.Received().Create("projects/{projectId}/repository/commits/{commitSha}/comments", Method.Post);
-		}
+            await sut.CreateComment(0, "commitSha", expected);
 
-		[Fact]
-		public async Task CreateCommit_ValidParameters_AddsNoteParameter()
-		{
-			const string expected = "note";
-			var sut = new CommitRepository(_requestFactory);
+            _request.Received().AddParameter("note", expected);
+        }
 
-			await sut.CreateComment(0, "commitSha", expected);
+        [Fact]
+        public async Task CreateStatus_CommitShaIsNull_ThrowsArgumentNullException()
+        {
+            var sut = new CommitRepository(_requestFactory);
 
-			_request.Received().AddParameter("note", expected);
-		}
+            await Assert.ThrowsAsync<ArgumentNullException>(() => sut.CreateStatus(0, null, BuildStatus.Pending));
+        }
 
-		[Fact]
-		public async Task CreateStatus_CommitShaIsNull_ThrowsArgumentNullException()
-		{
-			var sut = new CommitRepository(_requestFactory);
+        [Fact]
+        public async Task CreateStatus_DescriptionIsSet_AddsDescriptionParameter()
+        {
+            const string expected = "description";
+            var sut = new CommitRepository(_requestFactory);
 
-			await Assert.ThrowsAsync<ArgumentNullException>(() => sut.CreateStatus(0, null, BuildStatus.Pending));
-		}
+            await sut.CreateStatus(0, "commitSha", BuildStatus.Pending, description: expected);
 
-		[Fact]
-		public async Task CreateStatus_DescriptionIsSet_AddsDescriptionParameter()
-		{
-			const string expected = "description";
-			var sut = new CommitRepository(_requestFactory);
+            _request.Received().AddParameterIfNotNull("description", expected);
+        }
 
-			await sut.CreateStatus(0, "commitSha", BuildStatus.Pending, description: expected);
+        [Fact]
+        public async Task CreateStatus_NameIsSet_AddsNameParameter()
+        {
+            const string expected = "name";
+            var sut = new CommitRepository(_requestFactory);
 
-			_request.Received().AddParameterIfNotNull("description", expected);
-		}
+            await sut.CreateStatus(0, "commitSha", BuildStatus.Pending, name: expected);
 
-		[Fact]
-		public async Task CreateStatus_NameIsSet_AddsNameParameter()
-		{
-			const string expected = "name";
-			var sut = new CommitRepository(_requestFactory);
+            _request.Received().AddParameterIfNotNull("name", expected);
+        }
 
-			await sut.CreateStatus(0, "commitSha", BuildStatus.Pending, name: expected);
+        [Fact]
+        public async Task CreateStatus_RefNameIsSet_AddsRefNameParameter()
+        {
+            const string expected = "refName";
+            var sut = new CommitRepository(_requestFactory);
 
-			_request.Received().AddParameterIfNotNull("name", expected);
-		}
+            await sut.CreateStatus(0, "commitSha", BuildStatus.Pending, expected);
 
-		[Fact]
-		public async Task CreateStatus_RefNameIsSet_AddsRefNameParameter()
-		{
-			const string expected = "refName";
-			var sut = new CommitRepository(_requestFactory);
+            _request.Received().AddParameterIfNotNull("ref", expected);
+        }
 
-			await sut.CreateStatus(0, "commitSha", BuildStatus.Pending, expected);
+        [Fact]
+        public async Task CreateStatus_TargetUrlIsSet_AddsTargetUrlParameter()
+        {
+            const string expected = "targetUrl";
+            var sut = new CommitRepository(_requestFactory);
 
-			_request.Received().AddParameterIfNotNull("ref", expected);
-		}
+            await sut.CreateStatus(0, "commitSha", BuildStatus.Pending, targetUrl: expected);
 
-		[Fact]
-		public async Task CreateStatus_TargetUrlIsSet_AddsTargetUrlParameter()
-		{
-			const string expected = "targetUrl";
-			var sut = new CommitRepository(_requestFactory);
+            _request.Received().AddParameterIfNotNull("target_url", expected);
+        }
 
-			await sut.CreateStatus(0, "commitSha", BuildStatus.Pending, targetUrl: expected);
+        [Fact]
+        public async Task CreateStatus_ValidParameters_AddsCommitShaUrlSegment()
+        {
+            const string expected = "commitSha";
+            var sut = new CommitRepository(_requestFactory);
 
-			_request.Received().AddParameterIfNotNull("target_url", expected);
-		}
+            await sut.CreateStatus(0, expected, BuildStatus.Pending);
 
-		[Fact]
-		public async Task CreateStatus_ValidParameters_AddsCommitShaUrlSegment()
-		{
-			const string expected = "commitSha";
-			var sut = new CommitRepository(_requestFactory);
+            _request.Received().AddUrlSegment("commitSha", expected);
+        }
 
-			await sut.CreateStatus(0, expected, BuildStatus.Pending);
+        [Fact]
+        public async Task CreateStatus_ValidParameters_AddsProjectIdUrlSegment()
+        {
+            const uint expected = 0;
+            var sut = new CommitRepository(_requestFactory);
 
-			_request.Received().AddUrlSegment("commitSha", expected);
-		}
+            await sut.CreateStatus(expected, "commitSha", BuildStatus.Pending);
 
-		[Fact]
-		public async Task CreateStatus_ValidParameters_AddsProjectIdUrlSegment()
-		{
-			const uint expected = 0;
-			var sut = new CommitRepository(_requestFactory);
+            _request.Received().AddUrlSegment("projectId", expected);
+        }
 
-			await sut.CreateStatus(expected, "commitSha", BuildStatus.Pending);
+        [Fact]
+        public async Task CreateStatus_ValidParameters_AddsStateParameter()
+        {
+            const string expected = "pending";
+            const BuildStatus state = BuildStatus.Pending;
+            var sut = new CommitRepository(_requestFactory);
 
-			_request.Received().AddUrlSegment("projectId", expected);
-		}
+            await sut.CreateStatus(0, "commitSha", state);
 
-		[Fact]
-		public async Task CreateStatus_ValidParameters_AddsStateParameter()
-		{
-			const string expected = "pending";
-			const BuildStatus state = BuildStatus.Pending;
-			var sut = new CommitRepository(_requestFactory);
+            _request.Received().AddParameter("state", expected);
+        }
 
-			await sut.CreateStatus(0, "commitSha", state);
+        [Fact]
+        public async Task CreateStatus_ValidParameters_SetsCorrectResourceAndMethod()
+        {
+            var sut = new CommitRepository(_requestFactory);
 
-			_request.Received().AddParameter("state", expected);
-		}
+            await sut.CreateStatus(0, "commitSha", BuildStatus.Pending);
 
-		[Fact]
-		public async Task CreateStatus_ValidParameters_SetsCorrectResourceAndMethod()
-		{
-			var sut = new CommitRepository(_requestFactory);
+            _requestFactory.Received().Create("projects/{projectId}/statuses/{commitSha}", Method.Post);
+        }
 
-			await sut.CreateStatus(0, "commitSha", BuildStatus.Pending);
+        [Fact]
+        public async Task Find_CommitShaIsNull_ThrowsArgumentNullException()
+        {
+            var sut = new CommitRepository(_requestFactory);
 
-			_requestFactory.Received().Create("projects/{projectId}/statuses/{commitSha}", Method.Post);
-		}
+            await Assert.ThrowsAsync<ArgumentNullException>(() => sut.Find(0, null));
+        }
 
-		[Fact]
-		public async Task Find_CommitShaIsNull_ThrowsArgumentNullException()
-		{
-			var sut = new CommitRepository(_requestFactory);
+        [Fact]
+        public async Task Find_ValidParameters_AddsCommitShaUrlSegment()
+        {
+            const string expected = "commitSha";
+            var sut = new CommitRepository(_requestFactory);
 
-			await Assert.ThrowsAsync<ArgumentNullException>(() => sut.Find(0, null));
-		}
+            await sut.Find(0, expected);
 
-		[Fact]
-		public async Task Find_ValidParameters_AddsCommitShaUrlSegment()
-		{
-			const string expected = "commitSha";
-			var sut = new CommitRepository(_requestFactory);
+            _request.Received().AddUrlSegment("commitSha", expected);
+        }
 
-			await sut.Find(0, expected);
+        [Fact]
+        public async Task Find_ValidParameters_AddsProjectIdUrlSegment()
+        {
+            const uint expected = 0;
+            var sut = new CommitRepository(_requestFactory);
 
-			_request.Received().AddUrlSegment("commitSha", expected);
-		}
+            await sut.Find(expected, "commitSha");
 
-		[Fact]
-		public async Task Find_ValidParameters_AddsProjectIdUrlSegment()
-		{
-			const uint expected = 0;
-			var sut = new CommitRepository(_requestFactory);
+            _request.Received().AddUrlSegment("projectId", expected);
+        }
 
-			await sut.Find(expected, "commitSha");
+        [Fact]
+        public async Task Find_ValidParameters_SetsCorrectResourceAndMethod()
+        {
+            var sut = new CommitRepository(_requestFactory);
 
-			_request.Received().AddUrlSegment("projectId", expected);
-		}
+            await sut.Find(0, "commitSha");
 
-		[Fact]
-		public async Task Find_ValidParameters_SetsCorrectResourceAndMethod()
-		{
-			var sut = new CommitRepository(_requestFactory);
+            _requestFactory.Received().Create("projects/{projectId}/repository/commits/{commitSha}", Method.Get);
+        }
 
-			await sut.Find(0, "commitSha");
+        [Fact]
+        public async Task GetAll_RefNameIsSet_AddsRefNameParameter()
+        {
+            const string expected = "refName";
+            var sut = new CommitRepository(_requestFactory);
 
-			_requestFactory.Received().Create("projects/{projectId}/repository/commits/{commitSha}", Method.Get);
-		}
+            await sut.GetAll(0, expected);
 
-		[Fact]
-		public async Task GetAll_RefNameIsSet_AddsRefNameParameter()
-		{
-			const string expected = "refName";
-			var sut = new CommitRepository(_requestFactory);
+            _request.Received().AddParameterIfNotNull("ref_name", expected);
+        }
 
-			await sut.GetAll(0, expected);
+        [Fact]
+        public async Task GetAll_SinceIsSet_AddsSinceParameter()
+        {
+            var expected = DateTime.MinValue;
+            var sut = new CommitRepository(_requestFactory);
 
-			_request.Received().AddParameterIfNotNull("ref_name", expected);
-		}
+            await sut.GetAll(0, since: expected);
 
-		[Fact]
-		public async Task GetAll_SinceIsSet_AddsSinceParameter()
-		{
-			var expected = DateTime.MinValue;
-			var sut = new CommitRepository(_requestFactory);
+            _request.Received().AddParameterIfNotNull("since", expected);
+        }
 
-			await sut.GetAll(0, since: expected);
+        [Fact]
+        public async Task GetAll_UntilIsSet_AddsUntilParameter()
+        {
+            var expected = DateTime.MaxValue;
+            var sut = new CommitRepository(_requestFactory);
 
-			_request.Received().AddParameterIfNotNull("since", expected);
-		}
+            await sut.GetAll(0, until: expected);
 
-		[Fact]
-		public async Task GetAll_UntilIsSet_AddsUntilParameter()
-		{
-			var expected = DateTime.MaxValue;
-			var sut = new CommitRepository(_requestFactory);
+            _request.Received().AddParameterIfNotNull("until", expected);
+        }
 
-			await sut.GetAll(0, until: expected);
+        [Fact]
+        public async Task GetAll_ValidParameters_AddsProjectIdUrlSegment()
+        {
+            const uint expected = 0;
+            var sut = new CommitRepository(_requestFactory);
 
-			_request.Received().AddParameterIfNotNull("until", expected);
-		}
+            await sut.GetAll(expected);
 
-		[Fact]
-		public async Task GetAll_ValidParameters_AddsProjectIdUrlSegment()
-		{
-			const uint expected = 0;
-			var sut = new CommitRepository(_requestFactory);
+            _request.Received().AddUrlSegment("projectId", expected);
+        }
 
-			await sut.GetAll(expected);
+        [Fact]
+        public async Task GetAll_ValidParameters_SetsCorrectResourceAndMethod()
+        {
+            var sut = new CommitRepository(_requestFactory);
 
-			_request.Received().AddUrlSegment("projectId", expected);
-		}
+            await sut.GetAll(0);
 
-		[Fact]
-		public async Task GetAll_ValidParameters_SetsCorrectResourceAndMethod()
-		{
-			var sut = new CommitRepository(_requestFactory);
+            _requestFactory.Received().Create("projects/{projectId}/repository/commits", Method.Get);
+        }
 
-			await sut.GetAll(0);
+        [Fact]
+        public async Task GetComments_CommitShaIsNull_ThrowsArgumentNullException()
+        {
+            var sut = new CommitRepository(_requestFactory);
 
-			_requestFactory.Received().Create("projects/{projectId}/repository/commits", Method.Get);
-		}
+            await Assert.ThrowsAsync<ArgumentNullException>(() => sut.GetComments(0, null));
+        }
 
-		[Fact]
-		public async Task GetComments_CommitShaIsNull_ThrowsArgumentNullException()
-		{
-			var sut = new CommitRepository(_requestFactory);
+        [Fact]
+        public async Task GetComments_PageIsLessThanMinimum_ThrowsArgumentOutOfRangeException()
+        {
+            var sut = new CommitRepository(_requestFactory);
 
-			await Assert.ThrowsAsync<ArgumentNullException>(() => sut.GetComments(0, null));
-		}
+            await Assert.ThrowsAsync<ArgumentOutOfRangeException>(() => sut.GetComments(0, "commitSha", uint.MinValue));
+        }
 
-		[Fact]
-		public async Task GetComments_PageIsLessThanMinimum_ThrowsArgumentOutOfRangeException()
-		{
-			var sut = new CommitRepository(_requestFactory);
+        [Fact]
+        public async Task GetComments_PageIsSet_AddsPageParameter()
+        {
+            const uint expected = 5;
+            var sut = new CommitRepository(_requestFactory);
 
-			await Assert.ThrowsAsync<ArgumentOutOfRangeException>(() => sut.GetComments(0, "commitSha", uint.MinValue));
-		}
+            await sut.GetComments(0, "commitSha", expected);
 
-		[Fact]
-		public async Task GetComments_PageIsSet_AddsPageParameter()
-		{
-			const uint expected = 5;
-			var sut = new CommitRepository(_requestFactory);
+            _request.Received().AddParameter("page", expected);
+        }
 
-			await sut.GetComments(0, "commitSha", expected);
+        [Fact]
+        public async Task GetComments_ResultsPerPageIsGreaterThanMaximum_ThrowsArgumentOutOfRangeException()
+        {
+            var sut = new CommitRepository(_requestFactory);
 
-			_request.Received().AddParameter("page", expected);
-		}
+            await Assert.ThrowsAsync<ArgumentOutOfRangeException>(
+                () => sut.GetComments(0, "commitSha", resultsPerPage: uint.MaxValue));
+        }
 
-		[Fact]
-		public async Task GetComments_ResultsPerPageIsGreaterThanMaximum_ThrowsArgumentOutOfRangeException()
-		{
-			var sut = new CommitRepository(_requestFactory);
+        [Fact]
+        public async Task GetComments_ResultsPerPageIsLessThanMinimum_ThrowsArgumentOutOfRangeException()
+        {
+            var sut = new CommitRepository(_requestFactory);
 
-			await Assert.ThrowsAsync<ArgumentOutOfRangeException>(() => sut.GetComments(0, "commitSha", resultsPerPage: uint.MaxValue));
-		}
+            await Assert.ThrowsAsync<ArgumentOutOfRangeException>(
+                () => sut.GetComments(0, "commitSha", resultsPerPage: uint.MinValue));
+        }
 
-		[Fact]
-		public async Task GetComments_ResultsPerPageIsLessThanMinimum_ThrowsArgumentOutOfRangeException()
-		{
-			var sut = new CommitRepository(_requestFactory);
+        [Fact]
+        public async Task GetComments_ResultsPerPageIsSet_AddsPerPageParameter()
+        {
+            const uint expected = 5;
+            var sut = new CommitRepository(_requestFactory);
 
-			await Assert.ThrowsAsync<ArgumentOutOfRangeException>(() => sut.GetComments(0, "commitSha", resultsPerPage: uint.MinValue));
-		}
+            await sut.GetComments(0, "commitSha", resultsPerPage: expected);
 
-		[Fact]
-		public async Task GetComments_ResultsPerPageIsSet_AddsPerPageParameter()
-		{
-			const uint expected = 5;
-			var sut = new CommitRepository(_requestFactory);
+            _request.Received().AddParameter("per_page", expected);
+        }
 
-			await sut.GetComments(0, "commitSha", resultsPerPage: expected);
+        [Fact]
+        public async Task GetComments_ValidParameters_AddsCommitShaUrlSegment()
+        {
+            const string expected = "commitSha";
+            var sut = new CommitRepository(_requestFactory);
 
-			_request.Received().AddParameter("per_page", expected);
-		}
+            await sut.GetComments(0, expected);
 
-		[Fact]
-		public async Task GetComments_ValidParameters_AddsCommitShaUrlSegment()
-		{
-			const string expected = "commitSha";
-			var sut = new CommitRepository(_requestFactory);
+            _request.Received().AddUrlSegment("commitSha", expected);
+        }
 
-			await sut.GetComments(0, expected);
+        [Fact]
+        public async Task GetComments_ValidParameters_AddsProjectIdUrlSegment()
+        {
+            const uint expected = 0;
+            var sut = new CommitRepository(_requestFactory);
 
-			_request.Received().AddUrlSegment("commitSha", expected);
-		}
+            await sut.GetComments(expected, "commitSha");
 
-		[Fact]
-		public async Task GetComments_ValidParameters_AddsProjectIdUrlSegment()
-		{
-			const uint expected = 0;
-			var sut = new CommitRepository(_requestFactory);
+            _request.Received().AddUrlSegment("projectId", expected);
+        }
 
-			await sut.GetComments(expected, "commitSha");
+        [Fact]
+        public async Task GetComments_ValidParameters_SetsCorrectResourceAndMethod()
+        {
+            var sut = new CommitRepository(_requestFactory);
 
-			_request.Received().AddUrlSegment("projectId", expected);
-		}
+            await sut.GetComments(0, "commitSha");
 
-		[Fact]
-		public async Task GetComments_ValidParameters_SetsCorrectResourceAndMethod()
-		{
-			var sut = new CommitRepository(_requestFactory);
+            _requestFactory.Received()
+                .Create("projects/{projectId}/repository/commits/{commitSha}/comments", Method.Get);
+        }
 
-			await sut.GetComments(0, "commitSha");
+        [Fact]
+        public async Task GetDiff_CommitShaIsNull_ThrowsArgumentNullException()
+        {
+            var sut = new CommitRepository(_requestFactory);
 
-			_requestFactory.Received().Create("projects/{projectId}/repository/commits/{commitSha}/comments", Method.Get);
-		}
+            await Assert.ThrowsAsync<ArgumentNullException>(() => sut.GetDiff(0, null));
+        }
 
-		[Fact]
-		public async Task GetDiff_CommitShaIsNull_ThrowsArgumentNullException()
-		{
-			var sut = new CommitRepository(_requestFactory);
+        [Fact]
+        public async Task GetDiff_ValidParameters_AddsCommitShaUrlSegment()
+        {
+            const string expected = "commitSha";
+            var sut = new CommitRepository(_requestFactory);
 
-			await Assert.ThrowsAsync<ArgumentNullException>(() => sut.GetDiff(0, null));
-		}
+            await sut.GetDiff(0, expected);
 
-		[Fact]
-		public async Task GetDiff_ValidParameters_AddsCommitShaUrlSegment()
-		{
-			const string expected = "commitSha";
-			var sut = new CommitRepository(_requestFactory);
+            _request.Received().AddUrlSegment("commitSha", expected);
+        }
 
-			await sut.GetDiff(0, expected);
+        [Fact]
+        public async Task GetDiff_ValidParameters_AddsProjectIdUrlSegment()
+        {
+            const uint expected = 0;
+            var sut = new CommitRepository(_requestFactory);
 
-			_request.Received().AddUrlSegment("commitSha", expected);
-		}
+            await sut.GetDiff(expected, "commitSha");
 
-		[Fact]
-		public async Task GetDiff_ValidParameters_AddsProjectIdUrlSegment()
-		{
-			const uint expected = 0;
-			var sut = new CommitRepository(_requestFactory);
+            _request.Received().AddUrlSegment("projectId", expected);
+        }
 
-			await sut.GetDiff(expected, "commitSha");
+        [Fact]
+        public async Task GetDiff_ValidParameters_SetsCorrectResourceAndMethod()
+        {
+            var sut = new CommitRepository(_requestFactory);
 
-			_request.Received().AddUrlSegment("projectId", expected);
-		}
+            await sut.GetDiff(0, "commitSha");
 
-		[Fact]
-		public async Task GetDiff_ValidParameters_SetsCorrectResourceAndMethod()
-		{
-			var sut = new CommitRepository(_requestFactory);
+            _requestFactory.Received().Create("projects/{projectId}/repository/commits/{commitSha}/diff", Method.Get);
+        }
 
-			await sut.GetDiff(0, "commitSha");
+        [Fact]
+        public async Task GetStatus_AllIsSet_AddsAllParameter()
+        {
+            const bool expected = true;
+            var sut = new CommitRepository(_requestFactory);
 
-			_requestFactory.Received().Create("projects/{projectId}/repository/commits/{commitSha}/diff", Method.Get);
-		}
+            await sut.GetStatus(0, "commitSha", all: expected);
 
-		[Fact]
-		public async Task GetStatus_AllIsSet_AddsAllParameter()
-		{
-			const bool expected = true;
-			var sut = new CommitRepository(_requestFactory);
+            _request.Received().AddParameterIfNotNull("all", expected);
+        }
 
-			await sut.GetStatus(0, "commitSha", all: expected);
+        [Fact]
+        public async Task GetStatus_CommitShaIsNull_ThrowsArgumentNullException()
+        {
+            var sut = new CommitRepository(_requestFactory);
 
-			_request.Received().AddParameterIfNotNull("all", expected);
-		}
+            await Assert.ThrowsAsync<ArgumentNullException>(() => sut.GetStatus(0, null));
+        }
 
-		[Fact]
-		public async Task GetStatus_CommitShaIsNull_ThrowsArgumentNullException()
-		{
-			var sut = new CommitRepository(_requestFactory);
+        [Fact]
+        public async Task GetStatus_NameIsSet_AddsNameParameter()
+        {
+            const string expected = "name";
+            var sut = new CommitRepository(_requestFactory);
 
-			await Assert.ThrowsAsync<ArgumentNullException>(() => sut.GetStatus(0, null));
-		}
+            await sut.GetStatus(0, "commitSha", name: expected);
 
-		[Fact]
-		public async Task GetStatus_NameIsSet_AddsNameParameter()
-		{
-			const string expected = "name";
-			var sut = new CommitRepository(_requestFactory);
+            _request.Received().AddParameterIfNotNull("name", expected);
+        }
 
-			await sut.GetStatus(0, "commitSha", name: expected);
+        [Fact]
+        public async Task GetStatus_PageIsLessThanMinimum_ThrowsArgumentOutOfRangeException()
+        {
+            var sut = new CommitRepository(_requestFactory);
 
-			_request.Received().AddParameterIfNotNull("name", expected);
-		}
+            await Assert.ThrowsAsync<ArgumentOutOfRangeException>(
+                () => sut.GetStatus(0, "commitSha", page: uint.MinValue));
+        }
 
-		[Fact]
-		public async Task GetStatus_PageIsLessThanMinimum_ThrowsArgumentOutOfRangeException()
-		{
-			var sut = new CommitRepository(_requestFactory);
+        [Fact]
+        public async Task GetStatus_PageIsSet_AddsPageParameter()
+        {
+            const uint expected = 5;
+            var sut = new CommitRepository(_requestFactory);
 
-			await Assert.ThrowsAsync<ArgumentOutOfRangeException>(() => sut.GetStatus(0, "commitSha", page: uint.MinValue));
-		}
+            await sut.GetStatus(0, "commitSha", page: expected);
 
-		[Fact]
-		public async Task GetStatus_PageIsSet_AddsPageParameter()
-		{
-			const uint expected = 5;
-			var sut = new CommitRepository(_requestFactory);
+            _request.Received().AddParameter("page", expected);
+        }
 
-			await sut.GetStatus(0, "commitSha", page: expected);
+        [Fact]
+        public async Task GetStatus_RefNameIsSet_AddsRefNameParameter()
+        {
+            const string expected = "refName";
+            var sut = new CommitRepository(_requestFactory);
 
-			_request.Received().AddParameter("page", expected);
-		}
+            await sut.GetStatus(0, "commitSha", expected);
 
-		[Fact]
-		public async Task GetStatus_RefNameIsSet_AddsRefNameParameter()
-		{
-			const string expected = "refName";
-			var sut = new CommitRepository(_requestFactory);
+            _request.Received().AddParameterIfNotNull("ref_name", expected);
+        }
 
-			await sut.GetStatus(0, "commitSha", expected);
+        [Fact]
+        public async Task GetStatus_ResultsPerPageIsGreaterThanMaximum_ThrowsArgumentOutOfRangeException()
+        {
+            var sut = new CommitRepository(_requestFactory);
 
-			_request.Received().AddParameterIfNotNull("ref_name", expected);
-		}
+            await Assert.ThrowsAsync<ArgumentOutOfRangeException>(
+                () => sut.GetStatus(0, "commitSha", resultsPerPage: uint.MaxValue));
+        }
 
-		[Fact]
-		public async Task GetStatus_ResultsPerPageIsGreaterThanMaximum_ThrowsArgumentOutOfRangeException()
-		{
-			var sut = new CommitRepository(_requestFactory);
+        [Fact]
+        public async Task GetStatus_ResultsPerPageIsLessThanMinimum_ThrowsArgumentOutOfRangeException()
+        {
+            var sut = new CommitRepository(_requestFactory);
 
-			await Assert.ThrowsAsync<ArgumentOutOfRangeException>(() => sut.GetStatus(0, "commitSha", resultsPerPage: uint.MaxValue));
-		}
+            await Assert.ThrowsAsync<ArgumentOutOfRangeException>(
+                () => sut.GetStatus(0, "commitSha", resultsPerPage: uint.MinValue));
+        }
 
-		[Fact]
-		public async Task GetStatus_ResultsPerPageIsLessThanMinimum_ThrowsArgumentOutOfRangeException()
-		{
-			var sut = new CommitRepository(_requestFactory);
+        [Fact]
+        public async Task GetStatus_ResultsPerPageIsSet_AddsPerPageParameter()
+        {
+            const uint expected = 5;
+            var sut = new CommitRepository(_requestFactory);
 
-			await Assert.ThrowsAsync<ArgumentOutOfRangeException>(() => sut.GetStatus(0, "commitSha", resultsPerPage: uint.MinValue));
-		}
+            await sut.GetStatus(0, "commitSha", resultsPerPage: expected);
 
-		[Fact]
-		public async Task GetStatus_ResultsPerPageIsSet_AddsPerPageParameter()
-		{
-			const uint expected = 5;
-			var sut = new CommitRepository(_requestFactory);
+            _request.Received().AddParameter("per_page", expected);
+        }
 
-			await sut.GetStatus(0, "commitSha", resultsPerPage: expected);
+        [Fact]
+        public async Task GetStatus_StageIsSet_AddsStageParameter()
+        {
+            const string expected = "stage";
+            var sut = new CommitRepository(_requestFactory);
 
-			_request.Received().AddParameter("per_page", expected);
-		}
+            await sut.GetStatus(0, "commitSha", stage: expected);
 
-		[Fact]
-		public async Task GetStatus_StageIsSet_AddsStageParameter()
-		{
-			const string expected = "stage";
-			var sut = new CommitRepository(_requestFactory);
+            _request.Received().AddParameterIfNotNull("stage", expected);
+        }
 
-			await sut.GetStatus(0, "commitSha", stage: expected);
+        [Fact]
+        public async Task GetStatus_ValidParameters_AddsCommitShaUrlSegment()
+        {
+            const string expected = "commitSha";
+            var sut = new CommitRepository(_requestFactory);
 
-			_request.Received().AddParameterIfNotNull("stage", expected);
-		}
+            await sut.GetStatus(0, expected);
 
-		[Fact]
-		public async Task GetStatus_ValidParameters_AddsCommitShaUrlSegment()
-		{
-			const string expected = "commitSha";
-			var sut = new CommitRepository(_requestFactory);
+            _request.Received().AddUrlSegment("commitSha", expected);
+        }
 
-			await sut.GetStatus(0, expected);
+        [Fact]
+        public async Task GetStatus_ValidParameters_AddsProjectIdUrlSegment()
+        {
+            const uint expected = 0;
+            var sut = new CommitRepository(_requestFactory);
 
-			_request.Received().AddUrlSegment("commitSha", expected);
-		}
+            await sut.GetStatus(expected, "commitSha");
 
-		[Fact]
-		public async Task GetStatus_ValidParameters_AddsProjectIdUrlSegment()
-		{
-			const uint expected = 0;
-			var sut = new CommitRepository(_requestFactory);
+            _request.Received().AddUrlSegment("projectId", expected);
+        }
 
-			await sut.GetStatus(expected, "commitSha");
+        [Fact]
+        public async Task GetStatus_ValidParameters_SetsCorrectResourceAndMethod()
+        {
+            var sut = new CommitRepository(_requestFactory);
 
-			_request.Received().AddUrlSegment("projectId", expected);
-		}
+            await sut.GetStatus(0, "commitSha");
 
-		[Fact]
-		public async Task GetStatus_ValidParameters_SetsCorrectResourceAndMethod()
-		{
-			var sut = new CommitRepository(_requestFactory);
+            _requestFactory.Received()
+                .Create("projects/{projectId}/repository/commits/{commitSha}/statuses", Method.Get);
+        }
 
-			await sut.GetStatus(0, "commitSha");
+        [Fact]
+        public async Task UpdateStatus_CommitShaIsNull_ThrowsArgumentNullException()
+        {
+            var sut = new CommitRepository(_requestFactory);
 
-			_requestFactory.Received().Create("projects/{projectId}/repository/commits/{commitSha}/statuses", Method.Get);
-		}
+            await Assert.ThrowsAsync<ArgumentNullException>(() => sut.UpdateStatus(0, null, BuildStatus.Pending));
+        }
 
-		[Fact]
-		public async Task UpdateStatus_CommitShaIsNull_ThrowsArgumentNullException()
-		{
-			var sut = new CommitRepository(_requestFactory);
+        [Fact]
+        public async Task UpdateStatus_DescriptionIsSet_AddsDescriptionParameter()
+        {
+            const string expected = "description";
+            var sut = new CommitRepository(_requestFactory);
 
-			await Assert.ThrowsAsync<ArgumentNullException>(() => sut.UpdateStatus(0, null, BuildStatus.Pending));
-		}
+            await sut.UpdateStatus(0, "commitSha", BuildStatus.Pending, description: expected);
 
-		[Fact]
-		public async Task UpdateStatus_DescriptionIsSet_AddsDescriptionParameter()
-		{
-			const string expected = "description";
-			var sut = new CommitRepository(_requestFactory);
+            _request.Received().AddParameterIfNotNull("description", expected);
+        }
 
-			await sut.UpdateStatus(0, "commitSha", BuildStatus.Pending, description: expected);
+        [Fact]
+        public async Task UpdateStatus_NameIsSet_AddsNameParameter()
+        {
+            const string expected = "name";
+            var sut = new CommitRepository(_requestFactory);
 
-			_request.Received().AddParameterIfNotNull("description", expected);
-		}
+            await sut.UpdateStatus(0, "commitSha", BuildStatus.Pending, name: expected);
 
-		[Fact]
-		public async Task UpdateStatus_NameIsSet_AddsNameParameter()
-		{
-			const string expected = "name";
-			var sut = new CommitRepository(_requestFactory);
+            _request.Received().AddParameterIfNotNull("name", expected);
+        }
 
-			await sut.UpdateStatus(0, "commitSha", BuildStatus.Pending, name: expected);
+        [Fact]
+        public async Task UpdateStatus_RefNameIsSet_AddsRefNameParameter()
+        {
+            const string expected = "refName";
+            var sut = new CommitRepository(_requestFactory);
 
-			_request.Received().AddParameterIfNotNull("name", expected);
-		}
+            await sut.UpdateStatus(0, "commitSha", BuildStatus.Pending, expected);
 
-		[Fact]
-		public async Task UpdateStatus_RefNameIsSet_AddsRefNameParameter()
-		{
-			const string expected = "refName";
-			var sut = new CommitRepository(_requestFactory);
+            _request.Received().AddParameterIfNotNull("ref", expected);
+        }
 
-			await sut.UpdateStatus(0, "commitSha", BuildStatus.Pending, expected);
+        [Fact]
+        public async Task UpdateStatus_TargetUrlIsSet_AddsTargetUrlParameter()
+        {
+            const string expected = "targetUrl";
+            var sut = new CommitRepository(_requestFactory);
 
-			_request.Received().AddParameterIfNotNull("ref", expected);
-		}
+            await sut.UpdateStatus(0, "commitSha", BuildStatus.Pending, targetUrl: expected);
 
-		[Fact]
-		public async Task UpdateStatus_TargetUrlIsSet_AddsTargetUrlParameter()
-		{
-			const string expected = "targetUrl";
-			var sut = new CommitRepository(_requestFactory);
+            _request.Received().AddParameterIfNotNull("target_url", expected);
+        }
 
-			await sut.UpdateStatus(0, "commitSha", BuildStatus.Pending, targetUrl: expected);
+        [Fact]
+        public async Task UpdateStatus_ValidParameters_AddsCommitShaUrlSegment()
+        {
+            const string expected = "commitSha";
+            var sut = new CommitRepository(_requestFactory);
 
-			_request.Received().AddParameterIfNotNull("target_url", expected);
-		}
+            await sut.UpdateStatus(0, expected, BuildStatus.Pending);
 
-		[Fact]
-		public async Task UpdateStatus_ValidParameters_AddsCommitShaUrlSegment()
-		{
-			const string expected = "commitSha";
-			var sut = new CommitRepository(_requestFactory);
+            _request.Received().AddUrlSegment("commitSha", expected);
+        }
 
-			await sut.UpdateStatus(0, expected, BuildStatus.Pending);
+        [Fact]
+        public async Task UpdateStatus_ValidParameters_AddsProjectIdUrlSegment()
+        {
+            const uint expected = 0;
+            var sut = new CommitRepository(_requestFactory);
 
-			_request.Received().AddUrlSegment("commitSha", expected);
-		}
+            await sut.UpdateStatus(expected, "commitSha", BuildStatus.Pending);
 
-		[Fact]
-		public async Task UpdateStatus_ValidParameters_AddsProjectIdUrlSegment()
-		{
-			const uint expected = 0;
-			var sut = new CommitRepository(_requestFactory);
+            _request.Received().AddUrlSegment("projectId", expected);
+        }
 
-			await sut.UpdateStatus(expected, "commitSha", BuildStatus.Pending);
+        [Fact]
+        public async Task UpdateStatus_ValidParameters_AddsStateParameter()
+        {
+            const string expected = "pending";
+            const BuildStatus state = BuildStatus.Pending;
+            var sut = new CommitRepository(_requestFactory);
 
-			_request.Received().AddUrlSegment("projectId", expected);
-		}
+            await sut.UpdateStatus(0, "commitSha", state);
 
-		[Fact]
-		public async Task UpdateStatus_ValidParameters_AddsStateParameter()
-		{
-			const string expected = "pending";
-			const BuildStatus state = BuildStatus.Pending;
-			var sut = new CommitRepository(_requestFactory);
+            _request.Received().AddParameter("state", expected);
+        }
 
-			await sut.UpdateStatus(0, "commitSha", state);
+        [Fact]
+        public async Task UpdateStatus_ValidParameters_SetsCorrectResourceAndMethod()
+        {
+            var sut = new CommitRepository(_requestFactory);
 
-			_request.Received().AddParameter("state", expected);
-		}
+            await sut.UpdateStatus(0, "commitSha", BuildStatus.Pending);
 
-		[Fact]
-		public async Task UpdateStatus_ValidParameters_SetsCorrectResourceAndMethod()
-		{
-			var sut = new CommitRepository(_requestFactory);
-
-			await sut.UpdateStatus(0, "commitSha", BuildStatus.Pending);
-
-			_requestFactory.Received().Create("projects/{projectId}/statuses/{commitSha}", Method.Post);
-		}
-	}
+            _requestFactory.Received().Create("projects/{projectId}/statuses/{commitSha}", Method.Post);
+        }
+    }
 }

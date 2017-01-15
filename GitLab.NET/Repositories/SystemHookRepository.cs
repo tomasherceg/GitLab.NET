@@ -11,7 +11,9 @@ namespace GitLab.NET.Repositories
     {
         /// <summary> Creates a new <see cref="SystemHookRepository" /> instance. </summary>
         /// <param name="requestFactory"> An instance of <see cref="IRequestFactory" /> to use for this repository. </param>
-        public SystemHookRepository(IRequestFactory requestFactory) : base(requestFactory) { }
+        public SystemHookRepository(IRequestFactory requestFactory) : base(requestFactory)
+        {
+        }
 
         /// <summary> Creates a new system hook. </summary>
         /// <param name="url"> The URL to use for the new system hook. </param>
@@ -20,7 +22,9 @@ namespace GitLab.NET.Repositories
         /// <param name="buildEvents"> Track build events by new system hook. </param>
         /// <param name="enableSSLVerification"> Enable SSL verification for new system hook. </param>
         /// <returns> A <see cref="RequestResult{SystemHook}" /> representing the results of the request. </returns>
-        public async Task<RequestResult<SystemHook>> Create(string url, bool? mergeRequestsEvents = null, bool? pushEvents = null, bool? buildEvents = null, bool? enableSSLVerification = null) {
+        public async Task<RequestResult<SystemHook>> Create(string url, bool? mergeRequestsEvents = null,
+            bool? pushEvents = null, bool? buildEvents = null, bool? enableSSLVerification = null)
+        {
             if (url == null)
                 throw new ArgumentNullException(nameof(url));
 
@@ -34,6 +38,7 @@ namespace GitLab.NET.Repositories
 
             return await request.Execute<SystemHook>();
         }
+
         /// <summary> Updates an existing system hook. </summary>
         /// <param name="hookId"> The ID of the system hook to update. </param>
         /// <param name="url"> The URL of the system hook to update. </param>
@@ -42,13 +47,15 @@ namespace GitLab.NET.Repositories
         /// <param name="buildEvents"> Update trackicng build events. </param>
         /// <param name="enableSSLVerification"> Update SSL verification. </param>
         /// <returns> A <see cref="RequestResult{SystemHook}" /> representing the results of the request. </returns>
-        public async Task<RequestResult<SystemHook>> Update(uint hookId, string url, bool mergeRequestsEvents, bool pushEvents, bool buildEvents, bool enableSSLVerification) {
+        public async Task<RequestResult<SystemHook>> Update(uint hookId, string url, bool mergeRequestsEvents,
+            bool pushEvents, bool buildEvents, bool enableSSLVerification)
+        {
             var request = RequestFactory.Create("hooks/{hookId}", Method.Put);
 
             request.AddUrlSegment("hookId", hookId);
 
             request.AddParameter("url", url);
-            
+
             request.AddParameter("merge_requests_events", mergeRequestsEvents);
             request.AddParameter("push_events", pushEvents);
             request.AddParameter("build_events", buildEvents);

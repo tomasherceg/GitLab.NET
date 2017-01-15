@@ -11,7 +11,9 @@ namespace GitLab.NET.Repositories
     {
         /// <summary> Creates a new <see cref="TagRepository" /> instance. </summary>
         /// <param name="requestFactory"> An instance of <see cref="IRequestFactory" /> to use for this repository. </param>
-        public TagRepository(IRequestFactory requestFactory) : base(requestFactory) { }
+        public TagRepository(IRequestFactory requestFactory) : base(requestFactory)
+        {
+        }
 
         /// <summary> Creates a new tag. </summary>
         /// <param name="projectId"> The ID of the project. </param>
@@ -20,7 +22,8 @@ namespace GitLab.NET.Repositories
         /// <param name="message"> The message for this tag. </param>
         /// <param name="releaseDescription"> The release description for this tag. </param>
         /// <returns> A <see cref="RequestResult{Tag}" /> representing the results of the request. </returns>
-        public async Task<RequestResult<Tag>> Create(uint projectId, string tagName, string refName, string message = null, string releaseDescription = null)
+        public async Task<RequestResult<Tag>> Create(uint projectId, string tagName, string refName,
+            string message = null, string releaseDescription = null)
         {
             if (tagName == null)
                 throw new ArgumentNullException(nameof(tagName));

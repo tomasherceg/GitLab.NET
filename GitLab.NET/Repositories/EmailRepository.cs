@@ -11,7 +11,9 @@ namespace GitLab.NET.Repositories
     {
         /// <summary> Creates a new <see cref="EmailRepository" /> instance. </summary>
         /// <param name="requestFactory"> An instance of <see cref="IRequestFactory" /> to use for this repository. </param>
-        public EmailRepository(IRequestFactory requestFactory) : base(requestFactory) { }
+        public EmailRepository(IRequestFactory requestFactory) : base(requestFactory)
+        {
+        }
 
         /// <summary> Adds an email address to the currently authenticated user's account or the specified user's account. </summary>
         /// <param name="email"> The email address to add. </param>

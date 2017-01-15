@@ -1,7 +1,7 @@
-﻿using NSubstitute;
-using System.Threading.Tasks;
+﻿using System.Threading.Tasks;
 using GitLab.NET.Abstractions;
 using GitLab.NET.Repositories;
+using NSubstitute;
 using Xunit;
 
 namespace GitLab.NET.Tests.Repositories
@@ -33,7 +33,7 @@ namespace GitLab.NET.Tests.Repositories
         {
             const string expected = "afterSignOutPath";
 
-            await _sut.Set(afterSignOutPath: expected);
+            await _sut.Set(expected);
 
             _request.Received().AddParameterIfNotNull("after_sign_out_path", expected);
         }
@@ -49,16 +49,6 @@ namespace GitLab.NET.Tests.Repositories
         }
 
         [Fact]
-        public async Task Set_DefaultProjectVisibilityIsSet_AddsDefaultProjectVisibilityParameter()
-        {
-            const uint expected = 0;
-
-            await _sut.Set(defaultProjectVisibility: expected);
-
-            _request.Received().AddParameterIfNotNull("default_project_visibility", expected);
-        }
-
-        [Fact]
         public async Task Set_DefaultProjectsLimitIsSet_AddsDefaultProjectsLimitParameter()
         {
             const uint expected = 0;
@@ -66,6 +56,16 @@ namespace GitLab.NET.Tests.Repositories
             await _sut.Set(defaultProjectsLimit: expected);
 
             _request.Received().AddParameterIfNotNull("default_projects_limit", expected);
+        }
+
+        [Fact]
+        public async Task Set_DefaultProjectVisibilityIsSet_AddsDefaultProjectVisibilityParameter()
+        {
+            const uint expected = 0;
+
+            await _sut.Set(defaultProjectVisibility: expected);
+
+            _request.Received().AddParameterIfNotNull("default_project_visibility", expected);
         }
 
         [Fact]
@@ -147,16 +147,6 @@ namespace GitLab.NET.Tests.Repositories
         }
 
         [Fact]
-        public async Task Set_SigninTextIsSet_AddsSignInTextParameter()
-        {
-            const string expected = "signinText";
-
-            await _sut.Set(signinText: expected);
-
-            _request.Received().AddParameterIfNotNull("sign_in_text", expected);
-        }
-
-        [Fact]
         public async Task Set_SigninEnabledIsSet_AddsSigninEnabledParameter()
         {
             const bool expected = true;
@@ -164,6 +154,16 @@ namespace GitLab.NET.Tests.Repositories
             await _sut.Set(signinEnabled: expected);
 
             _request.Received().AddParameterIfNotNull("signin_enabled", expected);
+        }
+
+        [Fact]
+        public async Task Set_SigninTextIsSet_AddsSignInTextParameter()
+        {
+            const string expected = "signinText";
+
+            await _sut.Set(signinText: expected);
+
+            _request.Received().AddParameterIfNotNull("sign_in_text", expected);
         }
 
         [Fact]
