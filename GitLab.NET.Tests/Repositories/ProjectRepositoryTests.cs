@@ -72,9 +72,13 @@ namespace GitLab.NET.Tests.Repositories
 
     public static class TestServerConfig
     {
-        public static readonly string GitLabName, GitLabUserName, EMailFirstName, EMailLastName = "GitLabNetTest";
+        public static readonly string GitLabName = "GitLabNetTest";
+        public static readonly string GitLabUserName = "GitLabNetTest";
+        public static readonly string EMailFirstName = "GitLabNetTest";
+        public static readonly string EMailLastName = "GitLabNetTest";
         public static readonly string GitLabPrivateToken = "SySK9dNRsbtSvKZbazkA";
-        public static readonly string GitLabPassword, EMailPassword = "GitLabNetTestPassword123";
+        public static readonly string GitLabPassword = "GitLabNetTestPassword123";
+        public static readonly string EMailPassword = "GitLabNetTestPassword123";
         public static readonly string EMail = "GitLabNetTest@gmail.com";
         public static readonly DateTime EMailBirthDay = new DateTime(1987, 2, 15);
         public static readonly string EMailGender = "Male";
