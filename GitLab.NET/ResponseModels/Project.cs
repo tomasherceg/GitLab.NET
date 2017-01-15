@@ -31,7 +31,7 @@ namespace GitLab.NET.ResponseModels
         public string WebUrl { get; set; }
 
         /// <summary> The tags for this project. </summary>
-        private List<string> TagList { get; set; }
+        private IList<string> TagList { get; set; }
 
         /// <summary> The project owner. </summary>
         public User Owner { get; set; }
