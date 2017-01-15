@@ -16,10 +16,10 @@ namespace GitLab.NET.ResponseModels
         public string DefaultBranch { get; set; }
 
         /// <summary> Is project public. </summary>
-        public bool Public { get; set; }
+        public bool? Public { get; set; }
 
         /// <summary> The VisibilityLevel for this project. </summary>
-        public int VisibilityLevel { get; set; }
+        public VisibilityLevel VisibilityLevel { get; set; }
 
         /// <summary> The ssh url to this project. </summary>
         public string SshUrlToRepo { get; set; }
@@ -49,7 +49,7 @@ namespace GitLab.NET.ResponseModels
         public string PathWithNamespace { get; set; }
 
         /// <summary> Is issues enabled for this project. </summary>
-        public bool IssuesEnabled { get; set; }
+        public bool? IssuesEnabled { get; set; }
 
         /// <summary> How many issues are open for this project. </summary>
         public int OpenIssuesCount { get; set; }
@@ -67,7 +67,7 @@ namespace GitLab.NET.ResponseModels
         public bool SnippetsEnabled { get; set; }
 
         /// <summary> Is container repository enabled for this project. </summary>
-        public bool ContainerRepositoryEnabled { get; set; }
+        public bool ContainerRegistryEnabled { get; set; }
 
         /// <summary> The date and time this project was created at. </summary>
         public DateTime CreatedAt { get; set; }
