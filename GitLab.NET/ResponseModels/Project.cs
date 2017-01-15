@@ -22,7 +22,7 @@ namespace GitLab.NET.ResponseModels
         public int VisibilityLevel { get; set; }
 
         /// <summary> The ssh url to this project. </summary>
-        public string SshUrl { get; set; }
+        public string SshUrlToRepo { get; set; }
 
         /// <summary> The http url to this project. </summary>
         public string HttpUrlToRepo { get; set; }
