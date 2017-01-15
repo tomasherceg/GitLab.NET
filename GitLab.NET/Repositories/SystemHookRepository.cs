@@ -20,10 +20,10 @@ namespace GitLab.NET.Repositories
         /// <param name="mergeRequestsEvents"> Track merge requests events by new system hook. </param>
         /// <param name="pushEvents"> Track push events by new system hook. </param>
         /// <param name="buildEvents"> Track build events by new system hook. </param>
-        /// <param name="enableSSLVerification"> Enable SSL verification for new system hook. </param>
+        /// <param name="enableSslVerification"> Enable SSL verification for new system hook. </param>
         /// <returns> A <see cref="RequestResult{SystemHook}" /> representing the results of the request. </returns>
         public async Task<RequestResult<SystemHook>> Create(string url, bool? mergeRequestsEvents = null,
-            bool? pushEvents = null, bool? buildEvents = null, bool? enableSSLVerification = null)
+            bool? pushEvents = null, bool? buildEvents = null, bool? enableSslVerification = null)
         {
             if (url == null)
                 throw new ArgumentNullException(nameof(url));
@@ -34,7 +34,7 @@ namespace GitLab.NET.Repositories
             request.AddParameterIfNotNull("merge_requests_events", mergeRequestsEvents);
             request.AddParameterIfNotNull("push_events", pushEvents);
             request.AddParameterIfNotNull("build_events", buildEvents);
-            request.AddParameterIfNotNull("enable_ssl_verification", enableSSLVerification);
+            request.AddParameterIfNotNull("enable_ssl_verification", enableSslVerification);
 
             return await request.Execute<SystemHook>();
         }
@@ -45,10 +45,10 @@ namespace GitLab.NET.Repositories
         /// <param name="mergeRequestsEvents"> Update trackicng merge requests events. </param>
         /// <param name="pushEvents"> Update trackicng push events. </param>
         /// <param name="buildEvents"> Update trackicng build events. </param>
-        /// <param name="enableSSLVerification"> Update SSL verification. </param>
+        /// <param name="enableSslVerification"> Update SSL verification. </param>
         /// <returns> A <see cref="RequestResult{SystemHook}" /> representing the results of the request. </returns>
         public async Task<RequestResult<SystemHook>> Update(uint hookId, string url, bool mergeRequestsEvents,
-            bool pushEvents, bool buildEvents, bool enableSSLVerification)
+            bool pushEvents, bool buildEvents, bool enableSslVerification)
         {
             var request = RequestFactory.Create("hooks/{hookId}", Method.Put);
 
@@ -59,7 +59,7 @@ namespace GitLab.NET.Repositories
             request.AddParameter("merge_requests_events", mergeRequestsEvents);
             request.AddParameter("push_events", pushEvents);
             request.AddParameter("build_events", buildEvents);
-            request.AddParameter("enable_ssl_verification", enableSSLVerification);
+            request.AddParameter("enable_ssl_verification", enableSslVerification);
 
             return await request.Execute<SystemHook>();
         }
