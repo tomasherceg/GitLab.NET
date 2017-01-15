@@ -85,7 +85,7 @@ namespace GitLab.NET.ResponseModels
         public bool Archived { get; set; }
 
         /// <summary> The avatar url for this project. </summary>
-        public string AvatarUlr { get; set; }
+        public string AvatarUrl { get; set; }
 
         /// <summary> Is shared runners enabled for this project. </summary>
         public bool SharedRunnersEnabled { get; set; }
