@@ -19,7 +19,7 @@ namespace GitLab.NET.ResponseModels
         public bool Public { get; set; }
 
         /// <summary> The VisibilityLevel for this project. </summary>
-        public int VisibilityLevel { get; set; }
+        public VisibilityLevel VisibilityLevel { get; set; }
 
         /// <summary> The ssh url to this project. </summary>
         public string SshUrl { get; set; }
