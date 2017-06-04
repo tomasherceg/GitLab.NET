@@ -100,6 +100,12 @@ namespace GitLab.NET
         /// <summary> Provides a wrapper around the GitLab projects API. </summary>
         public ProjectRepository Projects { get; }
 
+        /// <summary> Provides a wrapper around the GitLab project members API. </summary>
+        public ProjectMemberRepository ProjectMembers { get; }
+
+        /// <summary> Provides a wrapper around the GitLab group members API. </summary>
+        public GroupMemberRepository GroupMembers { get; }
+
         /// <summary> Creates a new <see cref="GitLabClient" /> instance. </summary>
         /// <param name="hostUri"> The GitLab server to connect to. </param>
         /// <param name="privateToken"> The private token to use when making requests to the GitLab API. </param>
@@ -138,6 +144,8 @@ namespace GitLab.NET
             Tags = new TagRepository(requestFactory);
             Users = new UserRepository(requestFactory);
             Projects = new ProjectRepository(requestFactory);
+            ProjectMembers = new ProjectMemberRepository(requestFactory);
+            GroupMembers = new GroupMemberRepository(requestFactory);
         }
     }
 }

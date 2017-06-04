@@ -79,9 +79,11 @@
     <Compile Include="Config.cs" />
     <Compile Include="Repositories\FileRepository.cs" />
     <Compile Include="Repositories\GitLabSettingsRepository.cs" />
+    <Compile Include="Repositories\GroupMemberRepository.cs" />
     <Compile Include="Repositories\IssueRepository.cs" />
     <Compile Include="Repositories\MergeRequestRepository.cs" />
     <Compile Include="Repositories\MilestoneRepository.cs" />
+    <Compile Include="Repositories\ProjectMemberRepository.cs" />
     <Compile Include="Repositories\ProjectRepository.cs" />
     <Compile Include="Repositories\RunnerRepository.cs" />
     <Compile Include="Repositories\TagRepository.cs" />
@@ -93,6 +95,7 @@
     <Compile Include="ResponseModels\Group.cs" />
     <Compile Include="ResponseModels\MergeRequest.cs" />
     <Compile Include="ResponseModels\Project.cs" />
+    <Compile Include="ResponseModels\Member.cs" />
     <Compile Include="ResponseModels\Runner.cs" />
     <Compile Include="ResponseModels\UserPreview.cs" />
     <Compile Include="ResponseModels\Commit.cs" />
