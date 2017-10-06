@@ -8,7 +8,7 @@ namespace GitLab.NET
     /// <summary> A wrapper around the GitLab API. </summary>
     public class GitLabClient
     {
-        private const string ApiPath = "/api/v3";
+        private const string ApiPath = "/api/v4";
 
         private readonly IPrivateTokenAuthenticator _authenticator;
 
